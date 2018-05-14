@@ -25,7 +25,7 @@ public class VerticalPagerAdapter extends android.support.v4.view.PagerAdapter {
     }
 
     public View getPage(int position) {
-//        Preconditions.checkState(position >= 0 && position < mPageFragmentList.size(), "参数越界:ExtPageAdapter.getPage()");
+
         return mPageFragmentList.get(position);
     }
 
