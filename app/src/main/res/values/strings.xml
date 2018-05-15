@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">iHypnusCare</string>
+    <string name="login_account_hint">请输入手机号</string>
 </resources>

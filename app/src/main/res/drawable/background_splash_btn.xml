@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <corners android:radius="30dp" />
+    <!-- 填充的颜色：这里设置背景透明 -->
+    <solid android:color="#33000000" />
+    <!--<stroke-->
+    <!--android:width="@dimen/w1"-->
+    <!--android:color="@color/white" />-->
+    <!--<gradient-->
+    <!--android:centerColor="#4a0970"-->
+    <!--android:endColor="#4a0970"-->
+    <!--android:startColor="#4a0970" />-->
+</shape>

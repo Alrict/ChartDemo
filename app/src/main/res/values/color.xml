@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="gray_holo_dark" type="color">#ff464646</item>
+    <item name="gray_holo_light" type="color">#ffd0d0d0</item>
+    <!-- 纯白色 -->
+    <color name="white">#ffffffff</color>
+    <!-- 浅灰色 -->
+    <color name="lightgray">#d0d0d0</color>
+    <!-- 透明色 -->
+    <color name="transparent">#00000000</color>
+    <!-- 半透明色 -->
+    <color name="translucent">#a0000000</color>
+    <!-- 透明色(50) -->
+    <color name="transparent_50">#50000000</color>
+    <!-- 纯黑色 -->
+    <color name="black_pure">#000000</color>
+
+    <!--通讯轮Item的点击效果-->
+    <color name="addressbook_item_press">#f5f5f5</color>
+    <!--所有的点击效果-->
+    <color name="item_press">#f5f5f5</color>
+
+    <!-- 灰色 -->
+    <color name="gray">#808080</color>
+    <!-- 灰色f8f8f8 -->
+    <color name="gray_f8f8f8">#f8f8f8</color>
+    <!-- 红色 -->
+    <color name="red">#FF0000</color>
+    <!-- 蓝色 -->
+    <color name="blue">#0096FF</color>
+    <!-- 黄色 -->
+    <color name="yellow">#ff9000</color>
+    <!-- 淡黄色 -->
+    <color name="faintyellow">#fffdf5</color>
+    <!-- 浅蓝色 -->
+    <color name="little_blue">#4A96d8</color>
+    <!-- 深蓝色 -->
+    <color name="dark_blue">#4e64a9</color>
+    <!-- listview中Item点击颜色 -->
+    <color name="list_selector">#efefef</color>
+    <!-- 洋李色 -->
+    <color name="gainsboro">#DCDCDC</color>
+    <!--橘红色-->
+    <color name="tangerine">#FF5500</color>
+    <!-- 天蓝色 -->
+    <color name="skyblue">#87CEEB</color>
+    <!-- 灰黑色-->
+    <color name="nocheck">#999999</color>
+    <!-- 灰白色-->
+    <color name="gray_white">#e9e9e9</color>
+    <!-- 半透明白色 -->
+    <color name="translucent_white">#ddffffff</color>
+    <!-- 普通文本 -->
+    <color name="text_content">#333333</color>
+    <!-- 灰色文本 -->
+    <color name="text_hint">#999999</color>
+
+    <!--默认的分割线颜色-->
+    <color name="def_line_color">#d7d7d7</color>
+
+
+    <color name="points_color_1">#FF5500</color>
+    <!--登录界面-->
+    <color name="login_line_color">#CDCDCD</color>
+    <color name="login_grey_color">#666666</color>
+    <color name="login_background">#f5f5f5</color>
+    <color name="login_diver_color">#cccccc</color>
+    <color name="login_popbg_color">#dddddd</color>
+    <color name="login_pop_select_color">#8e22cd</color>
+    <color name="login_popbg_check_color">#666666</color>
+
+    <color name="panel_black">#25272A</color>
+    <color name="text_blue1">#1173CB</color>
+
+    <!-- 日历控件 -->
+    <color name="normal_day">#ff666666</color>
+    <color name="selected_day_background">#7c0fbb</color>
+    <color name="selected_day_text">#ff666666</color>
+
+    <!--提交按钮背景默认颜色-->
+    <color name="submit_btn_bg_default_color">#7c0fbb</color>
+    <!--提交按钮背景点击颜色-->
+    <color name="submit_btn_bg_pressed_color">#5f0a90</color>
+    <!--提交按钮不能点击的颜色-->
+    <color name="submit_btn_bg_unable_color">#cccccc</color>
+
+
+</resources>

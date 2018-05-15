@@ -8,4 +8,32 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TextTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_content</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+    </style>
+
+    <style name="TextAppearanceMedium" parent="TextTheme">
+        <item name="android:textSize">@dimen/w44</item>
+    </style>
+
+    <!--分割线-->
+    <style name="DividerLineHor">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/h1</item>
+        <item name="android:background">@color/def_line_color</item>
+    </style>
+
+    <!--start 默认的Button样式 高度统一为@dimen/h120,宽度为@dimen/w800-->
+    <style name="CommentButtonStyle">
+        <item name="android:layout_width">@dimen/w912</item>
+        <item name="android:layout_height">@dimen/h126</item>
+        <item name="android:background">@drawable/sl_comment_btn</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/w50</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:text">确定</item>
+    </style>
 </resources>

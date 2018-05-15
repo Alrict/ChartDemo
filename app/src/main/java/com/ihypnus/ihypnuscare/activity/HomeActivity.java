@@ -1,4 +1,4 @@
-package com.ihypnus.ihypnuscare;
+package com.ihypnus.ihypnuscare.activity;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -7,12 +7,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.VerticalPagerAdapter;
 import com.ihypnus.ihypnuscare.widget.VerticalViewPager;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity
+        extends AppCompatActivity {
 
     private static final String TAG = "llw";
     private VerticalViewPager mViewPager;
