@@ -36,37 +36,34 @@ import kr.co.namee.permissiongen.PermissionGen;
  * @date: 2018/5/14 13:44
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class LoginActivity
-        extends BaseActivity
-        implements View.OnClickListener
-{
-    private Context        context;           //上下文
-    private Button         mLoginBtn;          //登录按钮
-    private Button         mYCodeBtn;            //获取验证码按钮
-    private EditText       mPhoneEdit;       //手机号输入框
-    private EditText       mCodeEdit;         //验证码输入框
-    private ImageView      img_clear;                    //帐号清除
-    private ImageView      img_tips;                     //帐号提示
-    private LinearLayout   layout_account;           //帐号内容整体布局
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
+    private Context context;           //上下文
+    private Button mLoginBtn;          //登录按钮
+    private Button mYCodeBtn;            //获取验证码按钮
+    private EditText mPhoneEdit;       //手机号输入框
+    private EditText mCodeEdit;         //验证码输入框
+    private ImageView img_clear;                    //帐号清除
+    private ImageView img_tips;                     //帐号提示
+    private LinearLayout layout_account;           //帐号内容整体布局
     //自动登录
     private RelativeLayout layout_choice_autoLogin;
-    private CheckBox       cb_autoLogin;
+    private CheckBox cb_autoLogin;
     //动态码
     private RelativeLayout layout_imgcode;           //动态码布局
-    private ImageView      mImgCodeIcon;                 //图形动态码
-    private Bitmap         mCodeBitmap;                     //动态码图片
-    private ImageView      mCodeLoading;           // 验证码请求动画imgview
+    private ImageView mImgCodeIcon;                 //图形动态码
+    private Bitmap mCodeBitmap;                     //动态码图片
+    private ImageView mCodeLoading;           // 验证码请求动画imgview
     private CountDownTimer mCountDownTimerYCode;   // 右边倒计时
-    private String         isUpdateMacValues;              //登录类型，1永久登录，2一次性登录
+    private String isUpdateMacValues;              //登录类型，1永久登录，2一次性登录
 
     private boolean isAutoLogin = false;           //是否自动登录
-    private String  lastAccount = "";                 //上一次
+    private String lastAccount = "";                 //上一次
 
     String requestApiLogin;                 //登陆请求
     private String registerErrorCode = "7777";  //账号需要注册的错误码
     private Animation mCodeLoadingAnim;     // 验证码请求动画
-    private String    mCode;                           //验证码
-    private String    mPhoneNumber;                   //手机号
+    private String mCode;                           //验证码
+    private String mPhoneNumber;                   //手机号
     private final static int REQUEST_CODE = 300;
 
     @Override
@@ -140,7 +137,7 @@ public class LoginActivity
             @Override
             public void onFocusChange(View view, boolean fouse) {
                 mPhoneNumber = mPhoneEdit.getText()
-                                         .toString();
+                        .toString();
                 if (fouse && !TextUtils.isEmpty(mPhoneNumber)) {
                     img_clear.setVisibility(View.VISIBLE);
                 } else {
@@ -197,12 +194,12 @@ public class LoginActivity
 
         // 权限申请 读写外部存储
         PermissionGen.with(this)
-                     .addRequestCode(REQUEST_CODE)
-                     .permissions(Manifest.permission.READ_SMS)
-                     .request();
+                .addRequestCode(REQUEST_CODE)
+                .permissions(Manifest.permission.READ_SMS)
+                .request();
         // TODO: 2017/6/6 0006
         CountdownManager.getInstance()
-                        .clearTimer();
+                .clearTimer();
     }
 
     @Override
@@ -235,14 +232,27 @@ public class LoginActivity
                         getUserConfirm2();
                     } else {
                         Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT)
-                             .show();
+                                .show();
                     }
                 }
                 break;
             //登录
             case R.id.id_login:
                 if (!ViewUtils.isFastDoubleClick()) {
-                    String error = checkRequire2();
+//                    IhyRequest.getUserConfirm2(new ResponseCallback() {
+//                        @Override
+//                        public void onSuccess(Object responseData, String successCode, String successMsg) {
+//                            CarSanitationListBean result = (CarSanitationListBean) responseData;
+//                            LogOut.d("llw", result.toString());
+//                        }
+//
+//                        @Override
+//                        public void onError(VolleyError var1, String var2, String var3) {
+//                            LogOut.d("llw", var1.toString());
+//                        }
+//                    });
+                }
+              /*      String error = checkRequire2();
                     if (error.equals("")) {
                         if (TextUtils.isEmpty(mCode)) {
 //                            Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT)
@@ -256,7 +266,7 @@ public class LoginActivity
 //                        Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT)
 //                             .show();
                     }
-                }
+                }*/
                 break;
 
         }
@@ -264,6 +274,7 @@ public class LoginActivity
 
     /**
      * 登入
+     *
      * @param s
      */
     private void doLogin(String s) {
@@ -293,11 +304,11 @@ public class LoginActivity
     public String checkRequire2() {
         String error = "";
         mPhoneNumber = mPhoneEdit.getText()
-                                 .toString()
-                                 .trim();
+                .toString()
+                .trim();
         mCode = mCodeEdit.getText()
-                         .toString()
-                         .trim();
+                .toString()
+                .trim();
         if (StringUtils.isNullOrEmpty(mPhoneNumber)) {
             error = getResources().getString(R.string.login_account_hint);
             return error;
