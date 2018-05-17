@@ -249,8 +249,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         @Override
                         public void onResponse(Object response) {
                             CarSanitationListBean bean = (CarSanitationListBean) response;
-                            ToastUtils.showToastDefault(LoginActivity.this, bean.getErrMsg());
                             if (bean != null && bean.getResult() != null && bean.getResult().getDatas() != null) {
+                                ToastUtils.showToastDefault(LoginActivity.this, bean.getErrMsg());
                                 LogOut.d("llw", bean.getResult().getDatas().toString());
                             }
                         }
