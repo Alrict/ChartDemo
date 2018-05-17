@@ -13,9 +13,5 @@ public class IhyAction {
      * 获取登录验证码( 内部,外请,代理,合作伙伴)
      */
     public static final String Get_Login_Code = HOST + "GetVCode";
-    /**
-     * 注册
-     */
-    public static final String Register = "http://care.ihypnus.com/hypnusMgr/dmz/user/register";
 
 }
