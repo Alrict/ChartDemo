@@ -21,9 +21,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.bean.CarSanitationListBean;
+import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.AndroidSystemHelper;
 import com.ihypnus.ihypnuscare.utils.CountdownManager;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
@@ -239,34 +244,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             //登录
             case R.id.id_login:
                 if (!ViewUtils.isFastDoubleClick()) {
-//                    IhyRequest.getUserConfirm2(new ResponseCallback() {
-//                        @Override
-//                        public void onSuccess(Object responseData, String successCode, String successMsg) {
-//                            CarSanitationListBean result = (CarSanitationListBean) responseData;
-//                            LogOut.d("llw", result.toString());
-//                        }
-//
-//                        @Override
-//                        public void onError(VolleyError var1, String var2, String var3) {
-//                            LogOut.d("llw", var1.toString());
-//                        }
-//                    });
-                }
-              /*      String error = checkRequire2();
-                    if (error.equals("")) {
-                        if (TextUtils.isEmpty(mCode)) {
-//                            Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT)
-//                                 .show();
-                            return;
+                    IhyRequest.getUserConfirm2(new Response.Listener<CarSanitationListBean>() {
+                        @Override
+                        public void onResponse(CarSanitationListBean response) {
+                            if (response != null && response.getResult() != null && response.getResult().getDatas() != null) {
+                                LogOut.d("llw", response.getResult().getDatas().toString());
+                            }
                         }
-                        AndroidSystemHelper.HideKeyboard(LoginActivity.this);
-                        doLogin("");
-                        mLoginBtn.setEnabled(false);
-                    } else {
-//                        Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT)
-//                             .show();
-                    }
-                }*/
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    });
+                }
                 break;
 
         }
