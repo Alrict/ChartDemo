@@ -1,5 +1,6 @@
 package com.ihypnus.ihypnuscare.net;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.android.volley.AuthFailureError;
@@ -9,8 +10,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.ihypnus.ihypnuscare.utils.HttpLog;
+
+import org.json.JSONException;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
@@ -25,7 +27,7 @@ import java.util.Map;
  * @date: 2018/5/17 15:18
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class HttpRequest<T> extends Request<T> {
+public class HttpRequest extends Request {
 
     private Response.ErrorListener mErrorListener;
     private boolean isCallBacked;
@@ -34,19 +36,18 @@ public class HttpRequest<T> extends Request<T> {
     private HashMap mParams;
     private Map<String, String> mHeaderParams;
     private Type mResponseJavaBean;
-    private Class<T> clazz;
-    private Response.Listener<T> listener;
-
+    private Response.Listener<Object> listener;
+    private int mResponseDataType;//请求结果解析类型 0:请求结果是string,1:请求结果是object
+    private String mDecodeCharset = "UTF-8";
 
     public HttpRequest(int method, String url, Response.ErrorListener listener) {
         super(method, url, listener);
         this.mParams = new HashMap();
     }
 
-    public HttpRequest(int method, String url, Class<T> clazz, Response.Listener<T> listener, Map<String, String> params,
+    public HttpRequest(int method, String url, Response.Listener<Object> listener, Map<String, String> params,
                        Response.ErrorListener errorListener) {
         super(method, url, errorListener);
-        this.clazz = clazz;
         this.listener = listener;
         this.mParams = new HashMap();
         mParams.putAll(params);
@@ -102,29 +103,120 @@ public class HttpRequest<T> extends Request<T> {
             this.mRequestLog.append("\n");
             this.mRequestLog.append("responseData : " + parsedData + "\n");
             this.mRequestLog.append("responseException : " + exception + "\n");
-            HttpLog.w("request:", mRequestLog.toString());
+//            HttpLog.w("request:", mRequestLog.toString());
         }
     }
 
-    @Override
-    protected Response<T> parseNetworkResponse(NetworkResponse response) {
-        try {
-            /**
-             * 得到返回的数据
-             */
-            String jsonStr = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            appendkyeNetLog(jsonStr, "");
-            /**
-             * 转化成对象
-             */
-            return Response.success(gson.fromJson(jsonStr, clazz), HttpHeaderParser.parseCacheHeaders(response));
-        } catch (UnsupportedEncodingException | JsonSyntaxException e) {
-            return Response.error(new ParseError(e));
-        }
+    public HttpRequest setResponseDataType(int responseDataType) {
+        this.mResponseDataType = responseDataType;
+        return this;
     }
 
     @Override
-    protected void deliverResponse(T response) {
+    protected Response parseNetworkResponse(NetworkResponse response) {
+        byte[] data = response.data;
+        String parsedData = "";
+        Object ex = null;
+        boolean var14 = false;
+        Response var6;
+
+        label121:
+        {
+            Response var7;
+            String exceptionStr = "";
+            label122:
+            {
+                try {
+                    var14 = true;
+                    parsedData = new String(data, this.mDecodeCharset);
+                    Object obj = this.getResponseData(parsedData);
+                    var6 = Response.success(obj, HttpHeaderParser.parseCacheHeaders(response));
+                    var14 = false;
+                    break label121;
+                } catch (UnsupportedEncodingException var15) {
+                    HttpLog.printStackTrace(var15);
+                    ex = var15;
+                    var7 = Response.error(new ParseError(var15));
+                    var14 = false;
+                    break label122;
+                } catch (Exception var16) {
+                    ex = var16;
+                    HttpLog.printStackTrace(var16);
+                    var7 = Response.error(new ParseError(var16));
+                    var14 = false;
+                } finally {
+                    if (var14) {
+                        if (HttpLog.LOG_FLAG) {
+                            if (ex != null) {
+                                exceptionStr = HttpLog.getExceptionMsg((Throwable) ex);
+                            }
+
+                            this.appendkyeNetLog(parsedData, exceptionStr);
+                            HttpLog.w("volley_request", this.mRequestLog.toString());
+                        }
+
+                    }
+                }
+
+                if (HttpLog.LOG_FLAG) {
+                    exceptionStr = "";
+                    if (ex != null) {
+                        exceptionStr = HttpLog.getExceptionMsg((Throwable) ex);
+                    }
+
+                    this.appendkyeNetLog(parsedData, exceptionStr);
+                    HttpLog.w("volley_request", this.mRequestLog.toString());
+                }
+
+                return var7;
+            }
+
+            if (HttpLog.LOG_FLAG) {
+                exceptionStr = "";
+                if (ex != null) {
+                    exceptionStr = HttpLog.getExceptionMsg((Throwable) ex);
+                }
+
+                this.appendkyeNetLog(parsedData, exceptionStr);
+                HttpLog.w("volley_request", this.mRequestLog.toString());
+            }
+
+            return var7;
+        }
+        if (HttpLog.LOG_FLAG) {
+            String exceptionStr = "";
+            if (ex != null) {
+                exceptionStr = HttpLog.getExceptionMsg((Throwable) ex);
+            }
+
+            this.appendkyeNetLog(parsedData, exceptionStr);
+            HttpLog.w("volley_request", this.mRequestLog.toString());
+        }
+
+        return var6;
+    }
+
+    /**
+     * 根据定义的返回类型解析请求结果
+     *
+     * @param parsedData
+     * @return
+     * @throws JSONException
+     */
+    public Object getResponseData(String parsedData) throws JSONException {
+        Object obj = null;
+        if (this.mResponseDataType == 3) {
+            //解析成normal string
+            obj = parsedData;
+        } else if (this.mResponseDataType == 4) {
+            //解析成普通的javaBean
+            obj = gson.fromJson(parsedData, this.mResponseJavaBean);
+        }
+        return obj;
+    }
+
+    @Override
+    protected void deliverResponse(Object response) {
         listener.onResponse(response);
     }
 
@@ -144,6 +236,36 @@ public class HttpRequest<T> extends Request<T> {
             return data.getBytes(paramsEncoding);
         } catch (UnsupportedEncodingException var4) {
             throw new RuntimeException("Encoding not supported: " + paramsEncoding, var4);
+        }
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        return 0;
+    }
+
+    /**
+     * 设置请求结果返回的bean
+     *
+     * @param responseType
+     * @return
+     */
+    public HttpRequest setResponseJavaBean(Type responseType) {
+        this.mResponseJavaBean = responseType;
+        return this;
+    }
+
+
+    /**
+     * 设置返回结果类型
+     */
+    public static class ResponseDataType {
+        //        public static final int RESULT_STRING = 1;
+//        public static final int RESULT_JAVA_BEAN = 2;
+        public static final int NORMAL_STRING = 3;
+        public static final int NORMAL_JAVABEAN = 4;
+
+        public ResponseDataType() {
         }
     }
 }

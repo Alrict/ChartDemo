@@ -30,6 +30,7 @@ import com.ihypnus.ihypnuscare.utils.AndroidSystemHelper;
 import com.ihypnus.ihypnuscare.utils.CountdownManager;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
+import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
 import kr.co.namee.permissiongen.PermissionGen;
@@ -244,19 +245,36 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             //登录
             case R.id.id_login:
                 if (!ViewUtils.isFastDoubleClick()) {
-                    IhyRequest.getUserConfirm2(new Response.Listener<CarSanitationListBean>() {
+                    IhyRequest.getUserConfirm2(new Response.Listener<Object>() {
                         @Override
-                        public void onResponse(CarSanitationListBean response) {
-                            if (response != null && response.getResult() != null && response.getResult().getDatas() != null) {
-                                LogOut.d("llw", response.getResult().getDatas().toString());
+                        public void onResponse(Object response) {
+                            CarSanitationListBean bean = (CarSanitationListBean) response;
+                            ToastUtils.showToastDefault(LoginActivity.this, bean.getErrMsg());
+                            if (bean != null && bean.getResult() != null && bean.getResult().getDatas() != null) {
+                                LogOut.d("llw", bean.getResult().getDatas().toString());
                             }
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-
+                            ToastUtils.showToastDefault(LoginActivity.this, error.toString());
                         }
                     });
+                  /*  UserInfo userInfo = new UserInfo();
+                    userInfo.setPhone("18820000743");
+                    userInfo.setPassword("888888");
+                    String userInfoJson = new Gson().toJson(userInfo);
+                    IhyRequest.getUserRegister(userInfoJson, "CP70100511S", new Response.Listener<Object>() {
+                        @Override
+                        public void onResponse(Object response) {
+//                            ToastUtils.showToastDefault(LoginActivity.this, response);
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            ToastUtils.showToastDefault(LoginActivity.this, error.toString());
+                        }
+                    });*/
                 }
                 break;
 
