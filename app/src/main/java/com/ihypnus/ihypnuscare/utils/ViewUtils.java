@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.ihypnus.ihypnuscare.IhyApplication;
+
 
 /**
  * @author ymh
@@ -64,6 +66,12 @@ public class ViewUtils {
         return false;
     }
 
+    /**
+     * 根据手机的分辨率从 dimens文件读取px
+     */
+    public static int getDimenPx(int dimenId) {
+        return IhyApplication.mInstance.getResources().getDimensionPixelOffset(dimenId);
+    }
 
 
     /**

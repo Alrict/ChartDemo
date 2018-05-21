@@ -2,6 +2,7 @@ package com.ihypnus.ihypnuscare.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,17 +22,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
-import com.ihypnus.ihypnuscare.bean.CarSanitationListBean;
-import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.AndroidSystemHelper;
 import com.ihypnus.ihypnuscare.utils.CountdownManager;
-import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
+import com.ihypnus.zxing.android.CaptureActivity;
 
 import kr.co.namee.permissiongen.PermissionGen;
 
@@ -245,21 +242,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             //登录
             case R.id.id_login:
                 if (!ViewUtils.isFastDoubleClick()) {
-                    IhyRequest.getUserConfirm2(new Response.Listener<Object>() {
-                        @Override
-                        public void onResponse(Object response) {
-                            CarSanitationListBean bean = (CarSanitationListBean) response;
-                            if (bean != null && bean.getResult() != null && bean.getResult().getDatas() != null) {
-                                ToastUtils.showToastDefault(LoginActivity.this, bean.getErrMsg());
-                                LogOut.d("llw", bean.getResult().getDatas().toString());
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            ToastUtils.showToastDefault(LoginActivity.this, error.toString());
-                        }
-                    });
+                    Intent intent = new Intent(LoginActivity.this, CaptureActivity.class);
+                    startActivityForResult(intent, 121);
+//                    IhyRequest.getUserConfirm2(new Response.Listener<Object>() {
+//                        @Override
+//                        public void onResponse(Object response) {
+//                            CarSanitationListBean bean = (CarSanitationListBean) response;
+//                            if (bean != null && bean.getResult() != null && bean.getResult().getDatas() != null) {
+//                                ToastUtils.showToastDefault(LoginActivity.this, bean.getErrMsg());
+//                                LogOut.d("llw", bean.getResult().getDatas().toString());
+//                            }
+//                        }
+//                    }, new Response.ErrorListener() {
+//                        @Override
+//                        public void onErrorResponse(VolleyError error) {
+//                            ToastUtils.showToastDefault(LoginActivity.this, error.toString());
+//                        }
+//                    });
                   /*  UserInfo userInfo = new UserInfo();
                     userInfo.setPhone("18820000743");
                     userInfo.setPassword("888888");
@@ -326,5 +325,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         return error;
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 121 && resultCode == RESULT_OK) {
+            String result = data.getStringExtra("id");
+            ToastUtils.showToastDefault(LoginActivity.this, result);
+        }
+    }
 }

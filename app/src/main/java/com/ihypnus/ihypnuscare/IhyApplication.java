@@ -23,4 +23,6 @@ public class IhyApplication extends Application {
         // 初始化新网络框架请求
         NetRequestHelper.getInstance().init(this);
     }
+
+
 }

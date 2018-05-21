@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <SurfaceView
+        android:id="@+id/surfaceview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.ihypnus.zxing.android.view.ViewfinderView
+        android:id="@+id/viewfinderview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00000000"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h150"
+        android:layout_alignParentBottom="true"
+
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/capture_layout_gallery"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/capture_txt_photo"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/bg_scan_btn_txt"-->
+                <!--android:paddingBottom="8dp"-->
+                <!--android:paddingLeft="30dp"-->
+                <!--android:paddingRight="30dp"-->
+                <!--android:paddingTop="8dp"-->
+                <!--android:singleLine="true"-->
+                <!--android:text="相册"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="@dimen/w20" />-->
+        <!--</RelativeLayout>-->
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/capture_txt_cancle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_scan_btn_txt"
+                android:paddingBottom="8dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="8dp"
+                android:singleLine="true"
+                android:text="取消"
+                android:textColor="@color/white"
+                android:textSize="@dimen/w20" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/capture_txt_light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_scan_btn_txt"
+                android:paddingBottom="8dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="8dp"
+                android:singleLine="true"
+                android:text="开灯"
+                android:textColor="@color/white"
+                android:textSize="@dimen/w20" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/focus_index"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/cam_focus_scan"
+        android:visibility="invisible" />
+</RelativeLayout>

@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">iHypnusCare</string>
     <string name="login_account_hint">请输入手机号</string>
+    <!-- Zxing-->
+    <string name="zxing_tip">对准条码/二维码到框内即可扫描</string>
+    <string name="activity_scan_title">二维码/条形码</string>
+    <string name="activity_scan_photo">相册</string>
+    <string name="activity_scan_cancle">取消</string>
+    <string name="activity_scan_open">开灯</string>
+    <string name="activity_scan_close">关灯</string>
+    <string name="toasts_scan_failed">图片解码失败</string>
+    <string name="intent_data">file_data</string>
+    <string name="intent_data_2">file_data_2</string>
+    <string name="intent_value">value</string>
+    <string name="intent_type">type</string>
+    <string name="activity_scan_battery_low_msg">手机电量过低,闪光灯功能暂时关闭！</string>
 </resources>
