@@ -56,7 +56,7 @@
     <color name="text_hint">#999999</color>
 
     <!--默认的分割线颜色-->
-    <color name="def_line_color">#d7d7d7</color>
+    <color name="def_line_color">#2c76b3</color>
 
 
     <color name="points_color_1">#FF5500</color>
@@ -74,13 +74,13 @@
 
     <!-- 日历控件 -->
     <color name="normal_day">#ff666666</color>
-    <color name="selected_day_background">#7c0fbb</color>
+    <color name="selected_day_background">#2c76b3</color>
     <color name="selected_day_text">#ff666666</color>
 
     <!--提交按钮背景默认颜色-->
-    <color name="submit_btn_bg_default_color">#7c0fbb</color>
+    <color name="submit_btn_bg_default_color">#2c76b3</color>
     <!--提交按钮背景点击颜色-->
-    <color name="submit_btn_bg_pressed_color">#5f0a90</color>
+    <color name="submit_btn_bg_pressed_color">#00A0EA</color>
     <!--提交按钮不能点击的颜色-->
     <color name="submit_btn_bg_unable_color">#cccccc</color>
 
@@ -95,4 +95,7 @@
     <color name="status_text">#ffffffff</color>
     <color name="viewfinder_laser">#ffcc0000</color> <!-- Android standard ICS color -->
     <color name="viewfinder_mask">#60000000</color>
+
+    //分割线颜色
+    <color name="main_color_blue">#2c76b3</color>
 </resources>
