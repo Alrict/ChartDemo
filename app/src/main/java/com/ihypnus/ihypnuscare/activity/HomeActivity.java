@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.VerticalPagerAdapter;
@@ -35,9 +36,18 @@ public class HomeActivity extends AppCompatActivity {
         mInflater = getLayoutInflater();
 
         mainView = mInflater.inflate(R.layout.fragment_main, null);
+        TextView tv_load = (TextView) mainView.findViewById(R.id.tv_load);
+
+
         mPb = (ProgressBarView2) mainView.findViewById(R.id.pb);
         mPb.setMax(100);
-        mPb.setProgress(53);
+
+        tv_load.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPb.setProgress(77);
+            }
+        });
         mSecondView = mInflater.inflate(R.layout.fragment_second, null);
         mCicleProgressBar = mSecondView.findViewById(R.id.cpv);
         mCicleProgressBar.setMaxProgress(100);

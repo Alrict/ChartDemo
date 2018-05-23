@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.View;
@@ -60,11 +61,16 @@ public class ProgressBarView2 extends View {
     /**
      * 圆弧的半径
      */
-    private int circleRadius;
+    private int mOuterCircleRadio;
     /**
      * 圆弧圆心位置
      */
     private int centerX, centerY;
+    private RectF mRectF;
+    private Paint mPaint;
+    private int mInnerCircleRadio;
+    private Paint mGreyPain;
+    private boolean mIsFirst = true;
 
 
     public ProgressBarView2(Context context) {
@@ -97,6 +103,16 @@ public class ProgressBarView2 extends View {
 
         textBgPaint = new Paint();
         textBgPaint.setAntiAlias(true);
+
+        //彩色圆画笔
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        //灰色圆画笔
+        mGreyPain = new Paint();
+        mGreyPain.setAntiAlias(true);
+        mGreyPain.setColor(Color.parseColor("#eeeeee"));
+        mRectF = new RectF();
+
     }
 
 
@@ -111,13 +127,25 @@ public class ProgressBarView2 extends View {
 
 
             //计算圆弧半径和圆心点
-            circleRadius = Math.min(width, height) / 2;
-            ARC_LINE_LENGTH = circleRadius / 8;
+            mOuterCircleRadio = Math.min(width, height) / 2;
+            mInnerCircleRadio = (int) (mOuterCircleRadio * 0.8);
+            ARC_LINE_LENGTH = mOuterCircleRadio / 8;
             ARC_LINE_WIDTH = ARC_LINE_LENGTH / 8;
 
 
             centerX = width / 2;
             centerY = height / 2;
+
+            // 圆环位置
+            mRectF.left = mOuterCircleRadio - mInnerCircleRadio; // 左上角x
+            mRectF.top = mOuterCircleRadio - mInnerCircleRadio; // 左上角y
+            mRectF.right = mOuterCircleRadio + mInnerCircleRadio; // 右下角x
+            mRectF.bottom = mOuterCircleRadio + mInnerCircleRadio; // 右下角y
+            // 绘制进度颜色显示
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeWidth((float) ((mOuterCircleRadio - mInnerCircleRadio) * 0.8));
+            //灰色圆
+            mGreyPain.setStrokeWidth((float) ((mOuterCircleRadio - mInnerCircleRadio) * 0.6));
         }
     }
 
@@ -137,59 +165,66 @@ public class ProgressBarView2 extends View {
         //绘制进度条
         progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ffff0000", "#ff00ff00")));
         progressPaint.setStrokeWidth(ARC_LINE_WIDTH);
+
+        canvas.drawArc(mRectF, -90, 360, false, mGreyPain);
         float drawDegree = 1.6f;
-        while (drawDegree <= ARC_FULL_DEGREE) {
-            double a = (start + drawDegree) / 180 * Math.PI;
-            float lineStartX = centerX - circleRadius * (float) Math.sin(a);
-            float lineStartY = centerY + circleRadius * (float) Math.cos(a);
-            float lineStopX = lineStartX + ARC_LINE_LENGTH * (float) Math.sin(a);
-            float lineStopY = lineStartY - ARC_LINE_LENGTH * (float) Math.cos(a);
+        if (mIsFirst) {
+            while (drawDegree <= ARC_FULL_DEGREE ) {
+                double a = (start + drawDegree) / 180 * Math.PI;
+                float lineStartX = centerX - mOuterCircleRadio * (float) Math.sin(a);
+                float lineStartY = centerY + mOuterCircleRadio * (float) Math.cos(a);
+                float lineStopX = lineStartX + ARC_LINE_LENGTH * (float) Math.sin(a);
+                float lineStopY = lineStartY - ARC_LINE_LENGTH * (float) Math.cos(a);
 
 
-            if (drawDegree > sweep1) {
-                //绘制进度条背景
-                progressPaint.setColor(Color.parseColor("#88aaaaaa"));
-                progressPaint.setStrokeWidth(ARC_LINE_WIDTH >> 1);
+                if (drawDegree > sweep1) {
+                    //绘制进度条背景
+                    progressPaint.setColor(Color.parseColor("#88aaaaaa"));
+                    progressPaint.setStrokeWidth(ARC_LINE_WIDTH >> 1);
+                }
+                canvas.drawLine(lineStartX, lineStartY, lineStopX, lineStopY, progressPaint);
+                // 绘制圆圈，进度条背景
+                drawDegree += ARC_EACH_PROGRESS;
             }
-            canvas.drawLine(lineStartX, lineStartY, lineStopX, lineStopY, progressPaint);
-
-
-            drawDegree += ARC_EACH_PROGRESS;
+            mIsFirst = false;
         }
+
+        mPaint.setColor(Color.rgb(0xf8, 0x60, 0x30));
+        canvas.drawArc(mRectF, -90, sweep1, false, mPaint);
 
 
         //绘制文字背景圆形
         textBgPaint.setStyle(Paint.Style.FILL);//设置填充
         textBgPaint.setColor(Color.parseColor("#41668b"));
-        canvas.drawCircle(centerX, centerY, (circleRadius - ARC_LINE_LENGTH) * 0.8f, textBgPaint);
+        canvas.drawCircle(centerX, centerY, (mOuterCircleRadio - ARC_LINE_LENGTH) * 0.8f, textBgPaint);
 
 
         textBgPaint.setStyle(Paint.Style.STROKE);//设置空心
         textBgPaint.setStrokeWidth(2);
         textBgPaint.setColor(Color.parseColor("#aaaaaaaa"));
-        canvas.drawCircle(centerX, centerY, (circleRadius - ARC_LINE_LENGTH) * 0.8f, textBgPaint);
+        canvas.drawCircle(centerX, centerY, (mOuterCircleRadio - ARC_LINE_LENGTH) * 0.8f, textBgPaint);
 
 
         //上一行文字
-        textPaint.setTextSize(circleRadius >> 1);
+        textPaint.setTextSize(mOuterCircleRadio >> 1);
         String text = (int) (100 * progress / max) + "";
         float textLen = textPaint.measureText(text);
         //计算文字高度
         textPaint.getTextBounds("8", 0, 1, textBounds);
         float h1 = textBounds.height();
-        canvas.drawText(text, centerX - textLen / 2, centerY - circleRadius / 10 + h1 / 2, textPaint);
+        canvas.drawText(text, centerX - textLen / 2, centerY - mOuterCircleRadio / 10 + h1 / 2, textPaint);
         //分
-        textPaint.setTextSize(circleRadius >> 3);
+        textPaint.setTextSize(mOuterCircleRadio >> 3);
         textPaint.getTextBounds("分", 0, 1, textBounds);
         float h11 = textBounds.height();
-        canvas.drawText("分", centerX + textLen / 2 + 5, centerY - circleRadius / 10 + h1 / 2 - (h1 - h11), textPaint);
+        canvas.drawText("分", centerX + textLen / 2 + 5, centerY - mOuterCircleRadio / 10 + h1 / 2 - (h1 - h11), textPaint);
 
 
         //下一行文字
-        textPaint.setTextSize(circleRadius / 6);
+        textPaint.setTextSize(mOuterCircleRadio / 6);
         text = "点击优化";
         textLen = textPaint.measureText(text);
-        canvas.drawText(text, centerX - textLen / 2, centerY + circleRadius / 2.5f, textPaint);
+        canvas.drawText(text, centerX - textLen / 2, centerY + mOuterCircleRadio / 2.5f, textPaint);
     }
 
 
