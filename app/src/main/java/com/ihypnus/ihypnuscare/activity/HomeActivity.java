@@ -9,12 +9,13 @@ import android.view.View;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.VerticalPagerAdapter;
+import com.ihypnus.ihypnuscare.widget.CircleProgressView;
+import com.ihypnus.ihypnuscare.widget.ProgressBarView2;
 import com.ihypnus.ihypnuscare.widget.VerticalViewPager;
 
 import java.util.ArrayList;
 
-public class HomeActivity
-        extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "llw";
     private VerticalViewPager mViewPager;
@@ -22,6 +23,8 @@ public class HomeActivity
     private View mainView;
     private LayoutInflater mInflater;
     private View mSecondView;
+    private ProgressBarView2 mPb;
+    private CircleProgressView mCicleProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,12 @@ public class HomeActivity
         mInflater = getLayoutInflater();
 
         mainView = mInflater.inflate(R.layout.fragment_main, null);
+        mPb = (ProgressBarView2) mainView.findViewById(R.id.pb);
+        mPb.setMax(100);
+        mPb.setProgress(53);
         mSecondView = mInflater.inflate(R.layout.fragment_second, null);
+        mCicleProgressBar = mSecondView.findViewById(R.id.cpv);
+        mCicleProgressBar.setMaxProgress(100);
 
         final ArrayList<View> fragmentList = new ArrayList<>();
 
@@ -54,6 +62,9 @@ public class HomeActivity
             @Override
             public void onPageSelected(int position) {
                 //position 被选中页面
+                if (position==1){
+                    mCicleProgressBar.setProgressNotInUiThread(73);
+                }
             }
 
             @Override

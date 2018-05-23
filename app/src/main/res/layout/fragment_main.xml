@@ -10,6 +10,11 @@
         android:layout_centerInParent="true"
         android:text="主页"
         android:textSize="23sp"/>
+    <com.ihypnus.ihypnuscare.widget.ProgressBarView2
+        android:id="@+id/pb"
+        android:layout_centerInParent="true"
+        android:layout_width="@dimen/w700"
+        android:layout_height="@dimen/w700"/>
 
 
 </RelativeLayout>
