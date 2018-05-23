@@ -7,7 +7,10 @@
     <RelativeLayout
         android:id="@+id/layout_input"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h380">
+        android:layout_height="@dimen/h380"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true"
+    >
 
         <TextView
             android:id="@+id/tv_title"
@@ -17,7 +20,7 @@
             android:gravity="center"
             android:text="登录"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/w55" />
+            android:textSize="@dimen/w55"/>
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -26,7 +29,7 @@
             android:layout_below="@id/tv_title"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/h60"
-            android:src="@mipmap/icon_logo" />
+            android:src="@mipmap/icon_logo"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -35,7 +38,7 @@
             android:gravity="center"
             android:text="iHypnusCare"
             android:textColor="@color/main_color_blue"
-            android:textSize="@dimen/w55" />
+            android:textSize="@dimen/w55"/>
     </RelativeLayout>
 
 
@@ -52,7 +55,7 @@
             android:id="@+id/line1"
             style="@style/DividerLineHor"
             android:layout_alignParentTop="true"
-            android:background="@color/main_color_blue" />
+            android:background="@color/main_color_blue"/>
 
 
         <LinearLayout
@@ -67,7 +70,7 @@
                 android:id="@+id/iv_user"
                 android:layout_width="@dimen/h56"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/icon_user" />
+                android:src="@mipmap/icon_user"/>
 
             <TextView
                 android:id="@+id/tv_local_code"
@@ -77,21 +80,21 @@
                 android:gravity="center"
                 android:text="+86"
                 android:textColor="@color/main_color_blue"
-                android:textSize="@dimen/w44" />
+                android:textSize="@dimen/w44"/>
 
             <ImageView
                 android:id="@+id/iv_down_arrow"
                 android:layout_width="@dimen/w26"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/w20"
-                android:src="@mipmap/ic_down_arrow" />
+                android:src="@mipmap/ic_down_arrow"/>
 
             <View
                 android:layout_width="@dimen/h2"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/h20"
-                android:background="@color/text_hint" />
+                android:background="@color/text_hint"/>
 
             <EditText
                 android:id="@+id/id_phone_edit2"
@@ -104,7 +107,7 @@
                 android:digits="1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-－"
                 android:hint="请输入账号"
                 android:inputType="textVisiblePassword"
-                android:maxLength="20" />
+                android:maxLength="20"/>
 
             <ImageView
                 android:id="@+id/img_login_account_clear2"
@@ -112,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:padding="@dimen/w8"
-                android:src="@drawable/login_accout_clear_selector" />
+                android:src="@drawable/login_accout_clear_selector"/>
 
         </LinearLayout>
 
@@ -125,7 +128,7 @@
         android:layout_below="@+id/layout_user"
         android:layout_marginLeft="@dimen/w66"
         android:layout_marginRight="@dimen/w66"
-        android:background="@color/main_color_blue" />
+        android:background="@color/main_color_blue"/>
 
     <LinearLayout
         android:id="@+id/code_layout"
@@ -141,7 +144,7 @@
             android:id="@+id/iv_pass_word"
             android:layout_width="@dimen/h56"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_pass_word" />
+            android:src="@mipmap/icon_pass_word"/>
 
 
         <EditText
@@ -154,12 +157,12 @@
             android:background="@null"
             android:hint="请输入密码"
             android:inputType="number"
-            android:maxLength="12" />
+            android:maxLength="12"/>
 
         <ImageView
             android:layout_width="@dimen/h56"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_un_see" />
+            android:src="@mipmap/icon_un_see"/>
     </LinearLayout>
 
 
@@ -169,7 +172,7 @@
         android:layout_below="@+id/code_layout"
         android:layout_marginLeft="@dimen/w66"
         android:layout_marginRight="@dimen/w66"
-        android:background="#2c76b3" />
+        android:background="#2c76b3"/>
 
     <Button
         android:id="@+id/id_login"
@@ -181,7 +184,7 @@
         android:layout_marginTop="@dimen/h160"
         android:gravity="center"
         android:text="登录"
-        android:textSize="@dimen/w54" />
+        android:textSize="@dimen/w54"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -200,7 +203,7 @@
             android:layout_centerVertical="true"
             android:autoLink="all"
             android:text="立即注册？"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
 
         <TextView
             android:id="@+id/tv_fogot_pass_word"
@@ -210,7 +213,7 @@
             android:layout_centerVertical="true"
             android:autoLink="all"
             android:text="忘记密码？"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -225,7 +228,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="其他登录方式"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
 
         <View
             android:layout_width="match_parent"
@@ -233,7 +236,7 @@
             android:layout_marginLeft="@dimen/w66"
             android:layout_marginRight="@dimen/w66"
             android:layout_marginTop="@dimen/h10"
-            android:background="#3082D6" />
+            android:background="#3082D6"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -252,7 +255,7 @@
                 <ImageView
                     android:layout_width="@dimen/w92"
                     android:layout_height="@dimen/w92"
-                    android:src="@mipmap/icon_qq" />
+                    android:src="@mipmap/icon_qq"/>
             </LinearLayout>
 
             <LinearLayout
@@ -264,7 +267,7 @@
                 <ImageView
                     android:layout_width="@dimen/w92"
                     android:layout_height="@dimen/w92"
-                    android:src="@mipmap/icon_qq" />
+                    android:src="@mipmap/icon_qq"/>
             </LinearLayout>
 
             <TextView
@@ -275,7 +278,7 @@
                 android:gravity="center_vertical|end"
                 android:text="..."
                 android:textColor="@color/white"
-                android:textSize="@dimen/w70" />
+                android:textSize="@dimen/w70"/>
         </LinearLayout>
 
     </LinearLayout>

@@ -1,10 +1,12 @@
 package com.ihypnus.ihypnuscare.activity;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.Window;
 import android.view.WindowManager;
+
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -13,16 +15,17 @@ import android.view.WindowManager;
  * @date: 2018/5/14 13:42
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public abstract class BaseActivity extends Activity{
+public abstract class BaseActivity extends Activity {
+
+    public SystemBarTintManager mTintManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //去除标题栏
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //去除状态栏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        initState();
         setContentView(setView());
+
+
         findViews();
         init(savedInstanceState);
         initEvent();
@@ -58,5 +61,16 @@ public abstract class BaseActivity extends Activity{
      */
     protected abstract void loadData();
 
+    /**
+     * 沉浸式状态栏
+     */
+    private void initState() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
 
 }
