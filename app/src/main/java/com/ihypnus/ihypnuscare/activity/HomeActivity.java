@@ -1,11 +1,13 @@
 package com.ihypnus.ihypnuscare.activity;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
@@ -45,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         tv_load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPb.setProgress(77);
+                startAni(73);
             }
         });
         mSecondView = mInflater.inflate(R.layout.fragment_second, null);
@@ -60,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
 
         mPagerAdapter = new VerticalPagerAdapter(fragmentList);
         //设置最小偏移量
-        mViewPager.setMinPageOffset(0.1f);
+        mViewPager.setMinPageOffset(0.15f);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -72,9 +74,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 //position 被选中页面
-                if (position==1){
-                    mCicleProgressBar.setProgressNotInUiThread(73);
-                }
             }
 
             @Override
@@ -84,5 +83,13 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    private void startAni(float sweep) {
+        ObjectAnimator a=ObjectAnimator.ofFloat(mPb,"progress",0f,sweep);
+        a.setInterpolator(new AccelerateDecelerateInterpolator());
+        a.setDuration(3000);
+//        a.setRepeatCount(0);
+//        a.setRepeatMode(ValueAnimator.REVERSE);
+        a.start();
+    }
 
 }

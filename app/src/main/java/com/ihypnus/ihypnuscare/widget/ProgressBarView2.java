@@ -1,12 +1,13 @@
 package com.ihypnus.ihypnuscare.widget;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.os.SystemClock;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -71,6 +72,11 @@ public class ProgressBarView2 extends View {
     private int mInnerCircleRadio;
     private Paint mGreyPain;
     private boolean mIsFirst = true;
+    private Canvas mCanvas;
+    private String mSleepStatus = "";
+    private String[] statusArray = {"不好", "良好", "非常好"};
+    private Bitmap mBitmap;
+    private Paint mTsPaint;
 
 
     public ProgressBarView2(Context context) {
@@ -95,6 +101,10 @@ public class ProgressBarView2 extends View {
         progressPaint = new Paint();
         progressPaint.setAntiAlias(true);
 
+        mTsPaint = new Paint();
+        mTsPaint.setColor(Color.YELLOW);
+        mTsPaint.setAntiAlias(true);
+
 
         textPaint = new Paint();
         textPaint.setColor(Color.WHITE);
@@ -107,10 +117,12 @@ public class ProgressBarView2 extends View {
         //彩色圆画笔
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);//设置线条两端为圆形
         //灰色圆画笔
         mGreyPain = new Paint();
         mGreyPain.setAntiAlias(true);
-        mGreyPain.setColor(Color.parseColor("#eeeeee"));
+        mGreyPain.setColor(Color.parseColor("#666666"));
+        mGreyPain.setStyle(Paint.Style.STROKE);
         mRectF = new RectF();
 
     }
@@ -157,74 +169,95 @@ public class ProgressBarView2 extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-
-        float start = (360 - ARC_FULL_DEGREE) >> 1; //进度条起始角度   >> 1即除以2
+        //绘制外围刻度
         float sweep1 = ARC_FULL_DEGREE * (progress / max); //进度划过的角度
+        drawOutterLine(canvas, sweep1);
 
+        //绘制内圆
+        drawInnerGrayCircle(canvas);
 
         //绘制进度条
-        progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ffff0000", "#ff00ff00")));
+        mPaint.setColor(Color.parseColor(calColor(progress / max, "#ffff0000", "#ff00ff00")));
         progressPaint.setStrokeWidth(ARC_LINE_WIDTH);
-
-        canvas.drawArc(mRectF, -90, 360, false, mGreyPain);
-        float drawDegree = 1.6f;
-        if (mIsFirst) {
-            while (drawDegree <= ARC_FULL_DEGREE ) {
-                double a = (start + drawDegree) / 180 * Math.PI;
-                float lineStartX = centerX - mOuterCircleRadio * (float) Math.sin(a);
-                float lineStartY = centerY + mOuterCircleRadio * (float) Math.cos(a);
-                float lineStopX = lineStartX + ARC_LINE_LENGTH * (float) Math.sin(a);
-                float lineStopY = lineStartY - ARC_LINE_LENGTH * (float) Math.cos(a);
-
-
-                if (drawDegree > sweep1) {
-                    //绘制进度条背景
-                    progressPaint.setColor(Color.parseColor("#88aaaaaa"));
-                    progressPaint.setStrokeWidth(ARC_LINE_WIDTH >> 1);
-                }
-                canvas.drawLine(lineStartX, lineStartY, lineStopX, lineStopY, progressPaint);
-                // 绘制圆圈，进度条背景
-                drawDegree += ARC_EACH_PROGRESS;
-            }
-            mIsFirst = false;
-        }
-
-        mPaint.setColor(Color.rgb(0xf8, 0x60, 0x30));
-        canvas.drawArc(mRectF, -90, sweep1, false, mPaint);
-
+        canvas.drawArc(mRectF, -210, sweep1, false, mPaint);
 
         //绘制文字背景圆形
-        textBgPaint.setStyle(Paint.Style.FILL);//设置填充
-        textBgPaint.setColor(Color.parseColor("#41668b"));
-        canvas.drawCircle(centerX, centerY, (mOuterCircleRadio - ARC_LINE_LENGTH) * 0.8f, textBgPaint);
+        drawTextBg(canvas);
+        //绘制圆环內的文字
+        drawText(canvas);
 
 
-        textBgPaint.setStyle(Paint.Style.STROKE);//设置空心
-        textBgPaint.setStrokeWidth(2);
-        textBgPaint.setColor(Color.parseColor("#aaaaaaaa"));
-        canvas.drawCircle(centerX, centerY, (mOuterCircleRadio - ARC_LINE_LENGTH) * 0.8f, textBgPaint);
+    }
 
-
-        //上一行文字
+    private void drawText(Canvas canvas) {
+        //中间文字:分数值
         textPaint.setTextSize(mOuterCircleRadio >> 1);
+        textPaint.setColor(Color.YELLOW);
         String text = (int) (100 * progress / max) + "";
         float textLen = textPaint.measureText(text);
         //计算文字高度
         textPaint.getTextBounds("8", 0, 1, textBounds);
         float h1 = textBounds.height();
         canvas.drawText(text, centerX - textLen / 2, centerY - mOuterCircleRadio / 10 + h1 / 2, textPaint);
+
+        //最上面文字:睡眠分数
+        textPaint.setTextSize(mOuterCircleRadio >> 2);
+        textPaint.setColor(Color.BLUE);
+        String topText = "睡眠分数";
+        float topTextLen = textPaint.measureText(topText);
+        //计算文字高度
+        textPaint.getTextBounds(topText, 0, 3, textBounds);
+        float topTextH1 = textBounds.height();
+        canvas.drawText(topText, centerX - topTextLen / 2, centerY - h1 / 2 - topTextH1 / 2 - 15, textPaint);
+
         //分
+        textPaint.setColor(Color.WHITE);
         textPaint.setTextSize(mOuterCircleRadio >> 3);
         textPaint.getTextBounds("分", 0, 1, textBounds);
         float h11 = textBounds.height();
-        canvas.drawText("分", centerX + textLen / 2 + 5, centerY - mOuterCircleRadio / 10 + h1 / 2 - (h1 - h11), textPaint);
+        canvas.drawText("分", centerX + textLen / 2 + 5, centerY - mOuterCircleRadio / 10 + h1 / 2 + 5, textPaint);
 
 
         //下一行文字
+        textPaint.setColor(Color.YELLOW);
         textPaint.setTextSize(mOuterCircleRadio / 6);
-        text = "点击优化";
+        text = mSleepStatus;
         textLen = textPaint.measureText(text);
         canvas.drawText(text, centerX - textLen / 2, centerY + mOuterCircleRadio / 2.5f, textPaint);
+    }
+
+    private void drawTextBg(Canvas canvas) {
+        textBgPaint.setStyle(Paint.Style.FILL);//设置填充
+        textBgPaint.setColor(Color.TRANSPARENT);
+        canvas.drawCircle(centerX, centerY, (mOuterCircleRadio - ARC_LINE_LENGTH) * 0.8f, textBgPaint);
+    }
+
+    private void drawOutterLine(Canvas canvas, float sweep1) {
+        float start = 30; //进度条起始角度   >> 1即除以2
+        progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ffff0000", "#ff00ff00")));
+        float drawDegree = 1.6f;
+        while (drawDegree <= ARC_FULL_DEGREE) {
+            double a = (start + drawDegree) / 180 * Math.PI;
+            float lineStartX = centerX - mOuterCircleRadio * (float) Math.sin(a);
+            float lineStartY = centerY + mOuterCircleRadio * (float) Math.cos(a);
+            float lineStopX = lineStartX + ARC_LINE_LENGTH * (float) Math.sin(a);
+            float lineStopY = lineStartY - ARC_LINE_LENGTH * (float) Math.cos(a);
+
+
+            if (drawDegree > sweep1) {
+                //绘制进度条背景
+                progressPaint.setColor(Color.parseColor("#88aaaaaa"));
+                progressPaint.setStrokeWidth(ARC_LINE_WIDTH >> 1);
+            }
+            canvas.drawLine(lineStartX, lineStartY, lineStopX, lineStopY, progressPaint);
+
+            // 绘制圆圈，进度条背景
+            drawDegree += ARC_EACH_PROGRESS;
+        }
+    }
+
+    private void drawInnerGrayCircle(Canvas canvas) {
+        canvas.drawCircle(centerX, centerY, mInnerCircleRadio, mGreyPain);
     }
 
 
@@ -236,17 +269,23 @@ public class ProgressBarView2 extends View {
 
     //动画切换进度值(异步)
     public void setProgress(final float progress) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                float oldProgress = ProgressBarView2.this.progress;
-                for (int i = 1; i <= 100; i++) {
-                    ProgressBarView2.this.progress = oldProgress + (progress - oldProgress) * (1.0f * i / 100);
-                    postInvalidate();
-                    SystemClock.sleep(20);
-                }
-            }
-        }).start();
+        if (progress >= 80) {
+            mSleepStatus = statusArray[2];
+        } else if (progress > 60) {
+            mSleepStatus = statusArray[1];
+        } else {
+            mSleepStatus = statusArray[0];
+        }
+
+        if (ProgressBarView2.this.progress == progress) {
+            return;
+        }
+        ProgressBarView2.this.progress = progress;
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            invalidate();
+        } else {
+            postInvalidate();
+        }
     }
 
 

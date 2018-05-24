@@ -3,7 +3,7 @@
                 android:id="@+id/room_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/transparent">
+                android:background="@color/main_color_blue">
     <TextView
         android:id="@+id/tv_load"
         android:layout_width="match_parent"
@@ -11,11 +11,18 @@
         android:layout_centerInParent="true"
         android:text="主页"
         android:textSize="23sp"/>
+
+
     <com.ihypnus.ihypnuscare.widget.ProgressBarView2
         android:id="@+id/pb"
-        android:layout_centerInParent="true"
         android:layout_width="@dimen/w700"
-        android:layout_height="@dimen/w700"/>
+        android:layout_height="@dimen/w700"
+        android:layout_centerInParent="true"/>
+
+    <!--<com.ihypnus.ihypnuscare.widget.LineCircleView-->
+        <!--android:layout_width="@dimen/w600"-->
+        <!--android:layout_height="@dimen/w600"-->
+        <!--android:layout_below="@+id/pb"/>-->
 
 
 </RelativeLayout>
