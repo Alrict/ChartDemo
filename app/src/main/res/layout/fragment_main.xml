@@ -13,7 +13,7 @@
         android:textSize="23sp"/>
 
 
-    <com.ihypnus.ihypnuscare.widget.ProgressBarView2
+    <com.ihypnus.ihypnuscare.widget.CircleProgressBarView
         android:id="@+id/pb"
         android:layout_width="@dimen/w700"
         android:layout_height="@dimen/w700"

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.VerticalPagerAdapter;
 import com.ihypnus.ihypnuscare.widget.CircleProgressView;
-import com.ihypnus.ihypnuscare.widget.ProgressBarView2;
+import com.ihypnus.ihypnuscare.widget.CircleProgressBarView;
 import com.ihypnus.ihypnuscare.widget.VerticalViewPager;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class HomeActivity extends AppCompatActivity {
     private View mainView;
     private LayoutInflater mInflater;
     private View mSecondView;
-    private ProgressBarView2 mPb;
+    private CircleProgressBarView mPb;
     private CircleProgressView mCicleProgressBar;
 
     @Override
@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
         TextView tv_load = (TextView) mainView.findViewById(R.id.tv_load);
 
 
-        mPb = (ProgressBarView2) mainView.findViewById(R.id.pb);
+        mPb = (CircleProgressBarView) mainView.findViewById(R.id.pb);
         mPb.setMax(100);
 
         tv_load.setOnClickListener(new View.OnClickListener() {

@@ -1,7 +1,6 @@
 package com.ihypnus.ihypnuscare.widget;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,9 +11,9 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * 自定义绚丽的ProgressBar.
+ * 自定义环形进度条
  */
-public class ProgressBarView2 extends View {
+public class CircleProgressBarView extends View {
     /**
      * 进度条所占用的角度
      */
@@ -58,7 +57,6 @@ public class ProgressBarView2 extends View {
      */
     private Paint textBgPaint;
 
-
     /**
      * 圆弧的半径
      */
@@ -75,36 +73,30 @@ public class ProgressBarView2 extends View {
     private Canvas mCanvas;
     private String mSleepStatus = "";
     private String[] statusArray = {"不好", "良好", "非常好"};
-    private Bitmap mBitmap;
-    private Paint mTsPaint;
 
 
-    public ProgressBarView2(Context context) {
+    public CircleProgressBarView(Context context) {
         super(context);
         init();
     }
 
 
-    public ProgressBarView2(Context context, AttributeSet attrs) {
+    public CircleProgressBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
 
-    public ProgressBarView2(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CircleProgressBarView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
 
     private void init() {
+        //外圆刻度 paint
         progressPaint = new Paint();
         progressPaint.setAntiAlias(true);
-
-        mTsPaint = new Paint();
-        mTsPaint.setColor(Color.YELLOW);
-        mTsPaint.setAntiAlias(true);
-
 
         textPaint = new Paint();
         textPaint.setColor(Color.WHITE);
@@ -277,10 +269,10 @@ public class ProgressBarView2 extends View {
             mSleepStatus = statusArray[0];
         }
 
-        if (ProgressBarView2.this.progress == progress) {
+        if (CircleProgressBarView.this.progress == progress) {
             return;
         }
-        ProgressBarView2.this.progress = progress;
+        CircleProgressBarView.this.progress = progress;
         if (Looper.myLooper() == Looper.getMainLooper()) {
             invalidate();
         } else {
