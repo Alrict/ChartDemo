@@ -1,15 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#171c3a"
+    android:orientation="vertical"
     tools:context="com.ihypnus.ihypnuscare.activity.HomeActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h160"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/tv_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/w54"/>
+        <ImageView
+            android:id="@+id/iv_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/w50"
+            android:layout_toRightOf="@id/tv_title"
+            android:src="@mipmap/icon_circle_delete_normal"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/w66"
+            android:layout_toRightOf="@id/iv_data"
+            android:src="@mipmap/icon_circle_delete_normal"/>
+    </RelativeLayout>
     <com.ihypnus.ihypnuscare.widget.VerticalViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
     />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

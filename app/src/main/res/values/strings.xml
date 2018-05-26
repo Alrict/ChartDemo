@@ -14,4 +14,5 @@
     <string name="intent_value">value</string>
     <string name="intent_type">type</string>
     <string name="activity_scan_battery_low_msg">手机电量过低,闪光灯功能暂时关闭！</string>
+    <string name="tv_title">睡眠报告</string>
 </resources>

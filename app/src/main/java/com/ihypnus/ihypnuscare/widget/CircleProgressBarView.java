@@ -232,7 +232,7 @@ public class CircleProgressBarView extends View {
         drawInnerGrayCircle(canvas);
 
         //绘制进度条
-        mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ffff0000", "#ff00ff00")));
+        mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ffff0000", "#ffabd0bc")));
 
         canvas.drawArc(mRectF, -90, sweep1, false, mOutterCirclePaint);
 
@@ -270,15 +270,14 @@ public class CircleProgressBarView extends View {
         //计算文字高度
         mTopTextPaint.getTextBounds(topText, 0, 3, textBounds);
         float topTextH1 = textBounds.height();
-        canvas.drawText(topText, centerX - topTextLen / 2, centerY - h1 / 2 - topTextH1 / 2, mTopTextPaint);
+        canvas.drawText(topText, centerX - topTextLen / 2, centerY - h1 / 2 - topTextH1 , mTopTextPaint);
 
 
         //底部文字
-        mBottomTextPaint.setColor(Color.YELLOW);
         mBottomTextPaint.setTextSize(mBottomTextSize);
         text = mSleepStatus;
         textLen = mBottomTextPaint.measureText(text);
-        canvas.drawText(text, centerX - textLen / 2, centerY + mOutterCircleRadius / 2.5f, mBottomTextPaint);
+        canvas.drawText(text, centerX - textLen / 2, centerY + centerY / 2 - textBounds.height() , mBottomTextPaint);
     }
 
     private void drawTextBg(Canvas canvas) {
@@ -298,7 +297,7 @@ public class CircleProgressBarView extends View {
 
             if (drawDegree > sweep1) {
                 //绘制进度条背景
-                progressPaint.setColor(Color.parseColor("#88aaaaaa"));
+                progressPaint.setColor(Color.parseColor("#88236fa1"));
                 progressPaint.setStrokeWidth(mTrackBarWidth >> 1);
             }
             canvas.drawLine(lineStartX, lineStartY, lineStopX, lineStopY, progressPaint);

@@ -47,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         tv_load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startAni(73);
+                startAni(97);
             }
         });
         mSecondView = mInflater.inflate(R.layout.fragment_second, null);
