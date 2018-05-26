@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/room_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -17,12 +18,27 @@
         android:id="@+id/pb"
         android:layout_width="@dimen/w700"
         android:layout_height="@dimen/w700"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        app:bottomTextColor="@color/red"
+        app:circularRingBgColor="@color/gray"
+        app:innerRadius="@dimen/w220"
+        app:middleTextColor="@color/tangerine"
+        app:middleTextSize="@dimen/w100"
+        app:middleRightTextSize="@dimen/w40"
+        app:outterRadius="@dimen/w300"
+        app:progressWidth="@dimen/w40"
+        app:progressDefaultWidth="@dimen/w30"
+        app:topText="睡眠分数"
+        app:topTextColor="@color/result_minor_text"
+        app:topTextSize="@dimen/w50"
+        app:trackBarColor="@color/white"
+        app:trackBarLength="@dimen/h40"
+        app:trackBarWidth="@dimen/h6"/>
 
     <!--<com.ihypnus.ihypnuscare.widget.LineCircleView-->
-        <!--android:layout_width="@dimen/w600"-->
-        <!--android:layout_height="@dimen/w600"-->
-        <!--android:layout_below="@+id/pb"/>-->
+    <!--android:layout_width="@dimen/w600"-->
+    <!--android:layout_height="@dimen/w600"-->
+    <!--android:layout_below="@+id/pb"/>-->
 
 
 </RelativeLayout>

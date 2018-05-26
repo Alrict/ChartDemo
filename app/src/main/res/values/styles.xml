@@ -41,4 +41,51 @@
         <item name="android:windowEnterAnimation">@anim/pop_enter_anim</item>
         <item name="android:windowExitAnimation">@anim/pop_exit_anim</item>
     </style>
+
+    <!--环形进度条-->
+    <declare-styleable name="CircleProgressBarView">
+        <!--外圆半径-->
+        <attr name="outterRadius" format="dimension"/>
+        <!--进度条宽度-->
+        <attr name="progressWidth" format="dimension"/>
+        <!--背景进度条宽度-->
+        <attr name="progressDefaultWidth" format="dimension"/>
+        <!--内圆半径-->
+        <attr name="innerRadius" format="dimension"/>
+        <!--圆环默认颜色-->
+        <attr name="circularRingBgColor" format="reference|color"/>
+        <!--圆环进度条开始颜色-->
+        <attr name="circularRingStartColor" format="reference|color"/>
+        <!--圆环进度条结束颜色-->
+        <attr name="circularRingEndColor" format="reference|color"/>
+        <!--外围刻度条颜色-->
+        <attr name="trackBarColor" format="reference|color"/>
+        <!--外围刻度条数量-->
+        <attr name="trackBarCounts" format="integer"/>
+        <!--外围刻度条宽度-->
+        <attr name="trackBarWidth" format="dimension"/>
+        <!--外围刻度条长度-->
+        <attr name="trackBarLength" format="dimension"/>
+        <!--顶部字体颜色-->
+        <attr name="topTextColor" format="reference|color"/>
+        <!--顶部文字内容-->
+        <attr name="topText" format="string"/>
+        <!--顶部字体大小-->
+        <attr name="topTextSize" format="dimension"/>
+        <!--中间字体颜色-->
+        <attr name="middleTextColor" format="reference|color"/>
+        <!--中间文字内容-->
+        <attr name="middleText" format="string"/>
+        <!--中间字体大小-->
+        <attr name="middleTextSize" format="dimension"/>
+        <!--右边字体大小-->
+        <attr name="middleRightTextSize" format="dimension"/>
+        <!--底部字体颜色-->
+        <attr name="bottomTextColor" format="reference|color"/>
+        <!--底部字体内容-->
+        <attr name="bottomText" format="string"/>
+        <!--底部字体大小-->
+        <attr name="bottomTextSize" format="dimension"/>
+
+    </declare-styleable>
 </resources>
