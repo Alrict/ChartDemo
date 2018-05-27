@@ -62,7 +62,7 @@ public abstract class BaseActivity extends Activity {
     protected abstract void loadData();
 
     /**
-     * 沉浸式状态栏
+     * 设置状态栏
      */
     private void initState() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

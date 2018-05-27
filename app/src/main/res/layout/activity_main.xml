@@ -7,11 +7,16 @@
     android:background="#171c3a"
     android:orientation="vertical"
     tools:context="com.ihypnus.ihypnuscare.activity.HomeActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="@dimen/h1"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/h160"
-        android:clipToPadding="true"
-        android:fitsSystemWindows="true">
+    >
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
@@ -22,21 +27,29 @@
             android:textSize="@dimen/w54"/>
         <ImageView
             android:id="@+id/iv_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/w56"
+            android:layout_height="@dimen/w56"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/w50"
+            android:layout_marginLeft="@dimen/w80"
             android:layout_toRightOf="@id/tv_title"
-            android:src="@mipmap/icon_circle_delete_normal"/>
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_calendar"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:id="@+id/iv_refresh"
+            android:layout_width="@dimen/w56"
+            android:layout_height="@dimen/w56"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/w66"
+            android:layout_marginRight="@dimen/w60"
             android:layout_toRightOf="@id/iv_data"
-            android:src="@mipmap/icon_circle_delete_normal"/>
+            android:src="@mipmap/icon_refresh_small"/>
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/h1"
+            android:layout_alignParentBottom="true"
+            android:background="@color/main_color_blue"/>
     </RelativeLayout>
     <com.ihypnus.ihypnuscare.widget.VerticalViewPager
         android:id="@+id/view_pager"

@@ -58,7 +58,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.HomeActivity">
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -77,9 +77,10 @@
             android:screenOrientation="portrait" />
 
         <!--主界面-->
-        <!--<activity-->
-            <!--android:name="com.ihypnus.ihypnuscare.activity.HomeActivity"-->
-            <!--android:screenOrientation="portrait" />-->
+        <activity
+            android:name="com.ihypnus.ihypnuscare.activity.HomeActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

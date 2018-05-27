@@ -3,7 +3,6 @@ package com.ihypnus.ihypnuscare.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -18,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
@@ -27,7 +25,6 @@ import com.ihypnus.ihypnuscare.utils.CountdownManager;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
-import com.ihypnus.zxing.android.CaptureActivity;
 
 import kr.co.namee.permissiongen.PermissionGen;
 
@@ -41,28 +38,14 @@ import kr.co.namee.permissiongen.PermissionGen;
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private Context context;           //上下文
     private Button mLoginBtn;          //登录按钮
-    //    private Button mYCodeBtn;            //获取验证码按钮
     private EditText mPhoneEdit;       //手机号输入框
     private EditText mCodeEdit;         //验证码输入框
     private ImageView img_clear;                    //帐号清除
-    //    private ImageView img_tips;                     //帐号提示
     private LinearLayout layout_account;           //帐号内容整体布局
-    //自动登录
-//    private RelativeLayout layout_choice_autoLogin;
-//    private CheckBox cb_autoLogin;
-    //动态码
-    private RelativeLayout layout_imgcode;           //动态码布局
-    private ImageView mImgCodeIcon;                 //图形动态码
-    private Bitmap mCodeBitmap;                     //动态码图片
-    //    private ImageView mCodeLoading;           // 验证码请求动画imgview
-    private CountDownTimer mCountDownTimerYCode;   // 右边倒计时
-    private String isUpdateMacValues;              //登录类型，1永久登录，2一次性登录
 
+    private CountDownTimer mCountDownTimerYCode;   // 右边倒计时
     private boolean isAutoLogin = false;           //是否自动登录
     private String lastAccount = "";                 //上一次
-
-    String requestApiLogin;                 //登陆请求
-    private String registerErrorCode = "7777";  //账号需要注册的错误码
     private Animation mCodeLoadingAnim;     // 验证码请求动画
     private String mCode;                           //验证码
     private String mPhoneNumber;                   //手机号
@@ -77,6 +60,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void findViews() {
+        //登入
         mLoginBtn = (Button) this.findViewById(R.id.id_login);
 
         //验证码登录布局控件
@@ -84,11 +68,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mPhoneEdit = (EditText) this.findViewById(R.id.id_phone_edit2);
         mCodeEdit = (EditText) this.findViewById(R.id.edit_login_code2);
         img_clear = (ImageView) this.findViewById(R.id.img_login_account_clear2);
-//        img_tips = (ImageView) this.findViewById(R.id.img_login_account_tips2);
         layout_account = (LinearLayout) this.findViewById(R.id.liner_account_edit2);
-        //自动登录
-//        layout_choice_autoLogin = (RelativeLayout) findViewById(R.id.layout_auto_login);
-//        cb_autoLogin = (CheckBox) findViewById(R.id.cb_auto_login);
 
         //注册
         mTvRegist = (TextView) findViewById(R.id.tv_regist);
@@ -109,9 +89,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void initEvent() {
 
         mLoginBtn.setOnClickListener(this);
-//        mYCodeBtn.setOnClickListener(this);
         img_clear.setOnClickListener(this);
-//        img_tips.setOnClickListener(this);
 
         mPhoneEdit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -135,7 +113,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         mCountDownTimerYCode.cancel();
                         mCountDownTimerYCode.onFinish();
                     }
-                    lastAccount = "";
                     clearCodeLoaidng();
                 } else {
                     if (img_clear.getVisibility() == View.GONE) {
@@ -217,8 +194,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             //登录
             case R.id.id_login:
                 if (!ViewUtils.isFastDoubleClick()) {
-                    Intent intent = new Intent(LoginActivity.this, CaptureActivity.class);
-                    startActivityForResult(intent, 121);
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
                 }
                 break;
             //注册

@@ -68,7 +68,7 @@
 
             <ImageView
                 android:id="@+id/iv_user"
-                android:layout_width="@dimen/h56"
+                android:layout_width="@dimen/w56"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/icon_user"/>
 
