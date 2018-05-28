@@ -15,6 +15,9 @@
     <!-- 纯黑色 -->
     <color name="black_pure">#000000</color>
 
+    <!--默认状态栏颜色-->
+    <color name="status_bar_default">#88171c3a</color>
+
     <!--通讯轮Item的点击效果-->
     <color name="addressbook_item_press">#f5f5f5</color>
     <!--所有的点击效果-->

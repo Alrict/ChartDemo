@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Looper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.ihypnus.ihypnuscare.R;
@@ -22,10 +23,6 @@ public class CircleProgressBarView extends View {
      */
     private static final int ARC_FULL_DEGREE = 360;
 
-    /**
-     * 组件的宽，高
-     */
-    private int width, height;
     /**
      * 进度条最大值和当前进度值
      */
@@ -166,6 +163,7 @@ public class CircleProgressBarView extends View {
         mInnerCirclePain = new Paint();
         mInnerCirclePain.setAntiAlias(true);
         mInnerCirclePain.setColor(mCircularRingBgColor);
+        mInnerCirclePain.setStrokeWidth((float) (mProgressDefaultWidth));
         mInnerCirclePain.setStyle(Paint.Style.STROKE);
 
         //绘制环形内顶部文字大小,颜色 paint
@@ -198,23 +196,30 @@ public class CircleProgressBarView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if (width == 0 || height == 0) {
-            width = getWidth();
-            height = getHeight();
 
+        Log.d("llw", "onMeasure");
 
-            centerX = width / 2;
-            centerY = height / 2;
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
 
-            // 圆环位置
-            mRectF.left = centerX - mInnerCircleRadius; // 左上角x
-            mRectF.top = centerY - mInnerCircleRadius; // 左上角y
-            mRectF.right = centerX + mInnerCircleRadius; // 右下角x
-            mRectF.bottom = centerY + mInnerCircleRadius; // 右下角y
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
-            //灰色圆
-            mInnerCirclePain.setStrokeWidth((float) (mProgressDefaultWidth));
+        int width;
+        int height;
+        if (widthMode == MeasureSpec.UNSPECIFIED) {
+            width = Math.max(mOutterCircleRadius * 2, heightSize);
+        } else {
+            width = Math.max(mOutterCircleRadius * 2, widthSize);
         }
+
+        if (heightMode == MeasureSpec.UNSPECIFIED) {
+            height = Math.min(mOutterCircleRadius * 2, widthSize);
+        } else {
+            height = Math.min(mOutterCircleRadius * 2, heightSize);
+        }
+        Log.d("llw", "onMeasure,width:" + width + ",height:" + height);
+        setMeasuredDimension(width, height);
     }
 
 
@@ -224,7 +229,14 @@ public class CircleProgressBarView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
+        centerX = canvas.getWidth() / 2;
+        centerY = canvas.getHeight() / 2;
+        // 圆环位置
+        mRectF.left = centerX - mInnerCircleRadius; // 左上角x
+        mRectF.top = centerY - mInnerCircleRadius; // 左上角y
+        mRectF.right = centerX + mInnerCircleRadius; // 右下角x
+        mRectF.bottom = centerY + mInnerCircleRadius; // 右下角y
+        Log.d("llw", "centerX:" + centerX + ",centerY:" + centerY + ",内圆半径:" + mInnerCircleRadius + ",外圆半径:" + mOutterCircleRadius);
         //绘制外围刻度
         float sweep1 = ARC_FULL_DEGREE * (progress / max); //进度划过的角度
         drawOutterLine(canvas, sweep1);
@@ -232,7 +244,7 @@ public class CircleProgressBarView extends View {
         drawInnerGrayCircle(canvas);
 
         //绘制进度条
-        mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ffff0000", "#ffabd0bc")));
+        mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ff0000ff", "#ff00ff00")));
 
         canvas.drawArc(mRectF, -90, sweep1, false, mOutterCirclePaint);
 
@@ -270,14 +282,14 @@ public class CircleProgressBarView extends View {
         //计算文字高度
         mTopTextPaint.getTextBounds(topText, 0, 3, textBounds);
         float topTextH1 = textBounds.height();
-        canvas.drawText(topText, centerX - topTextLen / 2, centerY - h1 / 2 - topTextH1 , mTopTextPaint);
+        canvas.drawText(topText, centerX - topTextLen / 2, centerY - h1 / 2 - topTextH1, mTopTextPaint);
 
 
         //底部文字
         mBottomTextPaint.setTextSize(mBottomTextSize);
         text = mSleepStatus;
         textLen = mBottomTextPaint.measureText(text);
-        canvas.drawText(text, centerX - textLen / 2, centerY + centerY / 2 - textBounds.height() , mBottomTextPaint);
+        canvas.drawText(text, centerX - textLen / 2, centerY + centerY / 2 + textBounds.height()/3, mBottomTextPaint);
     }
 
     private void drawTextBg(Canvas canvas) {

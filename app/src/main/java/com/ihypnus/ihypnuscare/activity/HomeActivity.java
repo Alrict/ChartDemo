@@ -7,16 +7,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.TextView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.VerticalPagerAdapter;
+import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.widget.CircleProgressBarView;
 import com.ihypnus.ihypnuscare.widget.VerticalViewPager;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "llw";
     private VerticalViewPager mViewPager;
@@ -25,7 +29,9 @@ public class HomeActivity extends BaseActivity {
     private LayoutInflater mInflater;
     private View mSecondView;
     private CircleProgressBarView mPb;
-    private TextView mTvLoad;
+    private Animation mReLoadingAnim;
+    private ImageView mIvRefresh;
+    private ImageView mIvData;
 
 
     @Override
@@ -35,17 +41,21 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void findViews() {
+        //头部刷新
+        mIvRefresh = (ImageView) findViewById(R.id.iv_refresh);
+        //头部 日历
+        mIvData = (ImageView) findViewById(R.id.iv_data);
+        //viewPager
         mViewPager = (VerticalViewPager) findViewById(R.id.view_pager);
 
         mInflater = getLayoutInflater();
+
+        //第一屏
         mainView = mInflater.inflate(R.layout.fragment_main, null);
-        mTvLoad = (TextView) mainView.findViewById(R.id.tv_load);
+        //
         mPb = (CircleProgressBarView) mainView.findViewById(R.id.pb);
         mPb.setMax(100);
         mSecondView = mInflater.inflate(R.layout.fragment_second, null);
-
-
-//        mViewPager.setPageTransformer(true, new DefaultTransformer());
 
 
     }
@@ -60,16 +70,18 @@ public class HomeActivity extends BaseActivity {
         //设置最小偏移量
         mViewPager.setMinPageOffset(0.15f);
         mViewPager.setAdapter(mPagerAdapter);
+
+        //头部刷新旋转动画
+        mReLoadingAnim = AnimationUtils.loadAnimation(this, R.anim.login_code_loading);
+        LinearInterpolator lin = new LinearInterpolator();
+        mReLoadingAnim.setInterpolator(lin);
     }
 
     @Override
     protected void initEvent() {
-        mTvLoad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startAni(88f);
-            }
-        });
+        mIvData.setOnClickListener(this);
+        mIvRefresh.setOnClickListener(this);
+
 
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -92,7 +104,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-
+        startAni(88f);
     }
 
     private void startAni(float sweep) {
@@ -102,4 +114,22 @@ public class HomeActivity extends BaseActivity {
         a.start();
     }
 
+    @Override
+    public void onClick(View v) {
+        if (ViewUtils.isFastDoubleClick()) {
+            return;
+        }
+        switch (v.getId()) {
+            case R.id.iv_refresh:
+                //刷新
+//                mIvRefresh.setAnimation(mReLoadingAnim);
+                mIvRefresh.startAnimation(mReLoadingAnim);
+//                mIvRefresh.clearAnimation();
+
+                break;
+            case R.id.iv_data:
+
+                break;
+        }
+    }
 }

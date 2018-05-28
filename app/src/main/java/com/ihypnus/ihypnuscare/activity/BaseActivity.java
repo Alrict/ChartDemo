@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.WindowManager;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.utils.StatusBarUtil;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -16,13 +17,24 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
 public abstract class BaseActivity extends Activity {
+    /**
+     * 隐藏状态条 默认显示
+     * 请在方法{@link #preCreate} 初始化这个变量
+     */
+    protected boolean mShowStatusBar = true;
+    /**
+     * 状态栏是否透明
+     * 请在方法{@link #preCreate} 初始化这个变量
+     */
+    protected boolean mIsTransparentStatusBar = false;
 
-    public SystemBarTintManager mTintManager;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        preCreate();
         super.onCreate(savedInstanceState);
-        initState();
+//        initState();
         setContentView(setView());
 
 
@@ -30,6 +42,15 @@ public abstract class BaseActivity extends Activity {
         init(savedInstanceState);
         initEvent();
         loadData();
+
+
+        if (mShowStatusBar) {
+            if (mIsTransparentStatusBar) {
+                StatusBarUtil.setTranslucent(this);
+            } else {
+                setStatusBar(R.color.status_bar_default);
+            }
+        }
     }
 
     /**
@@ -73,4 +94,14 @@ public abstract class BaseActivity extends Activity {
         }
     }
 
+    /**
+     * 此方法在Activity中方法onCreate之前调用此方法
+     */
+    protected void preCreate() {
+    }
+
+    public void setStatusBar(int color) {
+//        StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.title_layout_color));
+        StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(color));
+    }
 }
