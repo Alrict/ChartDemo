@@ -26,7 +26,7 @@ public class CircleProgressBarView extends View {
     /**
      * 进度条最大值和当前进度值
      */
-    private float max, progress;
+    private float max = 100, progress;
 
 
     /**
@@ -289,7 +289,7 @@ public class CircleProgressBarView extends View {
         mBottomTextPaint.setTextSize(mBottomTextSize);
         text = mSleepStatus;
         textLen = mBottomTextPaint.measureText(text);
-        canvas.drawText(text, centerX - textLen / 2, centerY + centerY / 2 + textBounds.height()/3, mBottomTextPaint);
+        canvas.drawText(text, centerX - textLen / 2, centerY + centerY / 2 + textBounds.height() / 3, mBottomTextPaint);
     }
 
     private void drawTextBg(Canvas canvas) {
