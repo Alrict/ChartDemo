@@ -10,7 +10,9 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.VerticalPagerAdapter;
@@ -20,7 +22,7 @@ import com.ihypnus.ihypnuscare.widget.VerticalViewPager;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends BaseActivity implements View.OnClickListener {
+public class HomeActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private static final String TAG = "llw";
     private VerticalViewPager mViewPager;
@@ -32,6 +34,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private Animation mReLoadingAnim;
     private ImageView mIvRefresh;
     private ImageView mIvData;
+    private RadioButton mRbDevice;
+    private RadioButton mRbReport;
+    private RadioButton mRbMyIhy;
 
 
     @Override
@@ -55,6 +60,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         //
         mPb = (CircleProgressBarView) mainView.findViewById(R.id.pb);
         mPb.setMax(100);
+
+        mRbDevice = (RadioButton) mainView.findViewById(R.id.rb_device);
+        mRbReport = (RadioButton) mainView.findViewById(R.id.rb_report);
+        mRbMyIhy = (RadioButton) mainView.findViewById(R.id.rb_my_ihy);
         mSecondView = mInflater.inflate(R.layout.fragment_second, null);
 
 
@@ -62,6 +71,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void init(Bundle savedInstanceState) {
+
         final ArrayList<View> fragmentList = new ArrayList<>();
         fragmentList.add(mainView);
         fragmentList.add(mSecondView);
@@ -81,6 +91,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     protected void initEvent() {
         mIvData.setOnClickListener(this);
         mIvRefresh.setOnClickListener(this);
+
+        mRbDevice.setChecked(true);
+        mRbDevice.setOnCheckedChangeListener(this);
+        mRbReport.setOnCheckedChangeListener(this);
+        mRbMyIhy.setOnCheckedChangeListener(this);
 
 
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -131,5 +146,25 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
                 break;
         }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (!isChecked) {
+            return;
+        }
+        if (buttonView == mRbDevice) {
+            //设备
+
+
+        } else if (buttonView == mRbReport) {
+            //报告
+
+
+        } else if (buttonView == mRbMyIhy) {
+            //我的
+
+        }
+
     }
 }
