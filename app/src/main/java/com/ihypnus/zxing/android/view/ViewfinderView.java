@@ -24,6 +24,8 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -149,6 +151,7 @@ public final class ViewfinderView extends View {
         this.cameraManager = cameraManager;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onDraw(Canvas canvas) {
 //    Rect frame = cameraManager.getFramingRect();
@@ -227,7 +230,7 @@ public final class ViewfinderView extends View {
             canvas.drawRect(frame.left, frame.bottom - 1, frame.right + 1, frame.bottom + 1, paint);
 
             // 这里画取景框四个角落的夹角
-            paint.setColor(0xff7c0fbb);
+            paint.setColor(Color.GREEN);
             paint.setAntiAlias(true);
             canvas.drawRect(frame.left - CORNER_WIDTH + 2, frame.top - CORNER_WIDTH + 2, frame.left + ScreenRate - CORNER_WIDTH + 2, frame.top + 2, paint);
             canvas.drawRect(frame.left - CORNER_WIDTH + 2, frame.top - CORNER_WIDTH + 2, frame.left + 2, frame.top + ScreenRate - CORNER_WIDTH + 2, paint);

@@ -57,7 +57,6 @@ import com.google.zxing.ResultPoint;
 import com.google.zxing.common.HybridBinarizer;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.utils.LogOut;
-import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.zxing.android.camera.CameraManager;
 import com.ihypnus.zxing.android.camera.CameraUtil;
@@ -532,11 +531,11 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
             return;
         }
         final String num = rawResult.getText().trim();
-        if (StringUtils.hasSpecialCharacters(num)) {
+      /*  if (StringUtils.hasSpecialCharacters(num)) {
             ToastUtils.showToastInCenter(CaptureActivity.this, "未查询到相关订单信息");
             finish();
             return;
-        }
+        }*/
         playBeepSoundAndVibrate();//解码正确的声音播放
         setResult(RESULT_OK, new Intent().putExtra("id", num));
         finish();

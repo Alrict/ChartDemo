@@ -1,7 +1,12 @@
 package com.ihypnus.ihypnuscare.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +33,8 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
     private final int REQUEST_CODE_INFO = 123;
     private EditText mEtInputDeviceSn;
     private Button mBtNext;
+    private String TAG = "AddNwedeviceActivity";
+    private int REQUEST_CAMERA = 132;
 
     @Override
     protected int setView() {
@@ -72,8 +79,10 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
                 break;
 
             case R.id.iv_scan:
+                //检查相机权限
+                requestCameraPermission();
                 //扫描
-                jumpToScan();
+//                jumpToScan();
                 break;
 
             case R.id.bt_next:
@@ -85,6 +94,17 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
         }
+    }
+
+    /**
+     * 申请相机权限
+     */
+    private void requestCameraPermission() {
+        Log.i(TAG, "相机权限未被授予，需要申请！");
+        // 相机权限未被授予，需要申请！
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
+                REQUEST_CAMERA);
+
     }
 
     private void jumpToNewDeviceInformationActivity() {
@@ -106,9 +126,32 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
                 mEtInputDeviceSn.setText(deviceSN);
                 mEtInputDeviceSn.setSelection(deviceSN.length());
             }
-        }else if (requestCode == REQUEST_CODE_INFO && resultCode == RESULT_OK){
+        } else if (requestCode == REQUEST_CODE_INFO && resultCode == RESULT_OK) {
             setResult(RESULT_OK);
             finish();
+        }
+    }
+
+    /**
+     * 申请权限的回调，
+     *
+     * @param requestCode  requestCode
+     * @param permissions  permissions
+     * @param grantResults grantResults 多个权限一起返回
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CAMERA) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //同意相机权限
+                jumpToScan();
+            } else {
+                //拒接,再次申请权限
+                requestCameraPermission();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }

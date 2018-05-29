@@ -63,7 +63,7 @@
                 android:singleLine="true"
                 android:text="取消"
                 android:textColor="@color/white"
-                android:textSize="@dimen/w20" />
+                android:textSize="@dimen/w44" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -84,7 +84,7 @@
                 android:singleLine="true"
                 android:text="开灯"
                 android:textColor="@color/white"
-                android:textSize="@dimen/w20" />
+                android:textSize="@dimen/w44" />
         </RelativeLayout>
     </LinearLayout>
 
