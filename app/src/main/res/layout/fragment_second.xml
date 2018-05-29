@@ -5,7 +5,7 @@
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h500"/>
+        android:layout_height="@dimen/h700"/>
 
 
 </RelativeLayout>

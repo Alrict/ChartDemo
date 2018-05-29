@@ -5,14 +5,14 @@ import android.os.Bundle;
 import android.widget.RadioGroup;
 
 import com.ihypnus.ihypnuscare.R;
-import com.ihypnus.ihypnuscare.fragment.HomeFrament;
+import com.ihypnus.ihypnuscare.fragment.DeviceFragment;
 import com.ihypnus.ihypnuscare.fragment.MyIhyFragment;
 import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 
 public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     private static final String TAG = "HomeActivity";
-    private HomeFrament mHomeFrament;
+    private DeviceFragment mDeviceFragment;
     private ReportFragment mReportFragment;
     private MyIhyFragment mMyIhyFragment;
     private RadioGroup mRgpTab;
@@ -30,7 +30,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        mRgpTab.check(R.id.rb_device);
+        mRgpTab.check(R.id.rb_report);
 
     }
 
@@ -43,12 +43,12 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     protected void loadData() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         //设备
-        if (mHomeFrament == null) {
-            mHomeFrament = new HomeFrament();
-            transaction.add(R.id.fragment_container, mHomeFrament);
+        if (mReportFragment == null) {
+            mReportFragment = new ReportFragment();
+            transaction.add(R.id.fragment_container, mReportFragment);
         }
-        transaction.show(mHomeFrament);
-        if (null != mReportFragment) transaction.hide(mReportFragment);
+        transaction.show(mReportFragment);
+        if (null != mDeviceFragment) transaction.hide(mDeviceFragment);
         if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
 
         transaction.commit();
@@ -60,11 +60,11 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         switch (checkedId) {
             case R.id.rb_device:
                 //设备
-                if (mHomeFrament == null) {
-                    mHomeFrament = new HomeFrament();
-                    transaction.add(R.id.fragment_container, mHomeFrament);
+                if (mDeviceFragment == null) {
+                    mDeviceFragment = new DeviceFragment();
+                    transaction.add(R.id.fragment_container, mDeviceFragment);
                 } else {
-                    transaction.show(mHomeFrament);
+                    transaction.show(mDeviceFragment);
                     if (null != mReportFragment) transaction.hide(mReportFragment);
                     if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
                 }
@@ -77,7 +77,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                     transaction.add(R.id.fragment_container, mReportFragment);
                 } else {
                     transaction.show(mReportFragment);
-                    if (null != mHomeFrament) transaction.hide(mHomeFrament);
+                    if (null != mDeviceFragment) transaction.hide(mDeviceFragment);
                     if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
                 }
                 break;
@@ -89,7 +89,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                     transaction.add(R.id.fragment_container, mMyIhyFragment);
                 } else {
                     transaction.show(mMyIhyFragment);
-                    if (null != mHomeFrament) transaction.hide(mHomeFrament);
+                    if (null != mDeviceFragment) transaction.hide(mDeviceFragment);
                     if (null != mReportFragment) transaction.hide(mReportFragment);
                 }
                 break;

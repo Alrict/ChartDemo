@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.ihypnus.ihypnuscare">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.ihypnus.ihypnuscare">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
+        tools:ignore="ProtectedPermissions"/>
     <!-- QQ、QQ空间所需权限 -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.GET_TASKS"/>
     <uses-permission
         android:name="android.permission.SET_DEBUG_APP"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+        tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
 
     <!-- 震动权限 -->
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA"/>
     <!-- 使用照相机权限 -->
-    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera"/>
     <!-- 自动聚焦权限 -->
-    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
 
     <!-- 接收和读取短信的权限: -->
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <!-- 百度地图 -->
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
-    <uses-permission android:name="android.permission.ACCESS_GPS" />
-    <uses-permission android:name="android.permission.ACCES_MOCK_LOCATION" />
-    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+    <uses-permission android:name="android.permission.ACCESS_GPS"/>
+    <uses-permission android:name="android.permission.ACCES_MOCK_LOCATION"/>
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <!-- 用于优化GPS定位 -->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:name=".IhyApplication"
@@ -60,26 +60,41 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.HomeActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <!--相机扫描二维码-->
         <activity
             android:name="com.ihypnus.zxing.android.CaptureActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
         <!--注册界面-->
         <activity
-            android:name="com.ihypnus.ihypnuscare.activity.RegisterActivity"
-            android:screenOrientation="portrait" />
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait"/>
 
-      <!--  &lt;!&ndash;主界面&ndash;&gt;
+        <!--新增设备-->
         <activity
-            android:name="com.ihypnus.ihypnuscare.activity.HomeActivity"
-            android:screenOrientation="portrait" />-->
+            android:name=".activity.AddNwedeviceActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--新增设备 提示信息-->
+        <activity
+            android:name=".activity.NewDeviceInformationActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--wifi设置提示页面-->
+        <activity
+            android:name=".activity.WifiSettingTipActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--  &lt;!&ndash;主界面&ndash;&gt;
+          <activity
+              android:name="com.ihypnus.ihypnuscare.activity.HomeActivity"
+              android:screenOrientation="portrait" />-->
 
     </application>
 

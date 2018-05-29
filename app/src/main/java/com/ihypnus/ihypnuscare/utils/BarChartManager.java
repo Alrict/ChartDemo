@@ -42,7 +42,7 @@ public class BarChartManager {
      */
     private void initLineChart() {
         //背景颜色
-        mBarChart.setBackgroundColor(Color.WHITE);
+        mBarChart.setBackgroundColor(Color.TRANSPARENT);
         //网格
         mBarChart.setDrawGridBackground(false);
         //背景阴影

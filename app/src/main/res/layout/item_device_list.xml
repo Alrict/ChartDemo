@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/h160"
+    android:orientation="horizontal">
+    <ImageView
+        android:layout_width="@dimen/w66"
+        android:layout_height="@dimen/w66"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/w50"
+        android:src="@mipmap/icon_device_small"/>
+    <TextView
+        android:id="@+id/tv_device_model"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/w50"
+        android:text="AU732W"
+        android:textColor="@color/white"
+        android:textSize="@dimen/w60"/>
+    <TextView
+        android:id="@+id/tv_device_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/w50"
+        android:text="cp100100501"
+        android:textColor="@color/white"
+        android:textSize="@dimen/w54"/>
+    <ImageView
+        android:id="@+id/iv_selected"
+        android:layout_width="@dimen/w66"
+        android:layout_height="@dimen/w66"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/w150"
+        android:src="@mipmap/icon_ring_selected"/>
+
+</LinearLayout>

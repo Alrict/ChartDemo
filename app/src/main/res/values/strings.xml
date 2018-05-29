@@ -15,4 +15,11 @@
     <string name="intent_type">type</string>
     <string name="activity_scan_battery_low_msg">手机电量过低,闪光灯功能暂时关闭！</string>
     <string name="tv_title">睡眠报告</string>
+    <string name="tv_new_device_tip_1">1.确保您的呼吸机接通电源,并确保呼吸机、手机、路由器三者间的距离不超过10米。</string>
+    <string name="tv_new_device_tip_2">2.进入呼吸机设置菜单,选择"一键配置",进入手动配置模式,点击下一步。</string>
+    <string name="btn_next">下一步</string>
+    <string name="tv_add_new_device">添加设备</string>
+    <string name="tv_connect_wifi_tip">先到手机WI-FI页面设置连接到"Hypnus-AP"后,返回iHypnusCare App进行操作</string>
+    <string name="bt_set_wifi">去设置WI-FI</string>
+    <string name="tv_setting_ok">设置好了</string>
 </resources>

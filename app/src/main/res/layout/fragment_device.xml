@@ -11,32 +11,24 @@
         android:layout_height="@dimen/h160"
     >
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_device_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/tv_title"
+            android:text="设备管理"
             android:textColor="@color/white"
             android:textSize="@dimen/w54"/>
-        <ImageView
-            android:id="@+id/iv_data"
-            android:layout_width="@dimen/w56"
-            android:layout_height="@dimen/w56"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/w80"
-            android:layout_toRightOf="@id/tv_title"
-            android:scaleType="fitXY"
-            android:src="@mipmap/icon_calendar"/>
+
 
         <ImageView
-            android:id="@+id/iv_refresh"
+            android:id="@+id/iv_add"
             android:layout_width="@dimen/w56"
             android:layout_height="@dimen/w56"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/w60"
             android:layout_toRightOf="@id/iv_data"
-            android:src="@mipmap/icon_refresh_small"/>
+            android:src="@mipmap/icon_add_blue"/>
         <View
             android:id="@+id/line"
             android:layout_width="match_parent"
@@ -45,12 +37,10 @@
             android:background="@color/main_color_blue"/>
     </RelativeLayout>
 
-
-    <com.ihypnus.ihypnuscare.widget.VerticalViewPager
-        android:id="@+id/view_pager"
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-    />
+        android:layout_height="match_parent"/>
+
 
 </LinearLayout>
