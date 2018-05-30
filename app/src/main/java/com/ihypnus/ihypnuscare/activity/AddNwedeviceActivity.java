@@ -3,6 +3,7 @@ package com.ihypnus.ihypnuscare.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -17,6 +18,8 @@ import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.zxing.android.CaptureActivity;
+
+import kr.co.namee.permissiongen.PermissionGen;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -80,9 +83,13 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
 
             case R.id.iv_scan:
                 //检查相机权限
-                requestCameraPermission();
-                //扫描
-//                jumpToScan();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestCameraPermission();
+                } else {
+                    //扫描
+                    jumpToScan();
+                }
+
                 break;
 
             case R.id.bt_next:
@@ -100,12 +107,18 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
      * 申请相机权限
      */
     private void requestCameraPermission() {
+
+        PermissionGen.with(this)
+                .addRequestCode(100)
+                .permissions(Manifest.permission.CAMERA)
+                .request();
         Log.i(TAG, "相机权限未被授予，需要申请！");
         // 相机权限未被授予，需要申请！
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
                 REQUEST_CAMERA);
 
     }
+
 
     private void jumpToNewDeviceInformationActivity() {
         Intent intent = new Intent(this, NewDeviceInformationActivity.class);

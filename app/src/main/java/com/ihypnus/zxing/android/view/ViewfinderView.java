@@ -255,7 +255,8 @@ public final class ViewfinderView extends View {
             lineRect.right = frame.right;
             lineRect.top = slideTop;
             lineRect.bottom = slideTop + 18;
-            canvas.drawBitmap(((BitmapDrawable) (getResources().getDrawable(R.mipmap.img_qr_scan_line))).getBitmap(), null, lineRect, paint);
+            canvas.drawBitmap(((BitmapDrawable) (getResources().getDrawable(R.mipmap.ic_scan_line))).getBitmap(), null, lineRect, paint);
+//            canvas.drawBitmap(((BitmapDrawable) (getResources().getDrawable(R.mipmap.img_qr_scan_line))).getBitmap(), null, lineRect, paint);
 
             // 画扫描框下面的字
             paint.setColor(Color.WHITE);
