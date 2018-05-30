@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.WifiListAdapter;
@@ -432,6 +433,15 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+    }
+
+    private void showIndeterminateProgressDialog(boolean horizontal,String content) {
+        MaterialDialog materialDialog = new MaterialDialog.Builder(this)
+                .title("WiFi正在连接中")
+                .content(content)
+                .progress(true, 0)
+                .progressIndeterminateStyle(horizontal)
+                .show();
     }
 
 }
