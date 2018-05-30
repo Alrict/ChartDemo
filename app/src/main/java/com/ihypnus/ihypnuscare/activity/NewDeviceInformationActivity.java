@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
+import com.ihypnus.ihypnuscare.utils.WifiSettingManager;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -45,7 +46,8 @@ public class NewDeviceInformationActivity extends BaseActivity implements View.O
 
     @Override
     protected void loadData() {
-
+        //打开wifi
+        WifiSettingManager.getInstance().initWifiManager(this).openWifi();
     }
 
     @Override

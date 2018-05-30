@@ -49,6 +49,11 @@
         android:textColor="@color/white"
         android:textSize="@dimen/w44"/>
 
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h500"
+        android:layout_below="@id/tv_connect_wifi_tip"/>
 
     <Button
         android:id="@+id/bt_next"
