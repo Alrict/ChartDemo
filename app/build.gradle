@@ -31,5 +31,5 @@ dependencies {
     implementation files('libs/zxing-3.3.0.jar')
     implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
     //dialog
-    implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
+//    implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
 }

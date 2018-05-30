@@ -25,14 +25,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.WifiListAdapter;
 import com.ihypnus.ihypnuscare.thread.ConnectThread;
 import com.ihypnus.ihypnuscare.thread.ListenerThread;
 import com.ihypnus.ihypnuscare.utils.LogOut;
-import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.utils.WifiSettingManager;
 
@@ -100,6 +98,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     private Socket mSocket = null;
     private Gson mGson = new Gson();
     private CreateSocketThread mThread;
+
 
     @Override
     protected int setView() {
@@ -238,7 +237,8 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
      * @param config
      */
     private void connect(WifiConfiguration config) {
-        ToastUtils.showToastDefault(this, "连接中...");
+        showIndeterminateProgressDialog(true, "连接中...");
+//        ToastUtils.showToastDefault(this, "连接中...");
         mWifiSettingManager.addNetwork(config);
     }
 
@@ -348,26 +348,33 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
                     Log.w("BBB", "WifiManager.NETWORK_STATE_CHANGED_ACTION");
                     NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                     if (info.getState().equals(NetworkInfo.State.DISCONNECTED)) {
-                        ToastUtils.showToastDefault(WifiSettingTipActivity.this, "连接已断开");
+                        showIndeterminateProgressDialog(true, "连接已断开");
+//                        ToastUtils.showToastDefault(WifiSettingTipActivity.this, "连接已断开");
                     } else if (info.getState().equals(NetworkInfo.State.CONNECTED)) {
                         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                         final WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-                        ToastUtils.showToastDefault(WifiSettingTipActivity.this, "已连接到网络:" + wifiInfo.getSSID());
+                        showIndeterminateProgressDialog(true, "已连接到网络");
+//                        ToastUtils.showToastDefault(WifiSettingTipActivity.this, "已连接到网络:" + wifiInfo.getSSID());
 
                         Log.w("AAA", "wifiInfo.getSSID():" + wifiInfo.getSSID() + "  WIFI_HOTSPOT_SSID:" + WIFI_HOTSPOT_SSID);
 
                         NetworkInfo.DetailedState state = info.getDetailedState();
                         if (state == state.CONNECTING) {
-                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "连接中...");
+                            showIndeterminateProgressDialog(true, "连接中...");
+//                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "连接中...");
                         } else if (state == state.AUTHENTICATING) {
-                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "正在验证身份信息...");
+                            showIndeterminateProgressDialog(true, "正在验证身份信息...");
+//                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "正在验证身份信息...");
                         } else if (state == state.OBTAINING_IPADDR) {
-                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "正在获取IP地址...");
+                            showIndeterminateProgressDialog(true, "正在获取IP地址..");
+//                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "正在获取IP地址...");
                         } else if (state == state.CONNECTED) {
-                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "连接成功");
+                            showIndeterminateProgressDialog(true, "连接成功");
+//                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "连接成功");
                             connectAndSocket();
                         } else if (state == state.FAILED) {
-                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "请检测您的手机是否成功连接Hypnus_AP热点");
+                            showIndeterminateProgressDialog(true, "请检测您的手机是否成功连接Hypnus_AP热点");
+//                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "请检测您的手机是否成功连接Hypnus_AP热点");
                         }
                     }
 
@@ -435,13 +442,16 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
         unregisterReceiver(receiver);
     }
 
-    private void showIndeterminateProgressDialog(boolean horizontal,String content) {
-        MaterialDialog materialDialog = new MaterialDialog.Builder(this)
-                .title("WiFi正在连接中")
-                .content(content)
-                .progress(true, 0)
-                .progressIndeterminateStyle(horizontal)
-                .show();
+    private void showIndeterminateProgressDialog(boolean horizontal, String content) {
+//        if (mProgresslDialog != null) {
+//            mProgresslDialog.dismiss();
+//        }
+//        mProgresslDialog = new MaterialDialog.Builder(this)
+//                .title("WiFi连接状态")
+//                .content(content)
+//                .progress(true, 0)
+//                .progressIndeterminateStyle(horizontal)
+//                .show();
     }
 
 }
