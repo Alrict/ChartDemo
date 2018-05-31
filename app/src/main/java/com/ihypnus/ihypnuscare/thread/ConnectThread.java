@@ -5,7 +5,9 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.ihypnus.ihypnuscare.activity.WifiSettingTipActivity;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -68,24 +70,37 @@ public class ConnectThread extends Thread {
      * 发送数据
      */
     public void sendData(String msg) {
-        if (outputStream != null) {
-            try {
-                outputStream.write(msg.getBytes());
-                Message message = Message.obtain();
-                message.what = WifiSettingTipActivity.SEND_MSG_SUCCSEE;
-                Bundle bundle = new Bundle();
-                bundle.putString("MSG", new String(msg));
-                message.setData(bundle);
-                handler.sendMessage(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-                Message message = Message.obtain();
-                message.what = WifiSettingTipActivity.SEND_MSG_ERROR;
-                Bundle bundle = new Bundle();
-                bundle.putString("MSG", new String(msg));
-                message.setData(bundle);
-                handler.sendMessage(message);
-            }
+        if (socket!=null){
+            LogOut.d("llw","socket是否连接:"+socket.isConnected());
         }
+        try {
+            DataOutputStream writer = new DataOutputStream(socket.getOutputStream());
+            writer.writeUTF(msg);  // 写一个UTF-8的信息
+            writer.write(msg.getBytes());
+            writer.write("\r\n".getBytes());
+            writer.flush();
+            LogOut.d("llw","socket客户端发送消息:"+msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        if (outputStream != null) {
+//            try {
+//                outputStream.write(msg.getBytes());
+//                Message message = Message.obtain();
+//                message.what = WifiSettingTipActivity.SEND_MSG_SUCCSEE;
+//                Bundle bundle = new Bundle();
+//                bundle.putString("MSG", new String(msg));
+//                message.setData(bundle);
+//                handler.sendMessage(message);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Message message = Message.obtain();
+//                message.what = WifiSettingTipActivity.SEND_MSG_ERROR;
+//                Bundle bundle = new Bundle();
+//                bundle.putString("MSG", new String(msg));
+//                message.setData(bundle);
+//                handler.sendMessage(message);
+//            }
+//        }
     }
 }

@@ -76,7 +76,7 @@
         android:layout_marginLeft="@dimen/w80"
         android:layout_marginRight="@dimen/w80"
         android:gravity="center"
-        android:text="@string/bt_set_wifi"
+        android:text="刷新WiFi列表"
         android:textSize="@dimen/w54"/>
 
 </RelativeLayout>

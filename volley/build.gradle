@@ -5,7 +5,6 @@
 // Any other changes to the build config belong in rules.gradle, which
 // is used by projects that depend on Volley but define their own
 // tools versions across all dependencies to ensure a consistent build.
-
 buildscript {
     repositories {
         mavenCentral()
@@ -16,12 +15,20 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.0.0'
     }
 }
-
 apply plugin: 'com.android.library'
-
 android {
+    signingConfigs {
+        volley {
+            keyAlias 'ihy'
+            keyPassword '111111'
+            storeFile file('C:/Users/Administrator/Desktop/ihy_debug_key.jks')
+            storePassword '111111'
+        }
+    }
     compileSdkVersion 19
     buildToolsVersion = '26.0.2'
 }
-
 apply from: 'rules.gradle'
+
+dependencies {
+}

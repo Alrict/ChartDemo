@@ -234,11 +234,14 @@ public class WifiSettingManager {
 
     public WifiConfiguration isExsits(String SSID) {
         List<WifiConfiguration> existingConfigs = mWifiManager.getConfiguredNetworks();
-        for (WifiConfiguration existingConfig : existingConfigs) {
-            if (existingConfig.SSID.equals("\"" + SSID + "\"")) {
-                return existingConfig;
+        if (existingConfigs!=null&&existingConfigs.size()>0){
+            for (WifiConfiguration existingConfig : existingConfigs) {
+                if (existingConfig.SSID.equals("\"" + SSID + "\"")) {
+                    return existingConfig;
+                }
             }
         }
+
         return null;
     }
 

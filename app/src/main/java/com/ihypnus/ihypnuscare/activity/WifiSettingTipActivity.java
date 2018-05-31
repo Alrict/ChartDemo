@@ -1,20 +1,20 @@
 package com.ihypnus.ihypnuscare.activity;
 
-import android.annotation.SuppressLint;
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,16 +28,16 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.WifiListAdapter;
-import com.ihypnus.ihypnuscare.thread.ConnectThread;
-import com.ihypnus.ihypnuscare.thread.ListenerThread;
-import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.utils.WifiSettingManager;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +53,8 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     private ImageView mIvBack;
     private Button mBtNext;
     private int PORT = 8089;
-    private String IP = "192.168.4.1";
+    private String IP = "10.167.189.89";
+//    private String IP = "192.168.4.1";
     private static final int WIFICIPHER_NOPASS = 1;
     private static final int WIFICIPHER_WEP = 2;
     private static final int WIFICIPHER_WPA = 3;
@@ -64,40 +65,17 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     public static final int SEND_MSG_ERROR = 4;//发送消息失败
     public static final int GET_MSG = 6;//获取新消息
 
-    @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case WifiSettingTipActivity.DEVICE_CONNECTING:
-                    //有设备正在连接热点
-
-                    break;
-
-                case WifiSettingTipActivity.SEND_MSG_SUCCSEE:
-                    //有设备正在连接热点
-
-                    break;
-
-            }
-        }
-    };
-
-    /**
-     * 热点名称
-     */
-    private static final String WIFI_HOTSPOT_SSID = "\"Hypnus_AP\"";
-
-    private ListenerThread listenerThread = new ListenerThread(PORT, handler);
     private ListView mListView;
     private WifiListAdapter mWifiListAdapter;
     private WifiManager mWifiManager;
     private WifiSettingManager mWifiSettingManager;
     private WifiConfiguration mConfig;
-    private ConnectThread mConnectThread;
     private Socket mSocket = null;
     private Gson mGson = new Gson();
     private CreateSocketThread mThread;
+    private Button mBtSetWifi;
+    private static final int GET_LOCATION_INFO = 122;
+    private OutputStream mOutputStream;
 
 
     @Override
@@ -108,30 +86,34 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     @Override
     protected void findViews() {
         mIvBack = findViewById(R.id.iv_back);
+        mBtSetWifi = findViewById(R.id.bt_set_wifi);
         mBtNext = findViewById(R.id.bt_next);
         mListView = (ListView) findViewById(R.id.listView);
     }
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        mWifiListAdapter = new WifiListAdapter(this, R.layout.wifi_list_item);
+        mListView.setAdapter(mWifiListAdapter);
+
         //注册广播
         initBroadcastReceiver();
+
         //初始化wifiManager
         mWifiSettingManager = WifiSettingManager.getInstance().initWifiManager(this);
         //扫描wifi
         mWifiSettingManager.startScan();
+
         //wifiManager
         mWifiManager = mWifiSettingManager.getWifiManager();
 
-        mWifiListAdapter = new WifiListAdapter(this, R.layout.wifi_list_item);
-        mListView.setAdapter(mWifiListAdapter);
-        listenerThread.start();
     }
 
     @Override
     protected void initEvent() {
 
         mIvBack.setOnClickListener(this);
+        mBtSetWifi.setOnClickListener(this);
         mBtNext.setOnClickListener(this);
 
 
@@ -195,25 +177,30 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
         map.put("ssid", ssid);
         map.put("pwd", pwd);
         String msg = mGson.toJson(map);
-        LogOut.d("llw", msg);
-        if (mConnectThread != null) {
-            mConnectThread.sendData(msg);
+        Log.d("llw", msg);
+        if (isWifiEnable(this)) {
+            connectSocket(msg);
         } else {
-            Log.w("AAA", "connectThread == null");
+            showIndeterminateProgressDialog(true, "请先连接目标热点");
         }
     }
 
     /**
      * 创建socket
      */
-    private void connectSocket() {
-        mThread = new CreateSocketThread();
+    private void connectSocket(String msg) {
+        mThread = new CreateSocketThread(msg);
         mThread.start();
-
-
     }
 
     class CreateSocketThread extends Thread {
+
+        String msg;
+
+        public CreateSocketThread(String msg) {
+            this.msg = msg;
+        }
+
         @Override
         public void run() {
             super.run();
@@ -221,10 +208,43 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
                 if (mSocket == null) {
                     mSocket = new Socket(IP, PORT);
                 }
-                mConnectThread = new ConnectThread(mSocket, handler);
-                mConnectThread.start();
+                mOutputStream = mSocket.getOutputStream();
+
+                if (mSocket == null || mSocket.isClosed()) {
+                    initSocket();
+                }
+                if (msg != null) {
+
+                    mOutputStream.write(msg.getBytes());
+
+                    //发送完一条数据后，需要再写入“\r\n”，否则可能服务端不能实时收到数据。
+                    mOutputStream.write("\r\n".getBytes());
+
+                    mOutputStream.flush();
+                    closeScoket();
+                }
+
+            } catch (UnknownHostException e) {
+
+                e.printStackTrace();
+                closeScoket();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showIndeterminateProgressDialog(true, "连接失败,请重新操作");
+                    }
+                });
+                Log.e("llw", "网络异常,scoket连接失败");
+
             } catch (IOException e) {
-                LogOut.d("llw", "scoket连接失败");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showIndeterminateProgressDialog(true, "连接失败,请重新操作");
+                    }
+                });
+                Log.d("llw", "scoket连接失败" + e.toString());
+                closeScoket();
                 e.printStackTrace();
             }
         }
@@ -244,39 +264,38 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void loadData() {
-
-        if (isWifiEnable(this)) {
-            //wifi已连接
-            connectAndSocket();
-
-        } else {
-            //未连接wifi
-            //连接Hypnus_AP  无需密码
-            mConfig = mWifiSettingManager.createWifiInfo("Hypnus_AP", "", WIFICIPHER_NOPASS);
-            connect(mConfig);
-        }
-
-
+        checkWifiPermission();
     }
 
-    /**
-     * 连接目标wifi并创建socket
-     */
-    private void connectAndSocket() {
-        WifiInfo connectionInfo = mWifiManager.getConnectionInfo();
-        String ssid = connectionInfo.getSSID();
-        if (ssid.equals(WIFI_HOTSPOT_SSID)) {
-            //连接的是目标wifi
-            //创建socket连接
-            connectSocket();
-        } else {
-            //否则断开连接并尝试连接热点Hypnus_AP
-            mWifiManager.disconnect();
-            //连接Hypnus_AP  无需密码
-            mConfig = mWifiSettingManager.createWifiInfo("Hypnus_AP", "", WIFICIPHER_NOPASS);
-            connect(mConfig);
+    private void checkWifiPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GET_LOCATION_INFO);
+            }
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            // requestCode即所声明的权限获取码，在checkSelfPermission时传入
+            case GET_LOCATION_INFO:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    WifiSettingManager.getInstance().initWifiManager(WifiSettingTipActivity.this).startScan();
+                    // 获取到权限，作相应处理（调用定位SDK应当确保相关权限均被授权，否则可能引起定位失败）
+//                    showToast("get");
+                } else {
+                    // 没有获取到权限，做特殊处理
+                    checkWifiPermission();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -295,7 +314,8 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.bt_set_wifi:
                 //下一步
-                jumpToWifiSetting();
+//                jumpToWifiSetting();
+                WifiSettingManager.getInstance().initWifiManager(this).startScan();
                 break;
         }
     }
@@ -329,6 +349,18 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
                     List<ScanResult> scanResults = mWifiSettingManager.getWifiList();
                     mWifiListAdapter.clear();
                     mWifiListAdapter.addAll(scanResults);
+                    if (isWifiEnable(WifiSettingTipActivity.this)) {
+                        //wifi已连接
+//                        connectAndSocket();
+
+                    } else {
+                        //未连接wifi
+                        //连接Hypnus_AP  无需密码
+//            mConfig = mWifiSettingManager.createWifiInfo("Hypnus_AP", "", WIFICIPHER_NOPASS);
+//            mConfig = mWifiSettingManager.createWifiInfo("Hypnus_AP", "", WIFICIPHER_NOPASS);
+                        mConfig = mWifiSettingManager.createWifiInfo("alrict", "123456789", 3);
+//                        connect(mConfig);
+                    }
                     break;
                 case WifiManager.WIFI_STATE_CHANGED_ACTION:
                     Log.w("BBB", "WifiManager.WIFI_STATE_CHANGED_ACTION");
@@ -354,9 +386,6 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
                         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                         final WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                         showIndeterminateProgressDialog(true, "已连接到网络");
-//                        ToastUtils.showToastDefault(WifiSettingTipActivity.this, "已连接到网络:" + wifiInfo.getSSID());
-
-                        Log.w("AAA", "wifiInfo.getSSID():" + wifiInfo.getSSID() + "  WIFI_HOTSPOT_SSID:" + WIFI_HOTSPOT_SSID);
 
                         NetworkInfo.DetailedState state = info.getDetailedState();
                         if (state == state.CONNECTING) {
@@ -370,8 +399,9 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
 //                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "正在获取IP地址...");
                         } else if (state == state.CONNECTED) {
                             showIndeterminateProgressDialog(true, "连接成功");
+                            mWifiSettingManager.startScan();
 //                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "连接成功");
-                            connectAndSocket();
+//                            connectAndSocket();
                         } else if (state == state.FAILED) {
                             showIndeterminateProgressDialog(true, "请检测您的手机是否成功连接Hypnus_AP热点");
 //                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "请检测您的手机是否成功连接Hypnus_AP热点");
@@ -382,6 +412,52 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
             }
         }
     };
+
+    //连接socket时，不能直接在UI主线程中，不然会包：android.os.NetworkOnMainThreadException错误
+    private void initSocket() {
+
+        try {
+            mSocket = new Socket(IP, PORT);
+            mOutputStream = mSocket.getOutputStream();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            Log.e("llw", "网络异常");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("llw", "网络异常");
+
+        }
+
+    }
+
+    //④关闭Socket连接
+
+    private void closeScoket() {
+        try {
+            if (mOutputStream != null) {
+                mOutputStream.close();
+            }
+
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } finally {
+            mOutputStream = null;
+        }
+
+        try {
+            if (mSocket != null) {
+                mSocket.close();
+            }
+
+        } catch (IOException e1) {
+            e1.printStackTrace();
+
+        } finally {
+            mSocket = null;
+        }
+
+    }
 
     /**
      * 获取连接到热点上的手机ip
@@ -443,6 +519,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     }
 
     private void showIndeterminateProgressDialog(boolean horizontal, String content) {
+        ToastUtils.showToastDefault(this, content);
 //        if (mProgresslDialog != null) {
 //            mProgresslDialog.dismiss();
 //        }

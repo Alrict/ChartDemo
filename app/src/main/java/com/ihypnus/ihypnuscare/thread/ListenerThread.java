@@ -40,14 +40,17 @@ public class ListenerThread extends Thread {
     public void run() {
         while (true) {
             try {
-                Log.w("AAA","阻塞");
+                Log.w("AAA", "阻塞");
                 //阻塞，等待设备连接
-                socket = serverSocket.accept();
-                Message message = Message.obtain();
-                message.what = WifiSettingTipActivity.DEVICE_CONNECTING;
-                handler.sendMessage(message);
+                if (serverSocket != null) {
+                    socket = serverSocket.accept();
+                    Message message = Message.obtain();
+                    message.what = WifiSettingTipActivity.DEVICE_CONNECTING;
+                    handler.sendMessage(message);
+                }
+
             } catch (IOException e) {
-                Log.w("AAA","error:"+e.getMessage());
+                Log.w("AAA", "error:" + e.getMessage());
                 e.printStackTrace();
             }
         }
