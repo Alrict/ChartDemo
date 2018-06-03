@@ -62,7 +62,7 @@
         android:roundIcon="@mipmap/icon_launch"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.WifiSettingTipActivity">
+        <activity android:name=".activity.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -91,9 +91,9 @@
             android:screenOrientation="portrait"/>
 
         <!--wifi设置提示页面-->
-        <!--<activity-->
-            <!--android:name=".activity.WifiSettingTipActivity"-->
-            <!--android:screenOrientation="portrait"/>-->
+        <activity
+            android:name=".activity.WifiSettingTipActivity"
+            android:screenOrientation="portrait"/>
 
         <!--  &lt;!&ndash;主界面&ndash;&gt;
           <activity

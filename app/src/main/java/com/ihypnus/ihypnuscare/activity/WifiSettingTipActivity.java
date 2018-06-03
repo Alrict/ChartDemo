@@ -28,6 +28,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.WifiListAdapter;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.utils.WifiSettingManager;
@@ -53,7 +54,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     private ImageView mIvBack;
     private Button mBtNext;
     private int PORT = 8089;
-    private String IP = "10.167.189.89";
+    private String IP = "192.168.43.146";
 //    private String IP = "192.168.4.1";
     private static final int WIFICIPHER_NOPASS = 1;
     private static final int WIFICIPHER_WEP = 2;
@@ -399,6 +400,8 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
 //                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "正在获取IP地址...");
                         } else if (state == state.CONNECTED) {
                             showIndeterminateProgressDialog(true, "连接成功");
+                            IP = getIp();
+                            LogOut.d("llw","当前链接wifi的ip:"+IP);
                             mWifiSettingManager.startScan();
 //                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "连接成功");
 //                            connectAndSocket();
@@ -529,6 +532,25 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
 //                .progress(true, 0)
 //                .progressIndeterminateStyle(horizontal)
 //                .show();
+    }
+
+    private String getIp(){
+        WifiManager wm=(WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        //检查Wifi状态
+        if(!wm.isWifiEnabled())
+            wm.setWifiEnabled(true);
+        WifiInfo wi=wm.getConnectionInfo();
+        //获取32位整型IP地址
+        int ipAdd=wi.getIpAddress();
+        //把整型地址转换成“*.*.*.*”地址
+        String ip=intToIp(ipAdd);
+        return ip;
+    }
+    private String intToIp(int i) {
+        return (i & 0xFF ) + "." +
+                ((i >> 8 ) & 0xFF) + "." +
+                ((i >> 16 ) & 0xFF) + "." +
+                ( i >> 24 & 0xFF) ;
     }
 
 }
