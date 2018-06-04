@@ -22,4 +22,21 @@
     <string name="tv_connect_wifi_tip">先到手机WI-FI页面设置连接到"Hypnus-AP"后,返回iHypnusCare App进行操作</string>
     <string name="bt_set_wifi">去设置WI-FI</string>
     <string name="tv_setting_ok">设置好了</string>
+
+    <!--wifi设置页面-->
+    <string name="toast_err_tip">WiFi密码可为空或者长度大于8</string>
+    <string name="tip_msg">温馨提示</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="input_pass_word_hint">请输入wifi密码</string>
+    <string name="semaphore_poor">信号很差</string>
+    <string name="semaphore_better">信号较好</string>
+    <string name="semaphore_standard">信号一般</string>
+    <string name="semaphore_good">信号很好</string>
+    <string name="semaphore_week">信号较差</string>
+    <string name="connect_success">信号较差</string>
+    <string name="refresh">刷新WiFi列表</string>
+    <string name="wifi_permission">请打开wifi及定位权限</string>
+    <string name="wifi_permission_connect_target">请先连接目标热点</string>
+    <string name="socket_err">连接失败,请重新操作</string>
 </resources>

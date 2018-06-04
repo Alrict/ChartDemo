@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/h500"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/w50"
+    android:background="@drawable/background_dialog">
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/tip_msg"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"/>
+
+
+    <EditText
+        android:id="@+id/et_wifi_pass_word"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_tip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:hint="@string/input_pass_word_hint"
+        android:padding="6dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"/>
+
+    <LinearLayout
+        android:id="@+id/button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            style="@style/dialog_btn"
+            android:background="@drawable/btn_bottom_left_bg"
+            android:text="@string/cancel"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#cccccc"/>
+
+
+        <Button
+            android:id="@+id/btn_ensure"
+            style="@style/dialog_btn"
+            android:background="@drawable/btn_bottom_right_bg"
+            android:text="@string/ok"/>
+    </LinearLayout>
+
+</RelativeLayout>
