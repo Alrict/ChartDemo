@@ -26,20 +26,23 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/h165"
         android:layout_gravity="bottom"
-        android:background="@color/main_color_blue"
+        android:background="#2A3354"
         android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/rb_device"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:button="@null"
             android:checked="true"
             android:drawableTop="@drawable/navigation_device"
             android:gravity="center"
+            android:paddingTop="@dimen/w30"
             android:text="设备"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="@dimen/w44"/>
 
         <RadioButton
             android:id="@+id/rb_report"
@@ -49,6 +52,7 @@
             android:button="@null"
             android:drawableTop="@drawable/navigation_report"
             android:gravity="center"
+            android:paddingTop="@dimen/w30"
             android:text="报告"
             android:textColor="@color/white"/>
 
@@ -61,6 +65,7 @@
             android:button="@null"
             android:drawableTop="@drawable/navigation_ihy"
             android:gravity="center"
+            android:paddingTop="@dimen/w30"
             android:text="我的"
             android:textColor="@color/white"/>
     </RadioGroup>

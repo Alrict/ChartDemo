@@ -3,6 +3,7 @@ package com.ihypnus.ihypnuscare.activity;
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -14,16 +15,20 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.WifiListAdapter;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.utils.WifiSettingManager;
@@ -49,8 +54,8 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     private ImageView mIvBack;
     private Button mBtNext;
     private int PORT = 8089;
-    private String IP = "10.167.189.89";
-    //    private String IP = "192.168.4.1";
+    private String IP = "192.168.43.146";
+//    private String IP = "192.168.4.1";
     private static final int WIFICIPHER_NOPASS = 1;
     private static final int WIFICIPHER_WEP = 2;
     private static final int WIFICIPHER_WPA = 3;
@@ -72,7 +77,6 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     private Button mBtSetWifi;
     private static final int GET_LOCATION_INFO = 122;
     private OutputStream mOutputStream;
-    private String mSsid;
 
 
     @Override
@@ -120,16 +124,44 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
 //                mWifiManager.disconnect();
                 final HashMap<String, String> map = new HashMap<>();
                 final ScanResult scanResult = mWifiListAdapter.getItem(position);
-
-                if (scanResult != null) {
-                    mSsid = scanResult.SSID;
-                    if (mSsid != null) {
-                        jumpToDialogActivity();
+                String capabilities = scanResult.capabilities;
+                int type = WIFICIPHER_WPA;
+                if (!TextUtils.isEmpty(capabilities)) {
+                    if (capabilities.contains("WPA") || capabilities.contains("wpa")) {
+                        type = WIFICIPHER_WPA;
+                    } else if (capabilities.contains("WEP") || capabilities.contains("wep")) {
+                        type = WIFICIPHER_WEP;
                     } else {
-                        showIndeterminateProgressDialog(true, getResources().getString(R.string.wifi_permission));
+                        type = WIFICIPHER_NOPASS;
+                    }
+                }
+                mConfig = mWifiSettingManager.isExsits(scanResult.SSID);
+                if (mConfig == null) {
+                    if (type != WIFICIPHER_NOPASS) {//需要密码
+                        final EditText editText = new EditText(WifiSettingTipActivity.this);
+                        final int finalType = type;
+                        new AlertDialog.Builder(WifiSettingTipActivity.this).setTitle("请输入Wifi密码").setIcon(
+                                android.R.drawable.ic_dialog_info).setView(
+                                editText).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String ssid = scanResult.SSID;
+                                String pwd = editText.getText().toString().trim();
+                                setWifiMsg(ssid, pwd, map);
+
+
+                            }
+                        })
+                                .setNegativeButton("取消", null).show();
+
+                    } else {
+                        String ssid = scanResult.SSID;
+                        String pwd = "";
+                        setWifiMsg(ssid, pwd, map);
+
                     }
                 } else {
-                    showIndeterminateProgressDialog(true, getResources().getString(R.string.wifi_permission));
+//                    connect(mConfig);
                 }
             }
         });
@@ -140,9 +172,9 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
      *
      * @param ssid ssid
      * @param pwd  密码
+     * @param map  map
      */
-    private void setWifiMsg(String ssid, String pwd) {
-        HashMap<String, String> map = new HashMap<>();
+    private void setWifiMsg(String ssid, String pwd, HashMap<String, String> map) {
         map.put("ssid", ssid);
         map.put("pwd", pwd);
         String msg = mGson.toJson(map);
@@ -150,16 +182,8 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
         if (isWifiEnable(this)) {
             connectSocket(msg);
         } else {
-            showIndeterminateProgressDialog(true, getResources().getString(R.string.wifi_permission_connect_target));
+            showIndeterminateProgressDialog(true, "请先连接目标热点");
         }
-    }
-
-    /**
-     * 跳转至输入wifi密码弹窗界面
-     */
-    private void jumpToDialogActivity() {
-        Intent intent = new Intent(this, WifiDialogActivity.class);
-        startActivityForResult(intent, 122);
     }
 
     /**
@@ -208,7 +232,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        showIndeterminateProgressDialog(true, getResources().getString(R.string.socket_err));
+                        showIndeterminateProgressDialog(true, "连接失败,请重新操作");
                     }
                 });
                 Log.e("llw", "网络异常,scoket连接失败");
@@ -217,7 +241,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        showIndeterminateProgressDialog(true, getResources().getString(R.string.socket_err));
+                        showIndeterminateProgressDialog(true, "连接失败,请重新操作");
                     }
                 });
                 Log.d("llw", "scoket连接失败" + e.toString());
@@ -357,31 +381,32 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
                     Log.w("BBB", "WifiManager.NETWORK_STATE_CHANGED_ACTION");
                     NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                     if (info.getState().equals(NetworkInfo.State.DISCONNECTED)) {
-//                        showIndeterminateProgressDialog(true, "连接已断开");
+                        showIndeterminateProgressDialog(true, "连接已断开");
 //                        ToastUtils.showToastDefault(WifiSettingTipActivity.this, "连接已断开");
                     } else if (info.getState().equals(NetworkInfo.State.CONNECTED)) {
                         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                         final WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-//                        showIndeterminateProgressDialog(true, "已连接到网络");
-//                        ToastUtils.showToastDefault(WifiSettingTipActivity.this, "已连接到网络:" + wifiInfo.getSSID());
+                        showIndeterminateProgressDialog(true, "已连接到网络");
 
                         NetworkInfo.DetailedState state = info.getDetailedState();
                         if (state == state.CONNECTING) {
-//                            showIndeterminateProgressDialog(true, "连接中...");
+                            showIndeterminateProgressDialog(true, "连接中...");
 //                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "连接中...");
                         } else if (state == state.AUTHENTICATING) {
-//                            showIndeterminateProgressDialog(true, "正在验证身份信息...");
+                            showIndeterminateProgressDialog(true, "正在验证身份信息...");
 //                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "正在验证身份信息...");
                         } else if (state == state.OBTAINING_IPADDR) {
-//                            showIndeterminateProgressDialog(true, "正在获取IP地址..");
+                            showIndeterminateProgressDialog(true, "正在获取IP地址..");
 //                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "正在获取IP地址...");
                         } else if (state == state.CONNECTED) {
-                            showIndeterminateProgressDialog(true, getResources().getString(R.string.connect_success));
+                            showIndeterminateProgressDialog(true, "连接成功");
+                            IP = getIp();
+                            LogOut.d("llw","当前链接wifi的ip:"+IP);
                             mWifiSettingManager.startScan();
 //                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "连接成功");
 //                            connectAndSocket();
                         } else if (state == state.FAILED) {
-//                            showIndeterminateProgressDialog(true, "请检测您的手机是否成功连接Hypnus_AP热点");
+                            showIndeterminateProgressDialog(true, "请检测您的手机是否成功连接Hypnus_AP热点");
 //                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "请检测您的手机是否成功连接Hypnus_AP热点");
                         }
                     }
@@ -507,6 +532,25 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
 //                .progress(true, 0)
 //                .progressIndeterminateStyle(horizontal)
 //                .show();
+    }
+
+    private String getIp(){
+        WifiManager wm=(WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        //检查Wifi状态
+        if(!wm.isWifiEnabled())
+            wm.setWifiEnabled(true);
+        WifiInfo wi=wm.getConnectionInfo();
+        //获取32位整型IP地址
+        int ipAdd=wi.getIpAddress();
+        //把整型地址转换成“*.*.*.*”地址
+        String ip=intToIp(ipAdd);
+        return ip;
+    }
+    private String intToIp(int i) {
+        return (i & 0xFF ) + "." +
+                ((i >> 8 ) & 0xFF) + "." +
+                ((i >> 16 ) & 0xFF) + "." +
+                ( i >> 24 & 0xFF) ;
     }
 
     @Override
