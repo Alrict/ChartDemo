@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/h160"
     android:orientation="horizontal">
     <ImageView
+        android:id="@+id/iv_icon"
         android:layout_width="@dimen/w66"
         android:layout_height="@dimen/w66"
-        android:layout_gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/w50"
         android:src="@mipmap/icon_device_small"/>
     <TextView
         android:id="@+id/tv_device_model"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/w50"
+        android:layout_marginLeft="@dimen/w60"
+        android:layout_toRightOf="@id/iv_icon"
         android:text="AU732W"
         android:textColor="@color/white"
         android:textSize="@dimen/w60"/>
@@ -23,8 +27,9 @@
         android:id="@+id/tv_device_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/w50"
+        android:layout_toRightOf="@id/tv_device_model"
         android:text="cp100100501"
         android:textColor="@color/white"
         android:textSize="@dimen/w54"/>
@@ -32,8 +37,10 @@
         android:id="@+id/iv_selected"
         android:layout_width="@dimen/w66"
         android:layout_height="@dimen/w66"
-        android:layout_gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/w60"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/w150"
         android:src="@mipmap/icon_ring_selected"/>
 
-</LinearLayout>
+</RelativeLayout>

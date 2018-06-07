@@ -102,9 +102,29 @@
 
         <!--wifi输入密码弹窗-->
         <activity
-              android:name="com.ihypnus.ihypnuscare.activity.WifiDialogActivity"
-              android:theme="@style/Theme.ActivityDialogStyle"
-              android:screenOrientation="portrait" />
+            android:name=".activity.WifiDialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ActivityDialogStyle"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <!--意见反馈-->
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--我的资料-->
+        <activity
+            android:name=".activity.MyInfosActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--帮助中心-->
+        <activity
+            android:name=".activity.HelpCenterActivity"
+            android:screenOrientation="portrait"/>
+        <!--设置中心-->
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 

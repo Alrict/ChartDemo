@@ -1,10 +1,17 @@
 package com.ihypnus.ihypnuscare.fragment;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.activity.FeedbackActivity;
+import com.ihypnus.ihypnuscare.activity.HelpCenterActivity;
+import com.ihypnus.ihypnuscare.activity.MyInfosActivity;
+import com.ihypnus.ihypnuscare.activity.SettingActivity;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * @Package com.ihypnus.ihypnuscare.fragment
@@ -57,22 +64,55 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
         if (ViewUtils.isFastDoubleClick()) return;
         switch (view.getId()) {
             case R.id.layout_person_info:
-
+                jumpToActivity(101, MyInfosActivity.class);
                 break;
 
             case R.id.layout_help:
-
+                jumpToActivity(102, HelpCenterActivity.class);
                 break;
 
             case R.id.layout_suggestions:
-
+                jumpToActivity(103, FeedbackActivity.class);
                 break;
 
             case R.id.layout_settings:
-
+                jumpToActivity(104, SettingActivity.class);
                 break;
 
         }
 
+    }
+
+    private void jumpToActivity(int requestCode, Class<?> cls) {
+        Intent intent = new Intent(mAct, cls);
+        startActivityForResult(intent, requestCode);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 101:
+                    //个人资料
+
+                    break;
+
+                case 102:
+                    //帮助中心
+
+                    break;
+
+                case 103:
+                    //意见反馈
+
+                    break;
+
+                case 104:
+                    //设置
+
+                    break;
+            }
+        }
     }
 }
