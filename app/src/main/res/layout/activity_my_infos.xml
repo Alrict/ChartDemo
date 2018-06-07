@@ -75,15 +75,15 @@
             android:layout_width="@dimen/w180"
             android:layout_height="@dimen/h180"
             android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/h45"
             android:layout_toLeftOf="@+id/tv_photo_arrow"
             android:layout_toRightOf="@+id/tv_photo">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/avatar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/w180"
+                android:layout_height="@dimen/h180"
                 app:civ_border_color="#7c0fbb"
+                android:layout_gravity="bottom|right"
                 app:civ_border_width="@dimen/w2"/>
 
             <ImageView

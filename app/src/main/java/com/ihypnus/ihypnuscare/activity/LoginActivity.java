@@ -52,6 +52,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private final static int REQUEST_CODE = 300;
     private TextView mTvRegist;
     private TextView mTvFogotPassWord;
+    private TextView mTvLocalCode;
 
     @Override
     protected int setView() {
@@ -62,6 +63,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void findViews() {
         //登入
         mLoginBtn = (Button) this.findViewById(R.id.id_login);
+
+        mTvLocalCode = (TextView) this.findViewById(R.id.tv_local_code);
 
         //验证码登录布局控件
 //        mYCodeBtn = (Button) this.findViewById(R.id.btn_login_get_code2);
@@ -78,6 +81,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mTvFogotPassWord = (TextView) findViewById(R.id.tv_fogot_pass_word);
         mTvFogotPassWord.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         mTvFogotPassWord.getPaint().setAntiAlias(true);//抗锯齿
+        mTvLocalCode.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        mTvLocalCode.getPaint().setAntiAlias(true);//抗锯齿
     }
 
     @Override

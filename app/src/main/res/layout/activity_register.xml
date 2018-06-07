@@ -29,7 +29,7 @@
             android:layout_below="@id/tv_title"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/h60"
-            android:src="@mipmap/icon_logo"/>
+            android:src="@mipmap/icon_logo_title"/>
 
         <TextView
             android:layout_width="match_parent"

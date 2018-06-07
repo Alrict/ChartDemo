@@ -224,6 +224,7 @@ public class MyInfosActivity extends BaseActivity implements View.OnClickListene
                     if (data != null) {
                         String imagePath = data.getStringExtra("images_path");
                         mAvatarBitmap = ImageUtils.getBitmap(imagePath);
+                        mCircleImageView.setImageBitmap(mAvatarBitmap);
                         final Bitmap bitmap = mAvatarBitmap;
 //                        final String guid = mCardDetailBean.getGuid();
 

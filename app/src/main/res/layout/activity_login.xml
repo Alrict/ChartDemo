@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#060409">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/ic_bg">
 
     <RelativeLayout
         android:id="@+id/layout_input"
@@ -19,8 +19,16 @@
             android:layout_marginTop="@dimen/h40"
             android:gravity="center"
             android:text="登录"
-            android:textColor="@android:color/white"
+            android:textColor="@color/main_color_blue"
             android:textSize="@dimen/w55"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/h1"
+            android:layout_below="@id/tv_title"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/h20"
+            android:background="@color/main_color_blue"/>
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -29,7 +37,7 @@
             android:layout_below="@id/tv_title"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/h60"
-            android:src="@mipmap/icon_logo"/>
+            android:src="@mipmap/icon_logo_title"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -104,10 +112,9 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="4"
                 android:background="@null"
-                android:digits="1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-－"
                 android:hint="请输入账号"
-                android:inputType="textVisiblePassword"
-                android:maxLength="20"/>
+                android:inputType="number"
+                android:maxLength="11"/>
 
             <ImageView
                 android:id="@+id/img_login_account_clear2"
@@ -115,7 +122,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:padding="@dimen/w8"
-                android:src="@drawable/login_accout_clear_selector"/>
+                android:src="@drawable/login_accout_clear_selector"
+                android:visibility="invisible"/>
 
         </LinearLayout>
 
@@ -156,10 +164,11 @@
             android:layout_weight="1"
             android:background="@null"
             android:hint="请输入密码"
-            android:inputType="number"
+            android:inputType="textPassword"
             android:maxLength="12"/>
 
         <ImageView
+            android:id="@+id/iv_visibility_status"
             android:layout_width="@dimen/h56"
             android:layout_height="wrap_content"
             android:src="@mipmap/icon_un_see"/>
@@ -181,10 +190,9 @@
         android:layout_below="@+id/line3"
         android:layout_marginLeft="@dimen/w60"
         android:layout_marginRight="@dimen/w60"
-        android:layout_marginTop="@dimen/h160"
+        android:layout_marginTop="@dimen/h100"
         android:gravity="center"
-        android:text="登录"
-        android:textSize="@dimen/w54"/>
+        android:text="登录"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
