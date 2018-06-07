@@ -24,6 +24,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.WifiListAdapter;
+import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
@@ -293,6 +294,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
             case R.id.bt_set_wifi:
                 //下一步
 //                jumpToWifiSetting();
+                BaseDialogHelper.showLoadingDialog(WifiSettingTipActivity.this, true, "正在刷新...");
                 WifiSettingManager.getInstance().initWifiManager(this).startScan();
                 break;
         }
@@ -307,8 +309,9 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
 
 
     private void jumpToWifiSettingActivity() {
-        setResult(RESULT_OK);
-        finish();
+        BaseDialogHelper.showMsgTipDialog(this, "设备不存在");
+//        setResult(RESULT_OK);
+//        finish();
     }
 
 
@@ -324,6 +327,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
                 case WifiManager.SCAN_RESULTS_AVAILABLE_ACTION:
                     Log.w("BBB", "SCAN_RESULTS_AVAILABLE_ACTION");
                     // wifi已成功扫描到可用wifi。
+                    BaseDialogHelper.dismissLoadingDialog();
                     List<ScanResult> scanResults = mWifiSettingManager.getWifiList();
                     mWifiListAdapter.clear();
                     mWifiListAdapter.addAll(scanResults);

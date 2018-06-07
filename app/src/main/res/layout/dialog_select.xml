@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/get_from_cam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingBottom="@dimen/h50"
+        android:paddingTop="@dimen/h50"
+        android:text="相机拍照"
+        android:textColor="@color/text_content"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h1"
+        android:background="@color/black_pure" />
+
+    <TextView
+        android:id="@+id/get_from_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingBottom="@dimen/h50"
+        android:paddingTop="@dimen/h50"
+        android:text="相册选择"
+        android:textColor="@color/text_content"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h20" />
+
+    <TextView
+        android:id="@+id/go_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingBottom="@dimen/h50"
+        android:paddingTop="@dimen/h50"
+        android:text="取消"
+        android:textColor="@color/text_content"
+        android:textSize="18sp" />
+</LinearLayout>

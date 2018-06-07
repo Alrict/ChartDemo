@@ -39,6 +39,9 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation files('libs/zxing-3.3.0.jar')
     implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
-    //dialog
-    //    implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    //  多图选择的依赖
+    //    implementation(name: 'multi_image_selector_library', ext: 'aar')
+    implementation project(':multi_image_selector_library')
+    implementation files('libs/universal-image-loader-1.9.5.jar')
 }

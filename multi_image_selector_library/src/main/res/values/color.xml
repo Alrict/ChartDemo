@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--多图选择-->
+    <color name="mis_actionbar_color">#21282C</color>
+    <color name="mis_actionbar_text_color">#0082d8</color>
+    <color name="mis_rippelColor">#c8c8c8</color>
+    <color name="mis_btn_text_color">#21282C</color>
+</resources>

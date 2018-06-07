@@ -126,6 +126,11 @@
             android:name=".activity.SettingActivity"
             android:screenOrientation="portrait"/>
 
+        <!--图片裁剪-->
+        <activity
+            android:name=".activity.ClipActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

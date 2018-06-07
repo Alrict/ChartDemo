@@ -1,2 +1,2 @@
-include ':app', ':volleylibrary'
+include ':app', ':volleylibrary', ':multi_image_selector_library', ':multi_image_selector_library'
 include ':app', ':volley'

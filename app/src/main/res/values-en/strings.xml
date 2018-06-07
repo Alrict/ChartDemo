@@ -39,4 +39,5 @@
     <string name="wifi_permission">Please turn on wifi and location permissions</string>
     <string name="wifi_permission_connect_target">Please connect to the target hotspot first</string>
     <string name="socket_err">Connection failed, please try again</string>
+    <string name="tv_person_msg">Personal Information</string>
 </resources>

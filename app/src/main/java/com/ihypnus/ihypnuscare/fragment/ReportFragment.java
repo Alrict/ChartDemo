@@ -42,6 +42,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     private ImageView mIvRefresh;
     private ImageView mIvData;
     private BarChart mChart;
+
     @Override
     protected int setView() {
         return R.layout.fragment_report;
@@ -138,6 +139,8 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void loadData() {
+//        BaseDialogHelper.showLoadingDialog(mAct, true, "正在加载...");
+//        BaseDialogHelper.dismissLoadingDialog();
         startAni(82);
     }
 

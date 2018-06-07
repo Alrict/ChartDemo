@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--多图选择-->
+    <!--<style name="MIS_NO_ACTIONBAR" parent="Theme.AppCompat.Light.NoActionBar"></style>-->
+    <!--多图选择-->
+
+    <style name="Mis_Animtop" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/mis_pop_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/mis_pop_exit_anim</item>
+    </style>
+
+
+    <declare-styleable name="Mis_RippleView">
+        <attr name="mis_rv_alpha" format="integer" />
+        <attr name="mis_rv_framerate" format="integer"/>
+        <attr name="mis_rv_rippleDuration" format="integer"/>
+        <attr name="mis_rv_zoomDuration" format="integer" />
+        <attr name="mis_rv_color" format="color" />
+        <attr name="mis_rv_centered" format="boolean" />
+        <attr name="mis_rv_type" format="enum">
+            <enum name="mis_simpleRipple" value="0"/>
+            <enum name="mis_doubleRipple" value="1"/>
+            <enum name="mis_rectangle" value="2" />
+        </attr>
+        <attr name="mis_rv_ripplePadding" format="dimension" />
+        <attr name="mis_rv_zoom" format="boolean" />
+        <attr name="mis_rv_zoomScale" format="float" />
+
+    </declare-styleable>
+</resources>
