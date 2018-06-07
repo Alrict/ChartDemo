@@ -14,7 +14,7 @@ import com.ihypnus.ihypnuscare.R;
 /**
  * @Package com.kye.smart.wifitext.thread
  * @author: llw
- * @Description:
+ * @Description: wifi dialog 样式的activity
  * @date: 2018/6/4 13:41
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */

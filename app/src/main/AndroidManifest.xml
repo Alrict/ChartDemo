@@ -103,6 +103,7 @@
         <!--wifi输入密码弹窗-->
         <activity
               android:name="com.ihypnus.ihypnuscare.activity.WifiDialogActivity"
+              android:theme="@style/Theme.ActivityDialogStyle"
               android:screenOrientation="portrait" />
 
     </application>

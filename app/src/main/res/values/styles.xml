@@ -68,6 +68,18 @@
         <item name="android:textSize">@dimen/w34</item>
     </style>
 
+    <!--dialog样式activity 主题-->
+    <style name="Theme.ActivityDialogStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:colorForeground">#fff</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
     <!--环形进度条-->
     <declare-styleable name="CircleProgressBarView">
         <!--外圆半径-->
