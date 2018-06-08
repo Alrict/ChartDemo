@@ -3,6 +3,7 @@ package com.ihypnus.ihypnuscare.fragment;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
+import android.nfc.FormatException;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.ihypnus.ihypnuscare.R;
@@ -48,6 +50,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     private BarChart mChart;
     public static final int REQUEST_START_TIME = 200;
     public static final int RESPONSE_SELECT_OK = 202;
+    private TextView mTvData;
 
     @Override
     protected int setView() {
@@ -69,6 +72,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         mHomeFirstView = mInflater.inflate(R.layout.fragment_home_first, null);
         //进度条
         mPb = (CircleProgressBarView) mHomeFirstView.findViewById(R.id.pb);
+        mTvData = (TextView) mHomeFirstView.findViewById(R.id.tv_data);
 //        mPb.setMax(100);
         mSecondView = mInflater.inflate(R.layout.fragment_second, null);
         mChart = (BarChart) mSecondView.findViewById(R.id.chart1);
@@ -147,6 +151,15 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     protected void loadData() {
 //        BaseDialogHelper.showLoadingDialog(mAct, true, "正在加载...");
 //        BaseDialogHelper.dismissLoadingDialog();
+        try {
+            String currentDate = DateTimeUtils.getCurrentDate();
+            String date = DateTimeUtils.date2Chinese(currentDate);
+            mTvData.setText(date);
+            ToastUtils.showToastDefault(mAct, date);
+        } catch (FormatException e) {
+            e.printStackTrace();
+
+        }
         startAni(82);
     }
 
@@ -214,7 +227,15 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         if (requestCode == REQUEST_START_TIME && resultCode == RESPONSE_SELECT_OK) {
             if (null != data) {
                 String time = initTime(data);
-                ToastUtils.showToastDefault(mAct, time);
+
+                try {
+                    String date = DateTimeUtils.date2Chinese(time);
+                    mTvData.setText(date);
+//                    ToastUtils.showToastDefault(mAct, date);
+                } catch (FormatException e) {
+                    e.printStackTrace();
+
+                }
             }
         }
     }

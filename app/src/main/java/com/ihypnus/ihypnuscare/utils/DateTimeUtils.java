@@ -1,6 +1,7 @@
 package com.ihypnus.ihypnuscare.utils;
 
 
+import android.nfc.FormatException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -1025,6 +1026,49 @@ public class DateTimeUtils {
         } else {
             return false;
         }
+    }
+
+    private static final String[] CN_NUMBER = {"", "一", "二", "三", "四", "五", "六", "七", "八", "九"};
+
+    public static String date2Chinese( String date) throws FormatException {
+        StringBuilder sb = new StringBuilder();
+        String[] split = date.split("-");
+        if (split.length != 3) {
+            throw new FormatException();
+        }
+        //解析月份
+        int mon = Integer.parseInt(split[1]);
+        if (mon < 10) {
+            sb.append(CN_NUMBER[mon]);
+        } else if (mon < 20) {
+            if (mon == 10) {
+                sb.append("十");
+            } else {
+                sb.append("十").append(CN_NUMBER[mon % 10]);
+            }
+        }
+        sb.append("月");
+        //解析日份
+        int day = Integer.parseInt(split[2]);
+        if (day < 10) {
+            sb.append(CN_NUMBER[day]);
+        } else if (day < 20) {
+            if (day == 10) {
+                sb.append("十");
+            } else {
+                sb.append("十").append(CN_NUMBER[day % 10]);
+            }
+        } else if (day < 30) {
+            if (day == 20) {
+                sb.append("二十");
+            } else {
+                sb.append("二十").append(CN_NUMBER[day % 10]);
+            }
+        } else {
+            sb.append("三十").append(CN_NUMBER[day % 10]);
+        }
+        sb.append("日");
+        return sb.toString();
     }
 
 }

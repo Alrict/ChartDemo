@@ -77,6 +77,7 @@ public class CircleProgressBarView extends View {
     private int mProgressWidth;
     private int mProgressDefaultWidth;
     private int mMiddleRightTextSize;
+    private float mProgress;
 
 
     public CircleProgressBarView(Context context) {
@@ -244,7 +245,14 @@ public class CircleProgressBarView extends View {
         drawInnerGrayCircle(canvas);
 
         //绘制进度条
-        mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ff0000ff", "#ff00ff00")));
+        if (mProgress >= 80) {
+            mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ff0000ff", "#ff00ff00")));
+        } else if (mProgress >= 60) {
+            mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ff0000ff", "#ff00ff00")));
+        } else {
+            mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ff0000ff", "#ff00ff00")));
+        }
+
 
         canvas.drawArc(mRectF, -90, sweep1, false, mOutterCirclePaint);
 
@@ -289,7 +297,7 @@ public class CircleProgressBarView extends View {
         mBottomTextPaint.setTextSize(mBottomTextSize);
         text = mSleepStatus;
         textLen = mBottomTextPaint.measureText(text);
-        canvas.drawText(text, centerX - textLen / 2, centerY + centerY / 2 + textBounds.height() / 3, mBottomTextPaint);
+        canvas.drawText(text, centerX - textLen / 2, centerY + centerY / 2 + textBounds.height() / 4, mBottomTextPaint);
     }
 
     private void drawTextBg(Canvas canvas) {
@@ -332,6 +340,7 @@ public class CircleProgressBarView extends View {
 
     //动画切换进度值(异步)
     public void setProgress(final float progress) {
+        mProgress = progress;
         if (progress >= 80) {
             mSleepStatus = statusArray[2];
         } else if (progress > 60) {
