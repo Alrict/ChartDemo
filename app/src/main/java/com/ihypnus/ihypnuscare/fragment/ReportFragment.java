@@ -1,6 +1,7 @@
 package com.ihypnus.ihypnuscare.fragment;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -14,8 +15,11 @@ import android.widget.ImageView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.activity.SelectDateActivity;
 import com.ihypnus.ihypnuscare.adapter.VerticalPagerAdapter;
 import com.ihypnus.ihypnuscare.utils.BarChartManager;
+import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
+import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.widget.CircleProgressBarView;
 import com.ihypnus.ihypnuscare.widget.VerticalViewPager;
@@ -42,6 +46,8 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     private ImageView mIvRefresh;
     private ImageView mIvData;
     private BarChart mChart;
+    public static final int REQUEST_START_TIME = 200;
+    public static final int RESPONSE_SELECT_OK = 202;
 
     @Override
     protected int setView() {
@@ -166,10 +172,26 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 
                 break;
             case R.id.iv_data:
-
+                String currentDate = DateTimeUtils.getCurrentDate();
+                jumpSelecteDateActivity("日期选择", currentDate, REQUEST_START_TIME);
                 break;
         }
     }
+
+    /**
+     * 跳转选择日期
+     *
+     * @param title
+     * @param time
+     * @param requestCode
+     */
+    private void jumpSelecteDateActivity(String title, String time, int requestCode) {
+        Intent intent = new Intent(mAct, SelectDateActivity.class);
+        intent.putExtra("time", time);
+        intent.putExtra("title", title);
+        this.startActivityForResult(intent, requestCode);
+    }
+
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -184,5 +206,23 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_START_TIME && resultCode == RESPONSE_SELECT_OK) {
+            if (null != data) {
+                String time = initTime(data);
+                ToastUtils.showToastDefault(mAct, time);
+            }
+        }
+    }
+
+    private String initTime(Intent data) {
+        int year = data.getIntExtra("year", -1);
+        int month = data.getIntExtra("month", -1);
+        int day = data.getIntExtra("day", -1);
+        return year + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
     }
 }

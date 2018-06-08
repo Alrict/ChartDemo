@@ -131,6 +131,11 @@
             android:name=".activity.ClipActivity"
             android:screenOrientation="portrait"/>
 
+        <!--日期选择-->
+        <activity
+            android:name=".activity.SelectDateActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

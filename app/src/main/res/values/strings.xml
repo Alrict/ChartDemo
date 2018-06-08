@@ -40,4 +40,6 @@
     <string name="wifi_permission_connect_target">请先连接目标热点</string>
     <string name="socket_err">连接失败,请重新操作</string>
     <string name="tv_person_msg">个人信息</string>
+    <!-- 日历控件 -->
+    <string name="sans_serif" translatable="false">sans-serif</string>
 </resources>
