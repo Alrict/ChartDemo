@@ -18,7 +18,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -48,7 +47,6 @@ import java.util.List;
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
 public class WifiSettingTipActivity extends BaseActivity implements View.OnClickListener {
-    private ImageView mIvBack;
     private Button mBtNext;
     private int PORT = 8089;
     private String IP = "192.168.43.146";
@@ -84,7 +82,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void findViews() {
-        mIvBack = findViewById(R.id.iv_back);
+
         mBtSetWifi = findViewById(R.id.bt_set_wifi);
         mBtNext = findViewById(R.id.bt_next);
         mListView = (ListView) findViewById(R.id.listView);
@@ -92,6 +90,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        setTitle(getResources().getString(R.string.tv_add_new_device));
         mWifiListAdapter = new WifiListAdapter(this, R.layout.wifi_list_item);
         mListView.setAdapter(mWifiListAdapter);
 
@@ -111,7 +110,6 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     @Override
     protected void initEvent() {
 
-        mIvBack.setOnClickListener(this);
         mBtSetWifi.setOnClickListener(this);
         mBtNext.setOnClickListener(this);
 
@@ -282,10 +280,6 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
             return;
         }
         switch (v.getId()) {
-            case R.id.iv_back:
-                //返回
-                finish();
-                break;
 
             case R.id.bt_next:
                 //设置好了

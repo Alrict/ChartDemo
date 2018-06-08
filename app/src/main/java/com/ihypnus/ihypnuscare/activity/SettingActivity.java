@@ -24,7 +24,7 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
+        setTitle("设置");
     }
 
     @Override

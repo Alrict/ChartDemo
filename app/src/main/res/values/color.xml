@@ -2,6 +2,12 @@
 <resources>
     <item name="gray_holo_dark" type="color">#ff464646</item>
     <item name="gray_holo_light" type="color">#ffd0d0d0</item>
+
+    <color name="title_layout_color">#1d1731</color>
+    <!-- app默认背景色 -->
+    <color name="default_background_color">#EFEFEF</color>
+    <color name="rippelColor">#c8c8c8</color>
+
     <!-- 纯白色 -->
     <color name="white">#ffffffff</color>
     <!-- 浅灰色 -->

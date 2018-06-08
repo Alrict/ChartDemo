@@ -24,7 +24,7 @@ public class FeedbackActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
+        setTitle("意见反馈");
     }
 
     @Override

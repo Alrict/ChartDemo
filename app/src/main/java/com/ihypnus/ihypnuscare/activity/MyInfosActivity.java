@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,7 +34,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class MyInfosActivity extends BaseActivity implements View.OnClickListener {
 
-    private ImageView mIvBack;
     private RelativeLayout mLlPhoto;
     private CircleImageView mCircleImageView;
     private RelativeLayout mLlName;
@@ -60,9 +58,6 @@ public class MyInfosActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void findViews() {
-        //返回
-        mIvBack = (ImageView) findViewById(R.id.iv_back);
-
         //头像
         mLlPhoto = (RelativeLayout) findViewById(R.id.ll_photo);
         mCircleImageView = (CircleImageView) findViewById(R.id.avatar);
@@ -87,12 +82,13 @@ public class MyInfosActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
+//        getSupportedActionBar().setVisibility(View.GONE);
+        setTitle("个人资料");
     }
 
     @Override
     protected void initEvent() {
-        mIvBack.setOnClickListener(this);
+
         mCircleImageView.setOnClickListener(this);
         mTvPersonName.setOnClickListener(this);
         mTvPersonGender.setOnClickListener(this);
@@ -109,9 +105,6 @@ public class MyInfosActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         if (ViewUtils.isFastDoubleClick()) return;
         switch (v.getId()) {
-            case R.id.iv_back:
-                finish();
-                break;
 
             case R.id.avatar:
                 //头像
@@ -226,7 +219,7 @@ public class MyInfosActivity extends BaseActivity implements View.OnClickListene
                         mAvatarBitmap = ImageUtils.getBitmap(imagePath);
                         final Bitmap bitmap = mAvatarBitmap;
 //                        final String guid = mCardDetailBean.getGuid();
-
+                        mCircleImageView.setImageBitmap(bitmap);
                         new Thread(new Runnable() {
                             @Override
                             public void run() {

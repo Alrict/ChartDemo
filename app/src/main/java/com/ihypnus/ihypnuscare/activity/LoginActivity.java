@@ -82,7 +82,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
+        getSupportedActionBar().setVisibility(View.INVISIBLE);
     }
 
     @Override

@@ -30,7 +30,6 @@ import kr.co.namee.permissiongen.PermissionGen;
  */
 public class AddNwedeviceActivity extends BaseActivity implements View.OnClickListener {
 
-    private ImageView mIvBack;
     private ImageView mIvScan;
     private final int REQUEST_CODE_SCAN = 122;
     private final int REQUEST_CODE_INFO = 123;
@@ -46,7 +45,6 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void findViews() {
-        mIvBack = findViewById(R.id.iv_back);
         mEtInputDeviceSn = findViewById(R.id.et_input_device_sn);
         mIvScan = findViewById(R.id.iv_scan);
         mBtNext = findViewById(R.id.bt_next);
@@ -54,12 +52,11 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
+        setTitle("添加设备");
     }
 
     @Override
     protected void initEvent() {
-        mIvBack.setOnClickListener(this);
         mIvScan.setOnClickListener(this);
         mBtNext.setOnClickListener(this);
 
@@ -76,10 +73,6 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
             return;
         }
         switch (v.getId()) {
-            case R.id.iv_back:
-                //返回
-                finish();
-                break;
 
             case R.id.iv_scan:
                 //检查相机权限

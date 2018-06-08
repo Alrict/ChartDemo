@@ -1,52 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/get_from_cam"
-        android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:background="#30ffffff"
+                android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center"
-        android:paddingBottom="@dimen/h50"
-        android:paddingTop="@dimen/h50"
-        android:text="相机拍照"
-        android:textColor="@color/text_content"
-        android:textSize="18sp" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/h1"
-        android:background="@color/black_pure" />
 
-    <TextView
-        android:id="@+id/get_from_gallery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center"
-        android:paddingBottom="@dimen/h50"
-        android:paddingTop="@dimen/h50"
-        android:text="相册选择"
-        android:textColor="@color/text_content"
-        android:textSize="18sp" />
+        <LinearLayout
+            android:layout_width="@dimen/w692"
+            android:layout_height="@dimen/h240"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/photo_dialog_selector"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/get_from_cam"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/h120"
+                android:gravity="center"
+                android:text="相机拍照"
+                android:textColor="@color/white"
+                android:textSize="@dimen/w46"
+            />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/h20" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/h2"
+                android:layout_marginLeft="@dimen/w20"
+                android:layout_marginRight="@dimen/w20"
+                android:background="@color/white"/>
 
-    <TextView
-        android:id="@+id/go_back"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center"
-        android:paddingBottom="@dimen/h50"
-        android:paddingTop="@dimen/h50"
-        android:text="取消"
-        android:textColor="@color/text_content"
-        android:textSize="18sp" />
-</LinearLayout>
+            <TextView
+                android:id="@+id/get_from_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/h120"
+                android:gravity="center"
+                android:text="相册选择"
+                android:textColor="@color/white"
+                android:textSize="@dimen/w46"/>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/go_back"
+            android:layout_width="@dimen/w692"
+            android:layout_height="@dimen/h120"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/h240"
+            android:layout_marginTop="@dimen/w34"
+            android:background="@drawable/btn_dialog"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/white"
+            android:textSize="@dimen/w46"/>
+
+    </LinearLayout>
+</RelativeLayout>

@@ -8,27 +8,8 @@
     <RelativeLayout
         android:id="@+id/layout_header"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h160"
+        android:layout_height="@dimen/h1"
     >
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="@dimen/w60"
-            android:layout_height="@dimen/w60"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/w60"
-            android:layout_toRightOf="@id/iv_data"
-            android:src="@mipmap/icon_back_arrow"/>
-        <TextView
-            android:id="@+id/tv_device_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/tv_add_new_device"
-            android:textColor="@color/white"
-            android:textSize="@dimen/w54"/>
-
 
         <View
             android:id="@+id/line"

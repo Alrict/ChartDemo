@@ -1,6 +1,7 @@
 package com.ihypnus.ihypnuscare.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.ihypnus.ihypnuscare.R;
 
@@ -24,7 +25,7 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
+        getSupportedActionBar().setVisibility(View.GONE);
     }
 
     @Override

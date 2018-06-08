@@ -20,15 +20,12 @@ import kr.co.namee.permissiongen.PermissionSuccess;
  * @date: 2018/5/14 13:43
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class SplashActivity
-        extends BaseActivity
-        implements View.OnClickListener
-{
+public class SplashActivity extends BaseActivity implements View.OnClickListener {
 
     private final static int REQUEST_CODE = 100;
     private ImageView mImSplash;
-    private TextView  mTvJumpOver;
-    private long      mStartTime;
+    private TextView mTvJumpOver;
+    private long mStartTime;
     /**
      * 手动点击跳转到下个界面 当点击跳过按钮就设置为true
      */
@@ -47,6 +44,7 @@ public class SplashActivity
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        getSupportedActionBar().setVisibility(View.GONE);
         // 防止重复开启界面
         if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
             finish();
@@ -80,10 +78,10 @@ public class SplashActivity
         // 权限控制
         // 权限申请 读写外部存储
         PermissionGen.with(this)
-                     .addRequestCode(REQUEST_CODE)
-                     .permissions(Manifest.permission.READ_EXTERNAL_STORAGE,
-                                  Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                     .request();
+                .addRequestCode(REQUEST_CODE)
+                .permissions(Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .request();
     }
 
     @Override

@@ -138,8 +138,25 @@
     </style>
 
 
-
-
+    <style name="ActionBarContentText" parent="TextTheme">
+        <item name="android:textSize">@dimen/w44</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!--页面标题文本样式-->
+    <style name="ActionBarTitleText" parent="TextTheme">
+        <item name="android:textSize">@dimen/w54</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!--页面小号标题样式-->
+    <style name="ActionBarTitleText2" parent="TextTheme">
+        <item name="android:textSize">@dimen/w48</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
 
     <!--环形进度条-->
     <declare-styleable name="CircleProgressBarView">
@@ -185,6 +202,24 @@
         <attr name="bottomText" format="string"/>
         <!--底部字体大小-->
         <attr name="bottomTextSize" format="dimension"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="RippleView">
+        <attr name="rv_alpha" format="integer" />
+        <attr name="rv_framerate" format="integer"/>
+        <attr name="rv_rippleDuration" format="integer"/>
+        <attr name="rv_zoomDuration" format="integer" />
+        <attr name="rv_color" format="color" />
+        <attr name="rv_centered" format="boolean" />
+        <attr name="rv_type" format="enum">
+            <enum name="simpleRipple" value="0"/>
+            <enum name="doubleRipple" value="1"/>
+            <enum name="rectangle" value="2" />
+        </attr>
+        <attr name="rv_ripplePadding" format="dimension" />
+        <attr name="rv_zoom" format="boolean" />
+        <attr name="rv_zoomScale" format="float" />
 
     </declare-styleable>
 </resources>

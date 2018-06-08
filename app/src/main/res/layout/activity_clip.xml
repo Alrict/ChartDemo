@@ -5,20 +5,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context="com.ihypnus.ihypnuscare.activity.ClipActivity">
-    <TextView
-        android:id="@+id/tv_confirm"
-        style="@style/TextAppearanceMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/w60"
-        android:layout_marginTop="@dimen/w60"
-        android:layout_margin="@dimen/h30"
-        android:background="@color/white"
-        android:text="@string/ok"/>
+
     <com.ihypnus.ihypnuscare.widget.ClipZoomImageView
         android:id="@+id/cziv_img"
-        android:layout_below="@id/tv_confirm"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black_pure"/>

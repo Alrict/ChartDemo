@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
@@ -18,7 +17,7 @@ import com.ihypnus.ihypnuscare.utils.WifiSettingManager;
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
 public class NewDeviceInformationActivity extends BaseActivity implements View.OnClickListener {
-    private ImageView mIvBack;
+
     private Button mBtNext;
     private final int REQUEST_CODE = 123;
 
@@ -29,13 +28,13 @@ public class NewDeviceInformationActivity extends BaseActivity implements View.O
 
     @Override
     protected void findViews() {
-        mIvBack = findViewById(R.id.iv_back);
+
         mBtNext = findViewById(R.id.bt_next);
     }
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        mIvBack.setOnClickListener(this);
+        setTitle(getResources().getString(R.string.tv_add_new_device));
         mBtNext.setOnClickListener(this);
     }
 
@@ -56,10 +55,6 @@ public class NewDeviceInformationActivity extends BaseActivity implements View.O
             return;
         }
         switch (v.getId()) {
-            case R.id.iv_back:
-                //返回
-                finish();
-                break;
 
             case R.id.bt_next:
                 //下一步
