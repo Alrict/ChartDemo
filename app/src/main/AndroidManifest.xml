@@ -95,10 +95,10 @@
             android:name=".activity.WifiSettingTipActivity"
             android:screenOrientation="portrait"/>
 
-          <!--主界面-->
-          <activity
-              android:name="com.ihypnus.ihypnuscare.activity.HomeActivity"
-              android:screenOrientation="portrait" />
+        <!--主界面-->
+        <activity
+            android:name="com.ihypnus.ihypnuscare.activity.HomeActivity"
+            android:screenOrientation="portrait"/>
 
         <!--wifi输入密码弹窗-->
         <activity
@@ -134,6 +134,11 @@
         <!--日期选择-->
         <activity
             android:name=".activity.SelectDateActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--忘记密码-->
+        <activity
+            android:name=".activity.ForgetPasswordActivity"
             android:screenOrientation="portrait"/>
 
     </application>
