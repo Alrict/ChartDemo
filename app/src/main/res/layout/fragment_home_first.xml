@@ -41,20 +41,20 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_data"
         app:bottomTextColor="#00ff00"
-        app:circularRingBgColor="@color/gray"
-        app:innerRadius="@dimen/w180"
+        app:circularRingBgColor="#383c55"
+        app:innerRadius="@dimen/w260"
         app:middleRightTextSize="@dimen/w40"
         app:middleTextColor="@color/tangerine"
         app:middleTextSize="@dimen/w100"
-        app:outterRadius="@dimen/w260"
+        app:outterRadius="@dimen/w330"
         app:progressDefaultWidth="@dimen/w30"
-        app:progressWidth="@dimen/w40"
+        app:progressWidth="@dimen/w36"
         app:topText="睡眠分数"
         app:topTextColor="@color/white"
         app:topTextSize="@dimen/w50"
         app:trackBarColor="#236fa1"
-        app:trackBarLength="@dimen/h40"
-        app:trackBarWidth="@dimen/h6"/>
+        app:trackBarLength="@dimen/h32"
+        app:trackBarWidth="@dimen/h4"/>
 
     <TextView
         android:id="@+id/tv_usage_long"

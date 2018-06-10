@@ -19,10 +19,9 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.ScaleGestureDetector.OnScaleGestureListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 
-public class ClipZoomImageView extends ImageView {
+public class ClipZoomImageView extends android.support.v7.widget.AppCompatImageView {
 
     public static float SCALE_MAX = 4.0f;
     private static float SCALE_MID = 2.0f;

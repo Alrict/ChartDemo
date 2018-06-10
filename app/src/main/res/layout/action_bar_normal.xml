@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       android:layout_width="match_parent">
+
+    <com.ihypnus.ihypnuscare.actionbar.RippleView
+        android:id="@+id/action_bar_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:minWidth="@dimen/w140"
+        app:rv_centered="true"
+        app:rv_color="@color/list_selector">
+
+        <ImageView
+            android:id="@+id/action_left_img"
+            android:layout_width="@dimen/w66"
+            android:layout_height="@dimen/w66"
+            android:layout_centerVertical="true"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/w50"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/icon_back_arrow" />
+
+        <TextView
+            android:id="@+id/action_left_text"
+            style="@style/ActionBarContentText"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/w55"
+            android:text="返回"
+            android:textColor="@color/white"
+            android:textSize="@dimen/w44"
+            android:visibility="invisible" />
+    </com.ihypnus.ihypnuscare.actionbar.RippleView>
+
+    <com.ihypnus.ihypnuscare.actionbar.LinearRippleView
+        android:id="@+id/action_bar_middle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:clickable="false"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:rv_centered="true">
+
+        <com.ihypnus.ihypnuscare.actionbar.MarqueeTextView
+            android:id="@+id/action_bar_title"
+            style="@style/ActionBarTitleText2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawablePadding="@dimen/w10"
+            android:gravity="center"
+            android:lines="1"
+            android:maxWidth="@dimen/w720"
+            android:text="" />
+
+        <ImageView
+            android:id="@+id/action_bar_middle_img"
+            android:layout_width="@dimen/w30"
+            android:layout_height="@dimen/w30"
+            android:layout_marginLeft="@dimen/w5"
+            android:scaleType="centerInside"
+            android:visibility="gone" />
+    </com.ihypnus.ihypnuscare.actionbar.LinearRippleView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center_vertical">
+
+        <com.ihypnus.ihypnuscare.actionbar.RippleView
+            android:id="@+id/action_bar_right2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:minWidth="@dimen/w140"
+            android:visibility="gone"
+            app:rv_centered="true">
+
+            <TextView
+                android:id="@+id/action_right_txt2"
+                style="@style/ActionBarContentText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/w20"
+                android:gravity="left|center_vertical"
+                android:paddingRight="@dimen/w29"
+                android:paddingTop="@dimen/h4"/>
+        </com.ihypnus.ihypnuscare.actionbar.RippleView>
+
+        <com.ihypnus.ihypnuscare.actionbar.RippleView
+            android:id="@+id/action_bar_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:minWidth="@dimen/w140"
+            app:rv_centered="true">
+
+            <TextView
+                android:id="@+id/action_right_txt"
+                style="@style/ActionBarContentText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/w20"
+                android:gravity="left|center_vertical"
+                android:paddingRight="@dimen/w29"
+                android:paddingTop="@dimen/h4"
+                android:text=""
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/action_right_img"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="@dimen/w80"
+                android:minWidth="@dimen/w51"
+                android:scaleType="centerInside" />
+        </com.ihypnus.ihypnuscare.actionbar.RippleView>
+
+    </LinearLayout>
+</merge>

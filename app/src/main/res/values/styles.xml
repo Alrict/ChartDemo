@@ -37,8 +37,8 @@
 
     <!--start 默认的Button样式 高度统一为@dimen/h120,宽度为@dimen/w800-->
     <style name="CommentButtonStyle">
-        <item name="android:layout_width">@dimen/w912</item>
-        <item name="android:layout_height">@dimen/h126</item>
+        <item name="android:layout_width">@dimen/w906</item>
+        <item name="android:layout_height">@dimen/h136</item>
         <item name="android:background">@drawable/sl_comment_btn</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:textSize">@dimen/w56</item>
@@ -118,6 +118,37 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <style name="CommentLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/h140</item>
+        <item name="android:paddingLeft">@dimen/w86</item>
+        <item name="android:paddingRight">@dimen/w86</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="CommentRelativeLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/h140</item>
+        <item name="android:paddingLeft">@dimen/w86</item>
+        <item name="android:paddingRight">@dimen/w86</item>
+    </style>
+
+    <style name="CommentDividingLineWihtPadding">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/h1</item>
+        <item name="android:paddingLeft">@dimen/w86</item>
+        <item name="android:background">#2c76b3</item>
+        <item name="android:paddingRight">@dimen/w86</item>
+    </style>
+
+    <style name="CommentDividingLineNoPadding">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">#2c76b3</item>
+        <item name="android:layout_height">@dimen/h1</item>
+    </style>
+
+
     <style name="CommentLinearLayoutDialogStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/h140</item>
@@ -138,8 +169,25 @@
     </style>
 
 
-
-
+    <style name="ActionBarContentText" parent="TextTheme">
+        <item name="android:textSize">@dimen/w44</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!--页面标题文本样式-->
+    <style name="ActionBarTitleText" parent="TextTheme">
+        <item name="android:textSize">@dimen/w54</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!--页面小号标题样式-->
+    <style name="ActionBarTitleText2" parent="TextTheme">
+        <item name="android:textSize">@dimen/w48</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
 
     <!--环形进度条-->
     <declare-styleable name="CircleProgressBarView">
@@ -186,5 +234,73 @@
         <!--底部字体大小-->
         <attr name="bottomTextSize" format="dimension"/>
 
+    </declare-styleable>
+
+    <declare-styleable name="RippleView">
+        <attr name="rv_alpha" format="integer"/>
+        <attr name="rv_framerate" format="integer"/>
+        <attr name="rv_rippleDuration" format="integer"/>
+        <attr name="rv_zoomDuration" format="integer"/>
+        <attr name="rv_color" format="color"/>
+        <attr name="rv_centered" format="boolean"/>
+        <attr name="rv_type" format="enum">
+            <enum name="simpleRipple" value="0"/>
+            <enum name="doubleRipple" value="1"/>
+            <enum name="rectangle" value="2"/>
+        </attr>
+        <attr name="rv_ripplePadding" format="dimension"/>
+        <attr name="rv_zoom" format="boolean"/>
+        <attr name="rv_zoomScale" format="float"/>
+
+    </declare-styleable>
+
+    <!-- 日历控件 -->
+    <declare-styleable name="DayPickerView">
+        <attr name="colorCurrentDay" format="color"/>
+        <attr name="colorSelectedDayBackground" format="color"/>
+        <attr name="colorSelectedDayText" format="color"/>
+        <attr name="colorPreviousDay" format="color"/>
+        <attr name="colorNormalDay" format="color"/>
+        <attr name="colorMonthName" format="color"/>
+        <attr name="colorDayName" format="color"/>
+        <attr name="textSizeDay" format="dimension"/>
+        <attr name="textSizeMonth" format="dimension"/>
+        <attr name="textSizeDayName" format="dimension"/>
+        <attr name="headerMonthHeight" format="dimension"/>
+        <attr name="selectedDayRadius" format="dimension"/>
+        <attr name="calendarHeight" format="dimension"/>
+        <attr name="enablePreviousDay" format="boolean"/>
+        <attr name="currentDaySelected" format="boolean"/>
+        <attr name="drawRoundRect" format="boolean"/>
+
+        <attr name="firstMonth" format="enum">
+            <enum name="january" value="0"/>
+            <enum name="february" value="1"/>
+            <enum name="march" value="2"/>
+            <enum name="april" value="3"/>
+            <enum name="may" value="4"/>
+            <enum name="june" value="5"/>
+            <enum name="july" value="6"/>
+            <enum name="august" value="7"/>
+            <enum name="september" value="8"/>
+            <enum name="october" value="9"/>
+            <enum name="november" value="10"/>
+            <enum name="december" value="11"/>
+        </attr>
+
+        <attr name="lastMonth" format="enum">
+            <enum name="january" value="0"/>
+            <enum name="february" value="1"/>
+            <enum name="march" value="2"/>
+            <enum name="april" value="3"/>
+            <enum name="may" value="4"/>
+            <enum name="june" value="5"/>
+            <enum name="july" value="6"/>
+            <enum name="august" value="7"/>
+            <enum name="september" value="8"/>
+            <enum name="october" value="9"/>
+            <enum name="november" value="10"/>
+            <enum name="december" value="11"/>
+        </attr>
     </declare-styleable>
 </resources>

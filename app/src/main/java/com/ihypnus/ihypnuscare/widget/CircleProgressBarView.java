@@ -77,6 +77,7 @@ public class CircleProgressBarView extends View {
     private int mProgressWidth;
     private int mProgressDefaultWidth;
     private int mMiddleRightTextSize;
+    private float mProgress;
 
 
     public CircleProgressBarView(Context context) {
@@ -101,7 +102,7 @@ public class CircleProgressBarView extends View {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleProgressBarView);
 
         //外层刻度条颜色
-        mTrackBarColor = a.getColor(R.styleable.CircleProgressBarView_trackBarColor, Color.RED);
+        mTrackBarColor = a.getColor(R.styleable.CircleProgressBarView_trackBarColor, Color.parseColor("#88236fa1"));
         //外层刻度条width
         mTrackBarWidth = a.getDimensionPixelSize(R.styleable.CircleProgressBarView_trackBarWidth, (int) getResources().getDimension(R.dimen.w4));
         //外层刻度条length
@@ -156,7 +157,7 @@ public class CircleProgressBarView extends View {
         mOutterCirclePaint = new Paint();
         mOutterCirclePaint.setStrokeWidth((float) (mProgressWidth));
         mOutterCirclePaint.setStyle(Paint.Style.STROKE);
-        mOutterCirclePaint.setStrokeCap(Paint.Cap.ROUND);//设置线条两端为圆形
+//        mOutterCirclePaint.setStrokeCap(Paint.Cap.ROUND);//设置线条两端为圆形
         mOutterCirclePaint.setAntiAlias(true);
 
         //內灰色圆画笔
@@ -237,14 +238,27 @@ public class CircleProgressBarView extends View {
         mRectF.right = centerX + mInnerCircleRadius; // 右下角x
         mRectF.bottom = centerY + mInnerCircleRadius; // 右下角y
         Log.d("llw", "centerX:" + centerX + ",centerY:" + centerY + ",内圆半径:" + mInnerCircleRadius + ",外圆半径:" + mOutterCircleRadius);
+        if (mProgress >= 80) {
+//            progressPaint.setColor(Color.parseColor( "#ff85c229"));
+            progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ff00ff00", "#ff85c229")));
+            mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ff00ff00", "#ff85c229")));
+        } else if (mProgress >= 60) {
+//            progressPaint.setColor(Color.parseColor("#ff00ff00"));
+            progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ffff5500", "#ff00ff00")));
+            mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ffff5500", "#ff00ff00")));
+        } else {
+//            progressPaint.setColor(Color.parseColor("#ffff5500"));
+            progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ff0000ff", "#ffff5500")));
+            mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ff0000ff", "#ffff5500")));
+        }
         //绘制外围刻度
         float sweep1 = ARC_FULL_DEGREE * (progress / max); //进度划过的角度
-        drawOutterLine(canvas, sweep1);
+        drawOutterLine(canvas, ARC_FULL_DEGREE);
         //绘制内圆
         drawInnerGrayCircle(canvas);
 
         //绘制进度条
-        mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ff0000ff", "#ff00ff00")));
+
 
         canvas.drawArc(mRectF, -90, sweep1, false, mOutterCirclePaint);
 
@@ -289,7 +303,7 @@ public class CircleProgressBarView extends View {
         mBottomTextPaint.setTextSize(mBottomTextSize);
         text = mSleepStatus;
         textLen = mBottomTextPaint.measureText(text);
-        canvas.drawText(text, centerX - textLen / 2, centerY + centerY / 2 + textBounds.height() / 3, mBottomTextPaint);
+        canvas.drawText(text, centerX - textLen / 2, centerY + centerY / 2 + textBounds.height() / 4, mBottomTextPaint);
     }
 
     private void drawTextBg(Canvas canvas) {
@@ -298,7 +312,7 @@ public class CircleProgressBarView extends View {
 
     private void drawOutterLine(Canvas canvas, float sweep1) {
         float start = 30; //进度条起始角度   >> 1即除以2
-        float drawDegree = 1.6f;
+        float drawDegree = 1.2f;
         while (drawDegree <= ARC_FULL_DEGREE) {
             double a = (start + drawDegree) / 180 * Math.PI;
             float lineStartX = centerX - mOutterCircleRadius * (float) Math.sin(a);
@@ -332,7 +346,11 @@ public class CircleProgressBarView extends View {
 
     //动画切换进度值(异步)
     public void setProgress(final float progress) {
-        if (progress >= 80) {
+        mProgress = progress;
+        if (progress == -1) {
+            //网络异常/无数据
+
+        } else if (progress >= 80) {
             mSleepStatus = statusArray[2];
         } else if (progress > 60) {
             mSleepStatus = statusArray[1];

@@ -62,7 +62,7 @@
         android:roundIcon="@mipmap/icon_launch"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.HomeActivity">
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -95,10 +95,10 @@
             android:name=".activity.WifiSettingTipActivity"
             android:screenOrientation="portrait"/>
 
-        <!--  &lt;!&ndash;主界面&ndash;&gt;
-          <activity
-              android:name="com.ihypnus.ihypnuscare.activity.HomeActivity"
-              android:screenOrientation="portrait" />-->
+        <!--主界面-->
+        <activity
+            android:name="com.ihypnus.ihypnuscare.activity.HomeActivity"
+            android:screenOrientation="portrait"/>
 
         <!--wifi输入密码弹窗-->
         <activity
@@ -129,6 +129,16 @@
         <!--图片裁剪-->
         <activity
             android:name=".activity.ClipActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--日期选择-->
+        <activity
+            android:name=".activity.SelectDateActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--忘记密码-->
+        <activity
+            android:name=".activity.ForgetPasswordActivity"
             android:screenOrientation="portrait"/>
 
     </application>

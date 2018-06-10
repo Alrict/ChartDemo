@@ -2,6 +2,7 @@ package com.ihypnus.ihypnuscare.activity;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RadioGroup;
 
 import com.ihypnus.ihypnuscare.R;
@@ -31,7 +32,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     protected void init(Bundle savedInstanceState) {
         mRgpTab.check(R.id.rb_report);
-
+        getSupportedActionBar().setVisibility(View.GONE);
     }
 
     @Override

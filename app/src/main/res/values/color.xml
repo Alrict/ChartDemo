@@ -2,8 +2,14 @@
 <resources>
     <item name="gray_holo_dark" type="color">#ff464646</item>
     <item name="gray_holo_light" type="color">#ffd0d0d0</item>
+
+    <color name="title_layout_color">#1d1731</color>
+    <!-- app默认背景色 -->
+    <color name="default_background_color">#EFEFEF</color>
+    <color name="rippelColor">#c8c8c8</color>
+
     <!-- 纯白色 -->
-    <color name="white">#ffffffff</color>
+    <color name="white">#fffcff</color>
     <!-- 浅灰色 -->
     <color name="lightgray">#d0d0d0</color>
     <!-- 透明色 -->
@@ -56,7 +62,7 @@
     <!-- 普通文本 -->
     <color name="text_content">#333333</color>
     <!-- 灰色文本 -->
-    <color name="text_hint">#999999</color>
+    <color name="text_hint">#525777</color>
 
     <!--默认的分割线颜色-->
     <color name="def_line_color">#2c76b3</color>

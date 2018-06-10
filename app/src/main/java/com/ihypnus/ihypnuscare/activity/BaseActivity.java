@@ -1,13 +1,25 @@
 package com.ihypnus.ihypnuscare.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.actionbar.ActionBar;
+import com.ihypnus.ihypnuscare.actionbar.ContentView;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StatusBarUtil;
+import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -27,7 +39,21 @@ public abstract class BaseActivity extends Activity {
      * 请在方法{@link #preCreate} 初始化这个变量
      */
     protected boolean mIsTransparentStatusBar = false;
-
+    /**
+     * activity根布局
+     */
+    private View mRootView;
+    /**
+     * 是否显示actionBar
+     * 请在方法{@link #preCreate} 初始化这个变量
+     */
+    protected boolean mShowActionBar = true;
+    private ContentView mContentView;
+    private ActionBar mActionBar;
+    /**
+     * 内容背景设置为透明 true为透明 默认  false
+     */
+    private boolean mContentBgIsTransparent = false;
 
 
     @Override
@@ -42,7 +68,7 @@ public abstract class BaseActivity extends Activity {
         init(savedInstanceState);
         initEvent();
         loadData();
-
+        setActionBarEvent();
 
         if (mShowStatusBar) {
             if (mIsTransparentStatusBar) {
@@ -103,5 +129,165 @@ public abstract class BaseActivity extends Activity {
     public void setStatusBar(int color) {
 //        StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.title_layout_color));
         StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(color));
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        mRootView = View.inflate(this, R.layout.activity_base, null);
+        if (mShowActionBar) {
+            inflateActionBar();
+        }
+        ViewGroup baseContent = (ViewGroup) mRootView.findViewById(R.id.base_content);
+        mContentView = (ContentView) mRootView.findViewById(R.id.base_content);
+        LayoutInflater.from(this).inflate(layoutResID, baseContent);
+        super.setContentView(mRootView);
+        initContentBg(baseContent);
+    }
+
+    public ActionBar getSupportedActionBar() {
+        if (mActionBar == null && mRootView != null) {
+            inflateActionBar();
+        }
+        return mActionBar;
+    }
+
+    private void inflateActionBar() {
+        if (mRootView != null) {
+            ViewStub viewStubActionBar = (ViewStub) mRootView.findViewById(R.id.view_stub);
+            viewStubActionBar.inflate();
+            mActionBar = (ActionBar) mRootView.findViewById(R.id.action_bar);
+        }
+    }
+
+    /**
+     * 初始化内容背景
+     */
+    private void initContentBg(View contentView) {
+        if (contentView == null) {
+            return;
+        }
+        if (mContentBgIsTransparent) {
+            contentView.setBackgroundResource(R.color.transparent);
+        } else {
+            contentView.setBackgroundResource(R.color.default_background_color);
+        }
+    }
+
+    //************************************ Actionbar
+
+    protected void onActionBarItemClick(View view, int position) {
+        if (position == ActionBar.LEFT_ITEM) {
+            back();
+        }
+    }
+
+    protected void setLeftActionItem(int drawableId) {
+        getSupportedActionBar().setLeftDrawable(drawableId);
+    }
+
+    protected void setRightActionItem(int drawableId) {
+        getSupportedActionBar().setRightDrawable(drawableId);
+        getSupportedActionBar().getRightView().setEnabled(true);
+    }
+
+    protected void setRightActionText(int textId) {
+        getSupportedActionBar().setRightText(textId);
+        getSupportedActionBar().getRightView().setEnabled(true);
+    }
+
+    protected void setRightActionText(String text) {
+        getSupportedActionBar().setRightText(text);
+        getSupportedActionBar().getRightView().setEnabled(true);
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        super.setTitle(title);
+        getSupportedActionBar().setTitle(title);
+    }
+
+    /**
+     * 设置标题栏左上角的文案，左上角的icon可见
+     */
+    public void setLeftText(String text) {
+        TextView mLeftTitleText = getSupportedActionBar().getLeftText();
+        mLeftTitleText.setVisibility(View.VISIBLE);
+        mLeftTitleText.setText("返回");
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.leftMargin = (int) getResources().getDimension(R.dimen.w100);
+        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        mLeftTitleText.setLayoutParams(layoutParams);
+    }
+
+
+    @Override
+    public void setTitle(int titleId) {
+        super.setTitle(titleId);
+        setTitle(getString(titleId));
+    }
+
+    /**
+     * 设置actionBar相关事件
+     */
+    private void setActionBarEvent() {
+        if (mActionBar != null && mShowActionBar) {
+            mActionBar.setOnActionBarListener(new ActionBar.OnActionBarListener() {
+                public void onActionBarItemClicked(int position) {
+                    if (position == ActionBar.LEFT_ITEM) {
+                        onActionBarItemClick(getSupportedActionBar().getLeftView(), position);
+                    } else if (position == ActionBar.RIGHT_ITEM) {
+                        onActionBarItemClick(getSupportedActionBar().getRightView(), position);
+                    } else if (position == ActionBar.MIDDLE_ITEM) {
+                        onActionBarItemClick(getSupportedActionBar().getMiddleView(), position);
+                    }
+                }
+            });
+        }
+    }
+
+    protected void back() {
+        try {
+            onBackPressed();
+            showInput(false);
+        } catch (Exception e) {
+            LogOut.printStackTrace(e);
+        }
+    }
+
+    /**
+     * 是否关闭键盘
+     *
+     * @param show
+     */
+    public void showInput(boolean show) {
+        try {
+            if (show) {
+                InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInputFromInputMethod(this.getCurrentFocus().getApplicationWindowToken(), 0);
+            } else {
+                InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(this.getCurrentFocus().getApplicationWindowToken(), 0);
+            }
+        } catch (NullPointerException e1) {
+
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * 防止防止快速点击事件
+     */
+    @Override
+    public void onBackPressed() {
+        if (ViewUtils.isFastDoubleClick(300)) {
+            return;
+        }
+
+        if (!isFinishing()) {
+            super.onBackPressed();
+        } else {
+            finish();
+        }
+
     }
 }
