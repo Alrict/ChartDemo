@@ -283,7 +283,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
 
             case R.id.bt_next:
                 //设置好了
-                jumpToWifiSettingActivity();
+                jumpToHomeActivity();
                 break;
             case R.id.bt_set_wifi:
                 //下一步
@@ -302,8 +302,11 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     }
 
 
-    private void jumpToWifiSettingActivity() {
-        BaseDialogHelper.showMsgTipDialog(this, "设备不存在");
+    private void jumpToHomeActivity() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+//        BaseDialogHelper.showMsgTipDialog(this, "设备不存在");
 //        setResult(RESULT_OK);
 //        finish();
     }

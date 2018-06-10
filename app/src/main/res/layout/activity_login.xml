@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#060409">
+                android:background="@mipmap/img_background">
     <!--登入标题栏-->
     <RelativeLayout
         android:id="@+id/layout_input"
@@ -102,6 +102,7 @@
                 android:background="@null"
                 android:hint="请输入账号"
                 android:inputType="number"
+                android:singleLine="true"
                 android:maxLength="11"/>
 
             <ImageView
@@ -146,8 +147,8 @@
             android:background="@null"
             android:hint="请输入密码"
             android:inputType="textPassword"
-
-            android:maxLength="20"/>
+            android:maxLength="20"
+            android:singleLine="true"/>
 
         <CheckBox
             android:id="@+id/cb_visible"

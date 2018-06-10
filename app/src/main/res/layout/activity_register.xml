@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#060409">
+                android:background="@mipmap/img_background">
     <!--注册标题栏-->
     <RelativeLayout
         android:id="@+id/layout_input"
@@ -80,6 +80,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="4"
+                android:singleLine="true"
                 android:background="@null"
                 android:hint="请输入账号"
                 android:inputType="number"
@@ -126,6 +127,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/w56"
+            android:singleLine="true"
             android:layout_weight="1"
             android:background="@null"
             android:hint="请输入密码"
@@ -173,7 +175,8 @@
             android:layout_weight="1"
             android:background="@null"
             android:hint="请输入验证码"
-            android:maxLength="6"/>
+            android:maxLength="6"
+            android:singleLine="true"/>
         <LinearLayout
             android:id="@+id/layout_vcerification_code"
             android:layout_width="wrap_content"
@@ -238,7 +241,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:hint="请输入或扫一扫设备SN"
-            android:maxLength="6"/>
+            android:singleLine="true"/>
 
         <ImageView
             android:id="@+id/iv_scan"
@@ -276,7 +279,7 @@
             android:id="@+id/tv_protocol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="同意iHypnusCare使用条款"
+            android:text="@string/use_protocol"
             android:textColor="@color/white"/>
     </LinearLayout>
 
@@ -299,8 +302,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/id_register"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/h50"
-        android:text="有账号?去登录"/>
+        android:layout_marginTop="@dimen/h60"
+        android:text="有账号?去登录"
+        android:textSize="@dimen/w36"/>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,50 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/room_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#171c3a"
+                android:background="@mipmap/img_background"
                 android:orientation="vertical">
     <!--头部标题-->
-    <RelativeLayout
-        android:id="@+id/layout_header"
+    <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-    >
-
-        <View
-            android:id="@+id/line"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/h1"
-            android:layout_alignParentBottom="true"
-            android:background="@color/main_color_blue"/>
-    </RelativeLayout>
-
+        android:layout_height="@dimen/h1"
+        android:background="@color/main_color_blue"/>
 
     <View
         android:id="@+id/line1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h1"
-        android:layout_below="@id/layout_header"
-        android:layout_marginLeft="@dimen/w60"
-        android:layout_marginRight="@dimen/w60"
-        android:layout_marginTop="@dimen/h200"
+        android:layout_below="@id/line"
+        android:layout_marginLeft="@dimen/w96"
+        android:layout_marginRight="@dimen/w96"
+        android:layout_marginTop="@dimen/h180"
         android:background="@color/main_color_blue"/>
+
+
     <LinearLayout
         android:id="@+id/layout_input"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h150"
+        android:layout_height="@dimen/h180"
         android:layout_below="@+id/line1"
         android:orientation="horizontal">
         <EditText
             android:id="@+id/et_input_device_sn"
             android:layout_width="0dp"
-            android:layout_height="@dimen/h150"
+            android:layout_height="@dimen/h180"
             android:layout_marginLeft="@dimen/w60"
             android:layout_weight="1"
             android:background="@null"
             android:gravity="center"
             android:hint="请输入或扫一扫设备SN"
+            android:singleLine="true"
             android:textColor="@color/white"
             android:textColorHint="@color/gray"/>
         <ImageView
@@ -52,7 +45,7 @@
             android:layout_width="@dimen/w60"
             android:layout_height="@dimen/w60"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/w60"
+            android:layout_marginRight="@dimen/w96"
             android:src="@mipmap/icon_scan"/>
     </LinearLayout>
 
@@ -60,8 +53,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/h1"
         android:layout_below="@+id/layout_input"
-        android:layout_marginLeft="@dimen/w60"
-        android:layout_marginRight="@dimen/w60"
+        android:layout_marginLeft="@dimen/w96"
+        android:layout_marginRight="@dimen/w96"
         android:background="@color/main_color_blue"/>
 
     <Button
@@ -69,9 +62,10 @@
         style="@style/CommentButtonStyle"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/h300"
-        android:layout_marginLeft="@dimen/w60"
-        android:layout_marginRight="@dimen/w60"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/h668"
+        android:layout_marginLeft="@dimen/w96"
+        android:layout_marginRight="@dimen/w96"
         android:gravity="center"
         android:text="下一步"
         android:textSize="@dimen/w54"/>

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -50,6 +51,7 @@ public class MyInfosActivity extends BaseActivity implements View.OnClickListene
     private static final int REQUEST_CLIP = 3;
     private File mOutputImageFile;
     private Bitmap mAvatarBitmap;
+    private ImageView mIvDefaultPhoto;
 
     @Override
     protected int setView() {
@@ -61,6 +63,7 @@ public class MyInfosActivity extends BaseActivity implements View.OnClickListene
         //头像
         mLlPhoto = (RelativeLayout) findViewById(R.id.ll_photo);
         mCircleImageView = (CircleImageView) findViewById(R.id.avatar);
+        mIvDefaultPhoto = (ImageView) findViewById(R.id.iv_default_photo);
 
         //昵称
         mLlName = (RelativeLayout) findViewById(R.id.ll_name);
@@ -98,7 +101,6 @@ public class MyInfosActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void loadData() {
-
     }
 
     @Override
@@ -218,9 +220,10 @@ public class MyInfosActivity extends BaseActivity implements View.OnClickListene
                         String imagePath = data.getStringExtra("images_path");
                         mAvatarBitmap = ImageUtils.getBitmap(imagePath);
                         mCircleImageView.setImageBitmap(mAvatarBitmap);
+                        mIvDefaultPhoto.setVisibility(View.GONE);
                         final Bitmap bitmap = mAvatarBitmap;
 //                        final String guid = mCardDetailBean.getGuid();
-                        mCircleImageView.setImageBitmap(bitmap);
+//                        mCircleImageView.setImageBitmap(bitmap);
                         new Thread(new Runnable() {
                             @Override
                             public void run() {

@@ -21,13 +21,13 @@ import com.ihypnus.ihypnuscare.activity.SelectDateActivity;
 import com.ihypnus.ihypnuscare.adapter.VerticalPagerAdapter;
 import com.ihypnus.ihypnuscare.utils.BarChartManager;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
-import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.widget.CircleProgressBarView;
 import com.ihypnus.ihypnuscare.widget.VerticalViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @Package com.ihypnus.ihypnuscare.fragment
@@ -47,10 +47,14 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     private Animation mReLoadingAnim;
     private ImageView mIvRefresh;
     private ImageView mIvData;
-    private BarChart mChart;
+    private BarChart mChart1;
     public static final int REQUEST_START_TIME = 200;
     public static final int RESPONSE_SELECT_OK = 202;
     private TextView mTvData;
+    private View mThirdView;
+    private View mFourthView;
+    private BarChart mChart2;
+    private BarChart mChart3;
 
     @Override
     protected int setView() {
@@ -75,7 +79,11 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         mTvData = (TextView) mHomeFirstView.findViewById(R.id.tv_data);
 //        mPb.setMax(100);
         mSecondView = mInflater.inflate(R.layout.fragment_second, null);
-        mChart = (BarChart) mSecondView.findViewById(R.id.chart1);
+        mChart1 = (BarChart) mSecondView.findViewById(R.id.chart1);
+        mThirdView = mInflater.inflate(R.layout.fragment_third, null);
+        mChart2 = (BarChart) mThirdView.findViewById(R.id.chart1);
+        mFourthView = mInflater.inflate(R.layout.fragment_fourth, null);
+        mChart3 = (BarChart) mFourthView.findViewById(R.id.chart1);
         initChart();
     }
 
@@ -87,7 +95,9 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 // （1）定义该chart；
 // （2）设置chart的样式：包括chart的样式、坐标轴的样式和图例的样式等 ；
 // （3）为chart添加数据：先定义相应的Entry列表，并添加到DataSet中，然后再添加到ChartData对象中，最后再赋值给该Chart并刷新即可。
-        BarChartManager barChartManager = new BarChartManager(mChart);
+        BarChartManager barChartManager1 = new BarChartManager(mChart1);
+        BarChartManager barChartManager2 = new BarChartManager(mChart2);
+        BarChartManager barChartManager3 = new BarChartManager(mChart3);
         //设置x轴的数据
         ArrayList<Float> xValues = new ArrayList<>();
         for (int i = 0; i <= 31; i++) {
@@ -119,7 +129,9 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         names.add("折线四");
 
         //创建多条折线的图表
-        barChartManager.showBarChart(xValues, yValues.get(0), names.get(1), colours.get(3));
+        barChartManager1.showBarChart(xValues, yValues.get(0), names.get(0), colours.get(1));
+        barChartManager2.showBarChart(xValues, yValues.get(1), names.get(1), colours.get(2));
+        barChartManager3.showBarChart(xValues, yValues.get(2), names.get(2), colours.get(3));
 
     }
 
@@ -128,6 +140,8 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         final ArrayList<View> fragmentList = new ArrayList<>();
         fragmentList.add(mHomeFirstView);
         fragmentList.add(mSecondView);
+        fragmentList.add(mThirdView);
+        fragmentList.add(mFourthView);
         mPagerAdapter = new VerticalPagerAdapter(fragmentList);
 
         //设置最小偏移量
@@ -155,12 +169,11 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
             String currentDate = DateTimeUtils.getCurrentDate();
             String date = DateTimeUtils.date2Chinese(currentDate);
             mTvData.setText(date);
-            ToastUtils.showToastDefault(mAct, date);
         } catch (FormatException e) {
             e.printStackTrace();
 
         }
-        startAni(82);
+        startAni(84);
     }
 
     private void startAni(float sweep) {
@@ -231,6 +244,9 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
                 try {
                     String date = DateTimeUtils.date2Chinese(time);
                     mTvData.setText(date);
+                    Random random = new Random();
+                    int i = random.nextInt(100);
+                    startAni(i);
 //                    ToastUtils.showToastDefault(mAct, date);
                 } catch (FormatException e) {
                     e.printStackTrace();

@@ -4,19 +4,21 @@
                 android:id="@+id/room_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#171c3a">
+                android:background="@mipmap/img_background">
     <RelativeLayout
         android:id="@+id/layout_data"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h150"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/w54"
+        android:paddingRight="@dimen/w54">
         <ImageView
             android:id="@+id/iv_last_week"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/w54"
+            android:layout_height="@dimen/w54"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/icon_down_arrow"/>
+            android:src="@mipmap/icon_page_last"/>
         <TextView
             android:id="@+id/tv_data"
             android:layout_width="wrap_content"
@@ -27,11 +29,11 @@
             android:textSize="@dimen/w54"/>
         <ImageView
             android:id="@+id/iv_next_week"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/w54"
+            android:layout_height="@dimen/w54"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/icon_down_arrow"/>
+            android:src="@mipmap/icon_page_next"/>
     </RelativeLayout>
 
 
@@ -42,13 +44,13 @@
         android:layout_below="@id/layout_data"
         app:bottomTextColor="#00ff00"
         app:circularRingBgColor="#383c55"
-        app:innerRadius="@dimen/w260"
+        app:innerRadius="@dimen/w200"
         app:middleRightTextSize="@dimen/w40"
         app:middleTextColor="@color/tangerine"
         app:middleTextSize="@dimen/w100"
-        app:outterRadius="@dimen/w330"
+        app:outterRadius="@dimen/w270"
         app:progressDefaultWidth="@dimen/w30"
-        app:progressWidth="@dimen/w36"
+        app:progressWidth="@dimen/w34"
         app:topText="睡眠分数"
         app:topTextColor="@color/white"
         app:topTextSize="@dimen/w50"
@@ -62,44 +64,73 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/pb"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/h30"
+        android:layout_marginTop="@dimen/h62"
         android:text="使用时长"
-        android:textColor="@color/gray_white"
-        android:textSize="@dimen/w44"/>
+        android:textColor="#c1bcb9"
+        android:textSize="@dimen/w38"/>
 
-    <TextView
-        android:id="@+id/tv_usage_long_time"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/layout_useage_long"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_usage_long"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/h30"
-        android:text="12时25分"
-        android:textColor="@color/white"
-        android:textSize="@dimen/w44"/>
+        android:layout_marginTop="@dimen/h36"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7"
+            android:textColor="@color/white"
+            android:textSize="@dimen/h74"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/w10"
+            android:paddingRight="@dimen/w10"
+            android:text="时"
+            android:textColor="@color/white"
+            android:textSize="@dimen/w36"/>
+        <TextView
+            android:id="@+id/tv_minues"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="49"
+            android:textColor="@color/white"
+            android:textSize="@dimen/h74"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/w10"
+            android:paddingRight="@dimen/w10"
+            android:text="分"
+            android:textColor="@color/white"
+            android:textSize="@dimen/w36"/>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/layout_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_usage_long_time"
-        android:layout_marginTop="@dimen/h30">
+        android:layout_below="@id/layout_useage_long"
+        android:layout_marginTop="@dimen/h36">
         <TextView
             android:id="@+id/tv_usage_long_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="12:23--20:36"
+            android:text="12:23~20:36"
             android:textColor="@color/white"
-            android:textSize="@dimen/w44"/>
+            android:textSize="@dimen/w54"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/w56"
+            android:layout_height="@dimen/w56"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/w150"
-            android:src="@mipmap/icon_down_arrow"/>
+            android:layout_marginRight="@dimen/w292"
+            android:src="@mipmap/icon_right_arrow"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -107,15 +138,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_time"
-        android:layout_marginTop="@dimen/h30">
+        android:layout_marginTop="@dimen/h36">
         <TextView
             android:id="@+id/tv_useage_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="使用详情"
-            android:textColor="@color/white"
-            android:textSize="@dimen/w54"/>
+            android:textColor="#c1bcb9"
+            android:textSize="@dimen/w38"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/h1"
@@ -144,24 +175,25 @@
                 android:gravity="center"
                 android:text="设备模式"
                 android:textColor="@color/gray_white"
-                android:textSize="@dimen/w44"/>
+                android:textSize="@dimen/w38"/>
             <TextView
                 android:id="@+id/tv_device_model"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/h24"
                 android:gravity="center"
                 android:text="APAP"
                 android:textColor="@color/gray_white"
-                android:textSize="@dimen/w44"/>
+                android:textSize="@dimen/w38"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h30"
+                android:layout_marginTop="@dimen/h40"
                 android:gravity="center"
                 android:text="平均漏气"
                 android:textColor="@color/gray_white"
-                android:textSize="@dimen/w44"/>
+                android:textSize="@dimen/w38"/>
             <TextView
                 android:id="@+id/tv_average_air_leak"
                 android:layout_width="match_parent"
@@ -169,7 +201,7 @@
                 android:gravity="center"
                 android:text="5.6L/min"
                 android:textColor="@color/gray_white"
-                android:textSize="@dimen/w44"/>
+                android:textSize="@dimen/w38"/>
         </LinearLayout>
 
         <!--吸气压力-->
@@ -184,24 +216,25 @@
                 android:gravity="center"
                 android:text="90%吸气压力"
                 android:textColor="@color/gray_white"
-                android:textSize="@dimen/w44"/>
+                android:textSize="@dimen/w38"/>
             <TextView
                 android:id="@+id/tv_nhale_kpa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/h24"
                 android:gravity="center"
                 android:text="11cmH2O"
                 android:textColor="@color/gray_white"
-                android:textSize="@dimen/w44"/>
+                android:textSize="@dimen/w38"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h30"
+                android:layout_marginTop="@dimen/h40"
                 android:gravity="center"
                 android:text="AHI"
                 android:textColor="@color/gray_white"
-                android:textSize="@dimen/w44"/>
+                android:textSize="@dimen/w38"/>
             <TextView
                 android:id="@+id/tv_ahi"
                 android:layout_width="match_parent"
@@ -209,7 +242,7 @@
                 android:gravity="center"
                 android:text="11"
                 android:textColor="@color/gray_white"
-                android:textSize="@dimen/w44"/>
+                android:textSize="@dimen/w38"/>
         </LinearLayout>
 
         <!--呼气压力-->
@@ -224,15 +257,16 @@
                 android:gravity="center"
                 android:text="呼气压力"
                 android:textColor="@color/gray_white"
-                android:textSize="@dimen/w44"/>
+                android:textSize="@dimen/w38"/>
             <TextView
                 android:id="@+id/tv_expiration_kpa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/h24"
                 android:gravity="center"
                 android:text="4cmH2O"
                 android:textColor="@color/gray_white"
-                android:textSize="@dimen/w44"/>
+                android:textSize="@dimen/w38"/>
 
         </LinearLayout>
 

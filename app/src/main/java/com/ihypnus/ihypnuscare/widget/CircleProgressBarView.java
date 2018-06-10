@@ -52,7 +52,7 @@ public class CircleProgressBarView extends View {
     private Paint mOutterCirclePaint;
     private Paint mInnerCirclePain;
     private String mSleepStatus = "";
-    private String[] statusArray = {"不好", "良好", "非常好"};
+    private String[] statusArray = {"不太好", "还不错", "非常好"};
     private int mOutterCircleRadius;
     private int mTrackBarColor;
     private int mTrackBarWidth;
@@ -240,16 +240,16 @@ public class CircleProgressBarView extends View {
         Log.d("llw", "centerX:" + centerX + ",centerY:" + centerY + ",内圆半径:" + mInnerCircleRadius + ",外圆半径:" + mOutterCircleRadius);
         if (mProgress >= 80) {
 //            progressPaint.setColor(Color.parseColor( "#ff85c229"));
-            progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ff00ff00", "#ff85c229")));
-            mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ff00ff00", "#ff85c229")));
+            progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ff0093dd", "#ff85C226")));
+            mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ff0093dd", "#ff85C226")));
         } else if (mProgress >= 60) {
 //            progressPaint.setColor(Color.parseColor("#ff00ff00"));
-            progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ffff5500", "#ff00ff00")));
-            mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ffff5500", "#ff00ff00")));
+            progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ffE67817", "#ff0093dd")));
+            mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ffE67817", "#ff0093dd")));
         } else {
 //            progressPaint.setColor(Color.parseColor("#ffff5500"));
-            progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ff0000ff", "#ffff5500")));
-            mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ff0000ff", "#ffff5500")));
+            progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ffD4380E", "#ffE67817")));
+            mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ffD4380E", "#ffE67817")));
         }
         //绘制外围刻度
         float sweep1 = ARC_FULL_DEGREE * (progress / max); //进度划过的角度
@@ -300,6 +300,13 @@ public class CircleProgressBarView extends View {
 
 
         //底部文字
+        if (mProgress >= 80) {
+            mBottomTextPaint.setColor(Color.parseColor("#ff85C226"));
+        } else if (mProgress >= 60) {
+            mBottomTextPaint.setColor(Color.parseColor("#ff0093dd"));
+        } else {
+            mBottomTextPaint.setColor(Color.parseColor("#ffE67817"));
+        }
         mBottomTextPaint.setTextSize(mBottomTextSize);
         text = mSleepStatus;
         textLen = mBottomTextPaint.measureText(text);

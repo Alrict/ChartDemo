@@ -3,7 +3,7 @@
               android:id="@+id/room_view"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#171c3a"
+              android:background="@color/status_bar_default"
               android:orientation="vertical">
     <!--头部标题-->
     <RelativeLayout

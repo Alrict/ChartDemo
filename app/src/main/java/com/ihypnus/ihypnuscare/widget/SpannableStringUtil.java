@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
@@ -17,7 +18,6 @@ import android.text.style.UnderlineSpan;
 
 /**
  * 文字处理工具类
- * Created by dsfg on 2016/5/5.
  */
 public class SpannableStringUtil {
 
@@ -55,12 +55,14 @@ public class SpannableStringUtil {
 
 
     /**
-     * 文字颜色
+     * 文字颜色及下划线
      */
     public static SpannableString addForeColorSpan(String text, int start, int end , int color) {
         SpannableString spanString = new SpannableString(text);
         ForegroundColorSpan span = new ForegroundColorSpan(color);
         spanString.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        UnderlineSpan underlineSpan = new UnderlineSpan();
+        spanString.setSpan(underlineSpan, start, end, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         return spanString;
     }
 

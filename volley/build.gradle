@@ -18,10 +18,10 @@ buildscript {
 apply plugin: 'com.android.library'
 android {
     signingConfigs {
-        volley {
+        ihy_sign {
+            storeFile file('G:/Ihy')
             keyAlias 'ihy'
             keyPassword '111111'
-            storeFile file('C:/Users/Administrator/Desktop/ihy_debug_key.jks')
             storePassword '111111'
         }
     }

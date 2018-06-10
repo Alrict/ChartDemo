@@ -1,7 +1,9 @@
 package com.ihypnus.ihypnuscare.activity;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.RadioGroup;
 
@@ -42,6 +44,9 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     protected void loadData() {
+
+//        BaseDialogHelper.showLoadingDialog(this, true, "正在加载...");
+
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         //设备
         if (mReportFragment == null) {
@@ -53,6 +58,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
 
         transaction.commit();
+//        BaseDialogHelper.dismissLoadingDialog();
     }
 
     @Override
@@ -96,5 +102,23 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 break;
         }
         transaction.commit();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (mMyIhyFragment != null && requestCode == 1 || requestCode == 2 || requestCode == 3) {
+                mMyIhyFragment.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (mMyIhyFragment != null && requestCode == 1)  {
+            mMyIhyFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

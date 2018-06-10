@@ -2,10 +2,16 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        ihy {
-            keyAlias 'ihy'
+        release {
+            keyAlias 'ihy_key_srore'
             keyPassword '111111'
-            storeFile file('C:/Users/Administrator/Desktop/ihy_debug_key.jks')
+            storeFile file('C:/Users/Vicky/Desktop/ihy/ihy_key_store.jks')
+            storePassword '111111'
+        }
+        debug {
+            keyAlias 'ihy_key_srore'
+            keyPassword '111111'
+            storeFile file('G:/Ihy')
             storePassword '111111'
         }
     }
@@ -22,7 +28,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.ihy
+            signingConfig signingConfigs.release
         }
     }
 }

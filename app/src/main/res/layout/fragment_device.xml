@@ -3,7 +3,7 @@
               android:id="@+id/room_view"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#171c3a"
+              android:background="@mipmap/img_background"
               android:orientation="vertical">
     <!--头部标题-->
     <RelativeLayout
@@ -40,7 +40,22 @@
     <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="@dimen/h1100"
+        android:layout_marginLeft="@dimen/w96"
+        android:layout_marginRight="@dimen/w96"
+        android:layout_marginTop="@dimen/h178"/>
+
+    <Button
+        android:id="@+id/btn_add"
+        style="@style/CommentButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="@dimen/h80"
+        android:layout_marginLeft="@dimen/w86"
+        android:layout_marginRight="@dimen/w86"
+        android:gravity="center"
+        android:text="设置为使用中的设备"
+        android:textSize="@dimen/w54"/>
 
 
 </LinearLayout>

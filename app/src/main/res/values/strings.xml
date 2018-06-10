@@ -42,4 +42,10 @@
     <string name="tv_person_msg">个人信息</string>
     <!-- 日历控件 -->
     <string name="sans_serif" translatable="false">sans-serif</string>
+    <!--同意条款-->
+    <string name="use_protocol">同意iHypnusCare使用条款</string>
+    <string name="tv_infos_tip1">为了睡眠报告更准确,请确保所填信息真实有效</string>
+    <string name="tv_infos_tip2">我们会保障您的信息安全,请放心填写</string>
+    <string name="tv_man">男</string>
+    <string name="tv_female">女</string>
 </resources>

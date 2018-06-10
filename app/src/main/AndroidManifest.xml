@@ -62,7 +62,8 @@
         android:roundIcon="@mipmap/icon_launch"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.LoginActivity"
+        >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -78,6 +79,7 @@
         <!--注册界面-->
         <activity
             android:name=".activity.RegisterActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
 
         <!--新增设备-->
@@ -139,6 +141,12 @@
         <!--忘记密码-->
         <activity
             android:name=".activity.ForgetPasswordActivity"
+            android:screenOrientation="portrait"/>
+
+
+        <!--个人信息-->
+        <activity
+            android:name=".activity.PersonalInformationActivity"
             android:screenOrientation="portrait"/>
 
     </application>

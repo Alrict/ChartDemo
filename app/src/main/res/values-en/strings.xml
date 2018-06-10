@@ -13,13 +13,21 @@
     <string name="intent_data_2">file_data_2</string>
     <string name="intent_value">value</string>
     <string name="intent_type">type</string>
-    <string name="activity_scan_battery_low_msg">The battery power is too low and the flash function is temporarily off!</string>
+    <string name="activity_scan_battery_low_msg">The battery power is too low and the flash function
+        is temporarily off!
+    </string>
     <string name="tv_title">Sleep report</string>
-    <string name="tv_new_device_tip_1">1. Make sure your ventilator is plugged in and that the distance between the ventilator, cell phone, and router is within 10 meters.</string>
-    <string name="tv_new_device_tip_2">2. Enter the ventilator setup menu and select "One-key configuration" to enter the manual configuration mode. Click Next.</string>
+    <string name="tv_new_device_tip_1">1. Make sure your ventilator is plugged in and that the
+        distance between the ventilator, cell phone, and router is within 10 meters.
+    </string>
+    <string name="tv_new_device_tip_2">2. Enter the ventilator setup menu and select "One-key
+        configuration" to enter the manual configuration mode. Click Next.
+    </string>
     <string name="btn_next">Next step</string>
     <string name="tv_add_new_device">Add device</string>
-    <string name="tv_connect_wifi_tip">Go to the mobile WI-FI page to connect to "Hypnus-AP" and return to iHypnusCare App for operation</string>
+    <string name="tv_connect_wifi_tip">Go to the mobile WI-FI page to connect to "Hypnus-AP" and
+        return to iHypnusCare App for operation
+    </string>
     <string name="bt_set_wifi">Go to set up WI-FI</string>
     <string name="tv_setting_ok">Set up ok</string>
 
@@ -34,11 +42,20 @@
     <string name="semaphore_standard">signal standard</string>
     <string name="semaphore_good">signal good</string>
     <string name="semaphore_week">signal week</string>
-    <string name="connect_success"> Connection successful</string>
-    <string name="refresh"> refresh wifi list</string>
+    <string name="connect_success">Connection successful</string>
+    <string name="refresh">refresh wifi list</string>
     <string name="wifi_permission">Please turn on wifi and location permissions</string>
-    <string name="wifi_permission_connect_target">Please connect to the target hotspot first</string>
+    <string name="wifi_permission_connect_target">Please connect to the target hotspot first
+    </string>
     <string name="socket_err">Connection failed, please try again</string>
     <string name="tv_person_msg">Personal Information</string>
+    <string name="use_protocol">Agree to iHypnusCare Terms of Use</string>
+    <string name="tv_infos_tip1">For a more accurate sleep report, make sure that the information
+        provided is true and valid
+    </string>
+    <string name="tv_infos_tip2">We will protect your information security, please fill it out
+    </string>
 
+    <string name="tv_man">Male</string>
+    <string name="tv_female">Female</string>
 </resources>
