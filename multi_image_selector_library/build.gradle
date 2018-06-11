@@ -5,7 +5,7 @@ android {
         ihy_sign {
             keyAlias 'ihy'
             keyPassword '111111'
-            storeFile file('G:/Ihy')
+            storeFile file('.\\ihy_key_store.jks')
             storePassword '111111'
         }
     }

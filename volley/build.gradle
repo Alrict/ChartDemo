@@ -19,7 +19,7 @@ apply plugin: 'com.android.library'
 android {
     signingConfigs {
         ihy_sign {
-            storeFile file('G:/Ihy')
+            storeFile file('.\\ihy_key_store.jks')
             keyAlias 'ihy'
             keyPassword '111111'
             storePassword '111111'
