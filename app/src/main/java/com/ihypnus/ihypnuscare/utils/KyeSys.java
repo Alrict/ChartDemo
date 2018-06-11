@@ -35,7 +35,7 @@ public class KyeSys {
 
     private static final String TAG = "KyeSys";
 
-    public static final String KYE_ROOT_FILE_NAME = "kyeInter";
+    public static final String KYE_ROOT_FILE_NAME = "iHynusCare";
 
     public static final String KYE_CRASH = "crashlog";
 

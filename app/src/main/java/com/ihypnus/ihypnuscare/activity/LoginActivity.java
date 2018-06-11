@@ -27,6 +27,7 @@ import com.ihypnus.ihypnuscare.utils.AndroidSystemHelper;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import kr.co.namee.permissiongen.PermissionGen;
 
@@ -193,7 +194,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
             //登录
             case R.id.id_login:
-
+                CrashReport.testJavaCrash();
                 if (!ViewUtils.isFastDoubleClick()) {
                     if (checkInput()) {
                         jumpToHomeActiity();

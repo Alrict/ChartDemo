@@ -4,6 +4,7 @@ import android.app.Application;
 import android.graphics.Bitmap;
 
 import com.ihypnus.ihypnuscare.net.NetRequestHelper;
+import com.ihypnus.ihypnuscare.utils.KyeSys;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -11,6 +12,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.tencent.bugly.crashreport.CrashReport;
+import com.wenming.library.LogReport;
+import com.wenming.library.save.imp.CrashWriter;
 
 
 /**
@@ -23,6 +27,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 public class IhyApplication extends Application {
 
     public static IhyApplication mInstance;
+    private boolean isDebug = BuildConfig.LOG_DEBUG;
 
     @Override
     public void onCreate() {
@@ -31,6 +36,38 @@ public class IhyApplication extends Application {
         // 初始化新网络框架请求
         NetRequestHelper.getInstance().init(this);
         initImageLoadConfig(this);
+        initLogReport();
+    }
+
+    /**
+     * 本地报错日志
+     */
+    private void initLogReport() {
+
+        if (isDebug) {
+            //debug模式下启动本地报错日志保存
+            LogReport.getInstance()
+                    .setCacheSize(30 * 1024 * 1024)//支持设置缓存大小，超出后清空
+                    .setLogDir(mInstance, KyeSys.getKrashPath() + "/")//定义路径为：sdcard/[app name]/
+                    .setWifiOnly(false)//设置只在Wifi状态下上传，设置为false为Wifi和移动网络都上传
+                    .setLogSaver(new CrashWriter(mInstance))//支持自定义保存崩溃信息的样式
+//                    .setEncryption(new AES()) //支持日志到AES加密或者DES加密，默认不开启
+                    .init(mInstance);
+        }else {
+            //初始化腾讯MTA(用户操作行为/月活量等数据)
+            initMTA(mInstance);
+            CrashReport.initCrashReport(mInstance);
+        }
+
+    }
+
+    private void initMTA(Application app) {
+//        try {
+//            boolean isSuccess = StatService.startStatService(app, "ABQX4U2J56XR", StatConstants.VERSION);
+//            LogOut.d("MTA", "MTA初始化==" + isSuccess);
+//        } catch (MtaSDkException e) {
+//            LogOut.d("MTA", "MTA初始化失败" + e);
+//        }
     }
 
     /**

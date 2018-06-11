@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+        // 防止在发布的时候出现因MissingTranslation导致Build Failed!1
+        disable 'MissingTranslation'
+    }
     signingConfigs {
         release {
             keyAlias 'ihy_key_srore'
@@ -16,19 +24,69 @@ android {
         }
     }
     compileSdkVersion 26
+
     defaultConfig {
         applicationId "com.ihypnus.ihypnuscare"
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        flavorDimensions "versionCode"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+
         release {
-            minifyEnabled false
+
+            // 移除无用的resource文件
+            shrinkResources true
+            //是否进行混淆
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            buildConfigField "String", "HOST", HOST_RELEASE.toString()
+        }
+        debug {
+
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+            buildConfigField "String", "HOST", HOST_DEBUG.toString()
+        }
+    }
+
+    //multiDex的一些相关配置，这样配置可以让你的编译速度更快
+    dexOptions {
+        preDexLibraries = false
+        //让它不要对Lib做preDexing
+        incremental true
+        //开启incremental dexing,优化编译效率，这个功能android studio默认是关闭的。
+        javaMaxHeapSize "16g"     //增加java堆内存大小
+    }
+
+    // 可定义的产品特性:根据不同需求 选择相应模式 正式key,测试key
+    productFlavors {
+
+        //正式环境
+        releaseApk {
+            applicationId "com.ihypnus.ihypnuscare"
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "String", "CRASH_LOG", '".crashlog"'
+        }
+
+        //测试环境
+        debugApk {
+            applicationId "com.ihypnus.ihypnuscare"
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "String", "CRASH_LOG", '"crashlog"'
+        }
+
+        //测试环境，可调式，正式地址,有日志打印,
+        debugRApk {
+            applicationId "com.ihypnus.ihypnuscare"
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "String", "CRASH_LOG", '"crashlog"'
         }
     }
 
@@ -38,18 +96,19 @@ android {
     * buildType.name指编译类型，就是debug或者release
     * defaultConfig.versionName表示在defaultConfig标签下写的版本号
     * */
-   applicationVariants.all {variant ->
-            variant.outputs.all {output ->
-                def fileName = "ihy_"+ buildType.name + "_v${defaultConfig.versionName}-${releaseTime()}.apk"
-                def outFile = output.outputFile
-                if (outFile != null && outFile.name.endsWith('.apk')) {
-                    outputFileName = fileName  //  output.outputFile 改为 outputFileName
-                }
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def fileName = "ihy_" + buildType.name + "_v${defaultConfig.versionName}-${releaseTime()}.apk"
+            def outFile = output.outputFile
+            if (outFile != null && outFile.name.endsWith('.apk')) {
+                outputFileName = fileName  //  output.outputFile 改为 outputFileName
             }
+        }
     }
 }
 
 /*生成打包时间*/
+
 def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }
@@ -71,4 +130,9 @@ dependencies {
     //    implementation(name: 'multi_image_selector_library', ext: 'aar')
     implementation project(':multi_image_selector_library')
     implementation files('libs/universal-image-loader-1.9.5.jar')
+    implementation 'com.github.wenmingvs:LogReport:1.0.3'
+    implementation 'com.tencent.bugly:crashreport:2.6.6.1'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    implementation 'com.tencent.bugly:nativecrashreport:3.3.1'
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
 }
