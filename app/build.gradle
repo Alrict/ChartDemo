@@ -26,6 +26,11 @@ android {
     compileSdkVersion 26
 
     defaultConfig {
+        ndk {
+// 设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_6
+        }
+
         applicationId "com.ihypnus.ihypnuscare"
         minSdkVersion 19
         targetSdkVersion 26
@@ -34,13 +39,12 @@ android {
         flavorDimensions "versionCode"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
 
         release {
 
-            // 移除无用的resource文件
             shrinkResources true
-            //是否进行混淆
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
@@ -109,7 +113,7 @@ android {
 
 /*生成打包时间*/
 
-def releaseTime() {
+static def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }
 
