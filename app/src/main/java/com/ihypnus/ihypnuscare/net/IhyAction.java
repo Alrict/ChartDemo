@@ -9,9 +9,7 @@ package com.ihypnus.ihypnuscare.net;
  */
 public class IhyAction {
     public final static String HOST = "http://172.20.2.56:8080/";
-    /**
-     * 获取登录验证码( 内部,外请,代理,合作伙伴)
-     */
+
     public static final String Get_Login_Code = HOST + "GetVCode";
 
 }

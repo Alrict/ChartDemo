@@ -16,9 +16,13 @@ import org.json.JSONException;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @Package com.ihypnus.ihypnuscare.net
@@ -28,7 +32,7 @@ import java.util.Map;
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
 public class HttpRequest extends Request {
-
+    public static String K = "99B22B64D53D2234RTY6A7360ABAEB82";
     private Response.ErrorListener mErrorListener;
     private boolean isCallBacked;
     private StringBuilder mRequestLog = new StringBuilder();
@@ -64,11 +68,91 @@ public class HttpRequest extends Request {
 
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
-        if (mHeaderParams != null) {
-            return mHeaderParams;
+        Map<String, String> headers = new HashMap();
+        String accessToken = this.createIdentifier();
+        if (accessToken != null) {
+            headers.put("access-token", accessToken);
+//            headers.put("kye", ORGANIZATION);
         }
-        return super.getHeaders();
+        if (mHeaderParams!=null){
+            headers.putAll(mHeaderParams);
+        }
 
+//        headers.putAll(Volley.me.staticInitRequestHead);
+        return headers;
+    }
+
+    protected String createIdentifier() {
+        Map<String, String> parmas = this.getParams();
+        if(parmas == null) {
+            return null;
+        } else {
+            Set<String> keySet = parmas.keySet();
+            String[] keys = new String[keySet.size()];
+            parmas.keySet().toArray(keys);
+            Arrays.sort(keys);
+            StringBuilder sb = new StringBuilder();
+            sb.append(K);
+            String[] var5 = keys;
+            int var6 = keys.length;
+
+            for(int var7 = 0; var7 < var6; ++var7) {
+                String key = var5[var7];
+                String value = (String)parmas.get(key);
+                if(!TextUtils.isEmpty(value) && !this.stringIsEmpty(value)) {
+                    sb.append(key + value);
+                }
+            }
+
+            return encryptionMD5(sb.toString()).toUpperCase();
+        }
+    }
+
+
+    /**
+     * 传入的字符窜是空格
+     * @param content
+     * @return
+     */
+    private boolean stringIsEmpty(String content) {
+        if(TextUtils.isEmpty(content)) {
+            return true;
+        } else {
+            int length = content.length();
+
+            for(int i = 0; i < length; ++i) {
+                char c = content.charAt(i);
+                if(c != 32) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+
+    public static String encryptionMD5(String content) {
+        MessageDigest messageDigest = null;
+        StringBuffer md5StrBuff = new StringBuffer();
+
+        try {
+            messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.reset();
+            messageDigest.update(content.getBytes("UTF-8"));
+            byte[] byteArray = messageDigest.digest();
+
+            for (byte aByteArray : byteArray) {
+                if (Integer.toHexString(255 & aByteArray).length() == 1) {
+                    md5StrBuff.append("0").append(Integer.toHexString(255 & aByteArray));
+                } else {
+                    md5StrBuff.append(Integer.toHexString(255 & aByteArray));
+                }
+            }
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException var5) {
+            var5.printStackTrace();
+        }
+
+        return md5StrBuff.toString();
     }
 
 

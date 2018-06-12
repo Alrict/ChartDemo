@@ -22,8 +22,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.config.Constants;
+import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.AndroidSystemHelper;
+import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.SP;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
@@ -56,6 +62,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private TextView mTvLocalCode;
     private ImageView mIvDownArrow;
     private CheckBox mCbVisible;
+    private SP mSP;
 
     @Override
     protected int setView() {
@@ -97,6 +104,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void init(Bundle savedInstanceState) {
         getSupportedActionBar().setVisibility(View.GONE);
+        mSP = SP.getSP(Constants.LOGIN_ACCOUNT_PASSWORD);
+        String login_account = mSP.getString(Constants.LOGIN_ACCOUNT);
+        String login_password = mSP.getString(Constants.LOGIN_PASSWORD);
+        if (!StringUtils.isNullOrEmpty(login_account)) {
+            mEtCount.setText(login_account);
+            mEtCount.setSelection(login_account.length());
+        }
+        if (!StringUtils.isNullOrEmpty(login_password)) {
+            mEtPassWord.setText(login_password);
+            mEtPassWord.setSelection(login_password.length());
+        }
+
     }
 
     @Override
@@ -239,8 +258,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void jumpToHomeActiity() {
-        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-        startActivity(intent);
+        IhyRequest.getUserConfirm2(new Response.Listener<Object>() {
+            @Override
+            public void onResponse(Object response) {
+                LogOut.d("llw",response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                LogOut.d("llw",error.toString());
+            }
+        });
+
+//        mSP.putString(Constants.LOGIN_ACCOUNT, mEtCount.getText().toString().trim());
+//        mSP.putString(Constants.LOGIN_PASSWORD, mEtPassWord.getText().toString().trim());
+//        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+//        startActivity(intent);
     }
 
     /**

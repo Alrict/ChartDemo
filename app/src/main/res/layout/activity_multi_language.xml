@@ -8,44 +8,73 @@
     <View
         style="@style/CommentDividingLineNoPadding"/>
     <RelativeLayout
+        android:id="@+id/layout_simplified_chinese"
         style="@style/CommentRelativeLayout">
         <TextView
-            android:id="@+id/tv_multi_language"
+            android:id="@+id/tv_simplified_chinese"
             style="@style/TextAppearanceMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="@string/tv_multi_language"/>
+            android:text="简体中文"/>
         <ImageView
-            android:id="@+id/iv_multi_language"
+            android:id="@+id/iv_simplified_chinese"
             android:layout_width="@dimen/w56"
             android:layout_height="@dimen/w56"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/icon_right_arrow"/>
+            android:src="@mipmap/icon_corrent"
+            android:visibility="invisible"/>
         <View
             style="@style/CommentDividingLineNoPadding"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/layout_traditional_chinese"
         style="@style/CommentRelativeLayout">
         <TextView
-            android:id="@+id/tv_about"
+            android:id="@+id/tv_traditional_chinese"
             style="@style/TextAppearanceMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="@string/tv_about"/>
+            android:text="繁体中文"/>
         <ImageView
-            android:id="@+id/iv_about"
+            android:id="@+id/iv_traditional_chinese"
             android:layout_width="@dimen/w56"
             android:layout_height="@dimen/w56"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/icon_right_arrow"/>
+            android:src="@mipmap/icon_corrent"
+            android:visibility="invisible"/>
         <View
             style="@style/CommentDividingLineNoPadding"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/layout_english"
+        style="@style/CommentRelativeLayout">
+        <TextView
+            android:id="@+id/tv_english"
+            style="@style/TextAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="繁体中文"/>
+        <ImageView
+            android:id="@+id/iv_english"
+            android:layout_width="@dimen/w56"
+            android:layout_height="@dimen/w56"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_corrent"
+            android:visibility="invisible"/>
+        <View
+            style="@style/CommentDividingLineNoPadding"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
 </LinearLayout>

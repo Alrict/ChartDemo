@@ -3,11 +3,16 @@ package com.ihypnus.ihypnuscare.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.config.Constants;
+import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.SP;
+import com.ihypnus.ihypnuscare.utils.StringUtils;
 
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
@@ -23,6 +28,7 @@ import kr.co.namee.permissiongen.PermissionSuccess;
 public class SplashActivity extends BaseActivity implements View.OnClickListener {
 
     private final static int REQUEST_CODE = 100;
+    private static final String TAG = SplashActivity.class.getSimpleName();
     private ImageView mImSplash;
     private TextView mTvJumpOver;
     private long mStartTime;
@@ -30,6 +36,9 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
      * 手动点击跳转到下个界面 当点击跳过按钮就设置为true
      */
     private boolean isJumpOver = false;
+    private SP mSP;
+    private CountDownTimer mCountDownTimer;
+    private TextView mTvCountdown;
 
     @Override
     protected int setView() {
@@ -39,6 +48,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void findViews() {
         mImSplash = (ImageView) findViewById(R.id.im_splash);
+        mTvCountdown = (TextView) findViewById(R.id.tv_countdown);
         mTvJumpOver = (TextView) findViewById(R.id.tv_jump_over);
     }
 
@@ -51,19 +61,8 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
             return;
         }
         mStartTime = System.currentTimeMillis();
-//        if (adInfo != null) {
-//            //本地有缓存启动页图片，那么加载显示它
-//            mInitAdinfo = adInfo;
-//            loadCacheImage(adInfo.getSmallImg());
-//            // TIME 秒后跳转到下个界面
-//            //            startCountDown(TIME);
-//        } else {
-//            // 由于不用加载缓存图片
-//            isLoadCacheImgComplete = true;
-//            //显示本地默认图片,等待app初始化完后立即跳转到下一个界面
-//            showJumpOverBtn(false);
-//        }
-        showJumpOverBtn(false);
+        // TIME 秒后跳转到下个界面
+        startCountDown(5);
     }
 
     @Override
@@ -88,91 +87,70 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_jump_over:
-                //                if (!AppInitHelper.getInstance().appIsInit()) {
-                //                    return;
-                //                }
                 isJumpOver = true;
                 jumpToNextActivity();
                 break;
             case R.id.im_splash: //点击图片跳转到H5界面
-                //                if (!AppInitHelper.getInstance().appIsInit()) {
-                //                    return;
-                //                }
-                //                if (mInitAdinfo == null) {
-                //                    return;
-                //                }
-                //                stopCountDown();
-                //                jumpToActivity();
-                //                if (PrefUtils.getSplashAdInfo() != null) {
-                //                    mAdinfo = PrefUtils.getSplashAdInfo();
-                //                }
-                //                if (!StringUtils.isNullOrEmpty(mInitAdinfo.getUrl())) { //Url
-                //                    KyeJumpManager.jumpMessageDetailActivity(SplashActivity.this, String.valueOf(mInitAdinfo.getId()), mInitAdinfo.getClassName(), mInitAdinfo.getAdName(), mInitAdinfo.getUrl(), mInitAdinfo.getAdName(), mInitAdinfo.getModule(), String.valueOf(mInitAdinfo.getClassid()));
-                //                    isJumpH5Web = true;
-                //                } else if (!StringUtils.isNullOrEmpty(mInitAdinfo.getAccessUrl())) { //accessUrl
-                //                    KyeJumpManager.jumpMessageDetailActivity(SplashActivity.this, String.valueOf(mInitAdinfo.getId()), mInitAdinfo.getClassName(), mInitAdinfo.getAdName(), mInitAdinfo.getAccessUrl(), mInitAdinfo.getAdName(), mInitAdinfo.getModule(), String.valueOf(mInitAdinfo.getClassid()));
-                //                    isJumpH5Web = true;
-                //                } else {
-                //                    mImSplash.setEnabled(false);
-                //                }
+
                 break;
         }
     }
 
-    /**
-     * 显示跳过按钮
-     */
-    private void showJumpOverBtn(boolean showBtn) {
-//        if (showBtn && AppInitHelper.getInstance().appIsInit()) {
-//            mTvJumpOver.setVisibility(View.VISIBLE);
-//            mTvJumpOver.setEnabled(true);
-//            AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
-//            alphaAnimation.setDuration(getResources().getInteger(R.integer.animation_default_duration));
-//            mTvJumpOver.startAnimation(alphaAnimation);
-//        } else {
-//            mTvJumpOver.setVisibility(View.INVISIBLE);
-//        }
-    }
 
     /**
      * 跳转页面
      */
     private void jumpToNextActivity() {
-        //        boolean isFirstInstall = KyeSys.getBoolean(KyeSys.FIRST_START_KEY, true);
-        //        UserInfo userInfo = getUserInfo();
-        //        LogOut.i(TAG, "第一次安装？->" + isFirstInstall);
-        //        if (isFirstInstall || userInfo == null) {
-        //            gotoLoginActivity();
-        //        } else {
-        //            if (userInfo.isLogin() && LoginHelper.getInstance().isCanOneKeyLogin()) {
-        //                LogOut.i(TAG, "SplashActivity jumpTo HomeActivity");
-        //                gotoHomeActivity();
-        //            } else {
-        //                gotoLoginActivity();
-        //            }
-        //        }
         gotoLoginActivity();
     }
 
-    private void delayJumpToNext() {
-        // App 初始化完成
-        //        if (AppInitHelper.getInstance().appIsInit()) {
-        //            long delayTime = 0;
-        //            final int thousand = 1000;
-        //            if (mInitAdinfo == null) {
-        //                delayTime = (long) (TIME2 * thousand);
-        //            } else {
-        //                delayTime = TIME * thousand;
-        //            }
-        //            mHandler.sendEmptyMessageDelayed(SPLASH_TIME_IS_OVER, delayTime);
-        //        }
+
+    /**
+     * 停止计时器
+     */
+    private void stopCountDown() {
+        if (mCountDownTimer != null) {
+            mCountDownTimer.cancel();
+        }
+    }
+
+    /**
+     * 开始倒计时
+     */
+    private void startCountDown(int time) {
+        final int countDownInterval = 1000;
+        mCountDownTimer = new CountDownTimer(time * countDownInterval + countDownInterval, countDownInterval) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long second = millisUntilFinished / countDownInterval;
+                mTvCountdown.setText(second + "");
+            }
+
+            @Override
+            public void onFinish() {
+                LogOut.i(TAG, "onFinish");
+
+                jumpToNextActivity();
+            }
+        };
+        mCountDownTimer.start();
     }
 
     //跳转到登录页面
     private void gotoLoginActivity() {
-        Intent in = new Intent(this, LoginActivity.class);
-        startActivity(in);
-        finish();
+        mSP = SP.getSP(Constants.LOGIN_ACCOUNT_PASSWORD);
+        String login_account = mSP.getString(Constants.LOGIN_ACCOUNT);
+        String login_password = mSP.getString(Constants.LOGIN_PASSWORD);
+        if (!StringUtils.isNullOrEmpty(login_account) && !StringUtils.isNullOrEmpty(login_password)) {
+            Intent in = new Intent(this, HomeActivity.class);
+            startActivity(in);
+            finish();
+        } else {
+            Intent in = new Intent(this, LoginActivity.class);
+            startActivity(in);
+            finish();
+        }
+
     }
 
     public void jumpHomeActivity() {

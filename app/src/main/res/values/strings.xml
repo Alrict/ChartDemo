@@ -48,4 +48,6 @@
     <string name="tv_infos_tip2">我们会保障您的信息安全,请放心填写</string>
     <string name="tv_man">男</string>
     <string name="tv_female">女</string>
+    <string name="tv_multi_language">多语言</string>
+    <string name="tv_about">关于</string>
 </resources>

@@ -1,13 +1,13 @@
 package com.ihypnus.ihypnuscare.utils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.ihypnus.ihypnuscare.IhyApplication;
 
 import java.util.Map;
 
 /**
- * @author ymh
- * @version V1.0
- * @company 跨越速运
  * @Description SharedPreference的封装
  * @date 2016/3/22
  */
@@ -22,7 +22,7 @@ public class SP {
      */
     public SP(String name) {
         spName = name;
-//        sp = KyeApplication.getInstance().getSharedPreferences(name, Context.MODE_PRIVATE);
+        sp = IhyApplication.mInstance.getSharedPreferences(name, Context.MODE_PRIVATE);
         editor = sp.edit();
         editor.apply();
     }

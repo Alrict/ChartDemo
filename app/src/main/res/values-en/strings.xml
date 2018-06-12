@@ -58,4 +58,6 @@
 
     <string name="tv_man">Male</string>
     <string name="tv_female">Female</string>
+    <string name="tv_multi_language">multi-language</string>
+    <string name="tv_about">关于</string>
 </resources>
