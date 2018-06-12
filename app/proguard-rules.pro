@@ -57,3 +57,4 @@
 }
 
 -dontwarn android.support.**
+-ignorewarnings

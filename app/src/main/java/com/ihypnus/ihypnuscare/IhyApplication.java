@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 
 import com.ihypnus.ihypnuscare.net.NetRequestHelper;
 import com.ihypnus.ihypnuscare.utils.KyeSys;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -13,6 +14,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.stat.MtaSDkException;
+import com.tencent.stat.StatService;
+import com.tencent.stat.common.StatConstants;
 import com.wenming.library.LogReport;
 import com.wenming.library.save.imp.CrashWriter;
 
@@ -55,19 +59,19 @@ public class IhyApplication extends Application {
                     .init(mInstance);
         }else {
             //初始化腾讯MTA(用户操作行为/月活量等数据)
-            initMTA(mInstance);
+//            initMTA(mInstance);
             CrashReport.initCrashReport(mInstance);
         }
 
     }
 
     private void initMTA(Application app) {
-//        try {
-//            boolean isSuccess = StatService.startStatService(app, "ABQX4U2J56XR", StatConstants.VERSION);
-//            LogOut.d("MTA", "MTA初始化==" + isSuccess);
-//        } catch (MtaSDkException e) {
-//            LogOut.d("MTA", "MTA初始化失败" + e);
-//        }
+        try {
+            boolean isSuccess = StatService.startStatService(app, "id", StatConstants.VERSION);
+            LogOut.d("MTA", "MTA初始化==" + isSuccess);
+        } catch (MtaSDkException e) {
+            LogOut.d("MTA", "MTA初始化失败" + e);
+        }
     }
 
     /**
