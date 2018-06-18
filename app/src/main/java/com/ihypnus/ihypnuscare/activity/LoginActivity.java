@@ -26,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.config.Constants;
+import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.AndroidSystemHelper;
 import com.ihypnus.ihypnuscare.utils.LogOut;
@@ -258,22 +259,31 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void jumpToHomeActiity() {
-        IhyRequest.getUserConfirm2(new Response.Listener<Object>() {
+        BaseDialogHelper.showLoadingDialog(this, false, "正在登入...");
+        IhyRequest.login(new Response.Listener<Object>() {
             @Override
             public void onResponse(Object response) {
-                LogOut.d("llw",response.toString());
+                BaseDialogHelper.dismissLoadingDialog();
+                LogOut.d("llw", response.toString());
+                jumpToHome();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                LogOut.d("llw",error.toString());
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(LoginActivity.this, error.getMessage());
+                LogOut.d("llw", error.toString());
             }
         });
 
-//        mSP.putString(Constants.LOGIN_ACCOUNT, mEtCount.getText().toString().trim());
-//        mSP.putString(Constants.LOGIN_PASSWORD, mEtPassWord.getText().toString().trim());
-//        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-//        startActivity(intent);
+    }
+
+    private void jumpToHome() {
+
+        mSP.putString(Constants.LOGIN_ACCOUNT, mEtCount.getText().toString().trim());
+        mSP.putString(Constants.LOGIN_PASSWORD, mEtPassWord.getText().toString().trim());
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
     }
 
     /**

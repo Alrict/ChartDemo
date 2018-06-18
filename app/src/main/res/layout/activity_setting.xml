@@ -8,6 +8,7 @@
     <View
         style="@style/CommentDividingLineNoPadding"/>
     <RelativeLayout
+        android:id="@+id/layout_multi_language"
         style="@style/CommentRelativeLayout">
         <TextView
             android:id="@+id/tv_multi_language"
@@ -29,6 +30,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/layout_about"
         style="@style/CommentRelativeLayout">
         <TextView
             android:id="@+id/tv_about"

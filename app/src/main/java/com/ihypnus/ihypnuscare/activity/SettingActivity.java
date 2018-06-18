@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
@@ -19,6 +20,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private ImageView mIvMultiLanguage;
     private ImageView mIvAbout;
+    private RelativeLayout mLayoutMultiLanguage;
+    private RelativeLayout mLayoutAbout;
 
     @Override
     protected int setView() {
@@ -27,7 +30,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void findViews() {
+        mLayoutMultiLanguage = findViewById(R.id.layout_multi_language);
         mIvMultiLanguage = findViewById(R.id.iv_multi_language);
+        mLayoutAbout = findViewById(R.id.layout_about);
         mIvAbout = findViewById(R.id.iv_about);
     }
 
@@ -38,8 +43,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void initEvent() {
-        mIvMultiLanguage.setOnClickListener(this);
-        mIvAbout.setOnClickListener(this);
+        mLayoutMultiLanguage.setOnClickListener(this);
+        mLayoutAbout.setOnClickListener(this);
     }
 
     @Override
@@ -51,12 +56,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         if (ViewUtils.isFastDoubleClick()) return;
         switch (v.getId()) {
-            case R.id.iv_multi_language:
+            case R.id.layout_multi_language:
                 jumpToActivity(MultiLanguageActivity.class);
                 break;
 
-            case R.id.iv_about:
-
+            case R.id.layout_about:
                 jumpToActivity(AboutCompanyInfosActivity.class);
                 break;
         }

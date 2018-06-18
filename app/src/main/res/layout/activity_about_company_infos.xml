@@ -1,7 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@mipmap/img_background">
+    <ImageView
+        android:layout_width="@dimen/w418"
+        android:layout_height="@dimen/w418"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/h280"
+        android:src="@mipmap/ic_logo"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/TextAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前版本:"/>
+        <TextView
+            android:id="@+id/tv_verson"
+            style="@style/TextAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="V1.1.0"/>
+    </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        style="@style/TextAppearanceMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/h50"
+        android:text="广州和普乐健康科技有限公司版权所有"/>
+</RelativeLayout>

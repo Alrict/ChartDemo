@@ -34,7 +34,7 @@
             android:layout_height="@dimen/w56"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/w60"
+            android:layout_marginLeft="@dimen/w100"
             android:layout_toRightOf="@id/iv_data"
             android:src="@mipmap/icon_refresh_small"/>
         <View

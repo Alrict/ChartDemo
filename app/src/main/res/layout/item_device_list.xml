@@ -39,6 +39,7 @@
         android:layout_height="@dimen/w38"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/h80"
         android:src="@mipmap/ic_circle_unchecked"/>
 
     <View style="@style/CommentDividingLineNoPadding"

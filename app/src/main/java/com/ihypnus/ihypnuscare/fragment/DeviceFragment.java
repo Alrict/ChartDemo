@@ -5,22 +5,17 @@ import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.github.mikephil.charting.charts.BarChart;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.activity.AddNwedeviceActivity;
+import com.ihypnus.ihypnuscare.activity.DeviceDetailActivity;
 import com.ihypnus.ihypnuscare.adapter.DeviceLIstAdapter;
-import com.ihypnus.ihypnuscare.adapter.VerticalPagerAdapter;
 import com.ihypnus.ihypnuscare.bean.DeviceInfoVO;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
-import com.ihypnus.ihypnuscare.widget.CircleProgressBarView;
-import com.ihypnus.ihypnuscare.widget.VerticalViewPager;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
@@ -39,18 +34,9 @@ import static android.app.Activity.RESULT_OK;
  * @Description: 主页fragment
  * @date: 2018/5/14 14:42
  */
-public class DeviceFragment extends BaseFragment implements View.OnClickListener, SwipeMenuCreator, SwipeMenuItemClickListener {
+public class DeviceFragment extends BaseFragment implements View.OnClickListener, SwipeMenuCreator, SwipeMenuItemClickListener, DeviceLIstAdapter.DeviceCheckListener, DeviceLIstAdapter.OnItemClickListener
+{
     private static final String TAG = "DeviceFragment";
-    private VerticalViewPager mViewPager;
-    private VerticalPagerAdapter mPagerAdapter;
-    private View mHomeFirstView;
-    private LayoutInflater mInflater;
-    private View mSecondView;
-    private CircleProgressBarView mPb;
-    private Animation mReLoadingAnim;
-    private ImageView mIvRefresh;
-    private ImageView mIvData;
-    private BarChart mChart;
     private ImageView mIvAdd;
     private SwipeMenuRecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -78,7 +64,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
         mItemDecoration = createItemDecoration();
         //设置侧滑
         mRecyclerView.setSwipeMenuCreator(this);
-        //设置点击时间
+        //设置滑动点击事件
         mRecyclerView.setSwipeMenuItemClickListener(this);
         mAdapter = new DeviceLIstAdapter(mAct);
         mRecyclerView.setAdapter(mAdapter);
@@ -99,6 +85,8 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
     @Override
     protected void initEvent() {
         mIvAdd.setOnClickListener(this);
+        mAdapter.setOnDeviceCheckedListener(this);
+        mAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -139,13 +127,13 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
                 .setHeight(height);
         swipeRightMenu.addMenuItem(deleteItem);// 添加菜单到右侧。
 
-        SwipeMenuItem addItem = new SwipeMenuItem(mAct)
-                .setBackground(R.drawable.selector_green)
-                .setText("添加")
-                .setTextColor(Color.WHITE)
-                .setWidth(width)
-                .setHeight(height);
-        swipeRightMenu.addMenuItem(addItem); // 添加菜单到右侧。
+//        SwipeMenuItem addItem = new SwipeMenuItem(mAct)
+//                .setBackground(R.drawable.selector_green)
+//                .setText("添加")
+//                .setTextColor(Color.WHITE)
+//                .setWidth(width)
+//                .setHeight(height);
+//        swipeRightMenu.addMenuItem(addItem); // 添加菜单到右侧。
     }
 
     @Override
@@ -195,5 +183,25 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
             mInfoList.add(new DeviceInfoVO("新增设备", "新增的"));
             mAdapter.notifyDataSetChanged(mInfoList);
         }
+    }
+
+    @Override
+    public void setDeviceCheckedCallback(int oldPosition, int position, ImageView imageView) {
+        imageView.setImageDrawable(getResources().getDrawable(R.mipmap.ic_circle_checked));
+        mInfoList.get(position).setIsChecked(1);
+        mInfoList.get(oldPosition).setIsChecked(0);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void jumpToDeviceDetail( DeviceInfoVO deviceInfoVO) {
+        Intent intent = new Intent(mAct, DeviceDetailActivity.class);
+        intent.putExtra("DATA_BEAN",deviceInfoVO);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(View view, int postion) {
+        DeviceInfoVO deviceInfoVO = mInfoList.get(postion);
+        jumpToDeviceDetail(deviceInfoVO);
     }
 }
