@@ -22,7 +22,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.bean.UserInfo;
+import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
@@ -63,6 +69,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private final int REQUEST_CODE_SCAN = 122;
     private SpannableString mSpannableString;
     private String mProtocol;
+    private Gson mGson = new Gson();
 
     @Override
     protected int setView() {
@@ -179,7 +186,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             case R.id.id_register:
                 //注册
                 if (checkInfos()) {
-                    jumpToPersonMsg();
+                    registerAppByNet();
+
                 }
 
                 break;
@@ -204,6 +212,25 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
                 break;
         }
+    }
+
+    private void registerAppByNet() {
+        BaseDialogHelper.showLoadingDialog(this, false, "正在登入");
+        UserInfo userInfo = new UserInfo(mEtCount.getText().toString().trim(), mEtPassWord.getText().toString().trim());
+//        String userInfos = mGson.toJson(userInfo);
+        String deviceId = mEtDeviceCode.getText().toString().trim();
+        IhyRequest.registerApp(userInfo, deviceId, new Response.Listener<Object>() {
+            @Override
+            public void onResponse(Object response) {
+                BaseDialogHelper.dismissLoadingDialog();
+                jumpToPersonMsg();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                BaseDialogHelper.dismissLoadingDialog();
+            }
+        });
     }
 
     /**

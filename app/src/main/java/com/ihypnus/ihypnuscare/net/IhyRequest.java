@@ -3,6 +3,7 @@ package com.ihypnus.ihypnuscare.net;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.ihypnus.ihypnuscare.bean.UserInfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,26 +45,43 @@ public class IhyRequest {
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
 
-    public static void getUserConfirm2(Response.Listener<Object> successCallback, Response.ErrorListener faileCallback) {
-//测试账号   18820000743  888888
-        String url = "http://172.20.2.56:8080/kyeapi/GetInvoiceTitle";
-//        String url = "http://106.15.184.7/hypnusMgr";
+    /**
+     * 校验手机号码是否被注册
+     *
+     * @param phoneNumber     手机号码
+     * @param successCallback
+     * @param faileCallback
+     */
+    public static void VerifyPhoneNumber(String phoneNumber, Response.Listener<Object> successCallback, Response.ErrorListener faileCallback) {
+        String url = "http://care.ihypnus.com/hypnusMgr/dmz/authCode/validationet";
         Map<String, String> params = new HashMap<String, String>();
-        params.put("uuid", "8D34DBC67AAB4584816C0947936C3388");
-//        params.put("carNo", "");
-//        params.put("pageIndex", String.valueOf(1));
-//        params.put("pageSize", String.valueOf(10));
+        params.put("phone", phoneNumber);
         HttpRequest httpRequest = new HttpRequest(Request.Method.POST, url, successCallback, params, faileCallback);
-        Map<String, String> headerParams = new HashMap<String, String>();
-//        headerParams.put("access-token", "C5FE647725DA929111AAFC16D96ADEFD");
-        headerParams.put("kye", "10002");
-        headerParams.put("Content-Type", "application/json");
-        httpRequest.putHeaders(headerParams);
-
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.NORMAL_STRING);
-//        httpRequest.setResponseJavaBean(CarSanitationListBean.class);
         httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
         NetRequestHelper.getInstance().add(httpRequest, url);
-
     }
+
+
+    /**
+     * 注册
+     *
+     * @param userInfo        用户登入信息(帐号密码信息)
+     * @param deviceId        设备id
+     * @param successCallback
+     * @param faileCallback
+     */
+    public static void registerApp(UserInfo userInfo, String deviceId, Response.Listener<Object> successCallback, Response.ErrorListener faileCallback) {
+        String url = "http://care.ihypnus.com/hypnusMgr/dmz/user/register";
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("userInfo", userInfo);
+//        params.put("deviceId", deviceId);
+        params.put("deviceId", "CP70100508S");
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, successCallback, params, faileCallback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.NORMAL_STRING);
+        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
+
+
 }

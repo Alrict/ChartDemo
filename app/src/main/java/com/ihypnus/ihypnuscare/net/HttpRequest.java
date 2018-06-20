@@ -8,6 +8,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.utils.HttpLog;
@@ -49,6 +50,12 @@ public class HttpRequest extends Request {
         this.mParams = new HashMap();
     }
 
+    public HttpRequest(int method, String url, Response.Listener<Object> listener, Response.ErrorListener errorListener) {
+        super(method, url, errorListener);
+        this.listener = listener;
+        this.mParams = new HashMap();
+    }
+
     public HttpRequest(int method, String url, Response.Listener<Object> listener, Map<String, String> params,
                        Response.ErrorListener errorListener) {
         super(method, url, errorListener);
@@ -74,7 +81,7 @@ public class HttpRequest extends Request {
             headers.put("access-token", accessToken);
 //            headers.put("kye", ORGANIZATION);
         }
-        if (mHeaderParams!=null){
+        if (mHeaderParams != null) {
             headers.putAll(mHeaderParams);
         }
 
@@ -84,7 +91,7 @@ public class HttpRequest extends Request {
 
     protected String createIdentifier() {
         Map<String, String> parmas = this.getParams();
-        if(parmas == null) {
+        if (parmas == null) {
             return null;
         } else {
             Set<String> keySet = parmas.keySet();
@@ -96,10 +103,10 @@ public class HttpRequest extends Request {
             String[] var5 = keys;
             int var6 = keys.length;
 
-            for(int var7 = 0; var7 < var6; ++var7) {
+            for (int var7 = 0; var7 < var6; ++var7) {
                 String key = var5[var7];
-                String value = (String)parmas.get(key);
-                if(!TextUtils.isEmpty(value) && !this.stringIsEmpty(value)) {
+                String value = (String) parmas.get(key);
+                if (!TextUtils.isEmpty(value) && !this.stringIsEmpty(value)) {
                     sb.append(key + value);
                 }
             }
@@ -111,18 +118,19 @@ public class HttpRequest extends Request {
 
     /**
      * 传入的字符窜是空格
+     *
      * @param content
      * @return
      */
     private boolean stringIsEmpty(String content) {
-        if(TextUtils.isEmpty(content)) {
+        if (TextUtils.isEmpty(content)) {
             return true;
         } else {
             int length = content.length();
 
-            for(int i = 0; i < length; ++i) {
+            for (int i = 0; i < length; ++i) {
                 char c = content.charAt(i);
-                if(c != 32) {
+                if (c != 32) {
                     return false;
                 }
             }
@@ -317,6 +325,9 @@ public class HttpRequest extends Request {
     private byte[] encodeParameters(Map<String, String> params, String paramsEncoding) {
         try {
             String data = gson.toJson(params);
+            if (VolleyLog.DEBUG) {
+                HttpLog.w("volley_request", "data:  " + data);
+            }
             return data.getBytes(paramsEncoding);
         } catch (UnsupportedEncodingException var4) {
             throw new RuntimeException("Encoding not supported: " + paramsEncoding, var4);

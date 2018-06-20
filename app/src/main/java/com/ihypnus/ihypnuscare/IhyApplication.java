@@ -3,7 +3,9 @@ package com.ihypnus.ihypnuscare;
 import android.app.Application;
 import android.graphics.Bitmap;
 
+import com.android.volley.VolleyLog;
 import com.ihypnus.ihypnuscare.net.NetRequestHelper;
+import com.ihypnus.ihypnuscare.utils.HttpLog;
 import com.ihypnus.ihypnuscare.utils.KyeSys;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -19,6 +21,7 @@ import com.tencent.stat.StatService;
 import com.tencent.stat.common.StatConstants;
 import com.wenming.library.LogReport;
 import com.wenming.library.save.imp.CrashWriter;
+import com.wenming.library.util.LogUtil;
 
 
 /**
@@ -40,7 +43,22 @@ public class IhyApplication extends Application {
         // 初始化新网络框架请求
         NetRequestHelper.getInstance().init(this);
         initImageLoadConfig(this);
+        initVariable();
         initLogReport();
+    }
+
+    /**
+     * 初始化相关变量
+     */
+    private void initVariable() {
+
+        boolean isDebug = true;
+
+        // 设置设置相关debug变量
+        LogUtil.isDebug = isDebug;
+        VolleyLog.DEBUG = isDebug;
+        HttpLog.LOG_FLAG = isDebug;
+        LogOut.DEBUG = isDebug;
     }
 
     /**
