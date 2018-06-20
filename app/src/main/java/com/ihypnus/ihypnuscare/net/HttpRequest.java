@@ -169,16 +169,26 @@ public class HttpRequest extends Request {
 
         public void onResponse(Object response) {
             try {
+                ResponseResult responseResult = (ResponseResult) response;
+                String errMsg = responseResult.getContent();
+                String errCode = responseResult.getErrorCode();
+                Object object = responseResult.getResult();
+                String type = responseResult.getType();
+
                 if (HttpRequest.this.mResponseDataType == 3) {
-                    HttpRequest.this.doSuccessCallback(HttpRequest.this, response.toString(), "", "", HttpRequest.this.mResponseCallback);
+                    if (!StringUtils.isNullOrEmpty(type) && type.equals("success")) {
+                        HttpRequest.this.doSuccessCallback(HttpRequest.this, response.toString(), errCode, errMsg, HttpRequest.this.mResponseCallback);
+                    } else {
+                        HttpRequest.this.doErrorCallback(HttpRequest.this, new VolleyError(), errCode, errMsg, HttpRequest.this.mResponseCallback);
+                    }
                 } else if (HttpRequest.this.mResponseDataType == 4) {
-                    HttpRequest.this.doSuccessCallback(HttpRequest.this, response, "", "", HttpRequest.this.mResponseCallback);
+                    if (!StringUtils.isNullOrEmpty(type) && type.equals("success")) {
+                        HttpRequest.this.doSuccessCallback(HttpRequest.this, response, errCode, errMsg, HttpRequest.this.mResponseCallback);
+                    } else {
+                        HttpRequest.this.doErrorCallback(HttpRequest.this, new VolleyError(), errCode, errMsg, HttpRequest.this.mResponseCallback);
+                    }
                 } else {
-                    ResponseResult responseResult = (ResponseResult) response;
-                    String errMsg = responseResult.getContent();
-                    String errCode = responseResult.getErrorCode();
-                    Object object = responseResult.getResult();
-                    String type = responseResult.getType();
+
                     if (!StringUtils.isNullOrEmpty(type) && type.equals("success")) {
                         HttpRequest.this.doSuccessCallback(HttpRequest.this, object, errCode, errMsg, HttpRequest.this.mResponseCallback);
                     } else {
