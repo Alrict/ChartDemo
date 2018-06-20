@@ -91,7 +91,7 @@ public class IhyRequest {
 //        params.put("deviceId", deviceId);
         params.put("deviceId", "CP70100508S");
         SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
-        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.NORMAL_STRING);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
         httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
