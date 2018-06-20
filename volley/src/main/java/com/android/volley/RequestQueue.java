@@ -39,6 +39,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RequestQueue {
 
+    private NetResponseHandler mNetResponseHandler;
+
     /** Callback interface for completed requests. */
     public static interface RequestFinishedListener<T> {
         /** Called when a request has finished processing. */
@@ -313,5 +315,19 @@ public class RequestQueue {
       synchronized (mFinishedListeners) {
         mFinishedListeners.remove(listener);
       }
+    }
+
+    public NetResponseHandler getNetResponseHandler() {
+        if(this.mNetResponseHandler == null) {
+            this.mNetResponseHandler = new NetResponseHandler();
+        }
+
+        return this.mNetResponseHandler;
+    }
+
+    public void setNetResponseHandler(NetResponseHandler netResponseHandler) {
+        if(netResponseHandler != null) {
+            this.mNetResponseHandler = netResponseHandler;
+        }
     }
 }

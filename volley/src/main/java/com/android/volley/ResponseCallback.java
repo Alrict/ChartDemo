@@ -1,6 +1,4 @@
-package com.ihypnus.ihypnuscare.net;
-
-import com.android.volley.VolleyError;
+package com.android.volley;
 
 /**
  * @Package com.ihypnus.ihypnuscare.net

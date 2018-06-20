@@ -3,6 +3,7 @@ package com.ihypnus.ihypnuscare.net;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ResponseCallback;
 import com.ihypnus.ihypnuscare.bean.UserInfo;
 
 import java.util.HashMap;
@@ -83,5 +84,16 @@ public class IhyRequest {
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
 
+    public static void registerApp(UserInfo userInfo, String deviceId, ResponseCallback callback) {
+        String url = "http://care.ihypnus.com/hypnusMgr/dmz/user/register";
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("userInfo", userInfo);
+//        params.put("deviceId", deviceId);
+        params.put("deviceId", "CP70100508S");
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.NORMAL_STRING);
+        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
 
 }

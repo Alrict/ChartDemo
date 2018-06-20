@@ -22,7 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Response;
+import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
@@ -215,20 +215,35 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void registerAppByNet() {
-        BaseDialogHelper.showLoadingDialog(this, false, "正在登入");
+        BaseDialogHelper.showLoadingDialog(this, true, "正在登入");
         UserInfo userInfo = new UserInfo(mEtCount.getText().toString().trim(), mEtPassWord.getText().toString().trim());
 //        String userInfos = mGson.toJson(userInfo);
         String deviceId = mEtDeviceCode.getText().toString().trim();
-        IhyRequest.registerApp(userInfo, deviceId, new Response.Listener<Object>() {
+//        IhyRequest.registerApp(userInfo, deviceId, new Response.Listener<Object>() {
+//            @Override
+//            public void onResponse(Object response) {
+//                BaseDialogHelper.dismissLoadingDialog();
+//                jumpToPersonMsg();
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                BaseDialogHelper.dismissLoadingDialog();
+//            }
+//        });
+
+        IhyRequest.registerApp(userInfo, deviceId, new ResponseCallback() {
             @Override
-            public void onResponse(Object response) {
+            public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(RegisterActivity.this,var3);
                 jumpToPersonMsg();
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(RegisterActivity.this,var3);
             }
         });
     }

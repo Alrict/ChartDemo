@@ -4,14 +4,23 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetResponseHandler;
 import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ResponseCallback;
+import com.android.volley.ResponseResult;
+import com.android.volley.TimeoutError;
+import com.android.volley.UnknownVolleyError;
+import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.utils.HttpLog;
+import com.ihypnus.ihypnuscare.utils.StringUtils;
 
 import org.json.JSONException;
 
@@ -34,7 +43,10 @@ import java.util.Set;
  */
 public class HttpRequest extends Request {
     public static String K = "99B22B64D53D2234RTY6A7360ABAEB82";
+    private Response.ErrorListener mHttpErrorListenr;
+    private NetResponseHandler mNetResponseHandler;
     private Response.ErrorListener mErrorListener;
+    private ResponseCallback mResponseCallback;
     private boolean isCallBacked;
     private StringBuilder mRequestLog = new StringBuilder();
     private static final Gson gson = new Gson();
@@ -44,6 +56,7 @@ public class HttpRequest extends Request {
     private Response.Listener<Object> listener;
     private int mResponseDataType;//请求结果解析类型 0:请求结果是string,1:请求结果是object
     private String mDecodeCharset = "UTF-8";
+    private ApiResponseSuccessListener mSuccessListener;
 
     public HttpRequest(int method, String url, Response.ErrorListener listener) {
         super(method, url, listener);
@@ -56,13 +69,163 @@ public class HttpRequest extends Request {
         this.mParams = new HashMap();
     }
 
+    public HttpRequest(int method, String url, ResponseCallback callback) {
+        super(method, url);
+        this.mParams = new HashMap();
+        this.mHttpErrorListenr = new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                try {
+                    if (error == null) {
+                        error = new UnknownVolleyError();
+                    }
+
+                    String errorMsg = "";
+                    if (!(error instanceof NoConnectionError) && !(error instanceof TimeoutError)) {
+                        if (((VolleyError) error).networkResponse != null) {
+                            int statusCode = ((VolleyError) error).getHttpStatusCode();
+                            errorMsg = errorMsg + statusCode + "：服务器异常,请稍后重试";
+                        }
+                    } else {
+                        errorMsg = "无法连接服务器，请检查你的网络设置";
+                    }
+
+                    HttpRequest.this.doErrorCallback(HttpRequest.this, (VolleyError) error, "", errorMsg, HttpRequest.this.mResponseCallback);
+                } catch (Exception var7) {
+                    HttpLog.printStackTrace(var7);
+                    HttpRequest.this.doErrorCallback(HttpRequest.this, new VolleyError((Throwable) error), "", "", HttpRequest.this.mResponseCallback);
+                } finally {
+                    if (HttpLog.LOG_FLAG) {
+                        HttpRequest.this.appendkyeNetLog("", HttpLog.getExceptionMsg((Throwable) error));
+                        HttpLog.w("volley_request", HttpRequest.this.mRequestLog.toString());
+                    }
+
+                }
+
+            }
+        };
+        this.mErrorListener = this.mHttpErrorListenr;
+        this.mResponseCallback = callback;
+        init();
+    }
+
     public HttpRequest(int method, String url, Response.Listener<Object> listener, Map<String, String> params,
                        Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         this.listener = listener;
         this.mParams = new HashMap();
         mParams.putAll(params);
+    }
 
+    public HttpRequest(int method, String url, Map<String, String> params,
+                       ResponseCallback callback) {
+        super(method, url);
+        this.listener = listener;
+        this.mParams = new HashMap();
+        mParams.putAll(params);
+        this.mHttpErrorListenr = new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                try {
+                    if (error == null) {
+                        error = new UnknownVolleyError();
+                    }
+
+                    String errorMsg = "";
+                    if (!(error instanceof NoConnectionError) && !(error instanceof TimeoutError)) {
+                        if (((VolleyError) error).networkResponse != null) {
+                            int statusCode = ((VolleyError) error).getHttpStatusCode();
+                            errorMsg = errorMsg + statusCode + "：服务器异常,请稍后重试";
+                        }
+                    } else {
+                        errorMsg = "无法连接服务器，请检查你的网络设置";
+                    }
+
+                    HttpRequest.this.doErrorCallback(HttpRequest.this, (VolleyError) error, "", errorMsg, HttpRequest.this.mResponseCallback);
+                } catch (Exception var7) {
+                    HttpLog.printStackTrace(var7);
+                    HttpRequest.this.doErrorCallback(HttpRequest.this, new VolleyError((Throwable) error), "", "", HttpRequest.this.mResponseCallback);
+                } finally {
+                    if (HttpLog.LOG_FLAG) {
+                        HttpRequest.this.appendkyeNetLog("", HttpLog.getExceptionMsg((Throwable) error));
+                        HttpLog.w("volley_request", HttpRequest.this.mRequestLog.toString());
+                    }
+
+                }
+
+            }
+        };
+        this.mErrorListener = this.mHttpErrorListenr;
+        this.mResponseCallback = callback;
+        init();
+    }
+
+    private void init() {
+        this.setErrorListener(this.mErrorListener);
+        this.mSuccessListener = new HttpRequest.ApiResponseSuccessListener();
+    }
+
+    private class ApiResponseSuccessListener implements Response.Listener {
+        private ApiResponseSuccessListener() {
+        }
+
+        public void onResponse(Object response) {
+            try {
+                if (HttpRequest.this.mResponseDataType == 3) {
+                    HttpRequest.this.doSuccessCallback(HttpRequest.this, response.toString(), "", "", HttpRequest.this.mResponseCallback);
+                } else if (HttpRequest.this.mResponseDataType == 4) {
+                    HttpRequest.this.doSuccessCallback(HttpRequest.this, response, "", "", HttpRequest.this.mResponseCallback);
+                } else {
+                    ResponseResult responseResult = (ResponseResult) response;
+                    String errMsg = responseResult.getContent();
+                    String errCode = responseResult.getErrorCode();
+                    Object object = responseResult.getResult();
+                    String type = responseResult.getType();
+                    if (!StringUtils.isNullOrEmpty(type) && type.equals("success")) {
+                        HttpRequest.this.doSuccessCallback(HttpRequest.this, object, errCode, errMsg, HttpRequest.this.mResponseCallback);
+                    } else {
+                        HttpRequest.this.doErrorCallback(HttpRequest.this, new VolleyError(), errCode, errMsg, HttpRequest.this.mResponseCallback);
+                    }
+                }
+            } catch (Exception var7) {
+                HttpLog.printStackTrace(var7);
+                HttpRequest.this.doErrorCallback(HttpRequest.this, new VolleyError(var7), "", "", HttpRequest.this.mResponseCallback);
+            }
+
+        }
+    }
+
+    @Override
+    public Request<?> setRequestQueue(RequestQueue requestQueue) {
+        this.mNetResponseHandler = requestQueue.getNetResponseHandler();
+        return super.setRequestQueue(requestQueue);
+
+    }
+
+    private void doErrorCallback(Request request, VolleyError error, String errorCode, String errMsg, ResponseCallback responseCallback) {
+        try {
+            if (this.mNetResponseHandler == null) {
+                HttpLog.e("volley_request", "NetResponseHandler is null !");
+                return;
+            }
+
+            if (this.isCallBacked) {
+                return;
+            }
+
+            this.isCallBacked = true;
+            this.mNetResponseHandler.error(request, error, errorCode, errMsg, responseCallback);
+        } catch (Exception var7) {
+            HttpLog.printStackTrace(var7);
+        }
+
+    }
+
+    private void doSuccessCallback(Request request, Object responseData, String successCode, String successMsg, ResponseCallback responseCallback) {
+        if (this.mNetResponseHandler == null) {
+            HttpLog.e("volley_request", "NetResponseHandler is null !");
+        } else if (!this.isCallBacked) {
+            this.isCallBacked = true;
+            this.mNetResponseHandler.success(request, responseData, successCode, successMsg, responseCallback);
+        }
     }
 
     /**
@@ -309,7 +472,12 @@ public class HttpRequest extends Request {
 
     @Override
     protected void deliverResponse(Object response) {
-        listener.onResponse(response);
+        if (listener != null) {
+            listener.onResponse(response);
+        }
+        if (mSuccessListener != null) {
+            this.mSuccessListener.onResponse(response);
+        }
     }
 
     public String getBodyContentType() {

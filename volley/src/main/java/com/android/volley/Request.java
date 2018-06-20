@@ -58,7 +58,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     }
 
     /** An event log tracing the lifetime of this request; for debugging. */
-    private final MarkerLog mEventLog = MarkerLog.ENABLED ? new MarkerLog() : null;
+    private  MarkerLog mEventLog = MarkerLog.ENABLED ? new MarkerLog() : null;
 
     /**
      * Request method of this request.  Currently supports GET, POST, PUT, DELETE, HEAD, OPTIONS,
@@ -73,7 +73,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     private final int mDefaultTrafficStatsTag;
 
     /** Listener interface for errors. */
-    private final Response.ErrorListener mErrorListener;
+    private  Response.ErrorListener mErrorListener;
 
     /** Sequence number of this request, used to enforce FIFO ordering. */
     private Integer mSequence;
@@ -106,6 +106,16 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      */
     private Cache.Entry mCacheEntry = null;
 
+    public boolean isUseHttpsVerify() {
+        return mUseHttpsVerify;
+    }
+
+    public void setUseHttpsVerify(boolean useHttpsVerify) {
+        mUseHttpsVerify = useHttpsVerify;
+    }
+
+    protected boolean mUseHttpsVerify;
+
     /** An opaque token tagging this request; used for bulk cancellation. */
     private Object mTag;
 
@@ -120,6 +130,19 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     @Deprecated
     public Request(String url, Response.ErrorListener listener) {
         this(Method.DEPRECATED_GET_OR_POST, url, listener);
+    }
+
+    public Request(int method, String url) {
+        this.mEventLog = MarkerLog.ENABLED?new MarkerLog():null;
+        this.mShouldCache = false;
+        this.mCanceled = false;
+        this.mResponseDelivered = false;
+        this.mCacheEntry = null;
+        this.mUseHttpsVerify = true;
+        this.mMethod = method;
+        this.mUrl = url;
+        this.setRetryPolicy(new DefaultRetryPolicy());
+        this.mDefaultTrafficStatsTag = findDefaultTrafficStatsTag(url);
     }
 
     /**
@@ -603,5 +626,9 @@ public abstract class Request<T> implements Comparable<Request<T>> {
         String trafficStatsTag = "0x" + Integer.toHexString(getTrafficStatsTag());
         return (mCanceled ? "[X] " : "[ ] ") + getUrl() + " " + trafficStatsTag + " "
                 + getPriority() + " " + mSequence;
+    }
+
+    public void setErrorListener(Response.ErrorListener listener) {
+        this.mErrorListener = listener;
     }
 }

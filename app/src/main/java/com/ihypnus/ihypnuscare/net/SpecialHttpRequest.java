@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
+import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyLog;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.utils.HttpLog;
@@ -31,6 +32,10 @@ public class SpecialHttpRequest extends HttpRequest {
         this.mParams.putAll(params);
     }
 
+    public SpecialHttpRequest(int method, String url, Map<String, Object> params, ResponseCallback callback) {
+        super(method, url,callback);
+        this.mParams.putAll(params);
+    }
 
     public String getBodyContentType() {
         return "application/json; charset=" + this.getParamsEncoding();
