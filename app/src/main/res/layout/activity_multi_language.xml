@@ -8,6 +8,29 @@
     <View
         style="@style/CommentDividingLineNoPadding"/>
     <RelativeLayout
+        android:id="@+id/layout_followsytem"
+        style="@style/CommentRelativeLayout">
+        <TextView
+            android:id="@+id/tv_followsystem"
+            style="@style/TextAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/setting_language_auto"/>
+        <ImageView
+            android:id="@+id/iv_followsystem"
+            android:layout_width="@dimen/w56"
+            android:layout_height="@dimen/w56"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_corrent"
+            android:visibility="invisible"/>
+        <View
+            style="@style/CommentDividingLineNoPadding"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/layout_simplified_chinese"
         style="@style/CommentRelativeLayout">
         <TextView
@@ -16,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="简体中文"/>
+            android:text="@string/setting_simplified_chinese"/>
         <ImageView
             android:id="@+id/iv_simplified_chinese"
             android:layout_width="@dimen/w56"
@@ -39,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="繁体中文"/>
+            android:text="@string/setting_traditional_chinese"/>
         <ImageView
             android:id="@+id/iv_traditional_chinese"
             android:layout_width="@dimen/w56"
@@ -63,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="英文"/>
+            android:text="@string/setting_language_english"/>
         <ImageView
             android:id="@+id/iv_english"
             android:layout_width="@dimen/w56"

@@ -8,6 +8,7 @@ import com.ihypnus.ihypnuscare.net.NetRequestHelper;
 import com.ihypnus.ihypnuscare.utils.HttpLog;
 import com.ihypnus.ihypnuscare.utils.KyeSys;
 import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.multilanguage.MultiLanguageUtil;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -40,6 +41,8 @@ public class IhyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        //初始化多语言设置
+        MultiLanguageUtil.init(this);
         // 初始化新网络框架请求
         NetRequestHelper.getInstance().init(this);
         initImageLoadConfig(this);
@@ -75,7 +78,7 @@ public class IhyApplication extends Application {
                     .setLogSaver(new CrashWriter(mInstance))//支持自定义保存崩溃信息的样式
 //                    .setEncryption(new AES()) //支持日志到AES加密或者DES加密，默认不开启
                     .init(mInstance);
-        }else {
+        } else {
             //初始化腾讯MTA(用户操作行为/月活量等数据)
 //            initMTA(mInstance);
             CrashReport.initCrashReport(mInstance);

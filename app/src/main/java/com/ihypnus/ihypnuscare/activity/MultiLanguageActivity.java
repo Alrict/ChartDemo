@@ -1,18 +1,15 @@
 package com.ihypnus.ihypnuscare.activity;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
-
-import java.util.Locale;
+import com.ihypnus.multilanguage.LanguageType;
+import com.ihypnus.multilanguage.MultiLanguageUtil;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -29,6 +26,9 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
     private ImageView mIvSimplifiedChinese;
     private ImageView mIvTraditionalChinese;
     private ImageView mIvEnglish;
+    private int savedLanguageType;
+    private RelativeLayout mLayoutFollowsytem;
+    private ImageView mIvFollowsystem;
 
     @Override
     protected int setView() {
@@ -37,6 +37,10 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void findViews() {
+
+        mLayoutFollowsytem = findViewById(R.id.layout_followsytem);
+        mIvFollowsystem = findViewById(R.id.iv_followsystem);
+
         mLayoutSimplifiedChinese = findViewById(R.id.layout_simplified_chinese);
         mIvSimplifiedChinese = findViewById(R.id.iv_simplified_chinese);
 
@@ -49,11 +53,56 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setTitle("语言设置");
+        setTitle(R.string.setting_language_title);
+        savedLanguageType = MultiLanguageUtil.getInstance().getLanguageType();
+        if (savedLanguageType == LanguageType.LANGUAGE_FOLLOW_SYSTEM) {
+            setFollowSytemVisible();
+        } else if (savedLanguageType == LanguageType.LANGUAGE_CHINESE_TRADITIONAL) {
+            setTraditionalVisible();
+        } else if (savedLanguageType == LanguageType.LANGUAGE_EN) {
+            setEnglishVisible();
+        } else if (savedLanguageType == LanguageType.LANGUAGE_CHINESE_SIMPLIFIED) {
+            setSimplifiedVisible();
+        } else {
+            setSimplifiedVisible();
+        }
+    }
+
+    //简体中文
+    private void setSimplifiedVisible() {
+        mIvSimplifiedChinese.setVisibility(View.VISIBLE);
+        mIvTraditionalChinese.setVisibility(View.INVISIBLE);
+        mIvEnglish.setVisibility(View.INVISIBLE);
+        mIvFollowsystem.setVisibility(View.INVISIBLE);
+    }
+
+    //英文
+    private void setEnglishVisible() {
+        mIvSimplifiedChinese.setVisibility(View.INVISIBLE);
+        mIvTraditionalChinese.setVisibility(View.INVISIBLE);
+        mIvEnglish.setVisibility(View.VISIBLE);
+        mIvFollowsystem.setVisibility(View.INVISIBLE);
+    }
+
+    //繁体中文
+    private void setTraditionalVisible() {
+        mIvSimplifiedChinese.setVisibility(View.INVISIBLE);
+        mIvTraditionalChinese.setVisibility(View.VISIBLE);
+        mIvFollowsystem.setVisibility(View.INVISIBLE);
+        mIvEnglish.setVisibility(View.INVISIBLE);
+    }
+
+    //跟随系统
+    private void setFollowSytemVisible() {
+        mIvFollowsystem.setVisibility(View.VISIBLE);
+        mIvSimplifiedChinese.setVisibility(View.INVISIBLE);
+        mIvTraditionalChinese.setVisibility(View.INVISIBLE);
+        mIvEnglish.setVisibility(View.INVISIBLE);
     }
 
     @Override
     protected void initEvent() {
+        mLayoutFollowsytem.setOnClickListener(this);
         mLayoutSimplifiedChinese.setOnClickListener(this);
         mLayoutTraditionalChinese.setOnClickListener(this);
         mLayoutEnglish.setOnClickListener(this);
@@ -61,97 +110,41 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void loadData() {
-        getDefaultLanguage();
     }
 
     @Override
     public void onClick(View v) {
         if (ViewUtils.isFastDoubleClick()) return;
+        int selectedLanguage = 0;
         switch (v.getId()) {
+            case R.id.layout_followsytem:
+                setSimplifiedVisible();
+                selectedLanguage = LanguageType.LANGUAGE_FOLLOW_SYSTEM;
+
+                break;
             case R.id.layout_simplified_chinese:
-                mIvSimplifiedChinese.setVisibility(View.VISIBLE);
-                mIvTraditionalChinese.setVisibility(View.INVISIBLE);
-                mIvEnglish.setVisibility(View.INVISIBLE);
-                switchLanguage("zh_simple");
+                setSimplifiedVisible();
+                selectedLanguage = LanguageType.LANGUAGE_CHINESE_SIMPLIFIED;
 
                 break;
 
             case R.id.layout_traditional_chinese:
-                mIvSimplifiedChinese.setVisibility(View.VISIBLE);
-                mIvTraditionalChinese.setVisibility(View.INVISIBLE);
-                mIvEnglish.setVisibility(View.INVISIBLE);
-                switchLanguage("zh_traditional");
+                setTraditionalVisible();
+                selectedLanguage = LanguageType.LANGUAGE_CHINESE_TRADITIONAL;
                 break;
 
             case R.id.layout_english:
-                mIvSimplifiedChinese.setVisibility(View.INVISIBLE);
-                mIvTraditionalChinese.setVisibility(View.INVISIBLE);
-                mIvEnglish.setVisibility(View.VISIBLE);
-                switchLanguage("en");
+                setEnglishVisible();
+                selectedLanguage = LanguageType.LANGUAGE_EN;
                 break;
         }
-    }
 
-    private void getDefaultLanguage() {
-        Resources resources = getResources();
-        Configuration config = resources.getConfiguration();
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        if (config.locale == Locale.TRADITIONAL_CHINESE) {
-            mIvSimplifiedChinese.setVisibility(View.INVISIBLE);
-            mIvTraditionalChinese.setVisibility(View.VISIBLE);
-            mIvEnglish.setVisibility(View.INVISIBLE);
-        } else if (config.locale == Locale.ENGLISH) {
-            mIvSimplifiedChinese.setVisibility(View.INVISIBLE);
-            mIvTraditionalChinese.setVisibility(View.INVISIBLE);
-            mIvEnglish.setVisibility(View.VISIBLE);
-        } else {
-            mIvSimplifiedChinese.setVisibility(View.VISIBLE);
-            mIvTraditionalChinese.setVisibility(View.INVISIBLE);
-            mIvEnglish.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    /**
-     * 切换语言
-     *
-     * @param language
-     */
-
-    private void switchLanguage(String language) {
-
-        //设置应用语言类型
-
-        Resources resources = getResources();
-
-        Configuration config = resources.getConfiguration();
-
-        DisplayMetrics dm = resources.getDisplayMetrics();
-
-        if (language.equals("zh_simple")) {
-            //简体中文
-            config.locale = Locale.SIMPLIFIED_CHINESE;
-        } else if (language.equals("en")) {
-            //英文
-            config.locale = Locale.ENGLISH;
-        } else if (language.equals("zh_traditional")) {
-            //繁体中文
-            config.locale = Locale.TRADITIONAL_CHINESE;
-
-        }
-
-        resources.updateConfiguration(config, dm);
-
-        //更新语言后，destroy当前页面，重新绘制
-
-        finish();
-
-        Intent intent = new Intent(this, HomeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        MultiLanguageUtil.getInstance().updateLanguage(selectedLanguage);
+        Intent intent = new Intent(MultiLanguageActivity.this, SettingActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        // 杀掉进程
-       android.os.Process.killProcess(android.os.Process.myPid());
-       System.exit(0);
-
-
+        if (selectedLanguage == LanguageType.LANGUAGE_FOLLOW_SYSTEM) {
+//            System.exit(0);
+        }
     }
 }

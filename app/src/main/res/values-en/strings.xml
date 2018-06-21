@@ -59,5 +59,8 @@
     <string name="tv_man">Male</string>
     <string name="tv_female">Female</string>
     <string name="tv_multi_language">multi-language</string>
-    <string name="tv_about">关于</string>
+    <string name="tv_about">about</string>
+    <!--多语言设置-->
+    <string name="setting_language_auto">Follow System</string>
+    <string name="setting_language">set language</string>
 </resources>
