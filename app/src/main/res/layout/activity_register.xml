@@ -139,8 +139,7 @@
             android:layout_width="@dimen/h76"
             android:layout_height="@dimen/h76"
             android:background="@drawable/password_visible"
-            android:button="@null"
-            android:checked="true"/>
+            android:button="@null"/>
 
     </LinearLayout>
 

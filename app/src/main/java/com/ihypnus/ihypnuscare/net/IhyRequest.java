@@ -19,25 +19,8 @@ import java.util.Map;
  */
 public class IhyRequest {
 
-
-    public static void getUserRegister(String userInfo, String deviceId, Response.Listener<Object> successCallback, Response.ErrorListener faileCallback) {
-//测试账号   18820000743  888888
-
-//        String url = IhyAction.Register;
-        String url = "http://Care.ihypnus.com/hypnusMgr/admin/statisti/data/getHistogramData";
-//        String url = "http://106.15.184.7/hypnusMgr";
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("deviceId", "CP70100506S");
-        params.put("createDateDay", "20180515");
-        params.put("endDateDay", "20180516");
-        HttpRequest httpRequest = new HttpRequest(Request.Method.POST, url, successCallback, params, faileCallback);
-        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
-        NetRequestHelper.getInstance().add(httpRequest, url);
-
-    }
-
     public static void login(String username, String password, ResponseCallback callback) {
-        String url = "http://care.ihypnus.com/hypnusMgr/app/login";
+        String url = "http://106.14.183.136/hypnusMgr/app/login";
         Map<String, String> params = new HashMap<String, String>();
         params.put("username", username);
         params.put("password", password);
@@ -55,7 +38,7 @@ public class IhyRequest {
      * @param faileCallback
      */
     public static void VerifyPhoneNumber(String phoneNumber, Response.Listener<Object> successCallback, Response.ErrorListener faileCallback) {
-        String url = "http://care.ihypnus.com/hypnusMgr/dmz/authCode/validationet";
+        String url = "http://106.14.183.136/hypnusMgr/dmz/authCode/validationet";
         Map<String, String> params = new HashMap<String, String>();
         params.put("phone", phoneNumber);
         HttpRequest httpRequest = new HttpRequest(Request.Method.POST, url, successCallback, params, faileCallback);
@@ -93,11 +76,11 @@ public class IhyRequest {
      * @param callback
      */
     public static void registerApp(UserInfo userInfo, String deviceId, ResponseCallback callback) {
-        String url = "http://care.ihypnus.com/hypnusMgr/dmz/user/register";
+        String url = "http://106.14.183.136/hypnusMgr/dmz/user/register";
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("userInfo", userInfo);
 //        params.put("deviceId", deviceId);
-        params.put("deviceId", "CP70100508S");
+        params.put("deviceId", deviceId);
         SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
         httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
@@ -107,24 +90,25 @@ public class IhyRequest {
     /**
      * 注册获取手机验证码
      *
-     * @param userIphonenfo 手机号
+     * @param phone    手机号
      * @param callback
      */
-    public static void getVerifyCode(String userIphonenfo, ResponseCallback callback) {
-        String url = "http://care.ihypnus.com/hypnusMgr/dmz/authCode/get";
+    public static void getVerifyCode(String phone, ResponseCallback callback) {
+//        String url = "http://care.ihypnus.com/hypnusMgr/dmz/authCode/get";
+        String url = "http://106.14.183.136/hypnusMgr/dmz/authCode/get?phone=" + phone;
         Map<String, String> params = new HashMap<String, String>();
-        params.put("phone", userIphonenfo);
+        params.put("phone", phone);
         HttpRequest httpRequest = new HttpRequest(Request.Method.POST, url, params, callback);
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
         httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
 
-   public static void getVerifyCode(PhoneVO userIphonenfo, ResponseCallback callback) {
+    public static void getVerifyCode(PhoneVO userIphonenfo, ResponseCallback callback) {
         String url = "http://care.ihypnus.com/hypnusMgr/dmz/authCode/get";
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("phone", userIphonenfo);
-       SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
         httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
         NetRequestHelper.getInstance().add(httpRequest, url);
@@ -137,7 +121,7 @@ public class IhyRequest {
      * @param callback
      */
     public static void getDeviceListInfos(String uuid, ResponseCallback callback) {
-        String url = "http://care.ihypnus.com/hypnusMgr/app/device/getPageList";
+        String url = "http://106.14.183.136/app/device/getPageList";
         Map<String, String> params = new HashMap<String, String>();
         params.put("uuid", uuid);
         HttpRequest httpRequest = new HttpRequest(Request.Method.POST, url, params, callback);
@@ -146,4 +130,16 @@ public class IhyRequest {
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
 
+
+    /**
+     * 重置密码
+     *
+     * @param phone
+     * @param code
+     * @param pw1
+     * @param responseCallback
+     */
+    public static void resetPassword(String phone, String code, String pw1, ResponseCallback responseCallback) {
+
+    }
 }

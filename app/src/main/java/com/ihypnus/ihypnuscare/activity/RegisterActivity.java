@@ -26,7 +26,6 @@ import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
-import com.ihypnus.ihypnuscare.bean.PhoneVO;
 import com.ihypnus.ihypnuscare.bean.UserInfo;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
@@ -366,18 +365,22 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void getVerifyCodeByNet(String phoneNo) {
-        PhoneVO phoneVO = new PhoneVO(phoneNo);
-        IhyRequest.getVerifyCode(phoneVO, new ResponseCallback() {
+
+        IhyRequest.getVerifyCode(phoneNo, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 ToastUtils.showToastDefault(var3);
                 mIvCodeLoading.clearAnimation();
+                mBtnVcerificationCode.setVisibility(View.VISIBLE);
+                mIvCodeLoading.setVisibility(View.GONE);
             }
 
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 ToastUtils.showToastDefault(var3);
                 mIvCodeLoading.clearAnimation();
+                mBtnVcerificationCode.setVisibility(View.VISIBLE);
+                mIvCodeLoading.setVisibility(View.GONE);
             }
         });
     }

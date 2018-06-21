@@ -1,7 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@mipmap/img_background"
+              android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <!--手机号-->
+    <RelativeLayout
+        android:id="@+id/layout_user"
+        style="@style/CommentRelativeLayout"
+        android:layout_below="@id/layout_input"
+        android:layout_marginTop="@dimen/h140">
+
+
+        <LinearLayout
+            android:id="@+id/liner_account_edit2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_user"
+                android:layout_width="@dimen/w56"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_user"/>
+
+            <TextView
+                android:id="@+id/tv_local_code"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/w38"
+                android:gravity="center"
+                android:text="+86"
+                android:textColor="@color/main_color_blue"
+                android:textSize="@dimen/w44"/>
+
+            <ImageView
+                android:id="@+id/iv_down_arrow"
+                android:layout_width="@dimen/w26"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/w20"
+                android:src="@mipmap/ic_down_arrow"/>
+
+            <View
+                android:layout_width="@dimen/h2"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/h20"
+                android:background="@color/text_hint"/>
+
+            <EditText
+                android:id="@+id/et_count"
+                style="@style/TextAppearanceMedium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="4"
+                android:background="@null"
+                android:hint="请输入手机号码"
+                android:inputType="number"
+                android:maxLength="11"
+                android:singleLine="true"/>
+
+            <ImageView
+                android:id="@+id/img_login_account_clear2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/w8"
+                android:src="@drawable/login_accout_clear_selector"
+                android:visibility="invisible"/>
+
+        </LinearLayout>
+
+        <View
+            style="@style/CommentDividingLineNoPadding"
+            android:layout_alignParentTop="true"/>
+        <View
+            style="@style/CommentDividingLineNoPadding"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+
+    <!--请输入验证码-->
+    <LinearLayout
+        android:id="@+id/vcerification_code_layout"
+        style="@style/CommentLinearLayout"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <View android:layout_width="@dimen/h1"
+              android:layout_height="match_parent"
+              android:layout_marginBottom="@dimen/h30"
+              android:layout_marginTop="@dimen/h30"
+              android:background="@color/text_hint"/>
+        <EditText
+            android:id="@+id/et_vcerification_code"
+            style="@style/TextAppearanceMedium"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/w20"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入验证码"
+            android:maxLength="6"
+            android:singleLine="true"/>
+        <LinearLayout
+            android:id="@+id/layout_vcerification_code"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/h90"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/sl_comment_btn"
+            android:gravity="center"
+            android:minWidth="@dimen/w240"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_code_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/w10"
+                android:padding="@dimen/w14"
+                android:src="@mipmap/ic_code_loading"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btn_vcerification_code"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/w20"
+                android:background="@null"
+                android:text="获取验证码"
+                android:textColor="@color/white"
+                android:textSize="@dimen/w38"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        style="@style/CommentDividingLineWihtPadding"
+        android:layout_marginLeft="@dimen/w86"
+        android:layout_marginRight="@dimen/w86"/>
+
+    <!--密码-->
+    <LinearLayout
+        android:id="@+id/new_code_layout"
+        style="@style/CommentLinearLayout"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View android:layout_width="@dimen/h1"
+              android:layout_height="match_parent"
+              android:layout_marginBottom="@dimen/h30"
+              android:layout_marginTop="@dimen/h30"
+              android:background="@color/text_hint"/>
+
+
+        <EditText
+            android:id="@+id/new_password"
+            style="@style/TextAppearanceMedium"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/w20"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入新密码"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:singleLine="true"/>
+
+        <CheckBox
+            android:id="@+id/cb_pw1"
+            android:layout_width="@dimen/h76"
+            android:layout_height="@dimen/h76"
+            android:background="@drawable/password_visible"
+            android:button="@null"/>
+
+    </LinearLayout>
+
+
+    <View
+        style="@style/CommentDividingLineWihtPadding"
+        android:layout_marginLeft="@dimen/w86"
+        android:layout_marginRight="@dimen/w86"/>
+
+    <!--密码-->
+    <LinearLayout
+        android:id="@+id/check_code_layout"
+        style="@style/CommentLinearLayout"
+        android:layout_below="@id/layout_user"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View android:layout_width="@dimen/h1"
+              android:layout_height="match_parent"
+              android:layout_marginBottom="@dimen/h30"
+              android:layout_marginTop="@dimen/h30"
+              android:background="@color/text_hint"/>
+
+
+        <EditText
+            android:id="@+id/et_pw2"
+            style="@style/TextAppearanceMedium"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/w20"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请再次输入新密码"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:singleLine="true"/>
+
+        <CheckBox
+            android:id="@+id/cb_pw2"
+            android:layout_width="@dimen/h76"
+            android:layout_height="@dimen/h76"
+            android:background="@drawable/password_visible"
+            android:button="@null"/>
+
+    </LinearLayout>
+
+
+    <View
+        style="@style/CommentDividingLineWihtPadding"
+        android:layout_marginLeft="@dimen/w86"
+        android:layout_marginRight="@dimen/w86"/>
+
+    <Button
+        android:id="@+id/btn_confirm"
+        style="@style/CommentButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/w86"
+        android:layout_marginRight="@dimen/w86"
+        android:layout_marginTop="@dimen/h500"
+        android:gravity="center"
+        android:text="确定"
+        android:textSize="@dimen/w54"/>
+
+</LinearLayout>
