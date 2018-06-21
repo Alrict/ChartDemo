@@ -22,7 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Response;
+import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.config.Constants;
@@ -260,19 +260,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     private void jumpToHomeActiity() {
         BaseDialogHelper.showLoadingDialog(this, false, "正在登入...");
-        IhyRequest.login(new Response.Listener<Object>() {
+        String countNum = mEtCount.getText().toString().trim();
+        String passWord = mEtPassWord.getText().toString().trim();
+        IhyRequest.login(countNum, passWord, new ResponseCallback() {
             @Override
-            public void onResponse(Object response) {
+            public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                LogOut.d("llw", response.toString());
+                LogOut.d("llw", var1.toString());
                 jumpToHome();
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(LoginActivity.this, error.getMessage());
-                LogOut.d("llw", error.toString());
+                ToastUtils.showToastDefault(LoginActivity.this, var3);
             }
         });
 

@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioGroup;
 
@@ -11,6 +12,7 @@ import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.fragment.DeviceFragment;
 import com.ihypnus.ihypnuscare.fragment.MyIhyFragment;
 import com.ihypnus.ihypnuscare.fragment.ReportFragment;
+import com.ihypnus.ihypnuscare.utils.ToastUtils;
 
 public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
@@ -19,6 +21,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private ReportFragment mReportFragment;
     private MyIhyFragment mMyIhyFragment;
     private RadioGroup mRgpTab;
+    private long exitTime;
 
 
     @Override
@@ -102,6 +105,27 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 break;
         }
         transaction.commit();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            reTryExit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 在主界面按两次back键退出App
+     */
+    private void reTryExit() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            ToastUtils.showToastInCenter(getApplicationContext(), "再按一次退出程序");
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+        }
     }
 
     @Override

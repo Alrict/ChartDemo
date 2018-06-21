@@ -9,10 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
-import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.SP;
-import com.ihypnus.ihypnuscare.utils.StringUtils;
 
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
@@ -138,7 +136,11 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
 
     //跳转到登录页面
     private void gotoLoginActivity() {
-        mSP = SP.getSP(Constants.LOGIN_ACCOUNT_PASSWORD);
+        Intent in = new Intent(this, LoginActivity.class);
+        startActivity(in);
+        finish();
+
+     /*   mSP = SP.getSP(Constants.LOGIN_ACCOUNT_PASSWORD);
         String login_account = mSP.getString(Constants.LOGIN_ACCOUNT);
         String login_password = mSP.getString(Constants.LOGIN_PASSWORD);
         if (!StringUtils.isNullOrEmpty(login_account) && !StringUtils.isNullOrEmpty(login_password)) {
@@ -149,7 +151,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
             Intent in = new Intent(this, LoginActivity.class);
             startActivity(in);
             finish();
-        }
+        }*/
 
     }
 

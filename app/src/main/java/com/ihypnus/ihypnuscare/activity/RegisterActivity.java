@@ -26,6 +26,7 @@ import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.bean.PhoneVO;
 import com.ihypnus.ihypnuscare.bean.UserInfo;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
@@ -171,6 +172,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 mIvCodeLoading.setVisibility(View.VISIBLE);
                 mBtnVcerificationCode.setVisibility(View.GONE);
                 mIvCodeLoading.startAnimation(mCodeLoadingAnim);
+                getVerifyCodeByNet(countNo);
                 break;
 
             case R.id.iv_scan:
@@ -236,14 +238,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(RegisterActivity.this,var3);
+                ToastUtils.showToastDefault(RegisterActivity.this, var3);
                 jumpToPersonMsg();
             }
 
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(RegisterActivity.this,var3);
+                ToastUtils.showToastDefault(RegisterActivity.this, var3);
             }
         });
     }
@@ -361,5 +363,22 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             mEtPassWord.setTransformationMethod(PasswordTransformationMethod.getInstance());
         }
         mEtPassWord.setSelection(passWord.length());
+    }
+
+    private void getVerifyCodeByNet(String phoneNo) {
+        PhoneVO phoneVO = new PhoneVO(phoneNo);
+        IhyRequest.getVerifyCode(phoneVO, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                ToastUtils.showToastDefault(var3);
+                mIvCodeLoading.clearAnimation();
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                ToastUtils.showToastDefault(var3);
+                mIvCodeLoading.clearAnimation();
+            }
+        });
     }
 }

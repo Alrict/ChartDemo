@@ -71,6 +71,21 @@ public class ToastUtils {
         CusttomToast.makeText(IhyApplication.mInstance, content, Toast.LENGTH_SHORT).show();
     }
 
+    public static void showToastDefault( String content) {
+
+        if (isFastClick()) return;
+        if (IhyApplication.mInstance == null || StringUtils.isNullOrEmpty(content)) {
+            return;
+        }
+        Context applicationContext = IhyApplication.mInstance.getApplicationContext();
+        if (applicationContext instanceof Activity) {
+            if (((Activity) applicationContext).isFinishing())
+                return;
+        }
+//        CustomToast.makeText(GlobalApplication.instance.getApplicationContext(), content, Toast.LENGTH_SHORT).show();
+        CusttomToast.makeText(IhyApplication.mInstance, content, Toast.LENGTH_SHORT).show();
+    }
+
     /**
      * @param context
      * @param content  显示内容
