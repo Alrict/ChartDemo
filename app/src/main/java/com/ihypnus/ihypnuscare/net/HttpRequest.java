@@ -23,6 +23,7 @@ import com.ihypnus.ihypnuscare.utils.HttpLog;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
@@ -466,6 +467,35 @@ public class HttpRequest extends Request {
         } else if (this.mResponseDataType == 4) {
             //解析成普通的javaBean
             obj = gson.fromJson(parsedData, this.mResponseJavaBean);
+        }else{
+            JSONObject jObject = new JSONObject(parsedData);
+            ResponseResult responseResult = ResponseResult.parseResponseResult(jObject);
+            String type = responseResult.getType();
+            String result = responseResult.getResult();
+            Object resultObj = null;
+            if(this.mResponseDataType == 2) {
+
+                if(type.equals("success") && !TextUtils.isEmpty(result) && this.mResponseJavaBean != null) {
+                    resultObj = gson.fromJson(result, this.mResponseJavaBean);
+                    responseResult.setResultObject(resultObj);
+                    responseResult.setType("success");
+                } else {
+                    responseResult.setResultObject("");
+                    responseResult.setType("error");
+                    HttpLog.e("volley_request", "type: " + type + "\nresult: " + result + "\nResponseJavaBean: " + (this.mResponseJavaBean == null?null:this.mResponseJavaBean.getClass().getSimpleName()));
+                }
+            } else {
+                if(this.mResponseDataType != 1) {
+                    throw new RuntimeException("invalid ResponseDataType");
+                }
+
+                if(type.equals("success")) {
+                    responseResult.setResultObject(result);
+                    responseResult.setType("success");
+                }
+            }
+
+            obj = responseResult;
         }
         return obj;
     }

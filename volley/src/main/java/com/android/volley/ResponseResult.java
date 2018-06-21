@@ -1,5 +1,7 @@
 package com.android.volley;
 
+import org.json.JSONObject;
+
 /**
  * @Package com.android.volley
  * @author: llw
@@ -13,6 +15,29 @@ public class ResponseResult {
     private String result;
     private String errorCode;
     private String type;
+    private Object responseData;
+
+    public static ResponseResult parseResponseResult(JSONObject jObject) {
+        if(jObject == null) {
+            return null;
+        } else {
+            ResponseResult responseResult = new ResponseResult();
+            responseResult.content = jObject.optString("content", "");
+            responseResult.type = jObject.optString("type", "");
+            responseResult.errorCode = jObject.optString("errorCode", "");
+            responseResult.result = jObject.optString("result", "");
+            return responseResult;
+        }
+    }
+
+
+    public Object getResultObject() {
+        return this.responseData;
+    }
+
+    public void setResultObject(Object responseData) {
+        this.responseData = responseData;
+    }
 
     public String getContent() {
         return content;
