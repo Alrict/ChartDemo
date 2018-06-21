@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@mipmap/img_background">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@mipmap/img_background"
+              android:orientation="vertical">
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h700"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-
-</RelativeLayout>
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chart2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>

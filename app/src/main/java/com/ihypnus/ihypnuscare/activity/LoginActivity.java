@@ -274,6 +274,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
                 ToastUtils.showToastDefault(LoginActivity.this, var3);
+                jumpToHome();
             }
         });
 

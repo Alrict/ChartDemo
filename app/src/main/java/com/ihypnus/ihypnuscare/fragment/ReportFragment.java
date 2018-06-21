@@ -1,32 +1,28 @@
 package com.ihypnus.ihypnuscare.fragment;
 
-import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.graphics.Color;
 import android.nfc.FormatException;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.BarChart;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.activity.SelectDateActivity;
 import com.ihypnus.ihypnuscare.adapter.VerticalPagerAdapter;
-import com.ihypnus.ihypnuscare.utils.BarChartManager;
+import com.ihypnus.ihypnuscare.controller.BaseController;
+import com.ihypnus.ihypnuscare.controller.ChartsPage1Controller;
+import com.ihypnus.ihypnuscare.controller.ChartsPage2Controller;
+import com.ihypnus.ihypnuscare.controller.ChartsPage3Controller;
+import com.ihypnus.ihypnuscare.controller.HomePageController;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
-import com.ihypnus.ihypnuscare.widget.CircleProgressBarView;
 import com.ihypnus.ihypnuscare.widget.VerticalViewPager;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -40,21 +36,15 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     private static final String TAG = "ReportFragment";
     private VerticalViewPager mViewPager;
     private VerticalPagerAdapter mPagerAdapter;
-    private View mHomeFirstView;
-    private LayoutInflater mInflater;
-    private View mSecondView;
-    private CircleProgressBarView mPb;
     private Animation mReLoadingAnim;
     private ImageView mIvRefresh;
     private ImageView mIvData;
-    private BarChart mChart1;
     public static final int REQUEST_START_TIME = 200;
     public static final int RESPONSE_SELECT_OK = 202;
-    private TextView mTvData;
-    private View mThirdView;
-    private View mFourthView;
-    private BarChart mChart2;
-    private BarChart mChart3;
+    private HomePageController mHomePageController;
+    private ChartsPage1Controller mChartsPage1Controller;
+    private ChartsPage2Controller mChartsPage2Controller;
+    private ChartsPage3Controller mChartsPage3Controller;
 
     @Override
     protected int setView() {
@@ -70,78 +60,21 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         //viewPager
         mViewPager = (VerticalViewPager) findViewById(R.id.view_pager);
 
-        mInflater = mAct.getLayoutInflater();
-
-        //第一屏
-        mHomeFirstView = mInflater.inflate(R.layout.fragment_home_first, null);
-        //进度条
-        mPb = (CircleProgressBarView) mHomeFirstView.findViewById(R.id.pb);
-        mTvData = (TextView) mHomeFirstView.findViewById(R.id.tv_data);
-//        mPb.setMax(100);
-        mSecondView = mInflater.inflate(R.layout.fragment_second, null);
-        mChart1 = (BarChart) mSecondView.findViewById(R.id.chart1);
-        mThirdView = mInflater.inflate(R.layout.fragment_third, null);
-        mChart2 = (BarChart) mThirdView.findViewById(R.id.chart1);
-        mFourthView = mInflater.inflate(R.layout.fragment_fourth, null);
-        mChart3 = (BarChart) mFourthView.findViewById(R.id.chart1);
-        initChart();
     }
 
-    /**
-     * 初始化柱状图
-     */
-    private void initChart() {
-//        使用chart时，一般都要经过以下几个步骤：
-// （1）定义该chart；
-// （2）设置chart的样式：包括chart的样式、坐标轴的样式和图例的样式等 ；
-// （3）为chart添加数据：先定义相应的Entry列表，并添加到DataSet中，然后再添加到ChartData对象中，最后再赋值给该Chart并刷新即可。
-        BarChartManager barChartManager1 = new BarChartManager(mChart1);
-        BarChartManager barChartManager2 = new BarChartManager(mChart2);
-        BarChartManager barChartManager3 = new BarChartManager(mChart3);
-        //设置x轴的数据
-        ArrayList<Float> xValues = new ArrayList<>();
-        for (int i = 0; i <= 31; i++) {
-            xValues.add((float) i);
-        }
-
-        //设置y轴的数据()
-        List<List<Float>> yValues = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            List<Float> yValue = new ArrayList<>();
-            for (int j = 0; j <= 31; j++) {
-                yValue.add((float) (Math.random() * 80));
-            }
-            yValues.add(yValue);
-        }
-
-        //颜色集合
-        List<Integer> colours = new ArrayList<>();
-        colours.add(Color.GREEN);
-        colours.add(Color.BLUE);
-        colours.add(Color.RED);
-        colours.add(Color.CYAN);
-
-        //线的名字集合
-        List<String> names = new ArrayList<>();
-        names.add("折线一");
-        names.add("折线二");
-        names.add("折线三");
-        names.add("折线四");
-
-        //创建多条折线的图表
-        barChartManager1.showBarChart(xValues, yValues.get(0), names.get(0), colours.get(1));
-        barChartManager2.showBarChart(xValues, yValues.get(1), names.get(1), colours.get(2));
-        barChartManager3.showBarChart(xValues, yValues.get(2), names.get(2), colours.get(3));
-
-    }
 
     @Override
     protected void init() {
-        final ArrayList<View> fragmentList = new ArrayList<>();
-        fragmentList.add(mHomeFirstView);
-        fragmentList.add(mSecondView);
-        fragmentList.add(mThirdView);
-        fragmentList.add(mFourthView);
+
+        ArrayList<BaseController> fragmentList = new ArrayList<>();
+        mHomePageController = new HomePageController(mAct);
+        mChartsPage1Controller = new ChartsPage1Controller(mAct);
+        mChartsPage2Controller = new ChartsPage2Controller(mAct);
+        mChartsPage3Controller = new ChartsPage3Controller(mAct);
+        fragmentList.add(mHomePageController);
+        fragmentList.add(mChartsPage1Controller);
+        fragmentList.add(mChartsPage2Controller);
+        fragmentList.add(mChartsPage3Controller);
         mPagerAdapter = new VerticalPagerAdapter(fragmentList);
 
         //设置最小偏移量
@@ -163,24 +96,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void loadData() {
-//        BaseDialogHelper.showLoadingDialog(mAct, true, "正在加载...");
-//        BaseDialogHelper.dismissLoadingDialog();
-        try {
-            String currentDate = DateTimeUtils.getCurrentDate();
-            String date = DateTimeUtils.date2Chinese(currentDate);
-            mTvData.setText(date);
-        } catch (FormatException e) {
-            e.printStackTrace();
 
-        }
-        startAni(84);
-    }
-
-    private void startAni(float sweep) {
-        ObjectAnimator a = ObjectAnimator.ofFloat(mPb, "progress", 0f, sweep);
-        a.setInterpolator(new AccelerateDecelerateInterpolator());
-        a.setDuration(3000);
-        a.start();
     }
 
 
@@ -192,9 +108,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         switch (v.getId()) {
             case R.id.iv_refresh:
                 //刷新
-//                mIvRefresh.setAnimation(mReLoadingAnim);
                 mIvRefresh.startAnimation(mReLoadingAnim);
-//                mIvRefresh.clearAnimation();
 
                 break;
             case R.id.iv_data:
@@ -243,11 +157,11 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 
                 try {
                     String date = DateTimeUtils.date2Chinese(time);
-                    mTvData.setText(date);
                     Random random = new Random();
                     int i = random.nextInt(100);
-                    startAni(i);
-//                    ToastUtils.showToastDefault(mAct, date);
+                    if (mHomePageController != null) {
+                        mHomePageController.refreshDatas(date, i);
+                    }
                 } catch (FormatException e) {
                     e.printStackTrace();
 

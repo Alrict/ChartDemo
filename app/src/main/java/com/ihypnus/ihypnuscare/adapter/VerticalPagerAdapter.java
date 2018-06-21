@@ -3,6 +3,8 @@ package com.ihypnus.ihypnuscare.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ihypnus.ihypnuscare.controller.BaseController;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,19 +16,19 @@ import java.util.List;
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
 public class VerticalPagerAdapter extends android.support.v4.view.PagerAdapter {
-    private ArrayList<View> mPageFragmentList;
+    private ArrayList<BaseController> mPageFragmentList;
 
-    public VerticalPagerAdapter(ArrayList<View> pageFragmentList) {
+    public VerticalPagerAdapter(ArrayList<BaseController> pageFragmentList) {
         mPageFragmentList = pageFragmentList;
     }
 
-    public List<View> getViews() {
+    public List<BaseController> getViews() {
         return mPageFragmentList;
     }
 
     public View getPage(int position) {
 
-        return mPageFragmentList.get(position);
+        return mPageFragmentList.get(position).getRootView();
     }
 
     @Override
@@ -42,13 +44,14 @@ public class VerticalPagerAdapter extends android.support.v4.view.PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView(mPageFragmentList.get(position));
+        container.removeView(mPageFragmentList.get(position).getRootView());
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = mPageFragmentList.get(position);
-        container.addView(view);
-        return view;
+        BaseController view = mPageFragmentList.get(position);
+        View rootView = view.getRootView();
+        container.addView(rootView);
+        return rootView;
     }
 }
