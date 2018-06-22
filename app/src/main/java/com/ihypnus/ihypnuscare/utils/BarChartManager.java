@@ -48,12 +48,31 @@ public class BarChartManager {
         //背景阴影
         mBarChart.setDrawBarShadow(false);
         mBarChart.setHighlightFullBarEnabled(false);
-
+        //最多显示的柱状图数量
+        mBarChart.setMaxVisibleValueCount(31);
         //显示边界
         mBarChart.setDrawBorders(true);
         //设置动画效果
         mBarChart.animateY(1000, Easing.EasingOption.Linear);
         mBarChart.animateX(1000, Easing.EasingOption.Linear);
+
+        XAxis xAxis = mBarChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setGranularity(1f); // only intervals of 1 day
+        xAxis.setLabelCount(7);
+
+        YAxis leftAxis = mBarChart.getAxisLeft();
+        leftAxis.setLabelCount(8, false);
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setSpaceTop(15f);
+        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+
+        YAxis rightAxis = mBarChart.getAxisRight();
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setLabelCount(8, false);
+        rightAxis.setSpaceTop(15f);
+        rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
         //折线图例 标签 设置
         Legend legend = mBarChart.getLegend();
