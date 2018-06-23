@@ -5,6 +5,7 @@ import android.content.Context;
 import android.nfc.FormatException;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
@@ -21,6 +22,8 @@ import com.ihypnus.ihypnuscare.widget.CircleProgressBarView;
 public class HomePageController extends BaseController {
     private TextView mTvData;
     private CircleProgressBarView mPb;
+    private LinearLayout mLayoutWeekData;
+    private TextView mTvDate;
 
     public HomePageController(Context context) {
         super(context);
@@ -33,6 +36,10 @@ public class HomePageController extends BaseController {
         mTvData = (TextView) rootView.findViewById(R.id.tv_data);
         //进度条
         mPb = (CircleProgressBarView) rootView.findViewById(R.id.pb);
+        //周统计数据
+        mLayoutWeekData = (LinearLayout) rootView.findViewById(R.id.layout_week_data);
+        //周统计数据时间范围
+        mTvDate = (TextView) rootView.findViewById(R.id.tv_date);
         return rootView;
     }
 

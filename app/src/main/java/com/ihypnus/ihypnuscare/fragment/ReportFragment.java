@@ -9,6 +9,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.activity.SelectDateActivity;
@@ -19,6 +21,7 @@ import com.ihypnus.ihypnuscare.controller.ChartsPage2Controller;
 import com.ihypnus.ihypnuscare.controller.ChartsPage3Controller;
 import com.ihypnus.ihypnuscare.controller.HomePageController;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.widget.VerticalViewPager;
 
@@ -45,6 +48,9 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     private ChartsPage1Controller mChartsPage1Controller;
     private ChartsPage2Controller mChartsPage2Controller;
     private ChartsPage3Controller mChartsPage3Controller;
+    private LinearLayout mLayoutWeekData;
+    private TextView mTvDate;
+    private float mOldPositionOffset;
 
     @Override
     protected int setView() {
@@ -59,6 +65,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         mIvData = (ImageView) findViewById(R.id.iv_data);
         //viewPager
         mViewPager = (VerticalViewPager) findViewById(R.id.view_pager);
+
 
     }
 
@@ -136,15 +143,36 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         Log.d("llw", "position:" + position + ",positionOffset:" + positionOffset + ",positionOffsetPixels:" + positionOffsetPixels);
+        //v小于0,向上滑,反之向下滑
+//        if (positionOffset == 0 || positionOffset == 1) {
+//            mOldPositionOffset = 0;
+//        }
+//        float v = positionOffset - mOldPositionOffset;
+//        if (position == 0) {
+//            mLayoutWeekData.setVisibility(View.GONE);
+//        } else if (position == 1 && v < 0) {
+//            mLayoutWeekData.setVisibility(View.GONE);
+//        } else if (position >= 1) {
+//            mLayoutWeekData.setVisibility(View.VISIBLE);
+//        }
+//        mOldPositionOffset = positionOffset;
+//        mLayoutWeekData.setAnimation();
     }
 
     @Override
     public void onPageSelected(int position) {
-
+        LogOut.d("llw", "position:" + position);
+//        mLayoutWeekData.setVisibility(position > 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
+        LogOut.d("llw", "state:" + state);
+        int position = mViewPager.getVerticalScrollbarPosition();
+
+//        if (state == 0) {
+//            mOldPositionOffset = 0;
+//        }
 
     }
 

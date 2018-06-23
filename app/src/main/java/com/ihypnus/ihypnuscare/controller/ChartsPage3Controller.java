@@ -3,6 +3,8 @@ package com.ihypnus.ihypnuscare.controller;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.ihypnus.ihypnuscare.R;
@@ -21,6 +23,8 @@ import java.util.List;
 public class ChartsPage3Controller extends BaseController {
     private BarChart mChart1;
     private BarChart mChart2;
+    private LinearLayout mLayoutWeekData;
+    private TextView mTvDate;
 
     public ChartsPage3Controller(Context context) {
         super(context);
@@ -31,6 +35,10 @@ public class ChartsPage3Controller extends BaseController {
         View rootView = View.inflate(mContext, R.layout.fragment_fourth, null);
         mChart1 = (BarChart) rootView.findViewById(R.id.chart1);
         mChart2 = (BarChart) rootView.findViewById(R.id.chart2);
+        //周统计数据
+        mLayoutWeekData = (LinearLayout) rootView.findViewById(R.id.layout_week_data);
+        //周统计数据时间范围
+        mTvDate = (TextView) rootView.findViewById(R.id.tv_date);
         return rootView;
     }
 
@@ -69,8 +77,8 @@ public class ChartsPage3Controller extends BaseController {
         names.add("折线四");
 
         //创建多条折线的图表
-        barChartManager1.showBarChart(xValues, yValues.get(0), names.get(0), colours.get(1));
-        barChartManager2.showBarChart(xValues, yValues.get(1), names.get(1), colours.get(2));
+        barChartManager1.showBarChart(xValues, yValues.get(0), names.get(0), "90%吸气压力(厘米水柱)");
+        barChartManager2.showBarChart(xValues, yValues.get(1), names.get(1),"AHI(次/小时)");
     }
 
     @Override

@@ -4,6 +4,26 @@
               android:layout_height="match_parent"
               android:background="@mipmap/img_background"
               android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/layout_week_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/h50"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+        <TextView
+            style="@style/TextAppearanceMedium"
+            android:text="周统计数据"
+            android:textSize="@dimen/w34"/>
+        <TextView
+            android:id="@+id/tv_date"
+            style="@style/TextAppearanceMedium"
+            android:layout_marginTop="@dimen/w24"
+            android:text="5月1日~5月7日"
+            android:textSize="@dimen/w34"/>
+    </LinearLayout>
+
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart1"
         android:layout_width="match_parent"

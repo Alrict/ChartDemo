@@ -3,6 +3,8 @@ package com.ihypnus.ihypnuscare.controller;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.ihypnus.ihypnuscare.R;
@@ -21,6 +23,8 @@ import java.util.List;
 public class ChartsPage1Controller extends BaseController {
     private BarChart mChart1;
     private BarChart mChart2;
+    private LinearLayout mLayoutWeekData;
+    private TextView mTvDate;
 
     public ChartsPage1Controller(Context context) {
         super(context);
@@ -31,6 +35,10 @@ public class ChartsPage1Controller extends BaseController {
         View rootView = View.inflate(mContext, R.layout.fragment_second, null);
         mChart1 = (BarChart) rootView.findViewById(R.id.chart1);
         mChart2 = (BarChart) rootView.findViewById(R.id.chart2);
+        //周统计数据
+        mLayoutWeekData = (LinearLayout) rootView.findViewById(R.id.layout_week_data);
+        //周统计数据时间范围
+        mTvDate = (TextView) rootView.findViewById(R.id.tv_date);
         return rootView;
     }
 
@@ -40,7 +48,7 @@ public class ChartsPage1Controller extends BaseController {
         BarChartManager barChartManager2 = new BarChartManager(mChart2);
         //设置x轴的数据
         ArrayList<Float> xValues = new ArrayList<>();
-        for (int i = 0; i <= 31; i++) {
+        for (int i = 0; i <= 6; i++) {
             xValues.add((float) i);
         }
 
@@ -48,8 +56,8 @@ public class ChartsPage1Controller extends BaseController {
         List<List<Float>> yValues = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             List<Float> yValue = new ArrayList<>();
-            for (int j = 0; j <= 31; j++) {
-                yValue.add((float) (Math.random() * 80));
+            for (int j = 0; j <= 6; j++) {
+                yValue.add((float) (Math.random() * 100));
             }
             yValues.add(yValue);
         }
@@ -63,14 +71,14 @@ public class ChartsPage1Controller extends BaseController {
 
         //线的名字集合
         List<String> names = new ArrayList<>();
-        names.add("折线一");
+        names.add("睡眠时间");
         names.add("折线二");
         names.add("折线三");
         names.add("折线四");
 
         //创建多条折线的图表
-        barChartManager1.showBarChart(xValues, yValues.get(0), names.get(0), colours.get(1));
-        barChartManager2.showBarChart(xValues, yValues.get(1), names.get(1), colours.get(2));
+        barChartManager1.showBarChart(xValues, yValues.get(0), names.get(0), "睡眠分数");
+        barChartManager2.showBarChart(xValues, yValues.get(1), names.get(1), "使用时长");
     }
 
     @Override
