@@ -46,17 +46,15 @@ android {
 
             shrinkResources true
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            buildConfigField "String", "HOST", HOST_RELEASE.toString()
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
 
             minifyEnabled false
             shrinkResources false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
-            buildConfigField "String", "HOST", HOST_DEBUG.toString()
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -77,6 +75,9 @@ android {
             applicationId "com.ihypnus.ihypnuscare"
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "String", "CRASH_LOG", '".crashlog"'
+            //对应服务器地址
+            buildConfigField 'String', 'SERVER_URL', HOST_RELEASE.toString()
+
         }
 
         //测试环境
@@ -84,6 +85,8 @@ android {
             applicationId "com.ihypnus.ihypnuscare"
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "String", "CRASH_LOG", '"crashlog"'
+            //对应服务器地址
+            buildConfigField 'String', 'SERVER_URL', HOST_DEBUG.toString()
         }
 
         //测试环境，可调式，正式地址,有日志打印,
@@ -91,6 +94,8 @@ android {
             applicationId "com.ihypnus.ihypnuscare"
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "String", "CRASH_LOG", '"crashlog"'
+            //对应服务器地址
+            buildConfigField 'String', 'SERVER_URL', HOST_RELEASE.toString()
         }
     }
 

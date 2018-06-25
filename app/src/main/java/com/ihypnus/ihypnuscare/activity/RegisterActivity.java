@@ -7,7 +7,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.text.Editable;
 import android.text.SpannableString;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -44,7 +46,7 @@ import kr.co.namee.permissiongen.PermissionGen;
  * @date: 2018/5/14 13:45
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class RegisterActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class RegisterActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, TextWatcher {
     private Animation mCodeLoadingAnim;
     private EditText mEtCount;
     private ImageView mIvCodeLoading;
@@ -134,6 +136,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initEvent() {
+        mEtCount.addTextChangedListener(this);
         mBtnVcerificationCode.setOnClickListener(this);
         mIvScan.setOnClickListener(this);
         mTvLogin.setOnClickListener(this);
@@ -381,6 +384,41 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 mIvCodeLoading.clearAnimation();
                 mBtnVcerificationCode.setVisibility(View.VISIBLE);
                 mIvCodeLoading.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        String account = mEtCount.getText().toString().trim();
+        if (account.length() == 11) {
+            vertifyPhoneNum(account);
+        }
+    }
+
+    private void vertifyPhoneNum(String account) {
+        BaseDialogHelper.showLoadingDialog(this, true, "正在验证...");
+        IhyRequest.VerifyPhoneNumber(account, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
             }
         });
     }
