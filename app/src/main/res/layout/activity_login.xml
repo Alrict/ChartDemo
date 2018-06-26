@@ -95,6 +95,7 @@
             <EditText
                 android:id="@+id/id_phone_edit2"
                 style="@style/TextAppearanceMedium"
+                android:textCursorDrawable="@drawable/cursor_color"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
@@ -142,6 +143,7 @@
             style="@style/TextAppearanceMedium"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:textCursorDrawable="@drawable/cursor_color"
             android:layout_marginLeft="@dimen/w56"
             android:layout_weight="1"
             android:background="@null"

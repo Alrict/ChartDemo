@@ -137,6 +137,30 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void initEvent() {
         mEtCount.addTextChangedListener(this);
+        mEtPassWord.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int index = mEtPassWord.getSelectionStart() - 1;
+                String password = mEtPassWord.getText().toString().trim();
+                if (s.length() > 0 && index >= 0) {
+                    if (!StringUtils.vertifyIllegal(password)) {
+                        ToastUtils.showToastDefault("输入的字符不合法!");
+                        s.delete(index, index + 1);
+                    }
+                }
+
+            }
+        });
         mBtnVcerificationCode.setOnClickListener(this);
         mIvScan.setOnClickListener(this);
         mTvLogin.setOnClickListener(this);
@@ -273,6 +297,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String passWord = mEtPassWord.getText().toString().trim();
         if (StringUtils.isNullOrEmpty(passWord)) {
             ToastUtils.showToastDefault(this, mEtPassWord.getHint().toString());
+            return false;
+        }
+        if (!StringUtils.vertifyPassWord(passWord)) {
+            ToastUtils.showToastDefault("请输入6-14位的密码,支持数字与大小写字母");
             return false;
         }
 

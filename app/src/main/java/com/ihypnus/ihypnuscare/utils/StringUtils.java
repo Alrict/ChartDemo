@@ -404,7 +404,6 @@ public class StringUtils {
     }
 
 
-
     /**
      * 检查是否有特殊字符串
      *
@@ -1093,6 +1092,7 @@ public class StringUtils {
         sbData.append(foot);
         return sbData.toString();
     }
+
     /**
      * 拼接字符串
      *
@@ -1258,5 +1258,31 @@ public class StringUtils {
             format.applyPattern("###,###,##0.00GB");
         }
         return format.format(size);
+    }
+
+    /**
+     * 验证输入的密码
+     *
+     * @param input
+     * @return
+     */
+    public static boolean vertifyPassWord(String input) {
+        Pattern p = Pattern.compile("^(?=.{6,14}$)[0-9a-zA-Z@!+-?]+$");
+        Matcher m = p.matcher(input);
+        return m.matches();
+
+    }
+
+    /**
+     * 验证输入的密码
+     *
+     * @param input
+     * @return
+     */
+    public static boolean vertifyIllegal(String input) {
+        Pattern p = Pattern.compile("^[0-9a-zA-Z@!+-?]+$");
+        Matcher m = p.matcher(input);
+        return m.matches();
+
     }
 }

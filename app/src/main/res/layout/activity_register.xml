@@ -80,11 +80,12 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="4"
-                android:singleLine="true"
                 android:background="@null"
                 android:hint="请输入账号"
                 android:inputType="number"
-                android:maxLength="11"/>
+                android:maxLength="11"
+                android:singleLine="true"
+                android:textCursorDrawable="@drawable/cursor_color"/>
 
             <ImageView
                 android:id="@+id/img_login_account_clear2"
@@ -127,12 +128,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/w56"
-            android:singleLine="true"
             android:layout_weight="1"
             android:background="@null"
             android:hint="请输入密码"
             android:inputType="textPassword"
-            android:maxLength="20"/>
+            android:maxLength="20"
+            android:singleLine="true"
+            android:textCursorDrawable="@drawable/cursor_color"/>
 
         <CheckBox
             android:id="@+id/cb_visible"
@@ -175,7 +177,8 @@
             android:background="@null"
             android:hint="请输入验证码"
             android:maxLength="6"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textCursorDrawable="@drawable/cursor_color"/>
         <LinearLayout
             android:id="@+id/layout_vcerification_code"
             android:layout_width="wrap_content"
@@ -240,7 +243,8 @@
             android:layout_weight="1"
             android:background="@null"
             android:hint="请输入或扫一扫设备SN"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textCursorDrawable="@drawable/cursor_color"/>
 
         <ImageView
             android:id="@+id/iv_scan"
