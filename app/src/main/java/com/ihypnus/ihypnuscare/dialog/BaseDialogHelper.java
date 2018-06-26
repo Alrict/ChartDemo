@@ -136,6 +136,11 @@ public class BaseDialogHelper {
     }
 
 
+    /**
+     * 错误提示框
+     * @param context
+     * @param msg
+     */
     public static void showMsgTipDialog(Context context, final String msg) {
         IhyBaseDialog kyeBaseDialog = IhyBaseDialog.createKyeBaseDialog(context, R.layout.dialog_msg_tip, new IhyBaseDialog.DialogListener() {
             @Override

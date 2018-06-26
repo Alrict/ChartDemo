@@ -163,7 +163,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
         if (pw1.length() < 6) {
             mEtNewPassword.setText("");
             mEtNewPassword2.setText("");
-            ToastUtils.showToastDefault("密码长度必须大于6位");
+            BaseDialogHelper.showMsgTipDialog(this,"密码长度必须大于6位");
             return;
         }
 
@@ -176,14 +176,14 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
         if (pw2.length() < 6) {
             mEtNewPassword.setText("");
             mEtNewPassword2.setText("");
-            ToastUtils.showToastDefault("密码长度必须大于6位");
+            BaseDialogHelper.showMsgTipDialog(this,"密码长度必须大于6位");
             return;
         }
 
         if (!pw1.equals(pw2)) {
             mEtNewPassword.setText("");
             mEtNewPassword2.setText("");
-            ToastUtils.showToastDefault("两次输入的密码不一致,请重新输入");
+            BaseDialogHelper.showMsgTipDialog(this,"两次输入的密码不一致,请重新输入");
             return;
         }
         BaseDialogHelper.showLoadingDialog(this, true, "正在提交...");
