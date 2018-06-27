@@ -39,5 +39,21 @@ public class IhyAction {
      * 重置密码
      */
     public static final String ResetPwd = HOST + "hypnusMgr/app/user/pwd";
+    /**
+     * 获取设备列表
+     */
+    public static final String getPageList = HOST + "hypnusMgr/app/device/getPageList";
+    /**
+     * 删除（解绑）用户名下设备
+     */
+    public static final String unbind = HOST + "hypnusMgr/app/device/unbind";
+    /**
+     * 添加（绑定）用户名下设备
+     */
+    public static final String bind = HOST + "hypnusMgr/app/device/bind";
+    /**
+     * 获取某一时段使用信息（包括使用时长，参数信息）
+     */
+    public static final String events = HOST + "hypnusMgr/app/statisti/data/events";
 
 }

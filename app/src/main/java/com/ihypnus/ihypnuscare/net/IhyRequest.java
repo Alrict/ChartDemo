@@ -1,7 +1,6 @@
 package com.ihypnus.ihypnuscare.net;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.ResponseCallback;
 import com.ihypnus.ihypnuscare.bean.PhoneVO;
 import com.ihypnus.ihypnuscare.bean.UserInfo;
@@ -64,29 +63,10 @@ public class IhyRequest {
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
 
-    /**
-     * 注册
-     *
-     * @param userInfo        用户登入信息(帐号密码信息)
-     * @param deviceId        设备id
-     * @param successCallback
-     * @param faileCallback
-     */
-    public static void registerApp(UserInfo userInfo, String deviceId, Response.Listener<Object> successCallback, Response.ErrorListener faileCallback) {
-        String url = IhyAction.Register;
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("userInfo", userInfo);
-//        params.put("deviceId", deviceId);
-        params.put("deviceId", deviceId);
-        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, successCallback, params, faileCallback);
-        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.NORMAL_STRING);
-//        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
-        NetRequestHelper.getInstance().add(httpRequest, url);
-    }
 
     /**
      * 注册账号
-     *
+     *  CP701000516S CP70100517S CP70100518S CP70100519S CP70100508S
      * @param userInfo 用户登入信息
      * @param deviceId 设备sn
      * @param callback
@@ -132,14 +112,16 @@ public class IhyRequest {
     /**
      * 获取设备列表信息
      *
-     * @param uuid
+     * @param JSESSIONID
+     * @param isCookie
      * @param callback
      */
-    public static void getDeviceListInfos(String uuid, ResponseCallback callback) {
-        String url = "http://106.14.183.136/app/device/getPageList";
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("uuid", uuid);
-        HttpRequest httpRequest = new HttpRequest(Request.Method.POST, url, params, callback);
+    public static void getDeviceListInfos(String JSESSIONID, boolean isCookie, ResponseCallback callback) {
+        String url = IhyAction.getPageList;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("JSESSIONID", JSESSIONID);
+        params.put("isCookie", isCookie);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
 //        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
         NetRequestHelper.getInstance().add(httpRequest, url);
@@ -166,4 +148,67 @@ public class IhyRequest {
 //        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
+
+    /**
+     * 删除（解绑）用户名下设备
+     *
+     * @param JSESSIONID
+     * @param isCookie
+     * @param deviceId
+     * @param callback
+     */
+    public static void unbindDevice(String JSESSIONID, boolean isCookie, String deviceId, ResponseCallback callback) {
+        String url = IhyAction.unbind;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("JSESSIONID", JSESSIONID);
+        params.put("isCookie", isCookie);
+        params.put("deviceId", deviceId);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+//        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
+
+    /**
+     * 添加（绑定）用户名下设备
+     *
+     * @param JSESSIONID
+     * @param isCookie
+     * @param deviceId
+     * @param callback
+     */
+    public static void bindDevice(String JSESSIONID, boolean isCookie, String deviceId, ResponseCallback callback) {
+        String url = IhyAction.bind;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("JSESSIONID", JSESSIONID);
+        params.put("isCookie", isCookie);
+        params.put("deviceId", deviceId);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+//        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
+
+    /**
+     * 获取某一时段使用信息（包括使用时长，参数信息）
+     *
+     * @param JSESSIONID
+     * @param endTime
+     * @param deviceId
+     * @param callback
+     */
+    public static void getEvents(String JSESSIONID, String deviceId, String startTime, String endTime, ResponseCallback callback) {
+        String url = IhyAction.events;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("JSESSIONID", JSESSIONID);
+        params.put("startTime", startTime);
+        params.put("endTime", endTime);
+        params.put("deviceId", deviceId);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+//        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
+
+
 }

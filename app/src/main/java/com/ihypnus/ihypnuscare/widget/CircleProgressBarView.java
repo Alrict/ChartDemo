@@ -246,7 +246,7 @@ public class CircleProgressBarView extends View {
 //            progressPaint.setColor(Color.parseColor("#ff00ff00"));
             progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ffE67817", "#ff0093dd")));
             mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ffE67817", "#ff0093dd")));
-        } else if (mProgress > 0) {
+        } else if (mProgress >= 0) {
 //            progressPaint.setColor(Color.parseColor("#ffff5500"));
             progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ffD4380E", "#ffE67817")));
             mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ffD4380E", "#ffE67817")));
@@ -258,7 +258,7 @@ public class CircleProgressBarView extends View {
         drawInnerGrayCircle(canvas);
 
 
-        if (mProgress <= 0) {
+        if (mProgress < 0) {
             //绘制文字背景圆形
             drawTextBg(canvas);
             //绘制"无数据"内容
