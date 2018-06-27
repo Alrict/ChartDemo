@@ -182,11 +182,14 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         if (requestCode == REQUEST_START_TIME && resultCode == RESPONSE_SELECT_OK) {
             if (null != data) {
                 String time = initTime(data);
+                long longTime = DateTimeUtils.getSimpleLongTime(time);
+
 
                 try {
                     String date = DateTimeUtils.date2Chinese(time);
                     Random random = new Random();
                     int i = random.nextInt(100);
+                    mHomePageController.setDate(longTime);
                     if (mHomePageController != null) {
                         mHomePageController.refreshDatas(date, i);
                     }

@@ -13,6 +13,8 @@ import android.view.View;
 public abstract class BaseController {
     private View mRootView;
     protected Context mContext;
+    //选择的日期
+    private long mDate;
 
 
     public BaseController(Context context) {
@@ -34,7 +36,6 @@ public abstract class BaseController {
     public abstract void initData();
 
 
-
     public View getRootView() {
 
         if (mRootView == null) {
@@ -44,4 +45,12 @@ public abstract class BaseController {
     }
 
     public abstract void onDestroy();
+
+    public long getDate() {
+        return mDate;
+    }
+
+    public void setDate(long date) {
+        mDate = date;
+    }
 }
