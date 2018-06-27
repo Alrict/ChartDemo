@@ -14,11 +14,15 @@ public class IhyAction {
      * 服务器ip
      */
     public final static String HOST = BuildConfig.SERVER_URL;
+    /**
+     * 登入
+     */
+    public final static String Login = HOST + "hypnusMgr/app/login";
 
     /**
      * 获取验证码
      */
-    public static final String GetVerfityCode = HOST + "hypnusMgr/dmz/authCode/get?phone=";
+    public static final String GetVerfityCode = HOST + "hypnusMgr/dmz/authCode/appget";
     /**
      * 注册
      */
@@ -27,5 +31,13 @@ public class IhyAction {
      * 验证手机号码是否被注册
      */
     public static final String Validationet = HOST + "hypnusMgr/dmz/authCode/validationet";
+    /**
+     * 验证手机号码对应的验证码
+     */
+    public static final String Appvalidation = HOST + "hypnusMgr/dmz/authCode/appvalidation";
+    /**
+     * 重置密码
+     */
+    public static final String ResetPwd = HOST + "hypnusMgr/app/user/pwd";
 
 }

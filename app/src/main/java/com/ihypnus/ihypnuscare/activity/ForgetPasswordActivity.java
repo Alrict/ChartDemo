@@ -187,21 +187,21 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             return;
         }
         BaseDialogHelper.showLoadingDialog(this, true, "正在提交...");
-        IhyRequest.resetPassword(phone, code, pw1, new ResponseCallback() {
-
-            @Override
-            public void onSuccess(Object var1, String var2, String var3) {
-                BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(var3);
-                finish();
-            }
-
-            @Override
-            public void onError(VolleyError var1, String var2, String var3) {
-                BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(var3);
-            }
-        });
+//        IhyRequest.resetPassword(phone, code, pw1, new ResponseCallback() {
+//
+//            @Override
+//            public void onSuccess(Object var1, String var2, String var3) {
+//                BaseDialogHelper.dismissLoadingDialog();
+//                ToastUtils.showToastDefault(var3);
+//                finish();
+//            }
+//
+//            @Override
+//            public void onError(VolleyError var1, String var2, String var3) {
+//                BaseDialogHelper.dismissLoadingDialog();
+//                ToastUtils.showToastDefault(var3);
+//            }
+//        });
     }
 
     /**

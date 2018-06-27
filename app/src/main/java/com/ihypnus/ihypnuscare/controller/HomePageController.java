@@ -58,7 +58,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
     public void initData() {
         mIvLastWeek.setOnClickListener(this);
         mIvNextWeek.setOnClickListener(this);
-        startAni(83);
+        startAni(-1);
         try {
             String currentDate = DateTimeUtils.getCurrentDate();
             String date = DateTimeUtils.date2Chinese(currentDate);
@@ -76,10 +76,15 @@ public class HomePageController extends BaseController implements View.OnClickLi
     }
 
     private void startAni(float sweep) {
-        ObjectAnimator a = ObjectAnimator.ofFloat(mPb, "progress", 0f, sweep);
-        a.setInterpolator(new AccelerateDecelerateInterpolator());
-        a.setDuration(3000);
-        a.start();
+        if (sweep == -1) {
+            mPb.setProgress(sweep);
+        } else {
+            ObjectAnimator a = ObjectAnimator.ofFloat(mPb, "progress", 0f, sweep);
+            a.setInterpolator(new AccelerateDecelerateInterpolator());
+            a.setDuration(3000);
+            a.start();
+        }
+
     }
 
     public void refreshDatas(String date, float sweep) {

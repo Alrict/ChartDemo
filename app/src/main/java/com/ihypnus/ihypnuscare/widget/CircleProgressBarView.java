@@ -52,7 +52,7 @@ public class CircleProgressBarView extends View {
     private Paint mOutterCirclePaint;
     private Paint mInnerCirclePain;
     private String mSleepStatus = "";
-    private String[] statusArray = {"不太好", "还不错", "非常好"};
+    private String[] statusArray = {"无数据", "不太好", "还不错", "非常好"};
     private int mOutterCircleRadius;
     private int mTrackBarColor;
     private int mTrackBarWidth;
@@ -246,7 +246,7 @@ public class CircleProgressBarView extends View {
 //            progressPaint.setColor(Color.parseColor("#ff00ff00"));
             progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ffE67817", "#ff0093dd")));
             mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ffE67817", "#ff0093dd")));
-        } else {
+        } else if (mProgress > 0) {
 //            progressPaint.setColor(Color.parseColor("#ffff5500"));
             progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ffD4380E", "#ffE67817")));
             mOutterCirclePaint.setColor(Color.parseColor(calColor(progress / max, "#ffD4380E", "#ffE67817")));
@@ -257,19 +257,46 @@ public class CircleProgressBarView extends View {
         //绘制内圆
         drawInnerGrayCircle(canvas);
 
-        //绘制进度条
 
+        if (mProgress <= 0) {
+            //绘制文字背景圆形
+            drawTextBg(canvas);
+            //绘制"无数据"内容
+            drawErrorText(canvas);
 
-        canvas.drawArc(mRectF, -90, sweep1, false, mOutterCirclePaint);
-
-        //绘制文字背景圆形
-        drawTextBg(canvas);
-        //绘制圆环內的文字
-        drawText(canvas);
+        } else {
+            //绘制进度条
+            canvas.drawArc(mRectF, -90, sweep1, false, mOutterCirclePaint);
+            //绘制文字背景圆形
+            drawTextBg(canvas);
+            //绘制圆环內的文字
+            drawText(canvas);
+        }
 
 
     }
 
+    /**
+     * 绘制无数据
+     * @param canvas
+     */
+    private void drawErrorText(Canvas canvas) {
+        //中间文字:分数值
+        mMiddleTextPaint.setTextSize(mMiddleTextSize);
+        mMiddleTextPaint.setColor(Color.GRAY);
+        String text = statusArray[0];
+        float textLen = mMiddleTextPaint.measureText(text);
+        //计算文字高度
+        mMiddleTextPaint.getTextBounds(text, 0, 1, textBounds);
+        float h1 = textBounds.height();
+        canvas.drawText(text, centerX - textLen / 2, centerY + h1 / 2, mMiddleTextPaint);
+    }
+
+    /**
+     * 绘制有数据时候的文本信息
+     *
+     * @param canvas
+     */
     private void drawText(Canvas canvas) {
         //中间文字:分数值
         mMiddleTextPaint.setTextSize(mMiddleTextSize);
@@ -356,13 +383,13 @@ public class CircleProgressBarView extends View {
         mProgress = progress;
         if (progress == -1) {
             //网络异常/无数据
-
-        } else if (progress >= 80) {
-            mSleepStatus = statusArray[2];
-        } else if (progress > 60) {
-            mSleepStatus = statusArray[1];
-        } else {
             mSleepStatus = statusArray[0];
+        } else if (progress >= 80) {
+            mSleepStatus = statusArray[3];
+        } else if (progress > 60) {
+            mSleepStatus = statusArray[2];
+        } else {
+            mSleepStatus = statusArray[1];
         }
 
         if (CircleProgressBarView.this.progress == progress) {
