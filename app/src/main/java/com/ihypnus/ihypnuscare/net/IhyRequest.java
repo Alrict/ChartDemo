@@ -2,6 +2,7 @@ package com.ihypnus.ihypnuscare.net;
 
 import com.android.volley.Request;
 import com.android.volley.ResponseCallback;
+import com.ihypnus.ihypnuscare.bean.LoginBean;
 import com.ihypnus.ihypnuscare.bean.PhoneVO;
 import com.ihypnus.ihypnuscare.bean.UserInfo;
 
@@ -23,7 +24,8 @@ public class IhyRequest {
         params.put("username", username);
         params.put("password", password);
         HttpRequest httpRequest = new HttpRequest(Request.Method.POST, url, params, callback);
-        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_JAVA_BEAN);
+        httpRequest.setResponseJavaBean(LoginBean.class);
 //        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
@@ -66,7 +68,8 @@ public class IhyRequest {
 
     /**
      * 注册账号
-     *  CP701000516S CP70100517S CP70100518S CP70100519S CP70100508S
+     * CP701000516S CP70100517S CP70100518S CP70100519S CP70100508S
+     *
      * @param userInfo 用户登入信息
      * @param deviceId 设备sn
      * @param callback

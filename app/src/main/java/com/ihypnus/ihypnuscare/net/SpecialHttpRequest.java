@@ -6,6 +6,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.utils.HttpLog;
 
@@ -47,6 +48,7 @@ public class SpecialHttpRequest extends HttpRequest {
         if (accessToken != null) {
             headers.put("access-token", accessToken);
         }
+        headers.putAll(Volley.me.staticInitRequestHead);
         return headers;
     }
 

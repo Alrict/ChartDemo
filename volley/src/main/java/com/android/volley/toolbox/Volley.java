@@ -21,16 +21,25 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.http.AndroidHttpClient;
 import android.os.Build;
+import android.text.TextUtils;
 
 import com.android.volley.Network;
 import com.android.volley.RequestQueue;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class Volley {
-
+    public static Volley me = new Volley();
+    public final HashMap<String, String> staticInitRequestHead = new HashMap();
     /** Default on-disk cache directory. */
     private static final String DEFAULT_CACHE_DIR = "volley";
+
+    public final void addInitRequestHead(String keyHead, String valueHead) {
+        if(!TextUtils.isEmpty(keyHead) && !TextUtils.isEmpty(valueHead)) {
+            this.staticInitRequestHead.put(keyHead, valueHead);
+        }
+    }
 
     /**
      * Creates a default instance of the worker pool and calls {@link RequestQueue#start()} on it.

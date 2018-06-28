@@ -24,7 +24,9 @@ import android.widget.TextView;
 
 import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
+import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.bean.LoginBean;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
@@ -266,7 +268,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                LogOut.d("llw", var1.toString());
+                LoginBean loginBean = (LoginBean) var1;
+                IhyApplication.mInstance.setUser(loginBean);
+                if (loginBean != null && loginBean.getJSESSIONID() != null) {
+                    String jsessionid = loginBean.getJSESSIONID();
+                    LogOut.d("llw", jsessionid);
+                }
                 jumpToHome();
             }
 

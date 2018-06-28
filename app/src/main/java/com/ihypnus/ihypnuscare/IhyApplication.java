@@ -4,6 +4,9 @@ import android.app.Application;
 import android.graphics.Bitmap;
 
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.Volley;
+import com.ihypnus.ihypnuscare.bean.LoginBean;
+import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.net.NetRequestHelper;
 import com.ihypnus.ihypnuscare.utils.HttpLog;
 import com.ihypnus.ihypnuscare.utils.KyeSys;
@@ -36,6 +39,7 @@ public class IhyApplication extends Application {
 
     public static IhyApplication mInstance;
     private boolean isDebug = BuildConfig.LOG_DEBUG;
+    private LoginBean loginBean;
 
     @Override
     public void onCreate() {
@@ -93,6 +97,16 @@ public class IhyApplication extends Application {
         } catch (MtaSDkException e) {
             LogOut.d("MTA", "MTA初始化失败" + e);
         }
+    }
+
+    public void setUser(LoginBean loginBean) {
+        this.loginBean = loginBean;
+        if (loginBean == null) {
+            return;
+        }
+        String jsessionid = loginBean.getJSESSIONID();
+        Constants.JSESSIONID = jsessionid;
+        Volley.me.addInitRequestHead("Cookie", "JSESSIONID="+jsessionid);
     }
 
     /**

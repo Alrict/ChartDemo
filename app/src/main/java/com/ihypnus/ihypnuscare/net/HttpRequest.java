@@ -18,6 +18,7 @@ import com.android.volley.UnknownVolleyError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.utils.HttpLog;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
@@ -178,7 +179,7 @@ public class HttpRequest extends Request {
                     ResponseResult responseResult = (ResponseResult) response;
                     String errMsg = responseResult.getContent();
                     String errCode = responseResult.getErrorCode();
-                    Object object = responseResult.getResult();
+                    Object object = responseResult.getResultObject();
                     String type = responseResult.getType();
                     if (!StringUtils.isNullOrEmpty(type) && type.equals("success")) {
                         HttpRequest.this.doSuccessCallback(HttpRequest.this, object, errCode, errMsg, HttpRequest.this.mResponseCallback);
@@ -230,7 +231,7 @@ public class HttpRequest extends Request {
     }
 
     /**
-     * 设置请求头部门
+     * 设置请求头
      */
     public void putHeaders(Map<String, String> headerMap) {
         this.mHeaderParams = headerMap;
@@ -249,7 +250,7 @@ public class HttpRequest extends Request {
             headers.putAll(mHeaderParams);
         }
 
-//        headers.putAll(Volley.me.staticInitRequestHead);
+        headers.putAll(Volley.me.staticInitRequestHead);
         return headers;
     }
 

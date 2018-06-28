@@ -21,4 +21,8 @@ public class Constants {
      * 密码
      */
     public static final String LOGIN_PASSWORD = "login_password";
+    /**
+     * jsessionid
+     */
+    public static  String JSESSIONID ;
 }

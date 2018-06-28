@@ -18,12 +18,17 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.android.volley.ResponseCallback;
+import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.activity.ClipActivity;
 import com.ihypnus.ihypnuscare.activity.FeedbackActivity;
 import com.ihypnus.ihypnuscare.activity.HelpCenterActivity;
 import com.ihypnus.ihypnuscare.activity.PersonalInformationActivity;
 import com.ihypnus.ihypnuscare.activity.SettingActivity;
+import com.ihypnus.ihypnuscare.config.Constants;
+import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.ImageUtils;
 import com.ihypnus.ihypnuscare.utils.TakePhotosUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
@@ -90,7 +95,18 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     protected void loadData() {
+        BaseDialogHelper.showLoadingDialog(mAct,true,"正在加载...");
+        IhyRequest.getDeviceListInfos(Constants.JSESSIONID, true, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+            }
 
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+            }
+        });
     }
 
     @Override
