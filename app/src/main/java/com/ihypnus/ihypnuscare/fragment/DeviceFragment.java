@@ -10,11 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.ResponseCallback;
+import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.activity.AddNwedeviceActivity;
 import com.ihypnus.ihypnuscare.activity.DeviceDetailActivity;
 import com.ihypnus.ihypnuscare.adapter.DeviceLIstAdapter;
-import com.ihypnus.ihypnuscare.bean.DeviceInfoVO;
+import com.ihypnus.ihypnuscare.bean.DeviceListVO;
+import com.ihypnus.ihypnuscare.config.Constants;
+import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
@@ -25,6 +30,7 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -34,15 +40,14 @@ import static android.app.Activity.RESULT_OK;
  * @Description: 主页fragment
  * @date: 2018/5/14 14:42
  */
-public class DeviceFragment extends BaseFragment implements View.OnClickListener, SwipeMenuCreator, SwipeMenuItemClickListener, DeviceLIstAdapter.DeviceCheckListener, DeviceLIstAdapter.OnItemClickListener
-{
+public class DeviceFragment extends BaseFragment implements View.OnClickListener, SwipeMenuCreator, SwipeMenuItemClickListener, DeviceLIstAdapter.DeviceCheckListener, DeviceLIstAdapter.OnItemClickListener {
     private static final String TAG = "DeviceFragment";
     private ImageView mIvAdd;
     private SwipeMenuRecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.ItemDecoration mItemDecoration;
     private DeviceLIstAdapter mAdapter;
-    private ArrayList<DeviceInfoVO> mInfoList;
+    private ArrayList<DeviceListVO.ContentBean> mInfoList;
     public static final int REQUEST_CODE = 131;
 
     @Override
@@ -66,7 +71,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
         mRecyclerView.setSwipeMenuCreator(this);
         //设置滑动点击事件
         mRecyclerView.setSwipeMenuItemClickListener(this);
-        mAdapter = new DeviceLIstAdapter(mAct);
+        mAdapter = new DeviceLIstAdapter(mAct, mInfoList);
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -91,13 +96,30 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void loadData() {
+        getDataList();
+    }
 
-        mInfoList.add(new DeviceInfoVO("设备型号1", "设备编码01"));
-        mInfoList.add(new DeviceInfoVO("设备型号2", "设备编码02"));
-        mInfoList.add(new DeviceInfoVO("设备型号3", "设备编码03"));
-        mInfoList.add(new DeviceInfoVO("设备型号4", "设备编码04"));
-        mInfoList.add(new DeviceInfoVO("设备型号5", "设备编码05"));
-        mAdapter.notifyDataSetChanged(mInfoList);
+    private void getDataList() {
+        BaseDialogHelper.showLoadingDialog(mAct, true, "正在加载...");
+        IhyRequest.getDeviceListInfos(Constants.JSESSIONID, true, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                mInfoList.clear();
+                DeviceListVO listVO = (DeviceListVO) var1;
+                if (listVO != null && listVO.getContent() != null && listVO.getContent().size() > 0) {
+                    List<DeviceListVO.ContentBean> content = listVO.getContent();
+                    mInfoList.addAll(content);
+
+                }
+                mAdapter.setList(mInfoList);
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+            }
+        });
     }
 
     @Override
@@ -176,12 +198,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-         /*   String device_model = data.getStringExtra("DEVICE_MODEL");
-            String device_no = data.getStringExtra("DEVICE_NO");
-            DeviceInfoVO deviceInfoVO = new DeviceInfoVO(device_model, device_no);
-            mInfoList.add(deviceInfoVO);*/
-            mInfoList.add(new DeviceInfoVO("新增设备", "新增的"));
-            mAdapter.notifyDataSetChanged(mInfoList);
+            getDataList();
         }
     }
 
@@ -193,15 +210,15 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
         mAdapter.notifyDataSetChanged();
     }
 
-    private void jumpToDeviceDetail( DeviceInfoVO deviceInfoVO) {
+    private void jumpToDeviceDetail(DeviceListVO.ContentBean deviceInfoVO) {
         Intent intent = new Intent(mAct, DeviceDetailActivity.class);
-        intent.putExtra("DATA_BEAN",deviceInfoVO);
+        intent.putExtra("DATA_BEAN", deviceInfoVO);
         startActivity(intent);
     }
 
     @Override
     public void onItemClick(View view, int postion) {
-        DeviceInfoVO deviceInfoVO = mInfoList.get(postion);
-        jumpToDeviceDetail(deviceInfoVO);
+        DeviceListVO.ContentBean contentBean = mInfoList.get(postion);
+        jumpToDeviceDetail(contentBean);
     }
 }

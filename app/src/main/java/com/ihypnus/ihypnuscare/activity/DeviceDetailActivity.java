@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.ihypnus.ihypnuscare.R;
-import com.ihypnus.ihypnuscare.bean.DeviceInfoVO;
+import com.ihypnus.ihypnuscare.bean.DeviceListVO;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -27,9 +27,9 @@ public class DeviceDetailActivity extends BaseActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         Intent intent = getIntent();
-        DeviceInfoVO bean = intent.getParcelableExtra("DATA_BEAN");
+        DeviceListVO.ContentBean bean = intent.getParcelableExtra("DATA_BEAN");
         if (bean != null) {
-            setTitle(bean.getDeviceNo());
+            setTitle(bean.getDevice_id());
         }
     }
 

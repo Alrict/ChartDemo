@@ -19,7 +19,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 
-import com.ihypnus.ihypnuscare.bean.DeviceInfoVO;
+import com.ihypnus.ihypnuscare.bean.DeviceListVO;
 
 import java.util.List;
 
@@ -38,6 +38,6 @@ public abstract class BaseAdapter<VH extends RecyclerView.ViewHolder> extends Re
         return mInflater;
     }
 
-    public abstract void notifyDataSetChanged(List<DeviceInfoVO> dataList);
+    public abstract void notifyDataSetChanged(List<DeviceListVO.ContentBean> dataList);
 
 }

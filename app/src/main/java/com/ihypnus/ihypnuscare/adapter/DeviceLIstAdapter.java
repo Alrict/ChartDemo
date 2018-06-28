@@ -23,7 +23,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
-import com.ihypnus.ihypnuscare.bean.DeviceInfoVO;
+import com.ihypnus.ihypnuscare.bean.DeviceListVO;
+import com.ihypnus.ihypnuscare.utils.StringUtils;
 
 import java.util.List;
 
@@ -33,18 +34,24 @@ import java.util.List;
 public class DeviceLIstAdapter extends BaseAdapter<DeviceLIstAdapter.ViewHolder> {
     private OnItemClickListener mClickListener;
     private final Context mAct;
-    private List<DeviceInfoVO> mDataList;
+    private List<DeviceListVO.ContentBean> mDataList;
     private DeviceCheckListener mDeviceCheckListener;
     private int mOldPosition;
 
-    public DeviceLIstAdapter(Context context) {
+    public DeviceLIstAdapter(Context context, List<DeviceListVO.ContentBean> dataList) {
         super(context);
+        this.mDataList = dataList;
         mAct = context;
     }
 
-    public void notifyDataSetChanged(List<DeviceInfoVO> dataList) {
+    public void notifyDataSetChanged(List<DeviceListVO.ContentBean> dataList) {
         this.mDataList = dataList;
         super.notifyDataSetChanged();
+    }
+
+    public void setList(List<DeviceListVO.ContentBean> list) {
+        this.mDataList = list;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -54,13 +61,13 @@ public class DeviceLIstAdapter extends BaseAdapter<DeviceLIstAdapter.ViewHolder>
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(getInflater().inflate(R.layout.item_device_list, parent, false),mClickListener);
+        return new ViewHolder(getInflater().inflate(R.layout.item_device_list, parent, false), mClickListener);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        DeviceInfoVO deviceInfoVO = mDataList.get(position);
-        int isChecked = deviceInfoVO.getIsChecked();
+        DeviceListVO.ContentBean contentBean = mDataList.get(position);
+        int isChecked = contentBean.getIsChecked();
         if (isChecked == 1) {
             mOldPosition = position;
             holder.ivSelected.setImageDrawable(mAct.getResources().getDrawable(R.mipmap.ic_circle_checked));
@@ -75,7 +82,7 @@ public class DeviceLIstAdapter extends BaseAdapter<DeviceLIstAdapter.ViewHolder>
 
                 //将时间回调给fragment,刷新报告页面数据
                 if (mDeviceCheckListener != null) {
-                    DeviceInfoVO deviceInfoVO = mDataList.get(position);
+                    DeviceListVO.ContentBean contentBean1 = mDataList.get(position);
 //                    deviceInfoVO.setIsChecked(1);
                     mDeviceCheckListener.setDeviceCheckedCallback(mOldPosition, position, holder.ivSelected);
                 }
@@ -100,9 +107,12 @@ public class DeviceLIstAdapter extends BaseAdapter<DeviceLIstAdapter.ViewHolder>
             ivSelected = (ImageView) itemView.findViewById(R.id.iv_selected);
         }
 
-        public void setData(DeviceInfoVO deviceInfoVO) {
-            this.tvDeviceModel.setText(deviceInfoVO.getDeviceModel());
-            this.tvDeviceNo.setText(deviceInfoVO.getDeviceNo());
+        public void setData(DeviceListVO.ContentBean deviceInfoVO) {
+            String model = deviceInfoVO.getModel();
+            String device_id = deviceInfoVO.getDevice_id();
+
+            this.tvDeviceModel.setText(StringUtils.isNullOrEmpty(model) ? "未知" : model);
+            this.tvDeviceNo.setText(StringUtils.isNullOrEmpty(device_id) ? "" : device_id);
         }
 
         @Override

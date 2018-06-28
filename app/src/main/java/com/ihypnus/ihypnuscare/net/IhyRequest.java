@@ -2,6 +2,7 @@ package com.ihypnus.ihypnuscare.net;
 
 import com.android.volley.Request;
 import com.android.volley.ResponseCallback;
+import com.ihypnus.ihypnuscare.bean.DeviceListVO;
 import com.ihypnus.ihypnuscare.bean.LoginBean;
 import com.ihypnus.ihypnuscare.bean.PhoneVO;
 import com.ihypnus.ihypnuscare.bean.UserInfo;
@@ -125,7 +126,8 @@ public class IhyRequest {
         params.put("JSESSIONID", JSESSIONID);
         params.put("isCookie", isCookie);
         SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
-        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_JAVA_BEAN);
+        httpRequest.setResponseJavaBean(DeviceListVO.class);
 //        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
