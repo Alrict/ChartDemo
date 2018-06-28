@@ -141,7 +141,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (mMyIhyFragment != null && requestCode == 1)  {
+        if (mMyIhyFragment != null && requestCode == 1) {
             mMyIhyFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }

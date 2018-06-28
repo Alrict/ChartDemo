@@ -20,10 +20,14 @@ import com.ihypnus.ihypnuscare.controller.ChartsPage1Controller;
 import com.ihypnus.ihypnuscare.controller.ChartsPage2Controller;
 import com.ihypnus.ihypnuscare.controller.ChartsPage3Controller;
 import com.ihypnus.ihypnuscare.controller.HomePageController;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.widget.VerticalViewPager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -54,6 +58,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected int setView() {
+        EventBus.getDefault().register(this);
         return R.layout.fragment_report;
     }
 
@@ -173,6 +178,12 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 //        if (state == 0) {
 //            mOldPositionOffset = 0;
 //        }
+
+    }
+
+    @Subscribe
+    public void onEventMainThreadEvent(BaseFactory.RefreshReportInfoEvent event) {
+        LogOut.d("llw", "刷新报告页面数据,设备id:" + event.getDeviceId());
 
     }
 

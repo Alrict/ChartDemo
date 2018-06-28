@@ -19,6 +19,7 @@ import com.ihypnus.ihypnuscare.adapter.DeviceLIstAdapter;
 import com.ihypnus.ihypnuscare.bean.DeviceListVO;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
@@ -28,6 +29,8 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -205,9 +208,13 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void setDeviceCheckedCallback(int oldPosition, int position, ImageView imageView) {
         imageView.setImageDrawable(getResources().getDrawable(R.mipmap.ic_circle_checked));
-        mInfoList.get(position).setIsChecked(1);
         mInfoList.get(oldPosition).setIsChecked(0);
-        mAdapter.notifyDataSetChanged();
+        mInfoList.get(position).setIsChecked(1);
+        mAdapter.setList(mInfoList);
+        if (oldPosition != position) {
+            EventBus.getDefault().post(new BaseFactory.RefreshReportInfoEvent(mInfoList.get(position).getDevice_id()));
+        }
+
     }
 
     private void jumpToDeviceDetail(DeviceListVO.ContentBean deviceInfoVO) {
