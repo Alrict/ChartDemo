@@ -24,5 +24,9 @@ public class Constants {
     /**
      * jsessionid
      */
-    public static  String JSESSIONID ;
+    public static String JSESSIONID;
+    /**
+     * 设备Id
+     */
+    public static String DEVICEID = "CP70100516S";
 }

@@ -9,9 +9,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.ResponseCallback;
+import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.bean.UsageInfos;
+import com.ihypnus.ihypnuscare.config.Constants;
+import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.widget.CircleProgressBarView;
 
@@ -68,6 +75,49 @@ public class HomePageController extends BaseController implements View.OnClickLi
             e.printStackTrace();
 
         }
+
+
+    }
+
+    @Override
+    public void loadData() {
+        loadData(getStartTime(), getEndTime());
+    }
+
+    private void loadData(String startTime, String endTime) {
+        BaseDialogHelper.showLoadingDialog(mContext, true, "正在加载...");
+        IhyRequest.getEvents(Constants.JSESSIONID, Constants.DEVICEID, startTime, endTime, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                UsageInfos infos = (UsageInfos) var1;
+                if (infos != null) {
+                    UsageInfos.LeakBean leak = infos.getLeak();
+                    UsageInfos.EventsBean events = infos.getEvents();
+                    setViews(leak, events);
+                    LogOut.d("llw", leak.toString());
+                    LogOut.d("llw", events.toString());
+
+                }
+
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
+            }
+        });
+    }
+
+    /**
+     * 设置视图
+     *
+     * @param leak
+     * @param events
+     */
+    private void setViews(UsageInfos.LeakBean leak, UsageInfos.EventsBean events) {
+
     }
 
     @Override

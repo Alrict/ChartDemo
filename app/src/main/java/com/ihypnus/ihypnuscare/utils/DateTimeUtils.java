@@ -56,10 +56,8 @@ public class DateTimeUtils {
     public static String getStringDateTime(long currentTimeMillis) {
         Date currentTime = new Date(currentTimeMillis);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss");
         String dateString = formatter.format(currentTime);
-        String timeString = formatter2.format(currentTime);
-        return dateString + "T" + timeString;
+        return dateString;
     }
 
 

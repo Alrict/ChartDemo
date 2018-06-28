@@ -6,8 +6,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.ResponseCallback;
+import com.android.volley.VolleyError;
 import com.github.mikephil.charting.charts.BarChart;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.bean.HistogramData;
+import com.ihypnus.ihypnuscare.config.Constants;
+import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.BarChartManager;
 
 import java.util.ArrayList;
@@ -79,6 +84,32 @@ public class ChartsPage2Controller extends BaseController {
         //创建多条折线的图表
         barChartManager1.showBarChart(xValues, yValues.get(0), names.get(0), "平均治疗压力(厘米水柱)");
         barChartManager2.showBarChart(xValues, yValues.get(1), names.get(1), "AHI(次/小时)");
+    }
+
+    @Override
+    public void loadData() {
+        loadFromNet();
+    }
+
+    private void loadFromNet() {
+        IhyRequest.getHistogramData(Constants.JSESSIONID, true, Constants.DEVICEID, getStartTime(), getEndTime(), new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                HistogramData data = (HistogramData) var1;
+                if (data != null) {
+                    HistogramData.EventsBean events = data.getEvents();
+                    HistogramData.LeakBean leak = data.getLeak();
+                    HistogramData.PressureBean pressure = data.getPressure();
+                    HistogramData.UseInfoBean useInfo = data.getUseInfo();
+                    HistogramData.UseParamsBean useParams = data.getUseParams();
+                }
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+
+            }
+        });
     }
 
     @Override

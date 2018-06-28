@@ -82,6 +82,11 @@ public class ChartsPage3Controller extends BaseController {
     }
 
     @Override
+    public void loadData() {
+
+    }
+
+    @Override
     public void onDestroy() {
 
     }

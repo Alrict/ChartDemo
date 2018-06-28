@@ -55,5 +55,13 @@ public class IhyAction {
      * 获取某一时段使用信息（包括使用时长，参数信息）
      */
     public static final String events = HOST + "hypnusMgr/app/statisti/data/events";
+    /**
+     * 获取用户个人信息:如身高体重等
+     */
+    public static final String getinfo = HOST + "hypnusMgr/app/user/getinfo";
+    /**
+     * 统计柱状图数据
+     */
+    public static final String getHistogramData = HOST + "hypnusMgr/app/statisti/data/getHistogramData";
 
 }

@@ -210,9 +210,11 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
         imageView.setImageDrawable(getResources().getDrawable(R.mipmap.ic_circle_checked));
         mInfoList.get(oldPosition).setIsChecked(0);
         mInfoList.get(position).setIsChecked(1);
+        String device_id = mInfoList.get(position).getDevice_id();
         mAdapter.setList(mInfoList);
         if (oldPosition != position) {
-            EventBus.getDefault().post(new BaseFactory.RefreshReportInfoEvent(mInfoList.get(position).getDevice_id()));
+            Constants.DEVICEID = device_id;
+            EventBus.getDefault().post(new BaseFactory.RefreshReportInfoEvent(device_id));
         }
 
     }
