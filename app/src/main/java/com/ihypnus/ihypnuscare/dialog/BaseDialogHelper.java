@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.StringUtils;
+import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.widget.NormalDialog;
 
 import java.lang.ref.WeakReference;
@@ -19,6 +23,7 @@ import java.lang.ref.WeakReference;
 
 public class BaseDialogHelper {
     private static WeakReference<Dialog> mDialog;
+    private NumberInputListener mOnNumberInputListener;
 
     public static NormalDialog showNormalDialog(Context context,
                                                 String title,
@@ -66,7 +71,6 @@ public class BaseDialogHelper {
 
     /**
      * 小人动画弹窗
-     * add xiongxiaofeng
      *
      * @param context
      * @param canAbort
@@ -84,7 +88,6 @@ public class BaseDialogHelper {
 
     /**
      * 销毁掉小人动画弹窗
-     * add xiongxiaofeng
      */
     public static void dismissLoadingDialog() {
         try {
@@ -109,35 +112,36 @@ public class BaseDialogHelper {
 
 
     public static void showSimpleDialog(Context context, final String mTitle, final String mMessage, final String ButtonName, final DialogListener listener) {
-//        KyeBaseDialog kyeBaseDialog = KyeBaseDialog.createKyeBaseDialog(context, R.layout.layout_normal_simple_dialog, new KyeBaseDialog.DialogListener() {
-//            @Override
-//            public void bindView(View view, final KyeBaseDialog kyeBaseDialog) {
-//                TextView title = (TextView) view.findViewById(R.id.title);
-//                TextView message = (TextView) view.findViewById(R.id.content);
-//                Button btnOk = (Button) view.findViewById(R.id.button1);
-//                if (!TextUtils.isEmpty(ButtonName)) {
-//                    btnOk.setText(ButtonName);
-//                }
-//                title.setText(mTitle);
-//                message.setText(mMessage);
-//                btnOk.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        kyeBaseDialog.dismiss();
-//                        if (listener != null) {
-//                            listener.onClick(BaseType.OK);
-//                        }
-//                    }
-//                });
-//            }
-//        });
-//        kyeBaseDialog.setCancelable(false);
-//        kyeBaseDialog.setCanceledOnTouchOutside(false);
+        IhyBaseDialog kyeBaseDialog = IhyBaseDialog.createKyeBaseDialog(context, R.layout.layout_normal_simple_dialog, new IhyBaseDialog.DialogListener() {
+            @Override
+            public void bindView(View view, final IhyBaseDialog kyeBaseDialog) {
+                TextView title = (TextView) view.findViewById(R.id.title);
+                TextView message = (TextView) view.findViewById(R.id.content);
+                Button btnOk = (Button) view.findViewById(R.id.button);
+                if (!TextUtils.isEmpty(ButtonName)) {
+                    btnOk.setText(ButtonName);
+                }
+                title.setText(mTitle);
+                message.setText(mMessage);
+                btnOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        kyeBaseDialog.dismiss();
+                        if (listener != null) {
+                            listener.onClick(BaseType.OK);
+                        }
+                    }
+                });
+            }
+        });
+        kyeBaseDialog.setCancelable(false);
+        kyeBaseDialog.setCanceledOnTouchOutside(false);
     }
 
 
     /**
      * 错误提示框
+     *
      * @param context
      * @param msg
      */
@@ -161,4 +165,98 @@ public class BaseDialogHelper {
         kyeBaseDialog.setCancelable(false);
         kyeBaseDialog.setCanceledOnTouchOutside(false);
     }
+
+    /**
+     * 输入数字的弹窗
+     *
+     * @param context
+     * @param mTitle
+     * @param listener
+     */
+    public static void showInputNumberDialog(Context context, final String mTitle, final NumberInputListener listener) {
+        IhyBaseDialog kyeBaseDialog = IhyBaseDialog.createKyeBaseDialog(context, R.layout.layout_input_height_dialog, new IhyBaseDialog.DialogListener() {
+            @Override
+            public void bindView(View view, final IhyBaseDialog kyeBaseDialog) {
+                TextView title = (TextView) view.findViewById(R.id.title);
+                final EditText input = (EditText) view.findViewById(R.id.content);
+                Button cancel = (Button) view.findViewById(R.id.cancel);
+                Button confirm = (Button) view.findViewById(R.id.confirm);
+
+                title.setText(mTitle);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        kyeBaseDialog.dismiss();
+
+                    }
+                });
+                confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String number = input.getText().toString().trim();
+                        if (!StringUtils.isNullOrEmpty(number)) {
+                            kyeBaseDialog.dismiss();
+                            if (listener != null) {
+                                listener.onNumberInputListener(number);
+                            }
+                        } else {
+                            ToastUtils.showToastDefault("请输入您的昵称");
+                        }
+
+
+                    }
+                });
+            }
+        });
+        kyeBaseDialog.setCancelable(false);
+        kyeBaseDialog.setCanceledOnTouchOutside(false);
+    }
+
+    public static void showInputNameDialog(Context context, final String mTitle, final NumberInputListener listener) {
+        IhyBaseDialog kyeBaseDialog = IhyBaseDialog.createKyeBaseDialog(context, R.layout.layout_input_dialog, new IhyBaseDialog.DialogListener() {
+            @Override
+            public void bindView(View view, final IhyBaseDialog kyeBaseDialog) {
+                TextView title = (TextView) view.findViewById(R.id.title);
+                final EditText input = (EditText) view.findViewById(R.id.content);
+                Button cancel = (Button) view.findViewById(R.id.cancel);
+                Button confirm = (Button) view.findViewById(R.id.confirm);
+
+                title.setText(mTitle);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        kyeBaseDialog.dismiss();
+
+                    }
+                });
+                confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String number = input.getText().toString().trim();
+                        if (!StringUtils.isNullOrEmpty(number)) {
+                            kyeBaseDialog.dismiss();
+                            if (listener != null) {
+                                listener.onNumberInputListener(number);
+                            }
+                        } else {
+                            ToastUtils.showToastDefault("请输入您的身高");
+                        }
+
+
+                    }
+                });
+            }
+        });
+        kyeBaseDialog.setCancelable(false);
+        kyeBaseDialog.setCanceledOnTouchOutside(false);
+    }
+
+    public interface NumberInputListener {
+        void onNumberInputListener(String l);
+    }
+
+    private void setOnNumberInputListener(NumberInputListener listener) {
+        mOnNumberInputListener = listener;
+    }
+
 }

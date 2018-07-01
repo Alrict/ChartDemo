@@ -252,5 +252,27 @@ public class IhyRequest {
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
 
+    /**
+     *
+     * @param JSESSIONID
+     * @param isCookie
+     * @param weight
+     * @param height
+     * @param BMI
+     * @param callback
+     */
+    public static void updateinfo(String JSESSIONID, boolean isCookie, String weight,String height,String BMI,ResponseCallback callback) {
+        String url = IhyAction.updateinfo;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("JSESSIONID", JSESSIONID);
+        params.put("isCookie", isCookie);
+        params.put("weight", weight);
+        params.put("height", height);
+        params.put("BMI", BMI);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
+
 
 }

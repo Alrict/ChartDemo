@@ -63,5 +63,9 @@ public class IhyAction {
      * 统计柱状图数据
      */
     public static final String getHistogramData = HOST + "hypnusMgr/app/statisti/data/getHistogramData";
+    /**
+     * 更新用户信息
+     */
+    public static final String updateinfo = HOST + "hypnusMgr/app/user/updateinfo";
 
 }

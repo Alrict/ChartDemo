@@ -13,7 +13,6 @@ import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -219,7 +218,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 //注册
                 if (checkInfos()) {
                     registerAppByNet();
-
                 }
 
                 break;
@@ -326,11 +324,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 .addRequestCode(REQUEST_CAMERA)
                 .permissions(Manifest.permission.CAMERA)
                 .request();
-        Log.i(TAG, "相机权限未被授予，需要申请！");
-        // 相机权限未被授予，需要申请！
-//        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
-//                REQUEST_CAMERA);
-
     }
 
     private void jumpToScan() {
@@ -463,7 +456,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private void vertifyPhoneNum(String account) {
+    private void vertifyPhoneNum(final String account) {
         BaseDialogHelper.showLoadingDialog(this, true, "正在验证...");
         IhyRequest.VerifyPhoneNumber(account, new ResponseCallback() {
             @Override
@@ -475,8 +468,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                if (StringUtils.isNullOrEmpty(var3)) {
-                    BaseDialogHelper.showMsgTipDialog(RegisterActivity.this, var3);
+                if (!StringUtils.isNullOrEmpty(var3)) {
+//                    BaseDialogHelper.showMsgTipDialog(RegisterActivity.this, var3);
+                    BaseDialogHelper.showSimpleDialog(RegisterActivity.this, "温馨提示", account + " " + var3);
+                    mEtCount.setText("");
                 }
             }
         });

@@ -21,7 +21,7 @@
         <RadioButton
             android:id="@+id/rb_man"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/h126"
+            android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/w86"
             android:checked="true"
             android:button="@drawable/circle_man_selector"
@@ -276,7 +276,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_ok"
         style="@style/CommentButtonStyle"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="@dimen/w90"
