@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/img_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/CommentLinearLayout"
+        android:layout_marginTop="@dimen/h300"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/TextAppearanceMedium"
+            android:text="SSID"
+            android:textColor="@color/white"/>
+        <View android:layout_width="@dimen/w2"
+              android:layout_height="match_parent"
+              android:layout_marginBottom="@dimen/h20"
+              android:layout_marginLeft="@dimen/w20"
+              android:layout_marginTop="@dimen/h20"
+              android:background="@color/main_color_blue"/>
+        <TextView
+            android:id="@+id/tv_ssid"
+            style="@style/TextAppearanceMedium"
+            android:layout_width="0dp"
+            android:layout_marginLeft="@dimen/h20"
+            android:layout_weight="1"
+            android:background="@color/submit_btn_bg_default_color"
+            android:drawablePadding="@dimen/w20"
+            android:drawableRight="@mipmap/icon_down_arrow"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/CommentLinearLayout"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/TextAppearanceMedium"
+            android:text="PWD"
+            android:textColor="@color/white"/>
+        <View android:layout_width="@dimen/w2"
+              android:layout_height="match_parent"
+              android:layout_marginBottom="@dimen/h20"
+              android:layout_marginLeft="@dimen/w20"
+              android:layout_marginTop="@dimen/h20"
+              android:background="@color/main_color_blue"/>
+        <TextView
+            android:id="@+id/tv_pwd"
+            style="@style/TextAppearanceMedium"
+            android:layout_width="0dp"
+            android:layout_marginLeft="@dimen/h20"
+            android:layout_weight="1"
+            android:background="@color/submit_btn_bg_default_color"
+            android:drawablePadding="@dimen/w20"
+            android:drawableRight="@mipmap/icon_down_arrow"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_confirm"
+        style="@style/CommentButtonStyle"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/w90"
+        android:layout_marginRight="@dimen/w90"
+        android:layout_marginTop="@dimen/h300"
+        android:gravity="center"
+        android:text="确认"
+        android:textSize="@dimen/w54"/>
+</LinearLayout>

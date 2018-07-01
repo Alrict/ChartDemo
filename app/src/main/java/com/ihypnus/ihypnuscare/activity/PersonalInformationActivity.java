@@ -16,10 +16,12 @@ import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.bean.PersonMesVO;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
+import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
@@ -49,6 +51,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     private ImageView mIvDateBirth;
     private Button mBtnLogin;
     private TimePickerView mPvTime;
+    private int mTyep;
 
     @Override
     protected int setView() {
@@ -147,7 +150,9 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
 
     @Override
     protected void loadData() {
-
+        Intent intent = getIntent();
+        mTyep = intent.getIntExtra("TYEP", 0);
+        getInfos();
     }
 
     @Override
@@ -221,7 +226,11 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                jumpToAddNewDevice();
+                if (mTyep == 1) {
+                    jumpToAddNewDevice();
+                } else {
+                    finish();
+                }
             }
 
             @Override
@@ -238,5 +247,33 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     private void jumpToAddNewDevice() {
         Intent intent = new Intent(this, AddNwedeviceActivity.class);
         startActivity(intent);
+    }
+
+    public void getInfos() {
+        BaseDialogHelper.showLoadingDialog(this, true, "正在加载");
+        IhyRequest.getinfos(Constants.JSESSIONID, true, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                PersonMesVO personMesVO = (PersonMesVO) var1;
+                if (personMesVO != null) {
+                    mTvName.setText(personMesVO.getAccount());
+                    mTvPersonBodyWeight.setText(String.valueOf(personMesVO.getWeight()) + " kg");
+                    String gender = personMesVO.getGender();
+                    if (!StringUtils.isNullOrEmpty(gender) && gender.equals("男")) {
+                        mRg_gender.check(R.id.rb_man);
+                    } else {
+                        mRg_gender.check(R.id.rb_female);
+                    }
+                    mTvPersonHeight.setText(String.valueOf(personMesVO.getHeight()) + " cm");
+                    mTvPersonDateBirth.setText(personMesVO.getBirthday());
+                }
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+            }
+        });
     }
 }

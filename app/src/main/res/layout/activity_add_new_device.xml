@@ -30,6 +30,7 @@
         android:orientation="horizontal">
         <EditText
             android:id="@+id/et_input_device_sn"
+            style="@style/TextAppearanceMedium"
             android:layout_width="0dp"
             android:layout_height="@dimen/h180"
             android:layout_marginLeft="@dimen/w60"

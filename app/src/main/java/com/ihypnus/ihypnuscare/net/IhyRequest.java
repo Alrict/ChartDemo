@@ -5,6 +5,7 @@ import com.android.volley.ResponseCallback;
 import com.ihypnus.ihypnuscare.bean.DeviceListVO;
 import com.ihypnus.ihypnuscare.bean.HistogramData;
 import com.ihypnus.ihypnuscare.bean.LoginBean;
+import com.ihypnus.ihypnuscare.bean.PersonMesVO;
 import com.ihypnus.ihypnuscare.bean.PhoneVO;
 import com.ihypnus.ihypnuscare.bean.UsageInfos;
 import com.ihypnus.ihypnuscare.bean.UserInfo;
@@ -224,7 +225,8 @@ public class IhyRequest {
         params.put("JSESSIONID", JSESSIONID);
         params.put("isCookie", isCookie);
         SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
-        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_JAVA_BEAN);
+        httpRequest.setResponseJavaBean(PersonMesVO.class);
 //        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
@@ -237,7 +239,7 @@ public class IhyRequest {
      * @param isCookie
      * @param callback
      */
-    public static void getHistogramData(String JSESSIONID, boolean isCookie, String deviceId,String startTime,String endTime,ResponseCallback callback) {
+    public static void getHistogramData(String JSESSIONID, boolean isCookie, String deviceId, String startTime, String endTime, ResponseCallback callback) {
         String url = IhyAction.getHistogramData;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("JSESSIONID", JSESSIONID);
@@ -253,7 +255,6 @@ public class IhyRequest {
     }
 
     /**
-     *
      * @param JSESSIONID
      * @param isCookie
      * @param weight
@@ -261,7 +262,7 @@ public class IhyRequest {
      * @param BMI
      * @param callback
      */
-    public static void updateinfo(String JSESSIONID, boolean isCookie, String weight,String height,String BMI,ResponseCallback callback) {
+    public static void updateinfo(String JSESSIONID, boolean isCookie, String weight, String height, String BMI, ResponseCallback callback) {
         String url = IhyAction.updateinfo;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("JSESSIONID", JSESSIONID);

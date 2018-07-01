@@ -270,6 +270,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      */
     private void jumpToPersonMsg() {
         Intent intent = new Intent(this, PersonalInformationActivity.class);
+        intent.putExtra("TYPE", 1);
         startActivity(intent);
     }
 

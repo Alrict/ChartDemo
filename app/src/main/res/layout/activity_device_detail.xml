@@ -3,6 +3,107 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/img_background">
+    android:background="@mipmap/img_background"
+    android:orientation="vertical">
+    <View
+        style="@style/DividerLineHor"
+        android:layout_marginLeft="@dimen/w86"
+        android:layout_marginRight="@dimen/w86"
+        android:layout_marginTop="@dimen/h300"/>
+    <LinearLayout
+        style="@style/CommentLinearLayout"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/w160">
+        <TextView
+            style="@style/TextAppearanceMedium"
+            android:text="型号"
+            android:textColor="@color/white"/>
+        <View android:layout_width="@dimen/w2"
+              android:layout_height="match_parent"
+              android:layout_margin="@dimen/h20"
+              android:background="@color/main_color_blue"/>
+        <TextView
+            android:id="@+id/tv_model_type"
+            style="@style/TextAppearanceMedium"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 
+    <View
+        style="@style/DividerLineHor"
+        android:layout_marginLeft="@dimen/w86"
+        android:layout_marginRight="@dimen/w86"/>
+    <LinearLayout
+        style="@style/CommentLinearLayout"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/w160">
+        <TextView
+            style="@style/TextAppearanceMedium"
+            android:text="版本"
+            android:textColor="@color/white"/>
+        <View android:layout_width="@dimen/w2"
+              android:layout_height="match_parent"
+              android:layout_margin="@dimen/h20"
+              android:background="@color/main_color_blue"/>
+        <TextView
+            android:id="@+id/tv_version"
+            style="@style/TextAppearanceMedium"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <View
+        style="@style/DividerLineHor"
+        android:layout_marginLeft="@dimen/w86"
+        android:layout_marginRight="@dimen/w86"/>
+    <LinearLayout
+        style="@style/CommentLinearLayout"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/w160">
+        <TextView
+            style="@style/TextAppearanceMedium"
+            android:text="状态"
+            android:textColor="@color/white"/>
+        <View android:layout_width="@dimen/w2"
+              android:layout_height="match_parent"
+              android:layout_margin="@dimen/h20"
+              android:background="@color/main_color_blue"/>
+        <TextView
+            android:id="@+id/tv_status"
+            style="@style/TextAppearanceMedium"
+            android:textColor="@color/white"/>
+        <ImageView
+            android:id="@+id/iv_status"
+            android:layout_width="@dimen/w56"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/w20"
+            android:src="@mipmap/icon_online"/>
+    </LinearLayout>
+    <View
+        style="@style/DividerLineHor"
+        android:layout_marginLeft="@dimen/w86"
+        android:layout_marginRight="@dimen/w86"/>
+
+    <Button
+        android:id="@+id/btn_setting"
+        style="@style/CommentButtonStyle"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/w90"
+        android:layout_marginRight="@dimen/w90"
+        android:layout_marginTop="@dimen/h300"
+        android:gravity="center"
+        android:text="参数设置"
+        android:textSize="@dimen/w54"/>
+
+    <Button
+        android:id="@+id/btn_modify"
+        style="@style/CommentButtonStyle"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/w90"
+        android:layout_marginRight="@dimen/w90"
+        android:layout_marginTop="@dimen/h80"
+        android:gravity="center"
+        android:text="更改wifi"
+        android:textSize="@dimen/w54"/>
 </LinearLayout>
