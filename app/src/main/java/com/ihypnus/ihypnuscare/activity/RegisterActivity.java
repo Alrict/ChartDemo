@@ -2,11 +2,12 @@ package com.ihypnus.ihypnuscare.activity;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
@@ -37,7 +38,9 @@ import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.widget.SpannableStringUtil;
 import com.ihypnus.zxing.android.CaptureActivity;
 
+import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
+import kr.co.namee.permissiongen.PermissionSuccess;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -72,6 +75,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private SpannableString mSpannableString;
     private String mProtocol;
     private Gson mGson = new Gson();
+    private TimerCountDown mTimerCountDown = new TimerCountDown(60 * 1000, 1000);
 
     @Override
     protected int setView() {
@@ -245,20 +249,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void registerAppByNet() {
         BaseDialogHelper.showLoadingDialog(this, true, "正在登入");
         UserInfo userInfo = new UserInfo(mEtCount.getText().toString().trim(), mEtPassWord.getText().toString().trim());
-//        String userInfos = mGson.toJson(userInfo);
         String deviceId = mEtDeviceCode.getText().toString().trim();
-//        IhyRequest.registerApp(userInfo, deviceId, new Response.Listener<Object>() {
-//            @Override
-//            public void onResponse(Object response) {
-//                BaseDialogHelper.dismissLoadingDialog();
-//                jumpToPersonMsg();
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                BaseDialogHelper.dismissLoadingDialog();
-//            }
-//        });
 
         IhyRequest.registerApp(userInfo, deviceId, new ResponseCallback() {
             @Override
@@ -332,13 +323,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void requestCameraPermission() {
 
         PermissionGen.with(this)
-                .addRequestCode(100)
+                .addRequestCode(REQUEST_CAMERA)
                 .permissions(Manifest.permission.CAMERA)
                 .request();
         Log.i(TAG, "相机权限未被授予，需要申请！");
         // 相机权限未被授予，需要申请！
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
-                REQUEST_CAMERA);
+//        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
+//                REQUEST_CAMERA);
 
     }
 
@@ -369,17 +360,22 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CAMERA) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //同意相机权限
-                jumpToScan();
-            } else {
-                //拒接,再次申请权限
-                requestCameraPermission();
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    }
+
+    @PermissionSuccess(requestCode = 132)
+    private void requestPhotoSuccess() {
+        //成功之后的处理
+        //同意相机权限
+        jumpToScan();
+    }
+
+    @PermissionFail(requestCode = 132)
+    public void requestPhotoFail() {
+        //失败之后的处理，我一般是跳到设置界面
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
     }
 
     @Override
@@ -395,6 +391,38 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         mEtPassWord.setSelection(passWord.length());
     }
 
+    /**
+     * 倒计时
+     */
+    class TimerCountDown extends CountDownTimer {
+        public TimerCountDown(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long l) {
+            String tip = "";
+            if (l >= 1000) {
+                tip = String.valueOf(l / 1000) + " 秒";
+                mBtnVcerificationCode.setClickable(false);
+            } else {
+                mBtnVcerificationCode.setClickable(true);
+                tip = "获取验证码";
+            }
+            mBtnVcerificationCode.setText(tip);
+        }
+
+        @Override
+        public void onFinish() {
+
+        }
+    }
+
+    /**
+     * 获取手机验证码
+     *
+     * @param phoneNo
+     */
     private void getVerifyCodeByNet(String phoneNo) {
 
         IhyRequest.getVerifyCode(phoneNo, new ResponseCallback() {
@@ -404,6 +432,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 mIvCodeLoading.clearAnimation();
                 mBtnVcerificationCode.setVisibility(View.VISIBLE);
                 mIvCodeLoading.setVisibility(View.GONE);
+                mTimerCountDown.start();
             }
 
             @Override
@@ -446,8 +475,18 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(var3);
+                if (StringUtils.isNullOrEmpty(var3)) {
+                    BaseDialogHelper.showMsgTipDialog(RegisterActivity.this, var3);
+                }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mTimerCountDown != null) {
+            mTimerCountDown.cancel();
+        }
     }
 }

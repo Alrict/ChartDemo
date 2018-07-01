@@ -93,7 +93,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:padding="@dimen/w8"
-                android:src="@drawable/login_accout_clear_selector"/>
+                android:src="@drawable/login_accout_clear_selector"
+                android:visibility="gone"/>
 
         </LinearLayout>
 
@@ -277,7 +278,8 @@
             android:layout_width="@dimen/w56"
             android:layout_height="@dimen/w56"
             android:background="@null"
-            android:button="@drawable/cb_protocol_selector"/>
+            android:button="@drawable/cb_protocol_selector"
+            android:checked="true"/>
         <TextView
             android:id="@+id/tv_protocol"
             android:layout_width="wrap_content"

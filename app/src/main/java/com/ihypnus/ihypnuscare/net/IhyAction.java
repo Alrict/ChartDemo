@@ -30,7 +30,7 @@ public class IhyAction {
     /**
      * 验证手机号码是否被注册
      */
-    public static final String Validationet = HOST + "hypnusMgr/dmz/authCode/validationet";
+    public static final String Validationet = HOST + "hypnusMgr/dmz/authCode/appcheck";
     /**
      * 验证手机号码对应的验证码
      */
