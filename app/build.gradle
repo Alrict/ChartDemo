@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'bugly'
 
+bugly {
+    appId = 'ed6aa3c12c' // 注册时分配的App ID
+    appKey = '3564f9db-bfb5-439c-a699-9636942d28b7' // 注册时分配的App Key
+}
 android {
     lintOptions {
         checkReleaseBuilds false
@@ -148,4 +153,5 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.0.0'
     //时间控件
     implementation 'com.contrarywind:Android-PickerView:4.1.4'
+
 }

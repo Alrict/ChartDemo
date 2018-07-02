@@ -7,7 +7,7 @@ package com.ihypnus.ihypnuscare.bean;
  * @date: 2018/6/28 11:35
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class LoginBean {
+public class LoginBean extends BaseModel{
     private String JSESSIONID;
 
     public String getJSESSIONID() {

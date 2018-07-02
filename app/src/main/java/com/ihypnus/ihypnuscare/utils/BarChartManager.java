@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.ihypnus.ihypnuscare.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,9 +66,9 @@ public class BarChartManager {
         xAxis.setDrawGridLines(false);   // 是否绘制网格线，默认true
         xAxis.setTextColor(Color.WHITE);
         //右下角的描述文本
-     /*   Description description = new Description();
+        Description description = new Description();
         description.setText(descriptionText);
-        description.setTextSize(ViewUtils.getDimenPx(R.dimen.w18));
+//        description.setTextSize(ViewUtils.getDimenPx(R.dimen.w18));
         description.setTextColor(Color.parseColor("#bbc1d1"));
         float width = mBarChart.getWidth();
         float height = mBarChart.getHeight();
@@ -75,7 +76,7 @@ public class BarChartManager {
 //        description.setPosition(width / 2, height + 20);
         description.setYOffset(-ViewUtils.getDimenPx(R.dimen.h20));
         description.setXOffset(ViewUtils.getDimenPx(R.dimen.w40));
-        mBarChart.setDescription(description);*/
+        mBarChart.setDescription(description);
 
 //        yAxis.setSpaceTop(34);   // 设置最大值到图标顶部的距离占所有数据范围的比例。默认10，y轴独有
         yAxis.setLabelCount(8, false);
@@ -102,7 +103,7 @@ public class BarChartManager {
         xAxis.setAxisLineColor(Color.WHITE);
 
         // X轴更多属性
-        xAxis.setLabelRotationAngle(90);   // 标签倾斜
+//        xAxis.setLabelRotationAngle(90);   // 标签倾斜
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);  // X轴绘制位置，默认是顶部
 
         yAxis.setDrawZeroLine(false);    // 绘制值为0的轴，默认false,其实比较有用的就是在柱形图，当有负数时，显示在0轴以下，其他的图这个可能会看到一些奇葩的效果
@@ -139,7 +140,7 @@ public class BarChartManager {
         //XY轴的设置
         //X轴设置显示位置在底部
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setLabelRotationAngle(90);   // 标签倾斜
+//        xAxis.setLabelRotationAngle(90);   // 标签倾斜
         xAxis.setGranularity(1f);
 
         // 轴值转换显示

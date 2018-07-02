@@ -1,5 +1,7 @@
 package com.ihypnus.ihypnuscare.config;
 
+import com.ihypnus.ihypnuscare.bean.BaseModel;
+
 /**
  * @Package com.ihypnus.ihypnuscare
  * @author: llw
@@ -7,7 +9,7 @@ package com.ihypnus.ihypnuscare.config;
  * @date: 2018/6/12 15:29
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class Constants {
+public class Constants extends BaseModel {
     /**
      * sp对象名
      */

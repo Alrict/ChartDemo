@@ -1,6 +1,7 @@
 package com.ihypnus.ihypnuscare.activity;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
@@ -47,6 +48,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
     private Button mBtnConfirm;
     private ImageView mIvCodeLoading;
     private Animation mCodeLoadingAnim;
+    private TimerCountDown mTimerCountDown = new TimerCountDown(60 * 1000, 1000);
 
     @Override
     protected int setView() {
@@ -217,6 +219,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                 mBtnVerificationCode.setVisibility(View.VISIBLE);
                 mIvCodeLoading.setVisibility(View.GONE);
                 mIvCodeLoading.clearAnimation();
+                mTimerCountDown.start();
             }
 
             @Override
@@ -227,6 +230,33 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                 mIvCodeLoading.clearAnimation();
             }
         });
+    }
+
+    /**
+     * 倒计时
+     */
+    class TimerCountDown extends CountDownTimer {
+        public TimerCountDown(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long l) {
+            String tip = "";
+            if (l >= 1000) {
+                tip = String.valueOf(l / 1000) + " 秒";
+                mBtnVerificationCode.setClickable(false);
+            } else {
+                mBtnVerificationCode.setClickable(true);
+                tip = "获取验证码";
+            }
+            mBtnVerificationCode.setText(tip);
+        }
+
+        @Override
+        public void onFinish() {
+
+        }
     }
 
     @Override
@@ -270,5 +300,13 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
         }
         editText.setSelection(passWord.length());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mTimerCountDown != null) {
+            mTimerCountDown.cancel();
+        }
     }
 }

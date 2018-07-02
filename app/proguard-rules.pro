@@ -58,3 +58,49 @@
 
 -dontwarn android.support.**
 -ignorewarnings
+
+#EventBus
+-keepclassmembers class ** {
+    public void onEvent*(**);
+    void onEvent*(**);
+    void on*Event*(**);
+}
+
+#保护注解
+-keepattributes *Annotation*
+-keepattributes Signature
+
+-keep class * implements android.os.Parcelable { # 保持 Parcelable 不被混淆
+    public static final android.os.Parcelable$Creator *;
+}
+
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+
+-keep public class * extends com.ihypnus.ihypnuscare.bean.BaseModel{
+    *;
+}
+
+-keep public class com.tencent.smtt.utils.LogFileUtils {
+	public <fields>;
+	public <methods>;
+}
+
+-keep public class com.tencent.smtt.utils.TbsLog {
+	public <fields>;
+	public <methods>;
+}
+
+-keep public class com.tencent.smtt.utils.TbsLogClient {
+	public <fields>;
+	public <methods>;
+}
+
