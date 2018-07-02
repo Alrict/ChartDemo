@@ -173,7 +173,7 @@ public class BaseDialogHelper {
      * @param mTitle
      * @param listener
      */
-    public static void showInputNumberDialog(Context context, final String mTitle, final NumberInputListener listener) {
+    public static void showInputNumberDialog(Context context, final String mTitle, final String errMsg, final NumberInputListener listener) {
         IhyBaseDialog kyeBaseDialog = IhyBaseDialog.createKyeBaseDialog(context, R.layout.layout_input_height_dialog, new IhyBaseDialog.DialogListener() {
             @Override
             public void bindView(View view, final IhyBaseDialog kyeBaseDialog) {
@@ -200,10 +200,8 @@ public class BaseDialogHelper {
                                 listener.onNumberInputListener(number);
                             }
                         } else {
-                            ToastUtils.showToastDefault("请输入您的昵称");
+                            ToastUtils.showToastDefault(errMsg);
                         }
-
-
                     }
                 });
             }
@@ -233,13 +231,14 @@ public class BaseDialogHelper {
                     @Override
                     public void onClick(View v) {
                         String number = input.getText().toString().trim();
-                        if (!StringUtils.isNullOrEmpty(number)) {
+
+                        if (!StringUtils.isNullOrEmpty(number) ) {
                             kyeBaseDialog.dismiss();
                             if (listener != null) {
                                 listener.onNumberInputListener(number);
                             }
                         } else {
-                            ToastUtils.showToastDefault("请输入您的身高");
+                            ToastUtils.showToastDefault("请输入您的昵称");
                         }
 
 

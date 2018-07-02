@@ -4,7 +4,6 @@ import android.graphics.Color;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
@@ -14,9 +13,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.ihypnus.ihypnuscare.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +65,7 @@ public class BarChartManager {
         xAxis.setDrawGridLines(false);   // 是否绘制网格线，默认true
         xAxis.setTextColor(Color.WHITE);
         //右下角的描述文本
-        Description description = new Description();
+     /*   Description description = new Description();
         description.setText(descriptionText);
         description.setTextSize(ViewUtils.getDimenPx(R.dimen.w18));
         description.setTextColor(Color.parseColor("#bbc1d1"));
@@ -78,7 +75,7 @@ public class BarChartManager {
 //        description.setPosition(width / 2, height + 20);
         description.setYOffset(-ViewUtils.getDimenPx(R.dimen.h20));
         description.setXOffset(ViewUtils.getDimenPx(R.dimen.w40));
-        mBarChart.setDescription(description);
+        mBarChart.setDescription(description);*/
 
 //        yAxis.setSpaceTop(34);   // 设置最大值到图标顶部的距离占所有数据范围的比例。默认10，y轴独有
         yAxis.setLabelCount(8, false);
@@ -146,12 +143,12 @@ public class BarChartManager {
         xAxis.setGranularity(1f);
 
         // 轴值转换显示
-        xAxis.setValueFormatter(new IAxisValueFormatter() { // 与上面值转换一样，这里就是转换出轴上label的显示。也有几个默认的，不多说了。
+    /*    xAxis.setValueFormatter(new IAxisValueFormatter() { // 与上面值转换一样，这里就是转换出轴上label的显示。也有几个默认的，不多说了。
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 return value + "℃";
             }
-        });
+        });*/
 
         //保证Y轴从0开始，不然会上移一点
         yAxis.setAxisMinimum(0f);

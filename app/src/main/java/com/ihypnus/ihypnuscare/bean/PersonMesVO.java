@@ -22,7 +22,7 @@ public class PersonMesVO {
 
     private String birthday;
     private String address;
-    private String gender;
+    private int gender;//性别： 0或者null——未知  1-男  2-女
     private String phone;
     private String headPath;
     private int weight;
@@ -46,11 +46,11 @@ public class PersonMesVO {
         this.address = address;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 

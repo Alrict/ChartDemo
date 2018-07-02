@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.bean.DeviceListVO;
+import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 
 import java.util.List;
@@ -70,6 +71,7 @@ public class DeviceLIstAdapter extends BaseAdapter<DeviceLIstAdapter.ViewHolder>
         int isChecked = contentBean.getIsChecked();
         if (isChecked == 1) {
             mOldPosition = position;
+            Constants.DEVICEID = contentBean.getDevice_id();
             holder.ivSelected.setImageDrawable(mAct.getResources().getDrawable(R.mipmap.ic_circle_checked));
         } else {
             holder.ivSelected.setImageDrawable(mAct.getResources().getDrawable(R.mipmap.ic_circle_unchecked));

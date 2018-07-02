@@ -20,6 +20,7 @@ public class NewDeviceInformationActivity extends BaseActivity implements View.O
 
     private Button mBtNext;
     private final int REQUEST_CODE = 123;
+    private String mNewDeviceId;
 
     @Override
     protected int setView() {
@@ -36,6 +37,8 @@ public class NewDeviceInformationActivity extends BaseActivity implements View.O
     protected void init(Bundle savedInstanceState) {
         setTitle(getResources().getString(R.string.tv_add_new_device));
         mBtNext.setOnClickListener(this);
+        Intent intent = getIntent();
+        mNewDeviceId = intent.getStringExtra("NEW_DEVICE_ID");
     }
 
     @Override
@@ -70,6 +73,7 @@ public class NewDeviceInformationActivity extends BaseActivity implements View.O
      */
     private void jumpToWifiSettingActivity() {
         Intent intent = new Intent(this, WifiSettingTipActivity.class);
+        intent.putExtra("NEW_DEVICE_ID", mNewDeviceId);
         startActivityForResult(intent, REQUEST_CODE);
 
     }

@@ -2,13 +2,12 @@ package com.ihypnus.ihypnuscare.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
@@ -21,6 +20,9 @@ import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
+import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.StringUtils;
+import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
@@ -28,9 +30,9 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
-import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,9 +54,13 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
     private DeviceLIstAdapter mAdapter;
     private ArrayList<DeviceListVO.ContentBean> mInfoList;
     public static final int REQUEST_CODE = 131;
+    private Button mBtnAdd;
+    private boolean mNeedRefresh = false;
+    private String mDeviceId;
 
     @Override
     protected int setView() {
+        EventBus.getDefault().register(this);
         return R.layout.fragment_device;
     }
 
@@ -62,6 +68,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
     protected void findViews() {
         mIvAdd = (ImageView) findViewById(R.id.iv_add);
         mRecyclerView = (SwipeMenuRecyclerView) findViewById(R.id.recycler_view);
+        mBtnAdd = (Button) findViewById(R.id.btn_add);
     }
 
 
@@ -69,7 +76,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
     protected void init() {
         mInfoList = new ArrayList<>();
         mLayoutManager = createLayoutManager();
-        mItemDecoration = createItemDecoration();
+//        mItemDecoration = createItemDecoration();
         //设置侧滑
         mRecyclerView.setSwipeMenuCreator(this);
         //设置滑动点击事件
@@ -78,7 +85,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addItemDecoration(mItemDecoration);
+//        mRecyclerView.addItemDecoration(null);
 
     }
 
@@ -86,24 +93,34 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
         return new LinearLayoutManager(mAct);
     }
 
-    protected RecyclerView.ItemDecoration createItemDecoration() {
-        return new DefaultItemDecoration(ContextCompat.getColor(mAct, R.color.main_color_blue));
-    }
+//    protected RecyclerView.ItemDecoration createItemDecoration() {
+//        return new DefaultItemDecoration(ContextCompat.getColor(mAct, R.color.main_color_blue));
+//    }
 
     @Override
     protected void initEvent() {
         mIvAdd.setOnClickListener(this);
+        mBtnAdd.setOnClickListener(this);
         mAdapter.setOnDeviceCheckedListener(this);
         mAdapter.setOnItemClickListener(this);
     }
 
     @Override
     protected void loadData() {
+        BaseDialogHelper.showLoadingDialog(mAct, true, "正在加载...");
         getDataList();
     }
 
+    @Subscribe
+    public void onEventMainThread(BaseFactory.RefreshDeviceListInfoEvent event) {
+        LogOut.d("llw", "添加新设备成功,刷新列表数据");
+        getDataList();
+    }
+
+    /**
+     * 获取用户绑定的设备列表信息
+     */
     private void getDataList() {
-        BaseDialogHelper.showLoadingDialog(mAct, true, "正在加载...");
         IhyRequest.getDeviceListInfos(Constants.JSESSIONID, true, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
@@ -113,7 +130,6 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
                 if (listVO != null && listVO.getContent() != null && listVO.getContent().size() > 0) {
                     List<DeviceListVO.ContentBean> content = listVO.getContent();
                     mInfoList.addAll(content);
-
                 }
                 mAdapter.setList(mInfoList);
             }
@@ -132,12 +148,23 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
             case R.id.iv_add:
                 jumpToAddNewDevice();
                 break;
+
+            case R.id.btn_add:
+                if (mInfoList.size() == 0 || StringUtils.isNullOrEmpty(mDeviceId)) {
+                    ToastUtils.showToastDefault("请绑定您的设备");
+                    return;
+                }
+                if (mNeedRefresh) {
+                    BaseDialogHelper.showMsgTipDialog(mAct, "设置成功");
+                    EventBus.getDefault().post(new BaseFactory.RefreshReportInfoEvent(mDeviceId));
+                }
+                break;
         }
     }
 
     @Override
     public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
-        int width = getResources().getDimensionPixelSize(R.dimen.w300);
+        int width = getResources().getDimensionPixelSize(R.dimen.w280);
 
         // 1. MATCH_PARENT 自适应高度，保持和Item一样高;
         // 2. 指定具体的高，比如80;
@@ -174,19 +201,47 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
         int menuPosition = menuBridge.getPosition(); // 菜单在RecyclerView的Item中的Position。
 
         if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
-            Toast.makeText(mAct, "list第" + adapterPosition + "; 右侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
+
             if (menuPosition == 0) {
                 //删除
-                mInfoList.remove(adapterPosition);
-                mAdapter.notifyDataSetChanged(mInfoList);
-            } else if (menuPosition == 1) {
+                String device_id = mInfoList.get(adapterPosition).getDevice_id();
+                if (device_id.equals(Constants.DEVICEID)) {
+                    BaseDialogHelper.showMsgTipDialog(mAct, "此为当前使用设备,更改后方能删除");
+                    return;
+                }
+                removeDeviceId(adapterPosition, device_id);
+
+            } /*else if (menuPosition == 1) {
                 //添加设备
                 jumpToAddNewDevice();
-            }
+            }*/
         } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
 
-            Toast.makeText(mAct, "list第" + adapterPosition + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * 移除绑定设备id
+     *
+     * @param position
+     * @param device_id
+     */
+    private void removeDeviceId(int position, String device_id) {
+        BaseDialogHelper.showLoadingDialog(mAct, true, "正在解绑...");
+        IhyRequest.unbindDevice(Constants.JSESSIONID, true, device_id, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                mInfoList.clear();
+                getDataList();
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
+            }
+        });
     }
 
     /**
@@ -210,12 +265,10 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
         imageView.setImageDrawable(getResources().getDrawable(R.mipmap.ic_circle_checked));
         mInfoList.get(oldPosition).setIsChecked(0);
         mInfoList.get(position).setIsChecked(1);
-        String device_id = mInfoList.get(position).getDevice_id();
+        mDeviceId = mInfoList.get(position).getDevice_id();
         mAdapter.setList(mInfoList);
-        if (oldPosition != position) {
-            Constants.DEVICEID = device_id;
-            EventBus.getDefault().post(new BaseFactory.RefreshReportInfoEvent(device_id));
-        }
+        mNeedRefresh = oldPosition != position;
+
 
     }
 

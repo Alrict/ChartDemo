@@ -53,7 +53,7 @@ public class ChartsPage2Controller extends BaseController {
         BarChartManager barChartManager2 = new BarChartManager(mChart2);
         //设置x轴的数据
         ArrayList<Float> xValues = new ArrayList<>();
-        for (int i = 0; i <= 31; i++) {
+        for (int i = 0; i <= 6; i++) {
             xValues.add((float) i);
         }
 
@@ -61,7 +61,7 @@ public class ChartsPage2Controller extends BaseController {
         List<List<Float>> yValues = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             List<Float> yValue = new ArrayList<>();
-            for (int j = 0; j <= 31; j++) {
+            for (int j = 0; j <= 6; j++) {
                 yValue.add((float) (Math.random() * 80));
             }
             yValues.add(yValue);

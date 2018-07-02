@@ -21,10 +21,11 @@ import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
-import com.ihypnus.ihypnuscare.utils.StringUtils;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -52,6 +53,9 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     private Button mBtnLogin;
     private TimePickerView mPvTime;
     private int mTyep;
+    private String mKg;
+    private String mHeight;
+    private String mGender = "2";
 
     @Override
     protected int setView() {
@@ -160,10 +164,12 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
         switch (i) {
             case R.id.rb_man:
                 mTvPersonGender.setText(getResources().getString(R.string.tv_man));
+                mGender = "1";
                 break;
 
             case R.id.rb_female:
                 mTvPersonGender.setText(getResources().getString(R.string.tv_female));
+                mGender = "2";
                 break;
         }
     }
@@ -187,10 +193,10 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
             case R.id.tv_person_height:
             case R.id.tv_height_arrow:
                 //修改身高
-                BaseDialogHelper.showInputNumberDialog(PersonalInformationActivity.this, "请输入您的身高(单位:cm)", new BaseDialogHelper.NumberInputListener() {
+                BaseDialogHelper.showInputNumberDialog(PersonalInformationActivity.this, "请输入您的身高(单位:cm)", "请输入您的身高", new BaseDialogHelper.NumberInputListener() {
                     @Override
                     public void onNumberInputListener(String l) {
-                        mTvPersonHeight.setText(l + " cm");
+                        mTvPersonHeight.setText(String.format("%s cm", l));
                     }
                 });
                 break;
@@ -199,10 +205,10 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
             case R.id.tv_person_body_weight:
             case R.id.tv_body_weight_arrow:
                 //修改体重
-                BaseDialogHelper.showInputNumberDialog(PersonalInformationActivity.this, "请输入您的体重(单位:kg)", new BaseDialogHelper.NumberInputListener() {
+                BaseDialogHelper.showInputNumberDialog(PersonalInformationActivity.this, "请输入您的体重(单位:kg)", "请输入您的体重", new BaseDialogHelper.NumberInputListener() {
                     @Override
                     public void onNumberInputListener(String l) {
-                        mTvPersonBodyWeight.setText(l + " kg");
+                        mTvPersonBodyWeight.setText(String.format("%s kg", l));
                     }
                 });
                 break;
@@ -221,8 +227,11 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     }
 
     private void submitPersonInfos() {
+        double bmi = getBMI();
+        String birthday = mTvPersonDateBirth.getText().toString().trim();
+        String nickname = mTvName.getText().toString().trim();
         BaseDialogHelper.showLoadingDialog(this, true, "正在上传...");
-        IhyRequest.updateinfo(Constants.JSESSIONID, true, mTvPersonBodyWeight.getText().toString(), mTvPersonHeight.getText().toString(), "", new ResponseCallback() {
+        IhyRequest.updateinfo(Constants.JSESSIONID, true, nickname, mGender, birthday, mKg, mHeight, String.valueOf(bmi), new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
@@ -258,14 +267,14 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
                 PersonMesVO personMesVO = (PersonMesVO) var1;
                 if (personMesVO != null) {
                     mTvName.setText(personMesVO.getAccount());
-                    mTvPersonBodyWeight.setText(String.valueOf(personMesVO.getWeight()) + " kg");
-                    String gender = personMesVO.getGender();
-                    if (!StringUtils.isNullOrEmpty(gender) && gender.equals("男")) {
+                    mTvPersonBodyWeight.setText(String.format("%s kg", String.valueOf(personMesVO.getWeight())));
+                    int gender = personMesVO.getGender();
+                    if (gender==1) {
                         mRg_gender.check(R.id.rb_man);
                     } else {
                         mRg_gender.check(R.id.rb_female);
                     }
-                    mTvPersonHeight.setText(String.valueOf(personMesVO.getHeight()) + " cm");
+                    mTvPersonHeight.setText(String.format("%s cm", String.valueOf(personMesVO.getHeight())));
                     mTvPersonDateBirth.setText(personMesVO.getBirthday());
                 }
             }
@@ -275,5 +284,30 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
                 BaseDialogHelper.dismissLoadingDialog();
             }
         });
+    }
+
+    /**
+     * 计算BMI体脂
+     *
+     * @return
+     */
+    public double getBMI() {
+        String weight = mTvPersonBodyWeight.getText().toString().trim();
+        int i1 = weight.indexOf(" kg");
+        mKg = weight.substring(0, i1);
+        double weightKg = Double.parseDouble(mKg);
+
+        mHeight = mTvPersonHeight.getText().toString().trim();
+        int i2 = mHeight.indexOf(" cm");
+        mHeight = mHeight.substring(0, i2);
+        double heightCm = Double.parseDouble(mHeight);
+        double heightM = heightCm / 100d;
+        double bmi = weightKg / (heightM * heightM);
+
+        BigDecimal b = new BigDecimal(bmi);
+        bmi = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();//bmi四舍五入
+        LogOut.d("llw", "BMI指数:" + bmi);
+        return bmi;
+
     }
 }

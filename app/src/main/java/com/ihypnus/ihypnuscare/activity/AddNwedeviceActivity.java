@@ -88,8 +88,9 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
 
             case R.id.bt_next:
                 //下一步
-                if (!StringUtils.isNullOrEmpty(mEtInputDeviceSn.getText().toString().trim())) {
-                    jumpToNewDeviceInformationActivity();
+                String deviceId = mEtInputDeviceSn.getText().toString().trim();
+                if (!StringUtils.isNullOrEmpty(deviceId)) {
+                    jumpToNewDeviceInformationActivity(deviceId);
                 } else {
                     ToastUtils.showToastDefault(AddNwedeviceActivity.this, mEtInputDeviceSn.getHint().toString());
                 }
@@ -110,8 +111,9 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    private void jumpToNewDeviceInformationActivity() {
+    private void jumpToNewDeviceInformationActivity(String deviceId) {
         Intent intent = new Intent(this, NewDeviceInformationActivity.class);
+        intent.putExtra("NEW_DEVICE_ID", deviceId);
         startActivityForResult(intent, REQUEST_CODE_INFO);
     }
 

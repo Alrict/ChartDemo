@@ -39,4 +39,10 @@ public class BaseFactory {
             this.deviceId = deviceId;
         }
     }
+
+    public static class RefreshDeviceListInfoEvent{
+        public RefreshDeviceListInfoEvent() {
+
+        }
+    }
 }

@@ -81,10 +81,10 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
     @Override
     public void loadData() {
-        loadData(getStartTime(), getEndTime());
+        loadDataByNet(getStartTime(), getEndTime(), null);
     }
 
-    private void loadData(String startTime, String endTime) {
+    private void loadDataByNet(String startTime, String endTime, final ImageView imageView) {
         BaseDialogHelper.showLoadingDialog(mContext, true, "正在加载...");
         IhyRequest.getEvents(Constants.JSESSIONID, Constants.DEVICEID, startTime, endTime, new ResponseCallback() {
             @Override
@@ -99,6 +99,9 @@ public class HomePageController extends BaseController implements View.OnClickLi
                     LogOut.d("llw", events.toString());
 
                 }
+                if (imageView != null) {
+                    imageView.clearAnimation();
+                }
 
             }
 
@@ -106,6 +109,9 @@ public class HomePageController extends BaseController implements View.OnClickLi
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
                 ToastUtils.showToastDefault(var3);
+                if (imageView != null) {
+                    imageView.clearAnimation();
+                }
             }
         });
     }
@@ -159,7 +165,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
     private void updateData(int type) {
         long date = getDate();
-        long lastDay = date + ((24l * 60l * 60l * 1000l) * type);
+        long lastDay = date + ((24L * 60L * 60L * 1000L) * type);
         String dateByTime = DateTimeUtils.getStringDateByMounthDay(lastDay);
         LogOut.d("llw", "当前日期:" + dateByTime);
         try {
@@ -172,5 +178,9 @@ public class HomePageController extends BaseController implements View.OnClickLi
             e.printStackTrace();
 
         }
+    }
+
+    public void reLoad(ImageView imageView) {
+        loadDataByNet(getStartTime(), getEndTime(), imageView);
     }
 }

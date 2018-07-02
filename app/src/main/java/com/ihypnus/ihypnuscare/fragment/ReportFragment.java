@@ -121,6 +121,9 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
             case R.id.iv_refresh:
                 //刷新
                 mIvRefresh.startAnimation(mReLoadingAnim);
+                if (mHomePageController != null) {
+                    mHomePageController.reLoad(mIvRefresh);
+                }
 
                 break;
             case R.id.iv_data:

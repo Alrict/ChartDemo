@@ -17,12 +17,14 @@ import com.ihypnus.ihypnuscare.R;
 public class WifiListAdapter extends ArrayAdapter<ScanResult> {
 
     private final LayoutInflater mInflater;
+    private final Context mContext;
     private int mResource;
 
     public WifiListAdapter(Context context, int resource) {
         super(context, resource);
         mInflater = LayoutInflater.from(context);
         mResource = resource;
+        mContext = context;
     }
 
     @Override
@@ -40,15 +42,15 @@ public class WifiListAdapter extends ArrayAdapter<ScanResult> {
 
         int level = scanResult.level;
         if (level <= 0 && level >= -50) {
-            signl.setText("信号很好");
+            signl.setText(mContext.getResources().getString(R.string.semaphore_good));
         } else if (level < -50 && level >= -70) {
-            signl.setText("信号较好");
+            signl.setText(mContext.getResources().getString(R.string.semaphore_better));
         } else if (level < -70 && level >= -80) {
-            signl.setText("信号一般");
+            signl.setText(mContext.getResources().getString(R.string.semaphore_standard));
         } else if (level < -80 && level >= -100) {
-            signl.setText("信号较差");
+            signl.setText(mContext.getResources().getString(R.string.semaphore_week));
         } else {
-            signl.setText("信号很差");
+            signl.setText(mContext.getResources().getString(R.string.semaphore_poor));
         }
 
         return convertView;

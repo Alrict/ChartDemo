@@ -173,7 +173,6 @@ public class IhyRequest {
         params.put("deviceId", deviceId);
         SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
-//        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
 
@@ -257,16 +256,22 @@ public class IhyRequest {
     /**
      * @param JSESSIONID
      * @param isCookie
+     * @param nickname
+     * @param gender
+     * @param birthday
      * @param weight
      * @param height
      * @param BMI
      * @param callback
      */
-    public static void updateinfo(String JSESSIONID, boolean isCookie, String weight, String height, String BMI, ResponseCallback callback) {
+    public static void updateinfo(String JSESSIONID, boolean isCookie, String nickname, String gender, String birthday, String weight, String height, String BMI, ResponseCallback callback) {
         String url = IhyAction.updateinfo;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("JSESSIONID", JSESSIONID);
         params.put("isCookie", isCookie);
+        params.put("nickname", nickname);
+        params.put("gender", gender);
+        params.put("birthday", birthday);
         params.put("weight", weight);
         params.put("height", height);
         params.put("BMI", BMI);

@@ -20,14 +20,22 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.android.volley.ResponseCallback;
+import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.WifiListAdapter;
+import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
+import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.utils.WifiSettingManager;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -65,7 +73,6 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     private WifiListAdapter mWifiListAdapter;
     private WifiManager mWifiManager;
     private WifiSettingManager mWifiSettingManager;
-    private WifiConfiguration mConfig;
     private Socket mSocket = null;
     private Gson mGson = new Gson();
     private CreateSocketThread mThread;
@@ -73,6 +80,8 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     private static final int GET_LOCATION_INFO = 122;
     private OutputStream mOutputStream;
     private String mSsid = "";
+    private String mNewDeviceId;
+    private List<ScanResult> mScanResults;
 
 
     @Override
@@ -91,6 +100,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     @Override
     protected void init(Bundle savedInstanceState) {
         setTitle(getResources().getString(R.string.tv_add_new_device));
+        mScanResults = new ArrayList<>();
         mWifiListAdapter = new WifiListAdapter(this, R.layout.wifi_list_item);
         mListView.setAdapter(mWifiListAdapter);
 
@@ -241,6 +251,8 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void loadData() {
+        Intent intent = getIntent();
+        mNewDeviceId = intent.getStringExtra("NEW_DEVICE_ID");
         checkWifiPermission();
     }
 
@@ -283,7 +295,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
 
             case R.id.bt_next:
                 //设置好了
-                jumpToHomeActivity();
+                bindDevice();
                 break;
             case R.id.bt_set_wifi:
                 //下一步
@@ -294,21 +306,29 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    /**
-     * 进入系统wifi设置界面
-     */
-    private void jumpToWifiSetting() {
+    private void bindDevice() {
+        BaseDialogHelper.showLoadingDialog(this, true, "正在提交...");
+        IhyRequest.bindDevice(Constants.JSESSIONID, true, mNewDeviceId, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
+                jumpToHomeActivity();
+            }
 
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
+            }
+        });
     }
-
 
     private void jumpToHomeActivity() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+        EventBus.getDefault().post(new BaseFactory.RefreshDeviceListInfoEvent());
         finish();
-//        BaseDialogHelper.showMsgTipDialog(this, "设备不存在");
-//        setResult(RESULT_OK);
-//        finish();
     }
 
 
@@ -320,26 +340,23 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
         public void onReceive(Context context, Intent intent) {
 
             final String action = intent.getAction();
+
             switch (action) {
                 case WifiManager.SCAN_RESULTS_AVAILABLE_ACTION:
                     Log.w("BBB", "SCAN_RESULTS_AVAILABLE_ACTION");
                     // wifi已成功扫描到可用wifi。
                     BaseDialogHelper.dismissLoadingDialog();
                     List<ScanResult> scanResults = mWifiSettingManager.getWifiList();
-                    mWifiListAdapter.clear();
-                    mWifiListAdapter.addAll(scanResults);
-                    if (isWifiEnable(WifiSettingTipActivity.this)) {
-                        //wifi已连接
-//                        connectAndSocket();
-
-                    } else {
-                        //未连接wifi
-                        //连接Hypnus_AP  无需密码
-//            mConfig = mWifiSettingManager.createWifiInfo("Hypnus_AP", "", WIFICIPHER_NOPASS);
-//            mConfig = mWifiSettingManager.createWifiInfo("Hypnus_AP", "", WIFICIPHER_NOPASS);
-                        mConfig = mWifiSettingManager.createWifiInfo("alrict", "123456789", 3);
-//                        connect(mConfig);
+                    mScanResults.clear();
+                    for (int i = 0; i < scanResults.size(); i++) {
+                        String ssid = scanResults.get(i).SSID;
+                        //Hypnus_AP
+                        if (!StringUtils.isNullOrEmpty(ssid) && !ssid.equals("Hypnus_AP")) {
+                            mScanResults.add(scanResults.get(i));
+                        }
                     }
+                    mWifiListAdapter.clear();
+                    mWifiListAdapter.addAll(mScanResults);
                     break;
                 case WifiManager.WIFI_STATE_CHANGED_ACTION:
                     Log.w("BBB", "WifiManager.WIFI_STATE_CHANGED_ACTION");
@@ -400,10 +417,6 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
         try {
             mSocket = new Socket(IP, PORT);
             mOutputStream = mSocket.getOutputStream();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-            Log.e("llw", "网络异常");
-
         } catch (IOException e) {
             e.printStackTrace();
             Log.e("llw", "网络异常");
