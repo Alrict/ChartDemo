@@ -271,17 +271,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 LoginBean loginBean = (LoginBean) var1;
                 IhyApplication.mInstance.setUser(loginBean);
                 if (loginBean != null && loginBean.getJSESSIONID() != null) {
+                    jumpToHome();
                     String jsessionid = loginBean.getJSESSIONID();
                     LogOut.d("llw", jsessionid);
                 }
-                jumpToHome();
             }
 
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
                 ToastUtils.showToastDefault(LoginActivity.this, var3);
-                jumpToHome();
+//                jumpToHome();
             }
         });
 
