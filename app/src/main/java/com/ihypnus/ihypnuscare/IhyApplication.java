@@ -3,6 +3,11 @@ package com.ihypnus.ihypnuscare;
 import android.app.Application;
 import android.graphics.Bitmap;
 
+import com.alibaba.sdk.android.oss.ClientConfiguration;
+import com.alibaba.sdk.android.oss.OSS;
+import com.alibaba.sdk.android.oss.OSSClient;
+import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
+import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 import com.ihypnus.ihypnuscare.bean.LoginBean;
@@ -40,6 +45,7 @@ public class IhyApplication extends Application {
     public static IhyApplication mInstance;
     private boolean isDebug = BuildConfig.LOG_DEBUG;
     private LoginBean loginBean;
+    public static OSS mOssClient;
 
     @Override
     public void onCreate() {
@@ -52,6 +58,21 @@ public class IhyApplication extends Application {
         initImageLoadConfig(this);
         initVariable();
         initLogReport();
+        initOSSClient();
+    }
+
+    private void initOSSClient() {
+        String endpoint = "http://oss-cn-shanghai.aliyuncs.com";
+        String stsServer = "http://ihy-test.oss-cn-shanghai.aliyuncs.com";
+//推荐使用OSSAuthCredentialsProvider。token过期可以及时更新
+        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
+        //该配置类如果不设置，会有默认配置，具体可看该类
+        ClientConfiguration conf = new ClientConfiguration();
+        conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
+        conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
+        conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
+        conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
+        mOssClient = new OSSClient(getApplicationContext(), endpoint, credentialProvider);
     }
 
     /**
@@ -106,7 +127,7 @@ public class IhyApplication extends Application {
         }
         String jsessionid = loginBean.getJSESSIONID();
         Constants.JSESSIONID = jsessionid;
-        Volley.me.addInitRequestHead("Cookie", "JSESSIONID="+jsessionid);
+        Volley.me.addInitRequestHead("Cookie", "JSESSIONID=" + jsessionid);
     }
 
     /**

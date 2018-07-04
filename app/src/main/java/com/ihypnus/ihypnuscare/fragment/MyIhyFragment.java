@@ -18,6 +18,16 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.ServiceException;
+import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
+import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
+import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
+import com.alibaba.sdk.android.oss.model.GetObjectRequest;
+import com.alibaba.sdk.android.oss.model.GetObjectResult;
+import com.alibaba.sdk.android.oss.model.PutObjectRequest;
+import com.alibaba.sdk.android.oss.model.PutObjectResult;
+import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.activity.ClipActivity;
 import com.ihypnus.ihypnuscare.activity.FeedbackActivity;
@@ -30,6 +40,8 @@ import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.kye.smart.multi_image_selector_library.MultiImageSelector;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -241,10 +253,12 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                     break;
                 case REQUEST_CLIP:
                     if (data != null) {
+                        String bucketName = "ihyoss";
                         String imagePath = data.getStringExtra("images_path");
                         mAvatarBitmap = ImageUtils.getBitmap(imagePath);
                         mCircleImageView.setImageBitmap(mAvatarBitmap);
                         mIvDefaultPhoto.setVisibility(View.GONE);
+                        uploadUserPhoto(bucketName, "ihytest01", imagePath);
                         final Bitmap bitmap = mAvatarBitmap;
 //                        final String guid = mCardDetailBean.getGuid();
 //                        mCircleImageView.setImageBitmap(bitmap);
@@ -252,20 +266,6 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                             @Override
                             public void run() {
                                 final String base64 = ImageUtils.bitmaptoString(bitmap);
-//                                uploadAvatar(base64, guid);
-//                                ImageLoader.getInstance().displayImage(url, mAvatar, options, new SimpleImageLoadingListener() {
-//
-//                                    @Override
-//                                    public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-//                                        mLoadedBitmap = bitmap;
-//                                        showQrCode(bitmap);
-//                                    }
-//
-//                                    @Override
-//                                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-//                                        mLoadedBitmap = null;
-//                                    }
-//                                });
                             }
                         }).start();
                     }
@@ -297,5 +297,89 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+    /**
+     * 上传用户头像
+     *
+     * @param bucketName     oss储存区域的名字
+     * @param objectKey      保存在oss的文件名
+     * @param uploadFilePath 被上传文件的路径
+     */
+    private void uploadUserPhoto(String bucketName, String objectKey, String uploadFilePath) {
+        // 构造上传请求
+        PutObjectRequest put = new PutObjectRequest(bucketName, objectKey, uploadFilePath);
+        // 异步上传时可以设置进度回调
+        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+            @Override
+            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+            }
+        });
+        OSSAsyncTask task = IhyApplication.mOssClient.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+            @Override
+            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                Log.d("PutObject", "UploadSuccess");
+            }
+
+            @Override
+            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                // 请求异常
+                if (clientExcepion != null) {
+                    // 本地异常如网络异常等
+                    clientExcepion.printStackTrace();
+                }
+                if (serviceException != null) {
+                    // 服务异常
+                    Log.e("oss", "ErrorCode:" + serviceException.getErrorCode());
+                    Log.e("oss", "RequestId:" + serviceException.getRequestId());
+                    Log.e("oss", "HostId:" + serviceException.getHostId());
+                    Log.e("oss", "RawMessage:" + serviceException.getRawMessage());
+                }
+            }
+        });
+    }
+
+    /*
+    * 从oss下载
+     */
+    private void downLoadUserPhoto(String bucketName, String objectKey) {
+        // 构造下载文件请求
+        GetObjectRequest get = new GetObjectRequest(bucketName, objectKey);
+        OSSAsyncTask task = IhyApplication.mOssClient.asyncGetObject(get, new OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
+            @Override
+            public void onSuccess(GetObjectRequest request, GetObjectResult result) {
+                // 请求成功
+                Log.d("Content-Length", "" + result.getContentLength());
+                InputStream inputStream = result.getObjectContent();
+                byte[] buffer = new byte[2048];
+                int len;
+                try {
+                    while ((len = inputStream.read(buffer)) != -1) {
+                        // 处理下载的数据
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(GetObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                // 请求异常
+                if (clientExcepion != null) {
+                    // 本地异常如网络异常等
+                    clientExcepion.printStackTrace();
+                }
+                if (serviceException != null) {
+                    // 服务异常
+                    Log.e("oss", "ErrorCode:" + serviceException.getErrorCode());
+                    Log.e("oss", "RequestId:" + serviceException.getRequestId());
+                    Log.e("oss", "HostId:" + serviceException.getHostId());
+                    Log.e("oss", "RawMessage:" + serviceException.getRawMessage());
+                }
+            }
+        });
+// task.cancel(); // 可以取消任务
+// task.waitUntilFinished(); // 如果需要等待任务完成
     }
 }

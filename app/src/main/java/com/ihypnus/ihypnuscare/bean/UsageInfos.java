@@ -3,7 +3,7 @@ package com.ihypnus.ihypnuscare.bean;
 /**
  * @Package com.ihypnus.ihypnuscare.bean
  * @author: llw
- * @Description:
+ * @Description: 报告界面 第一屏数据
  * @date: 2018/6/28 21:39
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
@@ -13,6 +13,10 @@ public class UsageInfos {
     private UseInfoBean useInfo;
     private EventsBean events;
     private UseParamsBean useParams;
+    //分数
+    private float score;
+    //使用时间段信息
+    private String usetimes;
 
     public LeakBean getLeak() {
         return leak;
@@ -54,6 +58,22 @@ public class UsageInfos {
         this.useParams = useParams;
     }
 
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public String getUsetimes() {
+        return usetimes;
+    }
+
+    public void setUsetimes(String usetimes) {
+        this.usetimes = usetimes;
+    }
+
     public static class LeakBean {
         /**
          * totalLeakVolume : 0
@@ -61,6 +81,7 @@ public class UsageInfos {
          */
 
         private int totalLeakVolume;
+        //平均漏气
         private String averageLeakVolume;
 
         public int getTotalLeakVolume() {
@@ -207,6 +228,7 @@ public class UsageInfos {
         private String usesec;
         private int pb;
         private int csr;
+        //AHI
         private int ahi;
         private int ai;
         private int snore;
@@ -304,6 +326,11 @@ public class UsageInfos {
          * modeInfo : Modes:
          */
 
+        /**
+         * 设备模式 0 --”CPAP”，1--”APAP”, 2--"BPAP-S", 3--"AutoBPAP-S", 4--"BPAP-T",
+         // 5--"BPAP-ST"   100 -- “No Data”  200--”多种模式”需要读取参数 “modeInfo”，
+         // 根据邝勇最新需求，当放回值为200时，默认显示最长使用时间段的模式，也就是从usetimes中最长的那条读取”mode”显示出来
+         */
         private int mode;
         private String cureDelay;
         private String yesterday;

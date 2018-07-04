@@ -205,7 +205,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
                     int i = random.nextInt(100);
                     mHomePageController.setDate(longTime);
                     if (mHomePageController != null) {
-                        mHomePageController.refreshDatas(date, i);
+                        mHomePageController.refreshDatas(date);
                     }
                 } catch (FormatException e) {
                     e.printStackTrace();

@@ -22,8 +22,6 @@ import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.widget.CircleProgressBarView;
 
-import java.util.Random;
-
 /**
  * @Package com.ihypnus.ihypnuscare.controller
  * @author: llw
@@ -38,6 +36,15 @@ public class HomePageController extends BaseController implements View.OnClickLi
     private TextView mTvDate;
     private ImageView mIvLastWeek;
     private ImageView mIvNextWeek;
+    private TextView mTvHours;
+    private TextView mTvMinues;
+    private TextView mLayoutTime;
+    private TextView mTvUsageLongData;
+    private TextView mTvDeviceModel;
+    private TextView mTvNhaleKpa;
+    private TextView mTvExpirationKpa;
+    private TextView mTvAverageAirLeak;
+    private TextView mTvAhi;
 
     public HomePageController(Context context) {
         super(context);
@@ -58,6 +65,30 @@ public class HomePageController extends BaseController implements View.OnClickLi
         mLayoutWeekData = (LinearLayout) rootView.findViewById(R.id.layout_week_data);
         //周统计数据时间范围
         mTvDate = (TextView) rootView.findViewById(R.id.tv_date);
+
+
+        //使用时长
+        //小时
+        mTvHours = (TextView) rootView.findViewById(R.id.tv_hours);
+        //分钟
+        mTvMinues = (TextView) rootView.findViewById(R.id.tv_minues);
+
+        //使用时间段
+        mLayoutTime = (TextView) rootView.findViewById(R.id.layout_time);
+        mTvUsageLongData = (TextView) rootView.findViewById(R.id.tv_usage_long_data);
+
+        //设备模式
+        mTvDeviceModel = (TextView) rootView.findViewById(R.id.tv_device_model);
+
+        //90%吸气压力
+        mTvNhaleKpa = (TextView) rootView.findViewById(R.id.tv_nhale_kpa);
+        //呼气压力
+        mTvExpirationKpa = (TextView) rootView.findViewById(R.id.tv_expiration_kpa);
+        //平均漏气
+        mTvAverageAirLeak = (TextView) rootView.findViewById(R.id.tv_average_air_leak);
+        //AHI
+        mTvAhi = (TextView) rootView.findViewById(R.id.tv_ahi);
+
         return rootView;
     }
 
@@ -65,7 +96,6 @@ public class HomePageController extends BaseController implements View.OnClickLi
     public void initData() {
         mIvLastWeek.setOnClickListener(this);
         mIvNextWeek.setOnClickListener(this);
-        startAni(-1);
         try {
             String currentDate = DateTimeUtils.getCurrentDate();
             String date = DateTimeUtils.date2Chinese(currentDate);
@@ -94,9 +124,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
                 if (infos != null) {
                     UsageInfos.LeakBean leak = infos.getLeak();
                     UsageInfos.EventsBean events = infos.getEvents();
-                    setViews(leak, events);
-                    LogOut.d("llw", leak.toString());
-                    LogOut.d("llw", events.toString());
+                    setViews(infos);
 
                 }
                 if (imageView != null) {
@@ -119,11 +147,15 @@ public class HomePageController extends BaseController implements View.OnClickLi
     /**
      * 设置视图
      *
-     * @param leak
-     * @param events
+     * @param usageInfos
      */
-    private void setViews(UsageInfos.LeakBean leak, UsageInfos.EventsBean events) {
-
+    private void setViews(UsageInfos usageInfos) {
+        float score = usageInfos.getScore();
+        startAni(score);
+        UsageInfos.EventsBean events = usageInfos.getEvents();
+        UsageInfos.UseInfoBean useInfo = usageInfos.getUseInfo();
+        int averageUseTime = useInfo.getAverageUseTime();
+//        mTvHours.setText();
     }
 
     @Override
@@ -143,9 +175,9 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
     }
 
-    public void refreshDatas(String date, float sweep) {
+    public void refreshDatas(String date) {
         mTvData.setText(date);
-        startAni(sweep);
+        loadDataByNet(getStartTime(), getEndTime(), null);
     }
 
     @Override
@@ -163,6 +195,9 @@ public class HomePageController extends BaseController implements View.OnClickLi
         }
     }
 
+    /**
+     * @param type -1 前一天 1 后一天
+     */
     private void updateData(int type) {
         long date = getDate();
         long lastDay = date + ((24L * 60L * 60L * 1000L) * type);
@@ -170,10 +205,8 @@ public class HomePageController extends BaseController implements View.OnClickLi
         LogOut.d("llw", "当前日期:" + dateByTime);
         try {
             String dayLast = DateTimeUtils.date2Chinese(dateByTime);
-            Random random = new Random();
-            int i = random.nextInt(100);
             setDate(lastDay);
-            refreshDatas(dayLast, i);
+            refreshDatas(dayLast);
         } catch (FormatException e) {
             e.printStackTrace();
 
