@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.ResponseCallback;
@@ -29,7 +30,7 @@ import com.ihypnus.ihypnuscare.widget.CircleProgressBarView;
  * @date: 2018/6/21 14:31
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class HomePageController extends BaseController implements View.OnClickListener {
+public class HomePageController extends BaseController implements View.OnClickListener, BaseController.NotifyDateChangedListener {
     private TextView mTvData;
     private CircleProgressBarView mPb;
     private LinearLayout mLayoutWeekData;
@@ -38,7 +39,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
     private ImageView mIvNextWeek;
     private TextView mTvHours;
     private TextView mTvMinues;
-    private TextView mLayoutTime;
+    private RelativeLayout mLayoutTime;
     private TextView mTvUsageLongData;
     private TextView mTvDeviceModel;
     private TextView mTvNhaleKpa;
@@ -46,7 +47,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
     private TextView mTvAverageAirLeak;
     private TextView mTvAhi;
 
-    public HomePageController(Context context) {
+    public HomePageController(Context context){
         super(context);
     }
 
@@ -74,7 +75,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
         mTvMinues = (TextView) rootView.findViewById(R.id.tv_minues);
 
         //使用时间段
-        mLayoutTime = (TextView) rootView.findViewById(R.id.layout_time);
+        mLayoutTime = (RelativeLayout) rootView.findViewById(R.id.layout_time);
         mTvUsageLongData = (TextView) rootView.findViewById(R.id.tv_usage_long_data);
 
         //设备模式
@@ -99,12 +100,14 @@ public class HomePageController extends BaseController implements View.OnClickLi
         try {
             String currentDate = DateTimeUtils.getCurrentDate();
             String date = DateTimeUtils.date2Chinese(currentDate);
-            setDate(System.currentTimeMillis());
+//            setDate(System.currentTimeMillis(),this);
             mTvData.setText(date);
         } catch (FormatException e) {
             e.printStackTrace();
 
         }
+
+        mLayoutTime.setOnClickListener(this);
 
 
     }
@@ -156,6 +159,83 @@ public class HomePageController extends BaseController implements View.OnClickLi
         UsageInfos.UseInfoBean useInfo = usageInfos.getUseInfo();
         int averageUseTime = useInfo.getAverageUseTime();
 //        mTvHours.setText();
+//        mTvMinues.setText();
+//        mTvDeviceModel.setText();
+        int mode = 100;
+        String modeName = "No Data";
+        String modeInfo = "多种模式";
+//        设备模式 0 --”CPAP”，1--”APAP”, 2--"BPAP-S", 3--"AutoBPAP-S", 4--"BPAP-T",
+        // 5--"BPAP-ST"   100 -- “No Data”  200--”多种模式”需要读取参数 “modeInfo”，
+        // 根据邝勇最新需求，当放回值为200时，默认显示最长使用时间段的模式，也就是从usetimes中最长的那条读取”mode”显示出来
+        UsageInfos.UseParamsBean useParams = usageInfos.getUseParams();
+        if (useParams != null) {
+            mode = useParams.getMode();
+            modeInfo = useParams.getModeInfo();
+        }
+        switch (mode) {
+            case 0:
+                modeName = "CPAP";
+                break;
+
+            case 1:
+                modeName = "APAP";
+                break;
+
+            case 2:
+                modeName = "BPAP-S";
+                break;
+
+            case 3:
+                modeName = "AutoBPAP-S";
+                break;
+
+            case 4:
+                modeName = "BPAP-T";
+                break;
+
+            case 5:
+                modeName = "BPAP-ST";
+                break;
+
+            case 100:
+                modeName = "No Data";
+                break;
+
+            case 200:
+                modeName = modeInfo;
+                break;
+        }
+
+        //设备模式
+        mTvDeviceModel.setText(modeName);
+        String nHaleKpa;
+        String expirationKpa;
+        String averageLeakVolume;
+        int ahi = 0;
+
+        UsageInfos.PressureBean pressure = usageInfos.getPressure();
+        if (pressure != null) {
+            nHaleKpa = String.valueOf(pressure.getNinetyPercentPresure1());
+            expirationKpa = String.valueOf(pressure.getNinetyPercentPresure2());
+        } else {
+            nHaleKpa = "--";
+            expirationKpa = "--";
+        }
+        mTvNhaleKpa.setText(nHaleKpa);
+        mTvExpirationKpa.setText(expirationKpa);
+
+        UsageInfos.LeakBean leak = usageInfos.getLeak();
+        if (leak != null) {
+            averageLeakVolume = leak.getAverageLeakVolume();
+        } else {
+            averageLeakVolume = "--";
+        }
+        mTvAverageAirLeak.setText(averageLeakVolume);
+
+        if (events != null) {
+            ahi = events.getAhi();
+        }
+        mTvAhi.setText(ahi >= 0 ? String.valueOf(ahi) : "--");
     }
 
     @Override
@@ -192,7 +272,19 @@ public class HomePageController extends BaseController implements View.OnClickLi
             case R.id.iv_next_week:
                 updateData(1);
                 break;
+
+            case R.id.layout_time:
+//               使用时间段
+                showPopDialog();
+                break;
         }
+    }
+
+    /**
+     * 显示使用时间段
+     */
+    private void showPopDialog() {
+        BaseDialogHelper.showMsgTipDialog(mContext, "显示使用时间段");
     }
 
     /**
@@ -215,5 +307,10 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
     public void reLoad(ImageView imageView) {
         loadDataByNet(getStartTime(), getEndTime(), imageView);
+    }
+
+    @Override
+    public void onNotifyDateChangedListener() {
+
     }
 }

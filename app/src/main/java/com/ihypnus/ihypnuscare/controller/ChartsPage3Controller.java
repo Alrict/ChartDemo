@@ -2,6 +2,7 @@ package com.ihypnus.ihypnuscare.controller;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.nfc.FormatException;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.utils.BarChartManager;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,16 +80,32 @@ public class ChartsPage3Controller extends BaseController {
 
         //创建多条折线的图表
         barChartManager1.showBarChart(xValues, yValues.get(0), names.get(0), "90%吸气压力(厘米水柱)");
-        barChartManager2.showBarChart(xValues, yValues.get(1), names.get(1),"AHI(次/小时)");
+        barChartManager2.showBarChart(xValues, yValues.get(1), names.get(1), "AHI(次/小时)");
     }
 
     @Override
     public void loadData() {
+        setWeekDate();
+    }
 
+    public void setWeekDate() {
+        String weekDates = "";
+        try {
+            weekDates = getWeekDates();
+        } catch (FormatException e) {
+            e.printStackTrace();
+        }
+        mTvDate.setText(weekDates);
     }
 
     @Override
     public void onDestroy() {
 
+    }
+
+    @Override
+    public void setNotifyDateChangedListener(NotifyDateChangedListener listener) {
+        super.setNotifyDateChangedListener(listener);
+        LogOut.d("llw","page3要更新");
     }
 }

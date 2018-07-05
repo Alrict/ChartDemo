@@ -30,5 +30,5 @@ public class Constants extends BaseModel {
     /**
      * 设备Id
      */
-    public static String DEVICEID = "CP70100516S";
+    public static String DEVICEID = "CP70100504S";
 }

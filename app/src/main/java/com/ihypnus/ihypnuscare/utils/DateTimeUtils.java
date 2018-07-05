@@ -60,6 +60,13 @@ public class DateTimeUtils {
         return dateString;
     }
 
+    public static String getMonthDayDateTime(long currentTimeMillis) {
+        Date currentTime = new Date(currentTimeMillis);
+        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd");
+        String dateString = formatter.format(currentTime);
+        return dateString;
+    }
+
 
     public static String getCurrentTime() {
         String str = android.text.format.DateFormat.format("yyyy-M-d kk:mm:ss", Calendar.getInstance().getTime()).toString();//获得系统时间

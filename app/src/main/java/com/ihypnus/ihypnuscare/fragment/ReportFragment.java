@@ -30,7 +30,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * @Package com.ihypnus.ihypnuscare.fragment
@@ -169,13 +168,13 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void onPageSelected(int position) {
-        LogOut.d("llw", "position:" + position);
+//        LogOut.d("llw", "position:" + position);
 //        mLayoutWeekData.setVisibility(position > 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        LogOut.d("llw", "state:" + state);
+//        LogOut.d("llw", "state:" + state);
         int position = mViewPager.getVerticalScrollbarPosition();
 
 //        if (state == 0) {
@@ -198,20 +197,31 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
                 String time = initTime(data);
                 long longTime = DateTimeUtils.getSimpleLongTime(time);
 
-
                 try {
                     String date = DateTimeUtils.date2Chinese(time);
-                    Random random = new Random();
-                    int i = random.nextInt(100);
                     mHomePageController.setDate(longTime);
                     if (mHomePageController != null) {
                         mHomePageController.refreshDatas(date);
                     }
+                    refreshCharsWeek();
+
                 } catch (FormatException e) {
                     e.printStackTrace();
 
                 }
             }
+        }
+    }
+
+    private void refreshCharsWeek() {
+        if (mChartsPage1Controller != null) {
+            mChartsPage1Controller.setWeekDate();
+        }
+        if (mChartsPage2Controller != null) {
+            mChartsPage2Controller.setWeekDate();
+        }
+        if (mChartsPage3Controller != null) {
+            mChartsPage3Controller.setWeekDate();
         }
     }
 

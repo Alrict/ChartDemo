@@ -2,18 +2,15 @@ package com.ihypnus.ihypnuscare.controller;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.nfc.FormatException;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.ResponseCallback;
-import com.android.volley.VolleyError;
 import com.github.mikephil.charting.charts.BarChart;
 import com.ihypnus.ihypnuscare.R;
-import com.ihypnus.ihypnuscare.bean.HistogramData;
-import com.ihypnus.ihypnuscare.config.Constants;
-import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.BarChartManager;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,32 +85,28 @@ public class ChartsPage2Controller extends BaseController {
 
     @Override
     public void loadData() {
-        loadFromNet();
+        setWeekDate();
     }
 
-    private void loadFromNet() {
-        IhyRequest.getHistogramData(Constants.JSESSIONID, true, Constants.DEVICEID, getStartTime(), getEndTime(), new ResponseCallback() {
-            @Override
-            public void onSuccess(Object var1, String var2, String var3) {
-                HistogramData data = (HistogramData) var1;
-                if (data != null) {
-                    HistogramData.EventsBean events = data.getEvents();
-                    HistogramData.LeakBean leak = data.getLeak();
-                    HistogramData.PressureBean pressure = data.getPressure();
-                    HistogramData.UseInfoBean useInfo = data.getUseInfo();
-                    HistogramData.UseParamsBean useParams = data.getUseParams();
-                }
-            }
 
-            @Override
-            public void onError(VolleyError var1, String var2, String var3) {
-
-            }
-        });
+    public void setWeekDate() {
+        String weekDates = "";
+        try {
+            weekDates = getWeekDates();
+        } catch (FormatException e) {
+            e.printStackTrace();
+        }
+        mTvDate.setText(weekDates);
     }
 
     @Override
     public void onDestroy() {
 
+    }
+
+    @Override
+    public void setNotifyDateChangedListener(NotifyDateChangedListener listener) {
+        super.setNotifyDateChangedListener(listener);
+        LogOut.d("llw","page2要更新");
     }
 }
