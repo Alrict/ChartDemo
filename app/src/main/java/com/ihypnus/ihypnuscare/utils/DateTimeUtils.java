@@ -1,6 +1,7 @@
 package com.ihypnus.ihypnuscare.utils;
 
 
+import android.annotation.SuppressLint;
 import android.nfc.FormatException;
 
 import java.text.DateFormat;
@@ -617,7 +618,7 @@ public class DateTimeUtils {
     public static long getSimpleLongTime(String time) {
         long millionSeconds;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             millionSeconds = sdf.parse(time).getTime();//毫秒
             return millionSeconds;
         } catch (Exception e) {
@@ -1035,7 +1036,7 @@ public class DateTimeUtils {
 
     private static final String[] CN_NUMBER = {"", "一", "二", "三", "四", "五", "六", "七", "八", "九"};
 
-    public static String date2Chinese( String date) throws FormatException {
+    public static String date2Chinese(String date) throws FormatException {
         StringBuilder sb = new StringBuilder();
         String[] split = date.split("-");
         if (split.length != 3) {
@@ -1076,4 +1077,7 @@ public class DateTimeUtils {
         return sb.toString();
     }
 
+    public static long getCurrentTimeMills() {
+        return System.currentTimeMillis();
+    }
 }

@@ -199,8 +199,8 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 
                 try {
                     String date = DateTimeUtils.date2Chinese(time);
-                    mHomePageController.setDate(longTime);
                     if (mHomePageController != null) {
+                        mHomePageController.setDate(longTime);
                         mHomePageController.refreshDatas(date);
                     }
                     refreshCharsWeek();

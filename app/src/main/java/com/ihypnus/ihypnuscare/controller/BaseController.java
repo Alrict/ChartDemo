@@ -19,7 +19,7 @@ public abstract class BaseController {
     private View mRootView;
     protected Context mContext;
     //当前选择日期
-    private long mDate;
+    private long mDate = DateTimeUtils.getCurrentTimeMills();
     //前7天日期
     private long mLast7Dates;
     private NotifyDateChangedListener mNotifyDateChangedListener;

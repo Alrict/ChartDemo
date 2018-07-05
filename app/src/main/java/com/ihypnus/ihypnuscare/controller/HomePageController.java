@@ -47,7 +47,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
     private TextView mTvAverageAirLeak;
     private TextView mTvAhi;
 
-    public HomePageController(Context context){
+    public HomePageController(Context context) {
         super(context);
     }
 
@@ -157,6 +157,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
         startAni(score);
         UsageInfos.EventsBean events = usageInfos.getEvents();
         UsageInfos.UseInfoBean useInfo = usageInfos.getUseInfo();
+        //平均使用时长
         int averageUseTime = useInfo.getAverageUseTime();
 //        mTvHours.setText();
 //        mTvMinues.setText();

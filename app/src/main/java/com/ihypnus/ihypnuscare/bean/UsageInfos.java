@@ -115,8 +115,8 @@ public class UsageInfos {
          * ninetyPercentPresure1 : 0.0
          */
 
-        private double ninetyPercentPresure2;
-        private double ninetyPercentPresure1;
+        private double ninetyPercentPresure2;//无效
+        private double ninetyPercentPresure1;//无效
 
         public double getNinetyPercentPresure2() {
             return ninetyPercentPresure2;
@@ -146,11 +146,11 @@ public class UsageInfos {
          * moreThan4HoursPercent : 0
          */
 
-        private int averageUseTime;
+        private int averageUseTime;//使用时长 单位小时
         private int lessThan4HoursDays;
         private int totalDays;
         private int noUseDays;
-        private int totalTimes;
+        private int totalTimes;//单位小时
         private int moreThan4HoursDays;
         private int moreThan4HoursPercent;
 
