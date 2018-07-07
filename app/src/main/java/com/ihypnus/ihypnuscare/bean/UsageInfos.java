@@ -117,6 +117,8 @@ public class UsageInfos {
 
         private double ninetyPercentPresure2;//无效
         private double ninetyPercentPresure1;//无效
+        private double tpEx;//90%呼气压力
+        private double tpIn;//90%吸气压力
 
         public double getNinetyPercentPresure2() {
             return ninetyPercentPresure2;
@@ -133,6 +135,22 @@ public class UsageInfos {
         public void setNinetyPercentPresure1(double ninetyPercentPresure1) {
             this.ninetyPercentPresure1 = ninetyPercentPresure1;
         }
+
+        public double getTpEx() {
+            return tpEx;
+        }
+
+        public void setTpEx(double tpEx) {
+            this.tpEx = tpEx;
+        }
+
+        public double getTpIn() {
+            return tpIn;
+        }
+
+        public void setTpIn(double tpIn) {
+            this.tpIn = tpIn;
+        }
     }
 
     public static class UseInfoBean {
@@ -146,19 +164,22 @@ public class UsageInfos {
          * moreThan4HoursPercent : 0
          */
 
-        private int averageUseTime;//使用时长 单位小时
+        private String averageUseTime;//使用时长 单位小时
         private int lessThan4HoursDays;
         private int totalDays;
         private int noUseDays;
-        private int totalTimes;//单位小时
+        private int use4days;
+        private int usedays;
+        private String totalTimes;//单位小时
+        private String useseconds;//单位小时
         private int moreThan4HoursDays;
-        private int moreThan4HoursPercent;
+        private String moreThan4HoursPercent;
 
-        public int getAverageUseTime() {
+        public String getAverageUseTime() {
             return averageUseTime;
         }
 
-        public void setAverageUseTime(int averageUseTime) {
+        public void setAverageUseTime(String averageUseTime) {
             this.averageUseTime = averageUseTime;
         }
 
@@ -186,11 +207,11 @@ public class UsageInfos {
             this.noUseDays = noUseDays;
         }
 
-        public int getTotalTimes() {
+        public String getTotalTimes() {
             return totalTimes;
         }
 
-        public void setTotalTimes(int totalTimes) {
+        public void setTotalTimes(String totalTimes) {
             this.totalTimes = totalTimes;
         }
 
@@ -202,11 +223,11 @@ public class UsageInfos {
             this.moreThan4HoursDays = moreThan4HoursDays;
         }
 
-        public int getMoreThan4HoursPercent() {
+        public String getMoreThan4HoursPercent() {
             return moreThan4HoursPercent;
         }
 
-        public void setMoreThan4HoursPercent(int moreThan4HoursPercent) {
+        public void setMoreThan4HoursPercent(String moreThan4HoursPercent) {
             this.moreThan4HoursPercent = moreThan4HoursPercent;
         }
     }

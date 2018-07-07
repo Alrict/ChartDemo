@@ -158,7 +158,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
         UsageInfos.EventsBean events = usageInfos.getEvents();
         UsageInfos.UseInfoBean useInfo = usageInfos.getUseInfo();
         //平均使用时长
-        int averageUseTime = useInfo.getAverageUseTime();
+        String averageUseTime = useInfo.getAverageUseTime();
 //        mTvHours.setText();
 //        mTvMinues.setText();
 //        mTvDeviceModel.setText();
@@ -216,8 +216,8 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
         UsageInfos.PressureBean pressure = usageInfos.getPressure();
         if (pressure != null) {
-            nHaleKpa = String.valueOf(pressure.getNinetyPercentPresure1());
-            expirationKpa = String.valueOf(pressure.getNinetyPercentPresure2());
+            nHaleKpa = String.valueOf(pressure.getTpIn());
+            expirationKpa = String.valueOf(pressure.getTpEx());
         } else {
             nHaleKpa = "--";
             expirationKpa = "--";
