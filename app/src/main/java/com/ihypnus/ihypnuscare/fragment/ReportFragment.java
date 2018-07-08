@@ -123,6 +123,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
                 if (mHomePageController != null) {
                     mHomePageController.reLoad(mIvRefresh);
                 }
+                refreshCharsWeek();
 
                 break;
             case R.id.iv_data:
@@ -186,7 +187,10 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     @Subscribe
     public void onEventMainThreadEvent(BaseFactory.RefreshReportInfoEvent event) {
         LogOut.d("llw", "刷新报告页面数据,设备id:" + event.getDeviceId());
-
+        if (mHomePageController != null) {
+            mHomePageController.reLoad(mIvRefresh);
+        }
+        refreshCharsWeek();
     }
 
     @Override

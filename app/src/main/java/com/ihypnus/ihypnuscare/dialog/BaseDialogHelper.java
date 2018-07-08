@@ -8,9 +8,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.adapter.NormalStringAdapter;
+import com.ihypnus.ihypnuscare.bean.UsageInfos;
 import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.utils.LogOut;
@@ -19,6 +22,7 @@ import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.widget.NormalDialog;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 
 public class BaseDialogHelper {
@@ -232,7 +236,7 @@ public class BaseDialogHelper {
                     public void onClick(View v) {
                         String number = input.getText().toString().trim();
 
-                        if (!StringUtils.isNullOrEmpty(number) ) {
+                        if (!StringUtils.isNullOrEmpty(number)) {
                             kyeBaseDialog.dismiss();
                             if (listener != null) {
                                 listener.onNumberInputListener(number);
@@ -256,6 +260,47 @@ public class BaseDialogHelper {
 
     private void setOnNumberInputListener(NumberInputListener listener) {
         mOnNumberInputListener = listener;
+    }
+
+
+    /**
+     * listview样式的dialog
+     *
+     * @param context
+     * @param mTitle
+     * @param button
+     * @param list
+     */
+    public static void showListDialog(final Context context, final String mTitle, final String button, final List<UsageInfos.UsetimesBean> list) {
+        IhyBaseDialog kyeBaseDialog = IhyBaseDialog.createKyeBaseDialog(context, R.layout.dialog_list, new IhyBaseDialog.DialogListener() {
+            @Override
+            public void bindView(View view, final IhyBaseDialog kyeBaseDialog) {
+                TextView title = (TextView) view.findViewById(R.id.title);
+                ListView lv = (ListView) view.findViewById(R.id.lv);
+                Button btn = (Button) view.findViewById(R.id.button);
+                NormalStringAdapter adapter = new NormalStringAdapter(context, list);
+                lv.setAdapter(adapter);
+                if (StringUtils.isNullOrEmpty(mTitle)) {
+                    title.setVisibility(View.GONE);
+                } else {
+                    title.setVisibility(View.VISIBLE);
+                    title.setText(mTitle);
+                }
+                if (!StringUtils.isNullOrEmpty(button)) {
+                    btn.setText(button);
+                }
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        kyeBaseDialog.dismiss();
+
+                    }
+                });
+
+            }
+        });
+        kyeBaseDialog.setCancelable(false);
+        kyeBaseDialog.setCanceledOnTouchOutside(false);
     }
 
 }

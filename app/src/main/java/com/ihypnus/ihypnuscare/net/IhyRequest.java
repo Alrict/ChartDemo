@@ -2,6 +2,7 @@ package com.ihypnus.ihypnuscare.net;
 
 import com.android.volley.Request;
 import com.android.volley.ResponseCallback;
+import com.ihypnus.ihypnuscare.bean.DefaultDeviceIdVO;
 import com.ihypnus.ihypnuscare.bean.DeviceListVO;
 import com.ihypnus.ihypnuscare.bean.HistogramData;
 import com.ihypnus.ihypnuscare.bean.LoginBean;
@@ -280,5 +281,39 @@ public class IhyRequest {
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
 
+    /**
+     * 获取用户名下默认设备
+     *
+     * @param JSESSIONID
+     * @param isCookie
+     * @param callback
+     */
+    public static void getDefaultDeviceId(String JSESSIONID, boolean isCookie, ResponseCallback callback) {
+        String url = IhyAction.getdefaultDeviceId;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("JSESSIONID", JSESSIONID);
+        params.put("isCookie", isCookie);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_JAVA_BEAN);
+        httpRequest.setResponseJavaBean(DefaultDeviceIdVO.class);
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
 
+    /**
+     * 设置用户默认数据读取设备
+     * @param JSESSIONID
+     * @param isCookie
+     * @param deviceId
+     * @param callback
+     */
+    public static void setDefaultDeviceId(String JSESSIONID, boolean isCookie, String deviceId, ResponseCallback callback) {
+        String url = IhyAction.setdefaultDeviceId;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("JSESSIONID", JSESSIONID);
+        params.put("isCookie", isCookie);
+        params.put("deviceId", deviceId);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
 }

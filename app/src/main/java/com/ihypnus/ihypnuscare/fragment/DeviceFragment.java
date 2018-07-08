@@ -130,6 +130,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
                 if (listVO != null && listVO.getContent() != null && listVO.getContent().size() > 0) {
                     List<DeviceListVO.ContentBean> content = listVO.getContent();
                     mInfoList.addAll(content);
+                    sortList();
                 }
                 mAdapter.setList(mInfoList);
             }
@@ -139,6 +140,18 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
                 BaseDialogHelper.dismissLoadingDialog();
             }
         });
+    }
+
+    private void sortList() {
+        if (mInfoList.size() > 0) {
+            for (int i = 0; i < mInfoList.size(); i++) {
+                String deviceId = mInfoList.get(i).getDevice_id();
+                String defaultDeviceId = Constants.DEVICEID;
+                if (!StringUtils.isNullOrEmpty(defaultDeviceId) && !StringUtils.isNullOrEmpty(defaultDeviceId) && defaultDeviceId.equals(deviceId)) {
+                    mInfoList.get(i).setIsChecked(1);
+                }
+            }
+        }
     }
 
     @Override
@@ -155,11 +168,33 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
                     return;
                 }
                 if (mNeedRefresh) {
-                    BaseDialogHelper.showMsgTipDialog(mAct, "设置成功");
-                    EventBus.getDefault().post(new BaseFactory.RefreshReportInfoEvent(mDeviceId));
+                    setDefaultDeviceId();
+
                 }
                 break;
         }
+    }
+
+    /**
+     * 设置默认设备
+     */
+    private void setDefaultDeviceId() {
+        BaseDialogHelper.showLoadingDialog(mAct, true, "正在设置...");
+        IhyRequest.setDefaultDeviceId(Constants.JSESSIONID, true, mDeviceId, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                BaseDialogHelper.showMsgTipDialog(mAct, "设置成功");
+                EventBus.getDefault().post(new BaseFactory.RefreshReportInfoEvent(mDeviceId));
+                Constants.DEVICEID = mDeviceId;
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
+            }
+        });
     }
 
     @Override

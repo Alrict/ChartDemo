@@ -62,10 +62,18 @@ public class IhyAction {
     /**
      * 统计柱状图数据
      */
-    public static final String getHistogramData = HOST + "hypnusMgr/app/statisti/data/getHistogramData";
+    public static final String getHistogramData = HOST + "hypnusMgr/app/statisti/data/getAppHistogramData";
     /**
      * 更新用户信息
      */
     public static final String updateinfo = HOST + "hypnusMgr/app/user/updateinfo";
+    /**
+     * 获取用户名下默认设备
+     */
+    public static final String getdefaultDeviceId = HOST + "hypnusMgr/app/device/getdefault";
+    /**
+     * 设置用户默认数据读取设备
+     */
+    public static final String setdefaultDeviceId = HOST + "hypnusMgr/app/device/setdefault";
 
 }

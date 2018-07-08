@@ -8,10 +8,20 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioGroup;
 
+import com.android.volley.ResponseCallback;
+import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.bean.DefaultDeviceIdVO;
+import com.ihypnus.ihypnuscare.config.Constants;
+import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.fragment.DeviceFragment;
 import com.ihypnus.ihypnuscare.fragment.MyIhyFragment;
 import com.ihypnus.ihypnuscare.fragment.ReportFragment;
+import com.ihypnus.ihypnuscare.iface.BaseType;
+import com.ihypnus.ihypnuscare.iface.DialogListener;
+import com.ihypnus.ihypnuscare.net.IhyRequest;
+import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 
 public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
@@ -47,9 +57,56 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     protected void loadData() {
+//        getDefaultDeviceInfos();
+        checkReportFragment();
 
-//        BaseDialogHelper.showLoadingDialog(this, true, "正在加载...");
+    }
 
+    private void getDefaultDeviceInfos() {
+        BaseDialogHelper.showLoadingDialog(this, true, "正在加载...");
+        IhyRequest.getDefaultDeviceId(Constants.JSESSIONID, true, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                DefaultDeviceIdVO defaultDeviceIdVO = (DefaultDeviceIdVO) var1;
+                if (defaultDeviceIdVO != null && !StringUtils.isNullOrEmpty(defaultDeviceIdVO.getDeviceId())) {
+                    LogOut.d("llw", "获取默认设备id:" + defaultDeviceIdVO.getDeviceId());
+                    Constants.DEVICEID = defaultDeviceIdVO.getDeviceId();
+                    checkReportFragment();
+                } else {
+                    BaseDialogHelper.showSimpleDialog(HomeActivity.this, "温馨提示", "您目前未绑定任何相关设备", "前去绑定", new DialogListener() {
+                        @Override
+                        public void onClick(BaseType baseType) {
+                            jumpToBindDeviceActivity();
+                        }
+
+                        @Override
+                        public void onItemClick(long postion, String s) {
+
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+            }
+        });
+    }
+
+    /**
+     * 跳转至绑定设备页面
+     */
+    private void jumpToBindDeviceActivity() {
+        Intent intent = new Intent(this, AddNwedeviceActivity.class);
+        startActivity(intent);
+        finish();
+
+    }
+
+    private void checkReportFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         //设备
         if (mReportFragment == null) {
@@ -61,7 +118,6 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
 
         transaction.commit();
-//        BaseDialogHelper.dismissLoadingDialog();
     }
 
     @Override

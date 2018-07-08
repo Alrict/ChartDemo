@@ -101,11 +101,7 @@ public class ChartsPage1Controller extends BaseController {
             public void onSuccess(Object var1, String var2, String var3) {
                 HistogramData data = (HistogramData) var1;
                 if (data != null) {
-                    HistogramData.EventsBean events = data.getEvents();
-                    HistogramData.LeakBean leak = data.getLeak();
-                    HistogramData.PressureBean pressure = data.getPressure();
-                    HistogramData.UseInfoBean useInfo = data.getUseInfo();
-                    HistogramData.UseParamsBean useParams = data.getUseParams();
+
                 }
             }
 
@@ -134,6 +130,6 @@ public class ChartsPage1Controller extends BaseController {
     @Override
     public void setNotifyDateChangedListener(NotifyDateChangedListener listener) {
         super.setNotifyDateChangedListener(listener);
-        LogOut.d("llw","page1要更新");
+        LogOut.d("llw", "page1要更新");
     }
 }

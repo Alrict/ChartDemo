@@ -1,5 +1,7 @@
 package com.ihypnus.ihypnuscare.bean;
 
+import java.util.List;
+
 /**
  * @Package com.ihypnus.ihypnuscare.bean
  * @author: llw
@@ -7,16 +9,25 @@ package com.ihypnus.ihypnuscare.bean;
  * @date: 2018/6/28 21:39
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class UsageInfos {
+public class UsageInfos extends BaseModel {
+
+    /**
+     * leak : {"totalLeakVolume":0,"averageLeakVolume":"0.0"}
+     * score : 100.0
+     * pressure : {"tpIn":"6.0","tpEx":"5.0"}
+     * usetimes : [{"mode":4,"starttime":"2018-05-31 12:00:00 12:00:00","endTime":"2018-05-31 13:10:01"},{"mode":4,"starttime":"2018-05-31 18:05:41","endTime":"2018-06-01 09:10:30"}]
+     * useInfo : {"averageUseTime":"16.25","lessThan4HoursDays":0,"totalDays":1,"noUseDays":0,"totalTimes":"16.25","usedays":1,"useseconds":58490,"moreThan4HoursDays":1,"moreThan4HoursPercent":"100.0","use4days":1}
+     * events : {"csa":"0.0","hi":"0.0","usesec":58490,"pb":"0.0","csr":"0.0","ahi":"0.0","ai":"0.0","snore":"0.0"}
+     * useParams : {"mode":4,"cureDelay":"0 Min","yesterday":"2018-05-31 12:00:00","startPresure":"5.0 cmH2O","presure2":"6.0 cmH2O","dataVersion":"7C_V1.19","presure1":"5.0 cmH2O","today":"2018-06-01 12:00:00","model":"AU730M"}
+     */
+
     private LeakBean leak;
+    private double score;
     private PressureBean pressure;
     private UseInfoBean useInfo;
     private EventsBean events;
     private UseParamsBean useParams;
-    //分数
-    private float score;
-    //使用时间段信息
-    private String usetimes;
+    private List<UsetimesBean> usetimes;
 
     public LeakBean getLeak() {
         return leak;
@@ -24,6 +35,14 @@ public class UsageInfos {
 
     public void setLeak(LeakBean leak) {
         this.leak = leak;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
     }
 
     public PressureBean getPressure() {
@@ -58,30 +77,21 @@ public class UsageInfos {
         this.useParams = useParams;
     }
 
-    public float getScore() {
-        return score;
-    }
-
-    public void setScore(float score) {
-        this.score = score;
-    }
-
-    public String getUsetimes() {
+    public List<UsetimesBean> getUsetimes() {
         return usetimes;
     }
 
-    public void setUsetimes(String usetimes) {
+    public void setUsetimes(List<UsetimesBean> usetimes) {
         this.usetimes = usetimes;
     }
 
-    public static class LeakBean {
+    public static class LeakBean extends BaseModel {
         /**
          * totalLeakVolume : 0
-         * averageLeakVolume : 0
+         * averageLeakVolume : 0.0
          */
 
         private int totalLeakVolume;
-        //平均漏气
         private String averageLeakVolume;
 
         public int getTotalLeakVolume() {
@@ -99,81 +109,58 @@ public class UsageInfos {
         public void setAverageLeakVolume(String averageLeakVolume) {
             this.averageLeakVolume = averageLeakVolume;
         }
-
-        @Override
-        public String toString() {
-            return "LeakBean{" +
-                    "totalLeakVolume=" + totalLeakVolume +
-                    ", averageLeakVolume='" + averageLeakVolume + '\'' +
-                    '}';
-        }
     }
 
-    public static class PressureBean {
+    public static class PressureBean extends BaseModel {
         /**
-         * ninetyPercentPresure2 : 0.0
-         * ninetyPercentPresure1 : 0.0
+         * tpIn : 6.0
+         * tpEx : 5.0
          */
 
-        private double ninetyPercentPresure2;//无效
-        private double ninetyPercentPresure1;//无效
-        private double tpEx;//90%呼气压力
-        private double tpIn;//90%吸气压力
+        private String tpIn;
+        private String tpEx;
 
-        public double getNinetyPercentPresure2() {
-            return ninetyPercentPresure2;
-        }
-
-        public void setNinetyPercentPresure2(double ninetyPercentPresure2) {
-            this.ninetyPercentPresure2 = ninetyPercentPresure2;
-        }
-
-        public double getNinetyPercentPresure1() {
-            return ninetyPercentPresure1;
-        }
-
-        public void setNinetyPercentPresure1(double ninetyPercentPresure1) {
-            this.ninetyPercentPresure1 = ninetyPercentPresure1;
-        }
-
-        public double getTpEx() {
-            return tpEx;
-        }
-
-        public void setTpEx(double tpEx) {
-            this.tpEx = tpEx;
-        }
-
-        public double getTpIn() {
+        public String getTpIn() {
             return tpIn;
         }
 
-        public void setTpIn(double tpIn) {
+        public void setTpIn(String tpIn) {
             this.tpIn = tpIn;
+        }
+
+        public String getTpEx() {
+            return tpEx;
+        }
+
+        public void setTpEx(String tpEx) {
+            this.tpEx = tpEx;
         }
     }
 
-    public static class UseInfoBean {
+    public static class UseInfoBean extends BaseModel {
         /**
-         * averageUseTime : 0
+         * averageUseTime : 16.25
          * lessThan4HoursDays : 0
          * totalDays : 1
-         * noUseDays : 1
-         * totalTimes : 0
-         * moreThan4HoursDays : 0
-         * moreThan4HoursPercent : 0
+         * noUseDays : 0
+         * totalTimes : 16.25
+         * usedays : 1
+         * useseconds : 58490
+         * moreThan4HoursDays : 1
+         * moreThan4HoursPercent : 100.0
+         * use4days : 1
          */
 
-        private String averageUseTime;//使用时长 单位小时
+        private String averageUseTime;
         private int lessThan4HoursDays;
         private int totalDays;
         private int noUseDays;
-        private int use4days;
+        private String totalTimes;
         private int usedays;
-        private String totalTimes;//单位小时
-        private String useseconds;//单位小时
+        private int useseconds;
         private int moreThan4HoursDays;
         private String moreThan4HoursPercent;
+        private int use4days;
 
         public String getAverageUseTime() {
             return averageUseTime;
@@ -215,6 +202,22 @@ public class UsageInfos {
             this.totalTimes = totalTimes;
         }
 
+        public int getUsedays() {
+            return usedays;
+        }
+
+        public void setUsedays(int usedays) {
+            this.usedays = usedays;
+        }
+
+        public int getUseseconds() {
+            return useseconds;
+        }
+
+        public void setUseseconds(int useseconds) {
+            this.useseconds = useseconds;
+        }
+
         public int getMoreThan4HoursDays() {
             return moreThan4HoursDays;
         }
@@ -230,128 +233,115 @@ public class UsageInfos {
         public void setMoreThan4HoursPercent(String moreThan4HoursPercent) {
             this.moreThan4HoursPercent = moreThan4HoursPercent;
         }
+
+        public int getUse4days() {
+            return use4days;
+        }
+
+        public void setUse4days(int use4days) {
+            this.use4days = use4days;
+        }
     }
 
-    public static class EventsBean {
+    public static class EventsBean extends BaseModel {
         /**
-         * csa : 0
-         * hi : 0
-         * usesec :
-         * pb : 0
-         * csr : 0
-         * ahi : 0
-         * ai : 0
-         * snore : 0
+         * csa : 0.0
+         * hi : 0.0
+         * usesec : 58490
+         * pb : 0.0
+         * csr : 0.0
+         * ahi : 0.0
+         * ai : 0.0
+         * snore : 0.0
          */
 
-        private int csa;
-        private int hi;
-        private String usesec;
-        private int pb;
-        private int csr;
-        //AHI
-        private int ahi;
-        private int ai;
-        private int snore;
+        private String csa;
+        private String hi;
+        private int usesec;
+        private String pb;
+        private String csr;
+        private String ahi;
+        private String ai;
+        private String snore;
 
-        public int getCsa() {
+        public String getCsa() {
             return csa;
         }
 
-        public void setCsa(int csa) {
+        public void setCsa(String csa) {
             this.csa = csa;
         }
 
-        public int getHi() {
+        public String getHi() {
             return hi;
         }
 
-        public void setHi(int hi) {
+        public void setHi(String hi) {
             this.hi = hi;
         }
 
-        public String getUsesec() {
+        public int getUsesec() {
             return usesec;
         }
 
-        public void setUsesec(String usesec) {
+        public void setUsesec(int usesec) {
             this.usesec = usesec;
         }
 
-        public int getPb() {
+        public String getPb() {
             return pb;
         }
 
-        public void setPb(int pb) {
+        public void setPb(String pb) {
             this.pb = pb;
         }
 
-        public int getCsr() {
+        public String getCsr() {
             return csr;
         }
 
-        public void setCsr(int csr) {
+        public void setCsr(String csr) {
             this.csr = csr;
         }
 
-        public int getAhi() {
+        public String getAhi() {
             return ahi;
         }
 
-        public void setAhi(int ahi) {
+        public void setAhi(String ahi) {
             this.ahi = ahi;
         }
 
-        public int getAi() {
+        public String getAi() {
             return ai;
         }
 
-        public void setAi(int ai) {
+        public void setAi(String ai) {
             this.ai = ai;
         }
 
-        public int getSnore() {
+        public String getSnore() {
             return snore;
         }
 
-        public void setSnore(int snore) {
+        public void setSnore(String snore) {
             this.snore = snore;
-        }
-
-        @Override
-        public String toString() {
-            return "EventsBean{" +
-                    "csa=" + csa +
-                    ", hi=" + hi +
-                    ", usesec='" + usesec + '\'' +
-                    ", pb=" + pb +
-                    ", csr=" + csr +
-                    ", ahi=" + ahi +
-                    ", ai=" + ai +
-                    ", snore=" + snore +
-                    '}';
         }
     }
 
-    public static class UseParamsBean {
+    public static class UseParamsBean extends BaseModel {
         /**
-         * mode : 100
-         * cureDelay : comflict
-         * yesterday : 2018-06-2712:00:00
-         * startPresure : comflict
-         * presure2 : comflict
-         * dataVersion : unknow
-         * presure1 : comflict
-         * today : 2018-06-2812:00:00
-         * model : unknow
-         * modeInfo : Modes:
+         * mode : 4
+         * cureDelay : 0 Min
+         * yesterday : 2018-05-31 12:00:00
+         * startPresure : 5.0 cmH2O
+         * presure2 : 6.0 cmH2O
+         * dataVersion : 7C_V1.19
+         * presure1 : 5.0 cmH2O
+         * today : 2018-06-01 12:00:00
+         * model : AU730M
          */
 
-        /**
-         * 设备模式 0 --”CPAP”，1--”APAP”, 2--"BPAP-S", 3--"AutoBPAP-S", 4--"BPAP-T",
-         // 5--"BPAP-ST"   100 -- “No Data”  200--”多种模式”需要读取参数 “modeInfo”，
-         // 根据邝勇最新需求，当放回值为200时，默认显示最长使用时间段的模式，也就是从usetimes中最长的那条读取”mode”显示出来
-         */
         private int mode;
         private String cureDelay;
         private String yesterday;
@@ -361,7 +351,6 @@ public class UsageInfos {
         private String presure1;
         private String today;
         private String model;
-        private String modeInfo;
 
         public int getMode() {
             return mode;
@@ -434,13 +423,41 @@ public class UsageInfos {
         public void setModel(String model) {
             this.model = model;
         }
+    }
 
-        public String getModeInfo() {
-            return modeInfo;
+    public static class UsetimesBean extends BaseModel {
+        /**
+         * mode : 4
+         * starttime : 2018-05-31 12:00:00 12:00:00
+         * endTime : 2018-05-31 13:10:01
+         */
+
+        private int mode;
+        private String starttime;
+        private String endTime;
+
+        public int getMode() {
+            return mode;
         }
 
-        public void setModeInfo(String modeInfo) {
-            this.modeInfo = modeInfo;
+        public void setMode(int mode) {
+            this.mode = mode;
+        }
+
+        public String getStarttime() {
+            return starttime;
+        }
+
+        public void setStarttime(String starttime) {
+            this.starttime = starttime;
+        }
+
+        public String getEndTime() {
+            return endTime;
+        }
+
+        public void setEndTime(String endTime) {
+            this.endTime = endTime;
         }
     }
 }

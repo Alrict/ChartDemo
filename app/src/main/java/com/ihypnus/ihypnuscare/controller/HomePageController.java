@@ -19,9 +19,12 @@ import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.widget.CircleProgressBarView;
+
+import java.util.List;
 
 /**
  * @Package com.ihypnus.ihypnuscare.controller
@@ -46,6 +49,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
     private TextView mTvExpirationKpa;
     private TextView mTvAverageAirLeak;
     private TextView mTvAhi;
+    private List<UsageInfos.UsetimesBean> mUsetimes;
 
     public HomePageController(Context context) {
         super(context);
@@ -153,15 +157,33 @@ public class HomePageController extends BaseController implements View.OnClickLi
      * @param usageInfos
      */
     private void setViews(UsageInfos usageInfos) {
-        float score = usageInfos.getScore();
+        float score = (float) usageInfos.getScore();
         startAni(score);
         UsageInfos.EventsBean events = usageInfos.getEvents();
         UsageInfos.UseInfoBean useInfo = usageInfos.getUseInfo();
+        //使用时间段
+        mUsetimes = usageInfos.getUsetimes();
         //平均使用时长
-        String averageUseTime = useInfo.getAverageUseTime();
+        int useseconds = useInfo.getUseseconds();
+        int hours = useseconds / 3600;
+        int minues = (useseconds - hours * 3600) / 60;
+        mTvHours.setText(String.valueOf(hours));
+        mTvMinues.setText(String.valueOf(minues));
+        if (mUsetimes.size() > 0) {
+            String starttime = mUsetimes.get(0).getStarttime();
+            String endTime = mUsetimes.get(0).getEndTime();
+            if (starttime.length() >= 16 && endTime.length() >= 16) {
+                starttime = starttime.substring(11, 16);
+                endTime = endTime.substring(11, 16);
+                mTvUsageLongData.setText(starttime + "~" + endTime);
+            } else {
+                mTvUsageLongData.setText("--~--");
+            }
+
+
+        }
 //        mTvHours.setText();
 //        mTvMinues.setText();
-//        mTvDeviceModel.setText();
         int mode = 100;
         String modeName = "No Data";
         String modeInfo = "多种模式";
@@ -171,7 +193,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
         UsageInfos.UseParamsBean useParams = usageInfos.getUseParams();
         if (useParams != null) {
             mode = useParams.getMode();
-            modeInfo = useParams.getModeInfo();
+            modeInfo = useParams.getModel();
         }
         switch (mode) {
             case 0:
@@ -212,12 +234,12 @@ public class HomePageController extends BaseController implements View.OnClickLi
         String nHaleKpa;
         String expirationKpa;
         String averageLeakVolume;
-        int ahi = 0;
+        String ahi = "";
 
         UsageInfos.PressureBean pressure = usageInfos.getPressure();
         if (pressure != null) {
-            nHaleKpa = String.valueOf(pressure.getTpIn());
-            expirationKpa = String.valueOf(pressure.getTpEx());
+            nHaleKpa = String.valueOf(pressure.getTpIn()) + "cmH2O";
+            expirationKpa = String.valueOf(pressure.getTpEx()) + "cmH2O";
         } else {
             nHaleKpa = "--";
             expirationKpa = "--";
@@ -227,7 +249,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
         UsageInfos.LeakBean leak = usageInfos.getLeak();
         if (leak != null) {
-            averageLeakVolume = leak.getAverageLeakVolume();
+            averageLeakVolume = leak.getAverageLeakVolume() + "L/min";
         } else {
             averageLeakVolume = "--";
         }
@@ -236,7 +258,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
         if (events != null) {
             ahi = events.getAhi();
         }
-        mTvAhi.setText(ahi >= 0 ? String.valueOf(ahi) : "--");
+        mTvAhi.setText(StringUtils.isNullOrEmpty(ahi) ? "--" : String.valueOf(ahi));
     }
 
     @Override
@@ -276,16 +298,22 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
             case R.id.layout_time:
 //               使用时间段
-                showPopDialog();
+                showPopDialog(mUsetimes);
                 break;
         }
     }
 
     /**
      * 显示使用时间段
+     *
+     * @param usetimes
      */
-    private void showPopDialog() {
-        BaseDialogHelper.showMsgTipDialog(mContext, "显示使用时间段");
+    private void showPopDialog(List<UsageInfos.UsetimesBean> usetimes) {
+        if (usetimes == null || usetimes.size() == 0) {
+            return;
+        }
+        BaseDialogHelper.showListDialog(mContext, "使用时段", "返回", usetimes);
+//        BaseDialogHelper.showMsgTipDialog(mContext, "显示使用时间段");
     }
 
     /**
