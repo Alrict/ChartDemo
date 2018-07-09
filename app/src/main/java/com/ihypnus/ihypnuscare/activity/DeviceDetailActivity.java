@@ -7,8 +7,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.ResponseCallback;
+import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.bean.DeviceListVO;
+import com.ihypnus.ihypnuscare.bean.ShadowDeviceBean;
+import com.ihypnus.ihypnuscare.config.Constants;
+import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.net.IhyRequest;
+import com.ihypnus.ihypnuscare.utils.StringUtils;
+import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
 /**
@@ -26,6 +34,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
     private ImageView mIvStatus;
     private Button mBtnSetting;
     private Button mBtnModify;
+    private String mDeviceId;
 
     @Override
     protected int setView() {
@@ -47,12 +56,14 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
         Intent intent = getIntent();
         DeviceListVO.ContentBean bean = intent.getParcelableExtra("DATA_BEAN");
         if (bean != null) {
-            setTitle(bean.getDevice_id());
-            mTvModelType.setText(bean.getModel());
-            mTvVersion.setText(bean.getFactory_id());
-
-            mTvStatus.setText("在线");
-            mIvStatus.setImageDrawable(getResources().getDrawable(R.mipmap.icon_out_line));
+            mDeviceId = bean.getDevice_id();
+            setTitle(mDeviceId);
+            String model = bean.getModel();
+            if (StringUtils.isNullOrEmpty(model)) {
+                mTvModelType.setText("未知");
+            } else {
+                mTvModelType.setText(bean.getModel());
+            }
 
         }
     }
@@ -65,6 +76,37 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void loadData() {
+        BaseDialogHelper.showLoadingDialog(this, true, "正在加载...");
+        IhyRequest.getShadowDevice(Constants.JSESSIONID, true, mDeviceId, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ShadowDeviceBean deviceBean = (ShadowDeviceBean) var1;
+
+                bindView(deviceBean);
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
+            }
+        });
+    }
+
+    private void bindView(ShadowDeviceBean deviceBean) {
+        if (deviceBean != null) {
+            String dataVersion = deviceBean.getData_version();
+            int light = deviceBean.getLight();
+            mTvVersion.setText(dataVersion);
+            if (light == 1) {
+                mTvStatus.setText("在线");
+                mIvStatus.setImageDrawable(getResources().getDrawable(R.mipmap.icon_online));
+            } else {
+                mTvStatus.setText("离线");
+                mIvStatus.setImageDrawable(getResources().getDrawable(R.mipmap.icon_out_line));
+            }
+        }
 
     }
 
@@ -74,11 +116,11 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.btn_setting:
 
-                jumpToWifi();
+
                 break;
 
             case R.id.btn_modify:
-
+//                jumpToWifi();
                 break;
         }
     }

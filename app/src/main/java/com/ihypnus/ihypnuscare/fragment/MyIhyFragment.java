@@ -1,12 +1,16 @@
 package com.ihypnus.ihypnuscare.fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -18,27 +22,38 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
+import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.GetObjectRequest;
 import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.ihypnus.ihypnuscare.IhyApplication;
+import com.android.volley.ResponseCallback;
+import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.activity.ClipActivity;
 import com.ihypnus.ihypnuscare.activity.FeedbackActivity;
 import com.ihypnus.ihypnuscare.activity.HelpCenterActivity;
 import com.ihypnus.ihypnuscare.activity.PersonalInformationActivity;
 import com.ihypnus.ihypnuscare.activity.SettingActivity;
+import com.ihypnus.ihypnuscare.bean.OssTokenVO;
+import com.ihypnus.ihypnuscare.config.Constants;
+import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.ImageUtils;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.TakePhotosUtils;
+import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.kye.smart.multi_image_selector_library.MultiImageSelector;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -69,6 +84,26 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
     private static final int REQUEST_CLIP = 3;
     private Bitmap mAvatarBitmap;
     private ImageView mIvDefaultPhoto;
+    private static final String bucketName = "hypnus-app-resource";
+    private OSSClient mOssClient;
+    private boolean mIsFirst = true;
+    private byte[] imageByteArray;
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    if (mDownLoadPic != null) {
+                        mCircleImageView.setImageBitmap(mDownLoadPic);
+                        mIvDefaultPhoto.setVisibility(View.GONE);
+                    }
+                    break;
+            }
+        }
+    };
+    private Bitmap mDownLoadPic;
 
     @Override
     protected int setView() {
@@ -102,7 +137,8 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     protected void loadData() {
-
+        BaseDialogHelper.showLoadingDialog(mAct, true, "正在加载");
+        getStsToken();
     }
 
     @Override
@@ -253,7 +289,6 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                     break;
                 case REQUEST_CLIP:
                     if (data != null) {
-                        String bucketName = "ihyoss";
                         String imagePath = data.getStringExtra("images_path");
                         mAvatarBitmap = ImageUtils.getBitmap(imagePath);
                         mCircleImageView.setImageBitmap(mAvatarBitmap);
@@ -307,6 +342,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
      * @param uploadFilePath 被上传文件的路径
      */
     private void uploadUserPhoto(String bucketName, String objectKey, String uploadFilePath) {
+        if (mOssClient == null) return;
         // 构造上传请求
         PutObjectRequest put = new PutObjectRequest(bucketName, objectKey, uploadFilePath);
         // 异步上传时可以设置进度回调
@@ -316,7 +352,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                 Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
             }
         });
-        OSSAsyncTask task = IhyApplication.mOssClient.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+        OSSAsyncTask task = mOssClient.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
             @Override
             public void onSuccess(PutObjectRequest request, PutObjectResult result) {
                 Log.d("PutObject", "UploadSuccess");
@@ -341,23 +377,33 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
     }
 
     /*
-    * 从oss下载
+     * 从oss下载
      */
-    private void downLoadUserPhoto(String bucketName, String objectKey) {
+    private byte[] downLoadUserPhoto(String bucketName, String objectKey) {
+        if (mOssClient == null) return new byte[0];
         // 构造下载文件请求
         GetObjectRequest get = new GetObjectRequest(bucketName, objectKey);
-        OSSAsyncTask task = IhyApplication.mOssClient.asyncGetObject(get, new OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
+        OSSAsyncTask task = mOssClient.asyncGetObject(get, new OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
             @Override
             public void onSuccess(GetObjectRequest request, GetObjectResult result) {
                 // 请求成功
                 Log.d("Content-Length", "" + result.getContentLength());
                 InputStream inputStream = result.getObjectContent();
                 byte[] buffer = new byte[2048];
+                ByteArrayOutputStream outStream = new ByteArrayOutputStream();
                 int len;
                 try {
                     while ((len = inputStream.read(buffer)) != -1) {
                         // 处理下载的数据
+                        outStream.write(buffer, 0, len);
+                        Log.d("asyncGetObjectSample", "read length: " + len);
                     }
+
+                    outStream.flush();
+                    imageByteArray = outStream.toByteArray();
+                    outStream.close();
+
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -381,5 +427,76 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
         });
 // task.cancel(); // 可以取消任务
 // task.waitUntilFinished(); // 如果需要等待任务完成
+
+        while (imageByteArray == null) {
+
+        }
+        return imageByteArray;
+    }
+
+
+    private void getStsToken() {
+        IhyRequest.getSTSToken(Constants.JSESSIONID, true, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                OssTokenVO tokenVO = (OssTokenVO) var1;
+                String accessKeyId = tokenVO.getAccessKeyId();
+                String accessKeySecret = tokenVO.getAccessKeySecret();
+                String expiration = tokenVO.getExpiration();
+                String securityToken = tokenVO.getSecurityToken();
+                String statusCode = tokenVO.getStatusCode();
+                initOSSClient(accessKeyId, accessKeySecret, securityToken);
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
+            }
+        });
+    }
+
+    private void initOSSClient(String accessKeyId, String scretKeyId, String securityToken) {
+        String endpoint = "http://oss-cn-shanghai.aliyuncs.com";
+//        String stsServer = "hypnus-app-resource.oss-cn-shanghai.aliyuncs.com";
+//推荐使用OSSAuthCredentialsProvider。token过期可以及时更新
+//        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
+        OSSStsTokenCredentialProvider ossStsTokenCredentialProvider = new OSSStsTokenCredentialProvider(accessKeyId, scretKeyId, securityToken);
+        //该配置类如果不设置，会有默认配置，具体可看该类
+        ClientConfiguration conf = new ClientConfiguration();
+        conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
+        conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
+        conf.setMaxConcurrentRequest(1); // 最大并发请求数，默认5个
+        conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
+        mOssClient = new OSSClient(mAct.getApplicationContext(), endpoint, ossStsTokenCredentialProvider);
+        LogOut.d("oss", "初始化");
+        if (mIsFirst) {
+            mIsFirst = false;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    mDownLoadPic = getPicFromBytes(downLoadUserPhoto(bucketName, "ihytest01"), null);
+                    mHandler.sendEmptyMessage(1);
+                }
+            }).start();
+        }
+    }
+
+
+    public static Bitmap getPicFromBytes(byte[] bytes, BitmapFactory.Options opts) {
+        Log.e("lyfsInBitmap", "begin");
+        if (bytes != null) {
+            if (opts != null) {
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, opts);
+            } else {
+                Log.e("lyfsInBitmap", bytes.toString());
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            }
+        } else {
+            Log.e("lyfsInBitmap", "bad");
+        }
+        return null;
+
     }
 }

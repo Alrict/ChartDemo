@@ -58,12 +58,12 @@ public class IhyApplication extends Application {
         initImageLoadConfig(this);
         initVariable();
         initLogReport();
-        initOSSClient();
+//        initOSSClient();
     }
 
     private void initOSSClient() {
         String endpoint = "http://oss-cn-shanghai.aliyuncs.com";
-        String stsServer = "http://ihy-test.oss-cn-shanghai.aliyuncs.com";
+        String stsServer = "hypnus-app-resource.oss-cn-shanghai.aliyuncs.com";
 //推荐使用OSSAuthCredentialsProvider。token过期可以及时更新
         OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
         //该配置类如果不设置，会有默认配置，具体可看该类
@@ -128,6 +128,10 @@ public class IhyApplication extends Application {
         String jsessionid = loginBean.getJSESSIONID();
         Constants.JSESSIONID = jsessionid;
         Volley.me.addInitRequestHead("Cookie", "JSESSIONID=" + jsessionid);
+    }
+
+    public LoginBean getUserInfo() {
+        return loginBean;
     }
 
     /**

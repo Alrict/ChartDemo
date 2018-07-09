@@ -257,7 +257,6 @@ public class UsageInfos extends BaseModel {
 
         private String csa;
         private String hi;
-        private int usesec;
         private String pb;
         private String csr;
         private String ahi;
@@ -280,13 +279,6 @@ public class UsageInfos extends BaseModel {
             this.hi = hi;
         }
 
-        public int getUsesec() {
-            return usesec;
-        }
-
-        public void setUsesec(int usesec) {
-            this.usesec = usesec;
-        }
 
         public String getPb() {
             return pb;

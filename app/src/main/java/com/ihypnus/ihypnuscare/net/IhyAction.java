@@ -75,5 +75,13 @@ public class IhyAction {
      * 设置用户默认数据读取设备
      */
     public static final String setdefaultDeviceId = HOST + "hypnusMgr/app/device/setdefault";
+    /**
+     * 获取OSS操作所需的权限信息
+     */
+    public static final String getSTSinfo = HOST + "hypnusMgr/app/user/getSTSinfo";
+    /**
+     * 获取设备参数以及状态信息
+     */
+    public static final String getShadowDevice = HOST + "hypnusMgr/app/device/getShadowDevice";
 
 }

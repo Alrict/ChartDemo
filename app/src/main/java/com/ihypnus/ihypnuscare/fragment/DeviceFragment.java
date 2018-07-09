@@ -163,7 +163,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
                 break;
 
             case R.id.btn_add:
-                if (mInfoList.size() == 0 || StringUtils.isNullOrEmpty(mDeviceId)) {
+                if (mInfoList.size() == 0 ) {
                     ToastUtils.showToastDefault("请绑定您的设备");
                     return;
                 }

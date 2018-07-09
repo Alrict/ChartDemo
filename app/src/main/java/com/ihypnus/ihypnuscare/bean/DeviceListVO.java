@@ -12,7 +12,7 @@ import java.util.List;
  * @date: 2018/6/28 15:02
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class DeviceListVO implements Parcelable {
+public class DeviceListVO extends BaseModel implements Parcelable {
     /**
      * content : [{"i_id":80,"device_id":"CP70100516S","userPhone":"18122017377","productDate":"","cus_id":706066129239408640,"factory_id":"","d_modify_date":"2018-06-27 17:50:25","phone ":"","sn_id ":"393035393436470 b0024002d ","name ":"","model ":"","d_create_date ":""}]
      * total  : 1
@@ -101,7 +101,7 @@ public class DeviceListVO implements Parcelable {
         dest.writeTypedList(content);
     }
 
-    public static class ContentBean implements Parcelable {
+    public static class ContentBean extends BaseModel implements Parcelable {
         /**
          * i_id : 80
          * device_id : CP70100516S

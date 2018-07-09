@@ -7,9 +7,13 @@
     <TextView
         android:id="@+id/tv_content"
         style="@style/TextAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/h50"
+        android:gravity="center"
         android:textColor="@android:color/background_dark"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/h2"
+        android:layout_marginTop="@dimen/h30"
         android:background="@color/gray"/>
 </LinearLayout>

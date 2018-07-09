@@ -6,8 +6,10 @@ import com.ihypnus.ihypnuscare.bean.DefaultDeviceIdVO;
 import com.ihypnus.ihypnuscare.bean.DeviceListVO;
 import com.ihypnus.ihypnuscare.bean.HistogramData;
 import com.ihypnus.ihypnuscare.bean.LoginBean;
+import com.ihypnus.ihypnuscare.bean.OssTokenVO;
 import com.ihypnus.ihypnuscare.bean.PersonMesVO;
 import com.ihypnus.ihypnuscare.bean.PhoneVO;
+import com.ihypnus.ihypnuscare.bean.ShadowDeviceBean;
 import com.ihypnus.ihypnuscare.bean.UsageInfos;
 import com.ihypnus.ihypnuscare.bean.UserInfo;
 
@@ -301,6 +303,7 @@ public class IhyRequest {
 
     /**
      * 设置用户默认数据读取设备
+     *
      * @param JSESSIONID
      * @param isCookie
      * @param deviceId
@@ -314,6 +317,44 @@ public class IhyRequest {
         params.put("deviceId", deviceId);
         SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
+
+
+    /**
+     * 获取OSS操作所需的权限信息
+     *
+     * @param JSESSIONID
+     * @param isCookie
+     * @param callback
+     */
+    public static void getSTSToken(String JSESSIONID, boolean isCookie, ResponseCallback callback) {
+        String url = IhyAction.getSTSinfo;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("JSESSIONID", JSESSIONID);
+        params.put("isCookie", isCookie);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_JAVA_BEAN);
+        httpRequest.setResponseJavaBean(OssTokenVO.class);
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
+
+    /**
+     * 获取设备参数以及状态信息
+     * @param JSESSIONID
+     * @param isCookie
+     * @param deviceId
+     * @param callback
+     */
+    public static void getShadowDevice(String JSESSIONID, boolean isCookie,String deviceId, ResponseCallback callback) {
+        String url = IhyAction.getShadowDevice;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("JSESSIONID", JSESSIONID);
+        params.put("isCookie", isCookie);
+        params.put("deviceId", deviceId);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_JAVA_BEAN);
+        httpRequest.setResponseJavaBean(ShadowDeviceBean.class);
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
 }
