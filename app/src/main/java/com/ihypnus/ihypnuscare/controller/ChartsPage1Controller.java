@@ -95,6 +95,13 @@ public class ChartsPage1Controller extends BaseController {
         setWeekDate();
     }
 
+    @Override
+    public void refreshData() {
+        LogOut.d("llw","page2更新");
+        loadFromNet();
+        setWeekDate();
+    }
+
     private void loadFromNet() {
         IhyRequest.getHistogramData(Constants.JSESSIONID, true, Constants.DEVICEID, getStartTime(7), getEndTime(), new ResponseCallback() {
             @Override

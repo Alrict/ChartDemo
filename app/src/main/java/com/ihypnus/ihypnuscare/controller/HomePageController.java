@@ -121,6 +121,11 @@ public class HomePageController extends BaseController implements View.OnClickLi
         loadDataByNet(getStartTime(), getEndTime(), null);
     }
 
+    @Override
+    public void refreshData() {
+        loadDataByNet(getStartTime(), getEndTime(), null);
+    }
+
     private void loadDataByNet(String startTime, String endTime, final ImageView imageView) {
         BaseDialogHelper.showLoadingDialog(mContext, true, "正在加载...");
         IhyRequest.getEvents(Constants.JSESSIONID, Constants.DEVICEID, startTime, endTime, new ResponseCallback() {
@@ -159,42 +164,85 @@ public class HomePageController extends BaseController implements View.OnClickLi
     private void setViews(UsageInfos usageInfos) {
         float score = (float) usageInfos.getScore();
         startAni(score);
+
         UsageInfos.EventsBean events = usageInfos.getEvents();
         UsageInfos.UseInfoBean useInfo = usageInfos.getUseInfo();
-        //使用时间段
-        mUsetimes = usageInfos.getUsetimes();
         //平均使用时长
         int useseconds = useInfo.getUseseconds();
-        int hours = useseconds / 3600;
-        int minues = (useseconds - hours * 3600) / 60;
-        mTvHours.setText(String.valueOf(hours));
-        mTvMinues.setText(String.valueOf(minues));
-        if (mUsetimes.size() > 0) {
-            String starttime = mUsetimes.get(0).getStarttime();
-            String endTime = mUsetimes.get(0).getEndTime();
-            if (starttime.length() >= 16 && endTime.length() >= 16) {
-                starttime = starttime.substring(11, 16);
-                endTime = endTime.substring(11, 16);
-                mTvUsageLongData.setText(starttime + "~" + endTime);
-            } else {
-                mTvUsageLongData.setText("--~--");
+        if (useseconds <= 0) {
+            mTvHours.setText("--");
+            mTvMinues.setText("--");
+            mTvUsageLongData.setText("--~--");
+            mTvDeviceModel.setText("--");
+            mTvNhaleKpa.setText("--");
+            mTvExpirationKpa.setText("--");
+            mTvAverageAirLeak.setText("--");
+            mTvAhi.setText("--");
+
+        } else {
+            //使用时间段
+            mUsetimes = usageInfos.getUsetimes();
+            int hours = useseconds / 3600;
+            int minues = (useseconds - hours * 3600) / 60;
+            mTvHours.setText(String.valueOf(hours));
+            mTvMinues.setText(String.valueOf(minues));
+            if (mUsetimes.size() > 0) {
+                String starttime = mUsetimes.get(0).getStarttime();
+                String endTime = mUsetimes.get(0).getEndTime();
+                if (starttime.length() >= 16 && endTime.length() >= 16) {
+                    starttime = starttime.substring(11, 16);
+                    endTime = endTime.substring(11, 16);
+                    mTvUsageLongData.setText(starttime + "~" + endTime);
+                } else {
+                    mTvUsageLongData.setText("--~--");
+                }
             }
 
+            UsageInfos.UseParamsBean useParams = usageInfos.getUseParams();
+            if (useParams != null) {
+                int mode = useParams.getMode();
+                String modeName = getModelName(mode);
+                //设备模式
+                mTvDeviceModel.setText(modeName);
+            }
 
+            String nHaleKpa;
+            String expirationKpa;
+            String averageLeakVolume;
+            String ahi = "";
+
+            UsageInfos.PressureBean pressure = usageInfos.getPressure();
+            if (pressure != null) {
+                nHaleKpa = String.valueOf(pressure.getTpIn()) + "cmH2O";
+                expirationKpa = String.valueOf(pressure.getTpEx()) + "cmH2O";
+            } else {
+                nHaleKpa = "--";
+                expirationKpa = "--";
+            }
+            mTvNhaleKpa.setText(nHaleKpa);
+            mTvExpirationKpa.setText(expirationKpa);
+
+            UsageInfos.LeakBean leak = usageInfos.getLeak();
+            if (leak != null) {
+                averageLeakVolume = leak.getAverageLeakVolume() + "L/min";
+            } else {
+                averageLeakVolume = "--";
+            }
+            mTvAverageAirLeak.setText(averageLeakVolume);
+
+            if (events != null) {
+                ahi = events.getAhi();
+            }
+            mTvAhi.setText(StringUtils.isNullOrEmpty(ahi) ? "--" : String.valueOf(ahi));
         }
-//        mTvHours.setText();
-//        mTvMinues.setText();
-        int mode = 100;
-        String modeName = "No Data";
-        String modeInfo = "多种模式";
-//        设备模式 0 --”CPAP”，1--”APAP”, 2--"BPAP-S", 3--"AutoBPAP-S", 4--"BPAP-T",
+
+    }
+
+    private String getModelName(int mode) {
+        //        设备模式 0 --”CPAP”，1--”APAP”, 2--"BPAP-S", 3--"AutoBPAP-S", 4--"BPAP-T",
         // 5--"BPAP-ST"   100 -- “No Data”  200--”多种模式”需要读取参数 “modeInfo”，
         // 根据邝勇最新需求，当放回值为200时，默认显示最长使用时间段的模式，也就是从usetimes中最长的那条读取”mode”显示出来
-        UsageInfos.UseParamsBean useParams = usageInfos.getUseParams();
-        if (useParams != null) {
-            mode = useParams.getMode();
-            modeInfo = useParams.getModel();
-        }
+        String modeName = "";
         switch (mode) {
             case 0:
                 modeName = "CPAP";
@@ -225,40 +273,18 @@ public class HomePageController extends BaseController implements View.OnClickLi
                 break;
 
             case 200:
-                modeName = modeInfo;
+                if (mUsetimes != null && mUsetimes.size() > 0) {
+                    UsageInfos.UsetimesBean usetimesBean = mUsetimes.get(mUsetimes.size() - 1);
+                    int mode1 = usetimesBean.getMode();
+                    if (mode1 != 200) {
+                        modeName = getModelName(mode1);
+                    }
+                } else {
+                    modeName = "未知";
+                }
                 break;
         }
-
-        //设备模式
-        mTvDeviceModel.setText(modeName);
-        String nHaleKpa;
-        String expirationKpa;
-        String averageLeakVolume;
-        String ahi = "";
-
-        UsageInfos.PressureBean pressure = usageInfos.getPressure();
-        if (pressure != null) {
-            nHaleKpa = String.valueOf(pressure.getTpIn()) + "cmH2O";
-            expirationKpa = String.valueOf(pressure.getTpEx()) + "cmH2O";
-        } else {
-            nHaleKpa = "--";
-            expirationKpa = "--";
-        }
-        mTvNhaleKpa.setText(nHaleKpa);
-        mTvExpirationKpa.setText(expirationKpa);
-
-        UsageInfos.LeakBean leak = usageInfos.getLeak();
-        if (leak != null) {
-            averageLeakVolume = leak.getAverageLeakVolume() + "L/min";
-        } else {
-            averageLeakVolume = "--";
-        }
-        mTvAverageAirLeak.setText(averageLeakVolume);
-
-        if (events != null) {
-            ahi = events.getAhi();
-        }
-        mTvAhi.setText(StringUtils.isNullOrEmpty(ahi) ? "--" : String.valueOf(ahi));
+        return modeName;
     }
 
     @Override
@@ -281,6 +307,8 @@ public class HomePageController extends BaseController implements View.OnClickLi
     public void refreshDatas(String date) {
         mTvData.setText(date);
         loadDataByNet(getStartTime(), getEndTime(), null);
+        //刷新柱状图数据
+
     }
 
     @Override

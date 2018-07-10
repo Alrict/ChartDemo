@@ -49,6 +49,10 @@ public abstract class BaseController {
      */
     public abstract void loadData();
 
+    /**
+     * 刷新列表数据
+     */
+    public abstract void refreshData();
 
     public View getRootView() {
 

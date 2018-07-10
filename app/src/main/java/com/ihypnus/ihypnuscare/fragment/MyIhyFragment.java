@@ -21,6 +21,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.ClientException;
@@ -36,6 +37,7 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
+import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.activity.ClipActivity;
 import com.ihypnus.ihypnuscare.activity.FeedbackActivity;
@@ -85,7 +87,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
     private Bitmap mAvatarBitmap;
     private ImageView mIvDefaultPhoto;
     private static final String bucketName = "hypnus-app-resource";
-    private static final String objectKeyPath = "app_header_image/";
+    private static final String objectKeyPath = "app_header_image/" + IhyApplication.mInstance.getUserInfo().getUserInfo().getPhone() + "photo";
     private OSSClient mOssClient;
     private boolean mIsFirst = true;
     private byte[] imageByteArray;
@@ -105,6 +107,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
         }
     };
     private Bitmap mDownLoadPic;
+    private TextView mTvUserName;
 
     @Override
     protected int setView() {
@@ -113,6 +116,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     protected void findViews() {
+        mTvUserName = (TextView) findViewById(R.id.tv_user_name);
         mCircleImageView = (CircleImageView) findViewById(R.id.avatar);
         mIvDefaultPhoto = (ImageView) findViewById(R.id.iv_default_photo);
         mLayoutPersonInfo = (RelativeLayout) findViewById(R.id.layout_person_info);
@@ -139,6 +143,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
     @Override
     protected void loadData() {
         BaseDialogHelper.showLoadingDialog(mAct, true, "正在加载");
+        mTvUserName.setText(IhyApplication.mInstance.getUserInfo().getUserInfo().getAccount());
         getStsToken();
     }
 
@@ -294,7 +299,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                         mAvatarBitmap = ImageUtils.getBitmap(imagePath);
                         mCircleImageView.setImageBitmap(mAvatarBitmap);
                         mIvDefaultPhoto.setVisibility(View.GONE);
-                        uploadUserPhoto(bucketName, objectKeyPath+"ihytest01", imagePath);
+                        uploadUserPhoto(bucketName, objectKeyPath, imagePath);
                         final Bitmap bitmap = mAvatarBitmap;
 
                     }
@@ -453,9 +458,6 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
 
     private void initOSSClient(String accessKeyId, String scretKeyId, String securityToken) {
         String endpoint = "http://oss-cn-shanghai.aliyuncs.com";
-//        String stsServer = "hypnus-app-resource.oss-cn-shanghai.aliyuncs.com";
-//推荐使用OSSAuthCredentialsProvider。token过期可以及时更新
-//        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
         OSSStsTokenCredentialProvider ossStsTokenCredentialProvider = new OSSStsTokenCredentialProvider(accessKeyId, scretKeyId, securityToken);
         //该配置类如果不设置，会有默认配置，具体可看该类
         ClientConfiguration conf = new ClientConfiguration();
@@ -464,11 +466,11 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
         conf.setMaxConcurrentRequest(1); // 最大并发请求数，默认5个
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
         mOssClient = new OSSClient(mAct.getApplicationContext(), endpoint, ossStsTokenCredentialProvider);
-        LogOut.d("oss", "初始化");
+        LogOut.d("llw", "初始化");
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mDownLoadPic = getPicFromBytes(downLoadUserPhoto(bucketName, objectKeyPath + "ihytest01"), null);
+                mDownLoadPic = getPicFromBytes(downLoadUserPhoto(bucketName, objectKeyPath), null);
                 mHandler.sendEmptyMessage(1);
             }
         }).start();
@@ -477,16 +479,14 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
 
 
     public static Bitmap getPicFromBytes(byte[] bytes, BitmapFactory.Options opts) {
-        Log.e("lyfsInBitmap", "begin");
         if (bytes != null) {
             if (opts != null) {
                 return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, opts);
             } else {
-                Log.e("lyfsInBitmap", bytes.toString());
                 return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             }
         } else {
-            Log.e("lyfsInBitmap", "bad");
+            Log.e("llw", "bad");
         }
         return null;
 

@@ -54,6 +54,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     private LinearLayout mLayoutWeekData;
     private TextView mTvDate;
     private float mOldPositionOffset;
+    private ArrayList<BaseController> mFragmentList;
 
     @Override
     protected int setView() {
@@ -77,16 +78,16 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     @Override
     protected void init() {
 
-        ArrayList<BaseController> fragmentList = new ArrayList<>();
+        mFragmentList = new ArrayList<>();
         mHomePageController = new HomePageController(mAct);
         mChartsPage1Controller = new ChartsPage1Controller(mAct);
         mChartsPage2Controller = new ChartsPage2Controller(mAct);
         mChartsPage3Controller = new ChartsPage3Controller(mAct);
-        fragmentList.add(mHomePageController);
-        fragmentList.add(mChartsPage1Controller);
-        fragmentList.add(mChartsPage2Controller);
-        fragmentList.add(mChartsPage3Controller);
-        mPagerAdapter = new VerticalPagerAdapter(fragmentList);
+        mFragmentList.add(mHomePageController);
+        mFragmentList.add(mChartsPage1Controller);
+        mFragmentList.add(mChartsPage2Controller);
+        mFragmentList.add(mChartsPage3Controller);
+        mPagerAdapter = new VerticalPagerAdapter(mFragmentList);
 
         //设置最小偏移量
         mViewPager.setMinPageOffset(0.15f);
@@ -151,37 +152,14 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         Log.d("llw", "position:" + position + ",positionOffset:" + positionOffset + ",positionOffsetPixels:" + positionOffsetPixels);
-        //v小于0,向上滑,反之向下滑
-//        if (positionOffset == 0 || positionOffset == 1) {
-//            mOldPositionOffset = 0;
-//        }
-//        float v = positionOffset - mOldPositionOffset;
-//        if (position == 0) {
-//            mLayoutWeekData.setVisibility(View.GONE);
-//        } else if (position == 1 && v < 0) {
-//            mLayoutWeekData.setVisibility(View.GONE);
-//        } else if (position >= 1) {
-//            mLayoutWeekData.setVisibility(View.VISIBLE);
-//        }
-//        mOldPositionOffset = positionOffset;
-//        mLayoutWeekData.setAnimation();
     }
 
     @Override
     public void onPageSelected(int position) {
-//        LogOut.d("llw", "position:" + position);
-//        mLayoutWeekData.setVisibility(position > 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-//        LogOut.d("llw", "state:" + state);
-        int position = mViewPager.getVerticalScrollbarPosition();
-
-//        if (state == 0) {
-//            mOldPositionOffset = 0;
-//        }
-
     }
 
     @Subscribe
@@ -217,16 +195,13 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         }
     }
 
+    /**
+     * 刷新对应页面数据
+     */
     private void refreshCharsWeek() {
-        if (mChartsPage1Controller != null) {
-            mChartsPage1Controller.setWeekDate();
-        }
-        if (mChartsPage2Controller != null) {
-            mChartsPage2Controller.setWeekDate();
-        }
-        if (mChartsPage3Controller != null) {
-            mChartsPage3Controller.setWeekDate();
-        }
+        refreshListData(1);
+        refreshListData(2);
+        refreshListData(3);
     }
 
     private String initTime(Intent data) {
@@ -234,5 +209,17 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         int month = data.getIntExtra("month", -1);
         int day = data.getIntExtra("day", -1);
         return year + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
+    }
+
+    /**
+     * 刷新指定页面的数据
+     *
+     * @param index
+     */
+    public void refreshListData(int index) {
+        if (index < 0 || index > mFragmentList.size() - 1) {
+            return;
+        }
+        mFragmentList.get(index).refreshData();
     }
 }

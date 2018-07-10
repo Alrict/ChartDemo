@@ -88,6 +88,11 @@ public class ChartsPage2Controller extends BaseController {
         setWeekDate();
     }
 
+    @Override
+    public void refreshData() {
+        setWeekDate();
+    }
+
 
     public void setWeekDate() {
         String weekDates = "";

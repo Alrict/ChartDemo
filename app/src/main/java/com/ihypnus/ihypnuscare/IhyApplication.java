@@ -127,6 +127,11 @@ public class IhyApplication extends Application {
         }
         String jsessionid = loginBean.getJSESSIONID();
         Constants.JSESSIONID = jsessionid;
+        LoginBean.UserInfoBean userInfo = loginBean.getUserInfo();
+        if (userInfo != null) {
+            String defaultDeviceId = userInfo.getDefaultDeviceId();
+            Constants.DEVICEID = defaultDeviceId;
+        }
         Volley.me.addInitRequestHead("Cookie", "JSESSIONID=" + jsessionid);
     }
 
