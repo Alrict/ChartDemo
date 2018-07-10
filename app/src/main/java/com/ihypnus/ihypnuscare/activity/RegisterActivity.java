@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
@@ -31,6 +30,7 @@ import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.bean.UserInfo;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
@@ -69,8 +69,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private ImageView mIvQq;
     private ImageView mIvOther;
     private String TAG = "RegisterActivity";
-    private int REQUEST_CAMERA = 132;
-    private final int REQUEST_CODE_SCAN = 122;
+    private static final int REQUEST_CAMERA = 132;
+    private static final int REQUEST_CODE_SCAN = 122;
     private SpannableString mSpannableString;
     private String mProtocol;
     private Gson mGson = new Gson();
@@ -206,6 +206,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             case R.id.iv_scan:
                 //检查相机权限
+                LogOut.d("llw", "点击扫描");
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestCameraPermission();
                 } else {
@@ -320,7 +321,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * 申请相机权限
      */
     private void requestCameraPermission() {
-
+        LogOut.d("llw", "正在申请权限");
         PermissionGen.with(this)
                 .addRequestCode(REQUEST_CAMERA)
                 .permissions(Manifest.permission.CAMERA)
@@ -328,6 +329,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void jumpToScan() {
+        LogOut.d("llw", "准备调用相机");
         Intent intent = new Intent(this, CaptureActivity.class);
         startActivityForResult(intent, REQUEST_CODE_SCAN);
     }
@@ -352,21 +354,23 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * @param grantResults grantResults 多个权限一起返回
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 
-    @PermissionSuccess(requestCode = 132)
-    private void requestPhotoSuccess() {
+    @PermissionSuccess(requestCode = REQUEST_CAMERA)
+    public void doSomething() {
         //成功之后的处理
         //同意相机权限
+        LogOut.d("llw", "申请成功");
         jumpToScan();
     }
 
-    @PermissionFail(requestCode = 132)
+    @PermissionFail(requestCode = REQUEST_CAMERA)
     public void requestPhotoFail() {
         //失败之后的处理，我一般是跳到设置界面
+        LogOut.d("llw", "申请失败");
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         Uri uri = Uri.fromParts("package", getPackageName(), null);
         intent.setData(uri);
@@ -485,4 +489,5 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             mTimerCountDown.cancel();
         }
     }
+
 }

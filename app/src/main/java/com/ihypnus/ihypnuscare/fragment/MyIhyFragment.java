@@ -85,6 +85,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
     private Bitmap mAvatarBitmap;
     private ImageView mIvDefaultPhoto;
     private static final String bucketName = "hypnus-app-resource";
+    private static final String objectKeyPath = "app_header_image/";
     private OSSClient mOssClient;
     private boolean mIsFirst = true;
     private byte[] imageByteArray;
@@ -293,16 +294,9 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                         mAvatarBitmap = ImageUtils.getBitmap(imagePath);
                         mCircleImageView.setImageBitmap(mAvatarBitmap);
                         mIvDefaultPhoto.setVisibility(View.GONE);
-                        uploadUserPhoto(bucketName, "ihytest01", imagePath);
+                        uploadUserPhoto(bucketName, objectKeyPath+"ihytest01", imagePath);
                         final Bitmap bitmap = mAvatarBitmap;
-//                        final String guid = mCardDetailBean.getGuid();
-//                        mCircleImageView.setImageBitmap(bitmap);
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                final String base64 = ImageUtils.bitmaptoString(bitmap);
-                            }
-                        }).start();
+
                     }
 
                     break;
@@ -471,16 +465,14 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
         mOssClient = new OSSClient(mAct.getApplicationContext(), endpoint, ossStsTokenCredentialProvider);
         LogOut.d("oss", "初始化");
-        if (mIsFirst) {
-            mIsFirst = false;
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    mDownLoadPic = getPicFromBytes(downLoadUserPhoto(bucketName, "ihytest01"), null);
-                    mHandler.sendEmptyMessage(1);
-                }
-            }).start();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mDownLoadPic = getPicFromBytes(downLoadUserPhoto(bucketName, objectKeyPath + "ihytest01"), null);
+                mHandler.sendEmptyMessage(1);
+            }
+        }).start();
+
     }
 
 
