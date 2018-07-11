@@ -87,7 +87,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
     private Bitmap mAvatarBitmap;
     private ImageView mIvDefaultPhoto;
     private static final String bucketName = "hypnus-app-resource";
-    private static final String objectKeyPath = "app_header_image/" + IhyApplication.mInstance.getUserInfo().getUserInfo().getPhone() + "photo";
+    private static final String objectKeyPath = "app_header_image/"  + "photo";
     private OSSClient mOssClient;
     private boolean mIsFirst = true;
     private byte[] imageByteArray;

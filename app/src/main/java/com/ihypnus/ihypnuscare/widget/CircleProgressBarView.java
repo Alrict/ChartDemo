@@ -9,7 +9,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Looper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.ihypnus.ihypnuscare.R;
@@ -198,7 +197,7 @@ public class CircleProgressBarView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        Log.d("llw", "onMeasure");
+//        Log.d("llw", "onMeasure");
 
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -219,7 +218,7 @@ public class CircleProgressBarView extends View {
         } else {
             height = Math.min(mOutterCircleRadius * 2, heightSize);
         }
-        Log.d("llw", "onMeasure,width:" + width + ",height:" + height);
+//        Log.d("llw", "onMeasure,width:" + width + ",height:" + height);
         setMeasuredDimension(width, height);
     }
 
@@ -237,7 +236,7 @@ public class CircleProgressBarView extends View {
         mRectF.top = centerY - mInnerCircleRadius; // 左上角y
         mRectF.right = centerX + mInnerCircleRadius; // 右下角x
         mRectF.bottom = centerY + mInnerCircleRadius; // 右下角y
-        Log.d("llw", "centerX:" + centerX + ",centerY:" + centerY + ",内圆半径:" + mInnerCircleRadius + ",外圆半径:" + mOutterCircleRadius);
+//        Log.d("llw", "centerX:" + centerX + ",centerY:" + centerY + ",内圆半径:" + mInnerCircleRadius + ",外圆半径:" + mOutterCircleRadius);
         if (mProgress >= 80) {
 //            progressPaint.setColor(Color.parseColor( "#ff85c229"));
             progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ff0093dd", "#ff85C226")));

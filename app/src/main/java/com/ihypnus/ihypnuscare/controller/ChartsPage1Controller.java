@@ -2,7 +2,6 @@ package com.ihypnus.ihypnuscare.controller;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.nfc.FormatException;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,6 +12,7 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.bean.HistogramData;
 import com.ihypnus.ihypnuscare.config.Constants;
+import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.BarChartManager;
 import com.ihypnus.ihypnuscare.utils.LogOut;
@@ -97,13 +97,13 @@ public class ChartsPage1Controller extends BaseController {
 
     @Override
     public void refreshData() {
-        LogOut.d("llw","page2更新");
-        loadFromNet();
+        LogOut.d("llw", "page2更新");
         setWeekDate();
+        loadFromNet();
     }
 
     private void loadFromNet() {
-        IhyRequest.getHistogramData(Constants.JSESSIONID, true, Constants.DEVICEID, getStartTime(7), getEndTime(), new ResponseCallback() {
+        IhyRequest.getHistogramData(Constants.JSESSIONID, true, Constants.DEVICEID, getStartTime(ReportFragment.sCurrentTime), getEndTime(ReportFragment.sCurrentTime), new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 HistogramData data = (HistogramData) var1;
@@ -120,13 +120,7 @@ public class ChartsPage1Controller extends BaseController {
     }
 
     public void setWeekDate() {
-        String weekDates = "";
-        try {
-            weekDates = getWeekDates();
-        } catch (FormatException e) {
-            e.printStackTrace();
-        }
-        mTvDate.setText(weekDates);
+        mTvDate.setText(getWeekRang(ReportFragment.sCurrentTime));
     }
 
     @Override
@@ -134,9 +128,6 @@ public class ChartsPage1Controller extends BaseController {
 
     }
 
-    @Override
-    public void setNotifyDateChangedListener(NotifyDateChangedListener listener) {
-        super.setNotifyDateChangedListener(listener);
-        LogOut.d("llw", "page1要更新");
-    }
+
+
 }

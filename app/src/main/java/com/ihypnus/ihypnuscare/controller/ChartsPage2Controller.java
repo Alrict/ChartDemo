@@ -2,15 +2,14 @@ package com.ihypnus.ihypnuscare.controller;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.nfc.FormatException;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 import com.ihypnus.ihypnuscare.utils.BarChartManager;
-import com.ihypnus.ihypnuscare.utils.LogOut;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,23 +94,11 @@ public class ChartsPage2Controller extends BaseController {
 
 
     public void setWeekDate() {
-        String weekDates = "";
-        try {
-            weekDates = getWeekDates();
-        } catch (FormatException e) {
-            e.printStackTrace();
-        }
-        mTvDate.setText(weekDates);
+        mTvDate.setText(getWeekRang(ReportFragment.sCurrentTime));
     }
 
     @Override
     public void onDestroy() {
 
-    }
-
-    @Override
-    public void setNotifyDateChangedListener(NotifyDateChangedListener listener) {
-        super.setNotifyDateChangedListener(listener);
-        LogOut.d("llw","page2要更新");
     }
 }

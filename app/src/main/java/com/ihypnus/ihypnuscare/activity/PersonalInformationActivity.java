@@ -269,7 +269,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
                     mTvName.setText(personMesVO.getAccount());
                     mTvPersonBodyWeight.setText(String.format("%s kg", String.valueOf(personMesVO.getWeight())));
                     int gender = personMesVO.getGender();
-                    if (gender==1) {
+                    if (gender == 1) {
                         mRg_gender.check(R.id.rb_man);
                     } else {
                         mRg_gender.check(R.id.rb_female);
@@ -292,17 +292,36 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
      * @return
      */
     public double getBMI() {
+        double weightKg;
+        double heightCm;
+        double bmi;
         String weight = mTvPersonBodyWeight.getText().toString().trim();
         int i1 = weight.indexOf(" kg");
         mKg = weight.substring(0, i1);
-        double weightKg = Double.parseDouble(mKg);
+        try {
+            weightKg = Double.parseDouble(mKg);
+        } catch (NumberFormatException e) {
+            weightKg = 0;
+        }
+
 
         mHeight = mTvPersonHeight.getText().toString().trim();
         int i2 = mHeight.indexOf(" cm");
         mHeight = mHeight.substring(0, i2);
-        double heightCm = Double.parseDouble(mHeight);
+        try {
+            heightCm = Double.parseDouble(mHeight);
+        } catch (NumberFormatException e) {
+            heightCm = 0;
+        }
+
         double heightM = heightCm / 100d;
-        double bmi = weightKg / (heightM * heightM);
+        double resultNo = heightM * heightM;
+        if (resultNo == 0) {
+            bmi = 0;
+        } else {
+            bmi = weightKg / (heightM * heightM);
+        }
+
 
         BigDecimal b = new BigDecimal(bmi);
         bmi = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();//bmi四舍五入

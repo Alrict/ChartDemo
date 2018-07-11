@@ -41,24 +41,41 @@ public class DateTimeUtils {
     }
 
     /**
-     * 我的评论，日期与时间的间隔较大
-     * 获取时间 月日  时分
+     * 获取当前日期一周的时间范围
      *
-     * @return返回字符串格式 MM-dd HH:mm
+     * @return
+     * @throws FormatException
      */
-    public static String getStringDateByTime(long currentTimeMillis) {
-        Date currentTime = new Date(currentTimeMillis);
-        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd  HH:mm");
-        String dateString = formatter.format(currentTime);
-        return dateString;
+    public static String getWeekRangDates(long currentTimeMils) {
+        String startTime = getMonthDayDateTime(currentTimeMils- (7L * 24L * 60L * 60L * 1000L));
+        String endTime = getMonthDayDateTime(currentTimeMils );
+        if (currentTimeMils <= 0) {
+            return "";
+        } else if (startTime.split("-").length == 2 && endTime.split("-").length == 2) {
+            String[] startTimesplit = startTime.split("-");
+            String[] endTimesplit = endTime.split("-");
+            String startMonth = startTimesplit[0] + "月";
+            String startDay = startTimesplit[1] + "日";
+            String endMonth = endTimesplit[0] + "月";
+            String endDay = endTimesplit[1] + "日";
+            LogOut.d("llw", startMonth + startDay + "~" + endMonth + endDay);
+            return startMonth + startDay + "~" + endMonth + endDay;
+        } else {
+            return "";
+        }
+
     }
 
-
+    /**
+     * 返回年月日形式的时间日期
+     *
+     * @param currentTimeMillis
+     * @return
+     */
     public static String getStringDateTime(long currentTimeMillis) {
         Date currentTime = new Date(currentTimeMillis);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = formatter.format(currentTime);
-        return dateString;
+        return formatter.format(currentTime);
     }
 
     public static String getMonthDayDateTime(long currentTimeMillis) {

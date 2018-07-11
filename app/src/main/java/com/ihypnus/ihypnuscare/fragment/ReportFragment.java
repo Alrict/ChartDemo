@@ -3,7 +3,6 @@ package com.ihypnus.ihypnuscare.fragment;
 import android.content.Intent;
 import android.nfc.FormatException;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -38,7 +37,7 @@ import java.util.ArrayList;
  * @date: 2018/5/28 18:34
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class ReportFragment extends BaseFragment implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class ReportFragment extends BaseFragment implements View.OnClickListener, ViewPager.OnPageChangeListener, HomePageController.ChangeDateListener {
     private static final String TAG = "ReportFragment";
     private VerticalViewPager mViewPager;
     private VerticalPagerAdapter mPagerAdapter;
@@ -55,6 +54,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     private TextView mTvDate;
     private float mOldPositionOffset;
     private ArrayList<BaseController> mFragmentList;
+    public static long sCurrentTime = System.currentTimeMillis();
 
     @Override
     protected int setView() {
@@ -104,6 +104,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         mIvData.setOnClickListener(this);
         mIvRefresh.setOnClickListener(this);
         mViewPager.setOnPageChangeListener(this);
+        mHomePageController.setOnChangeDateListener(this);
     }
 
     @Override
@@ -151,7 +152,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        Log.d("llw", "position:" + position + ",positionOffset:" + positionOffset + ",positionOffsetPixels:" + positionOffsetPixels);
+//        Log.d("llw", "position:" + position + ",positionOffset:" + positionOffset + ",positionOffsetPixels:" + positionOffsetPixels);
     }
 
     @Override
@@ -178,11 +179,10 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
             if (null != data) {
                 String time = initTime(data);
                 long longTime = DateTimeUtils.getSimpleLongTime(time);
-
+                sCurrentTime = longTime;
                 try {
                     String date = DateTimeUtils.date2Chinese(time);
                     if (mHomePageController != null) {
-                        mHomePageController.setDate(longTime);
                         mHomePageController.refreshDatas(date);
                     }
                     refreshCharsWeek();
@@ -221,5 +221,11 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
             return;
         }
         mFragmentList.get(index).refreshData();
+    }
+
+    @Override
+    public void onChangeDateListener() {
+        //更新柱状图数据
+        refreshCharsWeek();
     }
 }

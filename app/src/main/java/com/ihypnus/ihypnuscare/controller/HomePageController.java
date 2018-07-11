@@ -16,6 +16,7 @@ import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.bean.UsageInfos;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
@@ -33,7 +34,7 @@ import java.util.List;
  * @date: 2018/6/21 14:31
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class HomePageController extends BaseController implements View.OnClickListener, BaseController.NotifyDateChangedListener {
+public class HomePageController extends BaseController implements View.OnClickListener {
     private TextView mTvData;
     private CircleProgressBarView mPb;
     private LinearLayout mLayoutWeekData;
@@ -50,6 +51,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
     private TextView mTvAverageAirLeak;
     private TextView mTvAhi;
     private List<UsageInfos.UsetimesBean> mUsetimes;
+    private ChangeDateListener mChangeDateListener;
 
     public HomePageController(Context context) {
         super(context);
@@ -118,12 +120,14 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
     @Override
     public void loadData() {
-        loadDataByNet(getStartTime(), getEndTime(), null);
+        long currentTime = ReportFragment.sCurrentTime;
+        loadDataByNet(getStartTime(currentTime), getEndTime(currentTime), null);
     }
 
     @Override
     public void refreshData() {
-        loadDataByNet(getStartTime(), getEndTime(), null);
+        long date = ReportFragment.sCurrentTime;
+        loadDataByNet(getStartTime(date), getEndTime(date), null);
     }
 
     private void loadDataByNet(String startTime, String endTime, final ImageView imageView) {
@@ -306,7 +310,8 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
     public void refreshDatas(String date) {
         mTvData.setText(date);
-        loadDataByNet(getStartTime(), getEndTime(), null);
+        long currentTime = ReportFragment.sCurrentTime;
+        loadDataByNet(getStartTime(currentTime), getEndTime(currentTime), null);
         //刷新柱状图数据
 
     }
@@ -348,14 +353,17 @@ public class HomePageController extends BaseController implements View.OnClickLi
      * @param type -1 前一天 1 后一天
      */
     private void updateData(int type) {
-        long date = getDate();
-        long lastDay = date + ((24L * 60L * 60L * 1000L) * type);
+        long date = ReportFragment.sCurrentTime;
+        long lastDay = date + (24L * 60L * 60L * 1000L * type);
+        ReportFragment.sCurrentTime = lastDay;
         String dateByTime = DateTimeUtils.getStringDateByMounthDay(lastDay);
         LogOut.d("llw", "当前日期:" + dateByTime);
         try {
             String dayLast = DateTimeUtils.date2Chinese(dateByTime);
-            setDate(lastDay);
             refreshDatas(dayLast);
+            if (mChangeDateListener != null) {
+                mChangeDateListener.onChangeDateListener();
+            }
         } catch (FormatException e) {
             e.printStackTrace();
 
@@ -363,11 +371,16 @@ public class HomePageController extends BaseController implements View.OnClickLi
     }
 
     public void reLoad(ImageView imageView) {
-        loadDataByNet(getStartTime(), getEndTime(), imageView);
+        long currentTime = ReportFragment.sCurrentTime;
+        loadDataByNet(getStartTime(currentTime), getEndTime(currentTime), imageView);
     }
 
-    @Override
-    public void onNotifyDateChangedListener() {
-
+    public interface ChangeDateListener {
+        void onChangeDateListener();
     }
+
+    public void setOnChangeDateListener(ChangeDateListener listener) {
+        mChangeDateListener = listener;
+    }
+
 }
