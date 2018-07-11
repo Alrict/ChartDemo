@@ -37,7 +37,6 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
-import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.activity.ClipActivity;
 import com.ihypnus.ihypnuscare.activity.FeedbackActivity;
@@ -45,6 +44,7 @@ import com.ihypnus.ihypnuscare.activity.HelpCenterActivity;
 import com.ihypnus.ihypnuscare.activity.PersonalInformationActivity;
 import com.ihypnus.ihypnuscare.activity.SettingActivity;
 import com.ihypnus.ihypnuscare.bean.OssTokenVO;
+import com.ihypnus.ihypnuscare.bean.PersonMesVO;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
@@ -87,7 +87,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
     private Bitmap mAvatarBitmap;
     private ImageView mIvDefaultPhoto;
     private static final String bucketName = "hypnus-app-resource";
-    private static final String objectKeyPath = "app_header_image/"  + "photo";
+    private static final String sObjectKeyPath = "app_header_image/photo_";
     private OSSClient mOssClient;
     private boolean mIsFirst = true;
     private byte[] imageByteArray;
@@ -108,6 +108,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
     };
     private Bitmap mDownLoadPic;
     private TextView mTvUserName;
+    private PersonMesVO mPersonMesVO;
 
     @Override
     protected int setView() {
@@ -143,8 +144,8 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
     @Override
     protected void loadData() {
         BaseDialogHelper.showLoadingDialog(mAct, true, "正在加载");
-        mTvUserName.setText(IhyApplication.mInstance.getUserInfo().getUserInfo().getAccount());
-        getStsToken();
+//        mTvUserName.setText(IhyApplication.mInstance.getUserInfo().getUserInfo().getAccount());
+        getInfos(true);
     }
 
     @Override
@@ -249,6 +250,9 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
 
     private void jumpToActivity(int requestCode, Class<?> cls) {
         Intent intent = new Intent(mAct, cls);
+        if (requestCode == 101 && mPersonMesVO != null) {
+            intent.putExtra("PERSON_MSG", mPersonMesVO);
+        }
         startActivityForResult(intent, requestCode);
     }
 
@@ -259,7 +263,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
             switch (requestCode) {
                 case 101:
                     //个人资料
-
+                    getInfos(false);
                     break;
 
                 case 102:
@@ -295,10 +299,15 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                     break;
                 case REQUEST_CLIP:
                     if (data != null) {
+                        String objectKeyPath = "";
                         String imagePath = data.getStringExtra("images_path");
                         mAvatarBitmap = ImageUtils.getBitmap(imagePath);
                         mCircleImageView.setImageBitmap(mAvatarBitmap);
                         mIvDefaultPhoto.setVisibility(View.GONE);
+                        if (mPersonMesVO != null) {
+                            String account = mPersonMesVO.getAccount();
+                            objectKeyPath = sObjectKeyPath + account;
+                        }
                         uploadUserPhoto(bucketName, objectKeyPath, imagePath);
                         final Bitmap bitmap = mAvatarBitmap;
 
@@ -434,6 +443,35 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
     }
 
 
+    /**
+     * 获取用户个人信息
+     *
+     * @param b 是否需要更新用户头像
+     */
+    public void getInfos(final boolean b) {
+        BaseDialogHelper.showLoadingDialog(mAct, true, "正在加载");
+        IhyRequest.getinfos(Constants.JSESSIONID, true, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                mPersonMesVO = (PersonMesVO) var1;
+                if (mPersonMesVO != null) {
+                    mTvUserName.setText(mPersonMesVO.getAccount());
+                    if (b) {
+                        getStsToken();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
+            }
+        });
+    }
+
+
     private void getStsToken() {
         IhyRequest.getSTSToken(Constants.JSESSIONID, true, new ResponseCallback() {
             @Override
@@ -470,6 +508,13 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
         new Thread(new Runnable() {
             @Override
             public void run() {
+                String objectKeyPath = "";
+                if (mPersonMesVO != null) {
+                    objectKeyPath = sObjectKeyPath + mPersonMesVO.getAccount();
+                } else {
+                    objectKeyPath = sObjectKeyPath;
+                }
+                LogOut.d("llw", "objectKeyPath:" + objectKeyPath);
                 mDownLoadPic = getPicFromBytes(downLoadUserPhoto(bucketName, objectKeyPath), null);
                 mHandler.sendEmptyMessage(1);
             }

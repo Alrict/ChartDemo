@@ -156,7 +156,12 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     protected void loadData() {
         Intent intent = getIntent();
         mTyep = intent.getIntExtra("TYEP", 0);
-        getInfos();
+        PersonMesVO personMsgBean = intent.getParcelableExtra("PERSON_MSG");
+        if (personMsgBean == null) {
+            getInfos();
+        } else {
+            bindView(personMsgBean);
+        }
     }
 
     @Override
@@ -238,6 +243,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
                 if (mTyep == 1) {
                     jumpToAddNewDevice();
                 } else {
+                    setResult(RESULT_OK);
                     finish();
                 }
             }
@@ -266,16 +272,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
                 BaseDialogHelper.dismissLoadingDialog();
                 PersonMesVO personMesVO = (PersonMesVO) var1;
                 if (personMesVO != null) {
-                    mTvName.setText(personMesVO.getAccount());
-                    mTvPersonBodyWeight.setText(String.format("%s kg", String.valueOf(personMesVO.getWeight())));
-                    int gender = personMesVO.getGender();
-                    if (gender == 1) {
-                        mRg_gender.check(R.id.rb_man);
-                    } else {
-                        mRg_gender.check(R.id.rb_female);
-                    }
-                    mTvPersonHeight.setText(String.format("%s cm", String.valueOf(personMesVO.getHeight())));
-                    mTvPersonDateBirth.setText(personMesVO.getBirthday());
+                    bindView(personMesVO);
                 }
             }
 
@@ -284,6 +281,19 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
                 BaseDialogHelper.dismissLoadingDialog();
             }
         });
+    }
+
+    private void bindView(PersonMesVO personMesVO) {
+        mTvName.setText(personMesVO.getAccount());
+        mTvPersonBodyWeight.setText(String.format("%s kg", String.valueOf(personMesVO.getWeight())));
+        int gender = personMesVO.getGender();
+        if (gender == 1) {
+            mRg_gender.check(R.id.rb_man);
+        } else {
+            mRg_gender.check(R.id.rb_female);
+        }
+        mTvPersonHeight.setText(String.format("%s cm", String.valueOf(personMesVO.getHeight())));
+        mTvPersonDateBirth.setText(personMesVO.getBirthday());
     }
 
     /**

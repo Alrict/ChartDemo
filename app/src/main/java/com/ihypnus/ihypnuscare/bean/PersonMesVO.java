@@ -1,5 +1,8 @@
 package com.ihypnus.ihypnuscare.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @Package com.ihypnus.ihypnuscare.bean
  * @author: llw
@@ -7,7 +10,7 @@ package com.ihypnus.ihypnuscare.bean;
  * @date: 2018/7/1 22:29
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class PersonMesVO {
+public class PersonMesVO extends BaseModel implements Parcelable{
     /**
      * birthday :
      * address :
@@ -29,6 +32,30 @@ public class PersonMesVO {
     private String account;
     private String email;
     private int height;
+
+    protected PersonMesVO(Parcel in) {
+        birthday = in.readString();
+        address = in.readString();
+        gender = in.readInt();
+        phone = in.readString();
+        headPath = in.readString();
+        weight = in.readInt();
+        account = in.readString();
+        email = in.readString();
+        height = in.readInt();
+    }
+
+    public static final Creator<PersonMesVO> CREATOR = new Creator<PersonMesVO>() {
+        @Override
+        public PersonMesVO createFromParcel(Parcel in) {
+            return new PersonMesVO(in);
+        }
+
+        @Override
+        public PersonMesVO[] newArray(int size) {
+            return new PersonMesVO[size];
+        }
+    };
 
     public String getBirthday() {
         return birthday;
@@ -100,5 +127,23 @@ public class PersonMesVO {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(birthday);
+        dest.writeString(address);
+        dest.writeInt(gender);
+        dest.writeString(phone);
+        dest.writeString(headPath);
+        dest.writeInt(weight);
+        dest.writeString(account);
+        dest.writeString(email);
+        dest.writeInt(height);
     }
 }
