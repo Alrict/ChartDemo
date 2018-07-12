@@ -6,6 +6,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 import com.ihypnus.ihypnuscare.utils.BarChartManager;
@@ -28,8 +30,8 @@ public class ChartsPage2Controller extends BaseController {
     private BarChartManager mBarChartManager1;
     private BarChartManager mBarChartManager2;
     private ArrayList<Float> mXValues;
-    private List<Float> mYValues1;
     private List<Float> mYValues2;
+    private ArrayList<BarEntry> mYValue1;
 
     public ChartsPage2Controller(Context context) {
         super(context);
@@ -58,7 +60,7 @@ public class ChartsPage2Controller extends BaseController {
         }
 
         //设置y轴的数据()
-        mYValues1 = new ArrayList<>();
+        mYValue1 = new ArrayList<BarEntry>();
         mYValues2 = new ArrayList<>();
 
 
@@ -84,22 +86,38 @@ public class ChartsPage2Controller extends BaseController {
 
     }
 
-    public void updateUI(List<Double> averageInp, List<Double> ahi) {
+    public void updateUI(List<Double> averageInp, List<Double> averageExp, List<Double> ahi) {
 
-        mYValues1.clear();
+        mYValue1.clear();
         mYValues2.clear();
-
-        for (int i = 0; i < averageInp.size(); i++) {
-            float aDouble = averageInp.get(i).floatValue();
-            mYValues1.add(aDouble);
+        for (int i = 0; i <= 6; i++) {
+            mYValue1.add(new BarEntry(
+                    i,
+                    new float[]{averageInp.get(i).floatValue(), averageExp.get(i).floatValue()},
+                    mContext.getResources().getDrawable(R.mipmap.star)));
         }
+
 
         for (int i = 0; i < ahi.size(); i++) {
             float aDouble = ahi.get(i).floatValue();
             mYValues2.add(aDouble);
         }
         //创建多条折线的图表
-        mBarChartManager1.showBarChart(mXValues, mYValues1, "平均治疗压力", "平均治疗压力(厘米水柱)");
-        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", "AHI(次/小时)");
+        mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "平均治疗压力", "平均治疗压力(厘米水柱)");
+        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", "AHI(次/小时)",false);
+    }
+
+    private int[] getColors() {
+
+        int stacksize = 3;
+
+        // have as many colors as stack-values per entry
+        int[] colors = new int[stacksize];
+
+        for (int i = 0; i < colors.length; i++) {
+            colors[i] = ColorTemplate.MATERIAL_COLORS[i];
+        }
+
+        return colors;
     }
 }

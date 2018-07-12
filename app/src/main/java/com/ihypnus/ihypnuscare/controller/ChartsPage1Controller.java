@@ -94,12 +94,19 @@ public class ChartsPage1Controller extends BaseController {
                         mCharsDataChangedListener.onCharsDataChangedListener(data);
                     }
                     updateUI(data);
+                } else {
+                    if (mCharsDataChangedListener != null) {
+                        mCharsDataChangedListener.onCharsDataChangedErrorListener("请求data为null");
+                    }
                 }
             }
 
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 ToastUtils.showToastDefault(var3);
+                if (mCharsDataChangedListener != null) {
+                    mCharsDataChangedListener.onCharsDataChangedErrorListener(var3);
+                }
             }
         });
     }
@@ -120,8 +127,8 @@ public class ChartsPage1Controller extends BaseController {
             mYValues2.add(aDouble);
         }
         //创建多条折线的图表
-        mBarChartManager1.showBarChart(mXValues, mYValues1, "睡眠时间", "睡眠分数");
-        mBarChartManager2.showBarChart(mXValues, mYValues2, "使用时长", "使用时长");
+        mBarChartManager1.showBarChart(mXValues, mYValues1, "睡眠时间", "睡眠分数", false);
+        mBarChartManager2.showBarChart(mXValues, mYValues2, "使用时长", "使用时长", false);
 
     }
 
@@ -137,6 +144,8 @@ public class ChartsPage1Controller extends BaseController {
 
     public interface CharsDataChangedListener {
         void onCharsDataChangedListener(HistogramData data);
+
+        void onCharsDataChangedErrorListener(String errMsg);
     }
 
     public void setOnCharsDataChangedListener(CharsDataChangedListener listener) {

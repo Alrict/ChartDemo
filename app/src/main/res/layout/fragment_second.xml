@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@mipmap/img_background"
@@ -9,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/h50"
-        android:visibility="visible"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
         <TextView
             style="@style/TextAppearanceMedium"
             android:text="周统计数据"
@@ -24,15 +25,116 @@
             android:textSize="@dimen/w34"/>
     </LinearLayout>
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/chart1"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/w50">
+        <com.ihypnus.ihypnuscare.widget.VerticalTextView
+            style="@style/TextAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            app:direction="downtoup"
+            app:text="cmH2O"
+            app:textColor="@color/white"
+            app:textSize="@dimen/w38"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/w100"
+            android:orientation="vertical">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/chart2"
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/chart1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <TextView
+                style="@style/TextAppearanceMedium"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/h30"
+                android:text="睡眠分数"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/h20"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="@dimen/w30"
+            android:layout_height="@dimen/w30"
+            android:background="@drawable/circle_orange"
+        />
+        <TextView
+            style="@style/TextAppearanceMedium"
+            android:layout_marginLeft="@dimen/w10"
+            android:text="不太好"
+            android:textColor="@color/gray_white"
+            android:textSize="@dimen/w38"/>
+        <TextView
+            android:layout_width="@dimen/w30"
+            android:layout_height="@dimen/w30"
+            android:layout_marginLeft="@dimen/w20"
+            android:background="@drawable/circle_blue_chart"/>
+        <TextView
+            style="@style/TextAppearanceMedium"
+            android:layout_marginLeft="@dimen/w10"
+            android:text="还不错"
+            android:textColor="@color/gray_white"
+            android:textSize="@dimen/w38"/>
+        <TextView
+            android:layout_width="@dimen/w30"
+            android:layout_height="@dimen/w30"
+            android:layout_marginLeft="@dimen/w20"
+            android:background="@drawable/circle_green"/>
+        <TextView
+            style="@style/TextAppearanceMedium"
+            android:layout_marginLeft="@dimen/w10"
+            android:text="非常好"
+            android:textColor="@color/gray_white"
+            android:textSize="@dimen/w38"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/w50">
+
+        <com.ihypnus.ihypnuscare.widget.VerticalTextView
+            style="@style/TextAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            app:direction="downtoup"
+            app:text="cmH2O"
+            app:textColor="@color/white"
+            app:textSize="@dimen/w38"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/w100"
+            android:orientation="vertical">
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/chart2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <TextView
+                style="@style/TextAppearanceMedium"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/h30"
+                android:layout_marginTop="@dimen/h30"
+                android:text="使用时长"/>
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>

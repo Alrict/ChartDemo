@@ -14,7 +14,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.ihypnus.ihypnuscare.R;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class BarChartManager {
     /**
      * 初始化BarChart
      */
-    private void initBarChart(String descriptionText) {
+    private void initBarChart(String descriptionText, boolean showLegend) {
         //背景颜色
         mBarChart.setBackgroundColor(Color.TRANSPARENT);
         //网格
@@ -59,7 +59,7 @@ public class BarChartManager {
         mBarChart.animateY(3000, Easing.EasingOption.Linear);
         mBarChart.animateX(3000, Easing.EasingOption.Linear);
 
-        XAxis xAxis = mBarChart.getXAxis();
+
         xAxis.setEnabled(true); // 轴线是否可编辑,默认true
         xAxis.setDrawLabels(true);  // 是否绘制标签,默认true
         xAxis.setDrawAxisLine(true);    // 是否绘制坐标轴,默认true
@@ -67,20 +67,20 @@ public class BarChartManager {
         xAxis.setTextColor(Color.WHITE);
         //右下角的描述文本
         Description description = new Description();
-        description.setText(descriptionText);
-//        description.setTextSize(ViewUtils.getDimenPx(R.dimen.w18));
-        description.setTextColor(Color.parseColor("#bbc1d1"));
-        float width = mBarChart.getWidth();
-        float height = mBarChart.getHeight();
-        LogOut.d("llw", "barchart的宽高:" + width + "," + height);
-//        description.setPosition(width / 2, height + 20);
-        description.setYOffset(-ViewUtils.getDimenPx(R.dimen.h20));
-        description.setXOffset(ViewUtils.getDimenPx(R.dimen.w40));
+        description.setText("");
+////        description.setTextSize(ViewUtils.getDimenPx(R.dimen.w18));
+//        description.setTextColor(Color.parseColor("#bbc1d1"));
+//        float width = mBarChart.getWidth();
+//        float height = mBarChart.getHeight();
+//        LogOut.d("llw", "barchart的宽高:" + width + "," + height);
+////        description.setPosition(width / 2, height + 20);
+//        description.setYOffset(-ViewUtils.getDimenPx(R.dimen.h40));
+//        description.setXOffset(ViewUtils.getDimenPx(R.dimen.w30));
         mBarChart.setDescription(description);
 
 //        yAxis.setSpaceTop(34);   // 设置最大值到图标顶部的距离占所有数据范围的比例。默认10，y轴独有
         yAxis.setLabelCount(8, false);
-        yAxis.setSpaceTop(15f);
+//        yAxis.setSpaceTop(15f);
         yAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
         yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);  // 标签绘制位置。默认再坐标轴外面
 
@@ -112,7 +112,7 @@ public class BarChartManager {
 
         //图例 标签 设置
         Legend legend = mBarChart.getLegend();
-        legend.setEnabled(true);    // 是否绘制图例
+        legend.setEnabled(showLegend);    // 是否绘制图例
         legend.setTextColor(Color.WHITE);    // 图例标签字体颜色，默认BLACK
         legend.setTextSize(12); // 图例标签字体大小[6,24]dp,默认10dp
         legend.setTypeface(null);   // 图例标签字体
@@ -136,6 +136,7 @@ public class BarChartManager {
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
+
 
         //XY轴的设置
         //X轴设置显示位置在底部
@@ -164,8 +165,8 @@ public class BarChartManager {
      * @param label
      * @param desc
      */
-    public void showBarChart(List<Float> xAxisValues, List<Float> yAxisValues, String label, String desc) {
-        initBarChart(desc);
+    public void showBarChart(List<Float> xAxisValues, List<Float> yAxisValues, String label, String desc, boolean showLegend) {
+        initBarChart(desc, showLegend);
         ArrayList<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < xAxisValues.size(); i++) {
             entries.add(new BarEntry(xAxisValues.get(i), yAxisValues.get(i)));
@@ -203,38 +204,59 @@ public class BarChartManager {
      * @param xAxisValues
      * @param yAxisValues
      * @param labels
-     * @param colours
      */
-    public void showBarChart(List<Float> xAxisValues, List<List<Float>> yAxisValues, List<String> labels, List<Integer> colours, String desc) {
-        initBarChart(desc);
-        BarData data = new BarData();
-        for (int i = 0; i < yAxisValues.size(); i++) {
-            ArrayList<BarEntry> entries = new ArrayList<>();
-            for (int j = 0; j < yAxisValues.get(i).size(); j++) {
+    public void showStackedBarChart(List<Float> xAxisValues, ArrayList<BarEntry> yAxisValues, String labels, String desc) {
+        initBarChart(desc, false);
+        BarDataSet set1;
+        if (mBarChart.getData() != null &&
+                mBarChart.getData().getDataSetCount() > 0) {
+            set1 = (BarDataSet) mBarChart.getData().getDataSetByIndex(0);
+            set1.setValues(yAxisValues);
+            mBarChart.getData().notifyDataChanged();
+            mBarChart.notifyDataSetChanged();
+        } else {
+            set1 = new BarDataSet(yAxisValues, "90%吸气压力");
+            set1.setDrawIcons(false);
+            set1.setLabel(labels);
+            set1.setColors(getColors());
+            set1.setStackLabels(new String[]{"吸气压力", "呼气压力"});
+            set1.setValueTextColor(Color.WHITE);
 
-                entries.add(new BarEntry(xAxisValues.get(j), yAxisValues.get(i).get(j)));
-            }
-            BarDataSet barDataSet = new BarDataSet(entries, labels.get(i));
+            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
+            dataSets.add(set1);
 
-            barDataSet.setColor(colours.get(i));
-            barDataSet.setValueTextColor(colours.get(i));
-            barDataSet.setValueTextSize(10f);
-            barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-            data.addDataSet(barDataSet);
+            BarData data = new BarData(dataSets);
+//            data.setValueFormatter(new MyValueFormatter());
+            data.setValueTextColor(Color.WHITE);
+
+            mBarChart.setData(data);
         }
-        int amount = yAxisValues.size();
 
-        float groupSpace = 0.12f; //柱状图组之间的间距
-        float barSpace = (float) ((1 - 0.12) / amount / 10); // x4 DataSet
-        float barWidth = (float) ((1 - 0.12) / amount / 10 * 9); // x4 DataSet
-
-        // (0.2 + 0.02) * 4 + 0.08 = 1.00 -> interval per "group"
+        mBarChart.setFitBars(true);
+        mBarChart.invalidate();
+        // Y轴更多属性
+        set1.setAxisDependency(YAxis.AxisDependency.LEFT);  // 设置dataSet应绘制在Y轴的左轴还是右轴，默认LEFT
+        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set1);
+        BarData data = new BarData(dataSets);
+        //设置X轴的刻度数
         xAxis.setLabelCount(xAxisValues.size() - 1, false);
-        data.setBarWidth(barWidth);
-
-
-        data.groupBars(0, groupSpace, barSpace);
         mBarChart.setData(data);
+
+    }
+
+    private int[] getColors() {
+
+        int stacksize = 2;
+
+        // have as many colors as stack-values per entry
+        int[] colors = new int[stacksize];
+
+        for (int i = 0; i < colors.length; i++) {
+            colors[i] = ColorTemplate.MATERIAL_COLORS[i];
+        }
+
+        return colors;
     }
 
 

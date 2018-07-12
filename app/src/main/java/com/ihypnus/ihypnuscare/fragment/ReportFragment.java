@@ -22,6 +22,7 @@ import com.ihypnus.ihypnuscare.controller.HomePageController;
 import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.widget.VerticalViewPager;
 
@@ -82,11 +83,11 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         mHomePageController = new HomePageController(mAct);
         mChartsPage1Controller = new ChartsPage1Controller(mAct);
         mChartsPage2Controller = new ChartsPage2Controller(mAct);
-        mChartsPage3Controller = new ChartsPage3Controller(mAct);
+//        mChartsPage3Controller = new ChartsPage3Controller(mAct);
         mFragmentList.add(mHomePageController);
         mFragmentList.add(mChartsPage1Controller);
         mFragmentList.add(mChartsPage2Controller);
-        mFragmentList.add(mChartsPage3Controller);
+//        mFragmentList.add(mChartsPage3Controller);
         mPagerAdapter = new VerticalPagerAdapter(mFragmentList);
 
         //设置最小偏移量
@@ -223,8 +224,9 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
      */
     @Override
     public void onCharsDataChangedListener(HistogramData data) {
+        mIvRefresh.clearAnimation();
         if (mChartsPage2Controller != null) {
-            mChartsPage2Controller.updateUI(data.getTpExValues(), data.getAhiValues());
+            mChartsPage2Controller.updateUI(data.getTpInValues(), data.getTpExValues(), data.getAhiValues());
         }
 
         if (mChartsPage3Controller != null) {
@@ -232,5 +234,16 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         }
 
 
+    }
+
+    /**
+     * 获取数据失败回调
+     *
+     * @param errMsg
+     */
+    @Override
+    public void onCharsDataChangedErrorListener(String errMsg) {
+        mIvRefresh.clearAnimation();
+        ToastUtils.showToastDefault(errMsg);
     }
 }
