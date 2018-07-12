@@ -1,7 +1,6 @@
 package com.ihypnus.ihypnuscare.fragment;
 
 import android.content.Intent;
-import android.nfc.FormatException;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.animation.Animation;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.activity.SelectDateActivity;
 import com.ihypnus.ihypnuscare.adapter.VerticalPagerAdapter;
+import com.ihypnus.ihypnuscare.bean.HistogramData;
 import com.ihypnus.ihypnuscare.controller.BaseController;
 import com.ihypnus.ihypnuscare.controller.ChartsPage1Controller;
 import com.ihypnus.ihypnuscare.controller.ChartsPage2Controller;
@@ -37,7 +37,7 @@ import java.util.ArrayList;
  * @date: 2018/5/28 18:34
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class ReportFragment extends BaseFragment implements View.OnClickListener, ViewPager.OnPageChangeListener, HomePageController.ChangeDateListener {
+public class ReportFragment extends BaseFragment implements View.OnClickListener, ViewPager.OnPageChangeListener, HomePageController.ChangeDateListener, ChartsPage1Controller.CharsDataChangedListener {
     private static final String TAG = "ReportFragment";
     private VerticalViewPager mViewPager;
     private VerticalPagerAdapter mPagerAdapter;
@@ -105,6 +105,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         mIvRefresh.setOnClickListener(this);
         mViewPager.setOnPageChangeListener(this);
         mHomePageController.setOnChangeDateListener(this);
+        mChartsPage1Controller.setOnCharsDataChangedListener(this);
     }
 
     @Override
@@ -122,9 +123,6 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
             case R.id.iv_refresh:
                 //刷新
                 mIvRefresh.startAnimation(mReLoadingAnim);
-                if (mHomePageController != null) {
-                    mHomePageController.reLoad(mIvRefresh);
-                }
                 refreshCharsWeek();
 
                 break;
@@ -166,9 +164,6 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     @Subscribe
     public void onEventMainThreadEvent(BaseFactory.RefreshReportInfoEvent event) {
         LogOut.d("llw", "刷新报告页面数据,设备id:" + event.getDeviceId());
-        if (mHomePageController != null) {
-            mHomePageController.reLoad(mIvRefresh);
-        }
         refreshCharsWeek();
     }
 
@@ -180,17 +175,8 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
                 String time = initTime(data);
                 long longTime = DateTimeUtils.getSimpleLongTime(time);
                 sCurrentTime = longTime;
-                try {
-                    String date = DateTimeUtils.date2Chinese(time);
-                    if (mHomePageController != null) {
-                        mHomePageController.refreshDatas(date);
-                    }
-                    refreshCharsWeek();
+                refreshCharsWeek();
 
-                } catch (FormatException e) {
-                    e.printStackTrace();
-
-                }
             }
         }
     }
@@ -199,6 +185,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
      * 刷新对应页面数据
      */
     private void refreshCharsWeek() {
+        refreshListData(0);
         refreshListData(1);
         refreshListData(2);
         refreshListData(3);
@@ -227,5 +214,23 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     public void onChangeDateListener() {
         //更新柱状图数据
         refreshCharsWeek();
+    }
+
+    /**
+     * 刷新柱状图之后更新ui
+     *
+     * @param data
+     */
+    @Override
+    public void onCharsDataChangedListener(HistogramData data) {
+        if (mChartsPage2Controller != null) {
+            mChartsPage2Controller.updateUI(data.getTpExValues(), data.getAhiValues());
+        }
+
+        if (mChartsPage3Controller != null) {
+            mChartsPage3Controller.updateUI(data.getTpInValues(), data.getAhiValues());
+        }
+
+
     }
 }

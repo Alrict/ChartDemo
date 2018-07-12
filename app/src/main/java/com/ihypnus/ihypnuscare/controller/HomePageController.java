@@ -126,9 +126,20 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
     @Override
     public void refreshData() {
+        LogOut.d("llw", "报告页首页刷新");
         long date = ReportFragment.sCurrentTime;
         loadDataByNet(getStartTime(date), getEndTime(date), null);
+        String dateTime = DateTimeUtils.getStringDateTime(date);
+        String time = null;
+        try {
+            time = DateTimeUtils.date2Chinese(dateTime);
+        } catch (FormatException e) {
+            e.printStackTrace();
+            time = "";
+        }
+        mTvData.setText(time);
     }
+
 
     private void loadDataByNet(String startTime, String endTime, final ImageView imageView) {
         BaseDialogHelper.showLoadingDialog(mContext, true, "正在加载...");
@@ -360,7 +371,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
         LogOut.d("llw", "当前日期:" + dateByTime);
         try {
             String dayLast = DateTimeUtils.date2Chinese(dateByTime);
-            refreshDatas(dayLast);
+//            refreshDatas(dayLast);
             if (mChangeDateListener != null) {
                 mChangeDateListener.onChangeDateListener();
             }

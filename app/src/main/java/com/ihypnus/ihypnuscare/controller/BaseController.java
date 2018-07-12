@@ -62,6 +62,16 @@ public abstract class BaseController {
         return DateTimeUtils.getStringDateByMounthDay(currentTime - ((24L * 60L * 60L * 1000L)));
     }
 
+    /**
+     * 获取前7天日期
+     *
+     * @param currentTime
+     * @return
+     */
+    public String getWeekStartTime(long currentTime) {
+        return DateTimeUtils.getStringDateByMounthDay(currentTime - ((24L * 60L * 60L * 7000L)));
+    }
+
     public String getEndTime(long currentTime) {
         return DateTimeUtils.getStringDateByMounthDay(currentTime);
     }

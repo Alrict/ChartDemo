@@ -1,7 +1,6 @@
 package com.ihypnus.ihypnuscare.controller;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,6 +25,11 @@ public class ChartsPage3Controller extends BaseController {
     private BarChart mChart2;
     private LinearLayout mLayoutWeekData;
     private TextView mTvDate;
+    private BarChartManager mBarChartManager1;
+    private BarChartManager mBarChartManager2;
+    private ArrayList<Float> mXValues;
+    private List<Float> mYValues1;
+    private List<Float> mYValues2;
 
     public ChartsPage3Controller(Context context) {
         super(context);
@@ -45,41 +49,18 @@ public class ChartsPage3Controller extends BaseController {
 
     @Override
     public void initData() {
-        BarChartManager barChartManager1 = new BarChartManager(mChart1);
-        BarChartManager barChartManager2 = new BarChartManager(mChart2);
+        mBarChartManager1 = new BarChartManager(mChart1);
+        mBarChartManager2 = new BarChartManager(mChart2);
         //设置x轴的数据
-        ArrayList<Float> xValues = new ArrayList<>();
-        for (int i = 0; i <= 6; i++) {
-            xValues.add((float) i);
+        mXValues = new ArrayList<>();
+        for (int i = 1; i <= 7; i++) {
+            mXValues.add((float) i);
         }
 
         //设置y轴的数据()
-        List<List<Float>> yValues = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            List<Float> yValue = new ArrayList<>();
-            for (int j = 0; j <= 6; j++) {
-                yValue.add((float) (Math.random() * 80));
-            }
-            yValues.add(yValue);
-        }
+        mYValues1 = new ArrayList<>();
+        mYValues2 = new ArrayList<>();
 
-        //颜色集合
-        List<Integer> colours = new ArrayList<>();
-        colours.add(Color.GREEN);
-        colours.add(Color.BLUE);
-        colours.add(Color.RED);
-        colours.add(Color.CYAN);
-
-        //线的名字集合
-        List<String> names = new ArrayList<>();
-        names.add("折线一");
-        names.add("折线二");
-        names.add("折线三");
-        names.add("折线四");
-
-        //创建多条折线的图表
-        barChartManager1.showBarChart(xValues, yValues.get(0), names.get(0), "90%吸气压力(厘米水柱)");
-        barChartManager2.showBarChart(xValues, yValues.get(1), names.get(1), "AHI(次/小时)");
     }
 
     @Override
@@ -99,5 +80,30 @@ public class ChartsPage3Controller extends BaseController {
     @Override
     public void onDestroy() {
 
+    }
+
+    /**
+     * 更新柱状图
+     *
+     * @param tpInValues
+     * @param ahiValues
+     */
+    public void updateUI(List<Double> tpInValues, List<Double> ahiValues) {
+
+        mYValues1.clear();
+        mYValues2.clear();
+
+        for (int i = 0; i < tpInValues.size(); i++) {
+            float aDouble = tpInValues.get(i).floatValue();
+            mYValues1.add(aDouble);
+        }
+
+        for (int i = 0; i < ahiValues.size(); i++) {
+            float aDouble = ahiValues.get(i).floatValue();
+            mYValues2.add(aDouble);
+        }
+        //创建多条折线的图表
+        mBarChartManager1.showBarChart(mXValues, mYValues1, "90%吸气压力(厘米水柱)", "90%吸气压力(厘米水柱)");
+        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI(次/小时)", "AHI(次/小时)");
     }
 }

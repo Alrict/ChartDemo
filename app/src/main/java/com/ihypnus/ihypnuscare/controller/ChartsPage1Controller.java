@@ -1,7 +1,6 @@
 package com.ihypnus.ihypnuscare.controller;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +32,12 @@ public class ChartsPage1Controller extends BaseController {
     private BarChart mChart2;
     private LinearLayout mLayoutWeekData;
     private TextView mTvDate;
+    private CharsDataChangedListener mCharsDataChangedListener;
+    private BarChartManager mBarChartManager1;
+    private BarChartManager mBarChartManager2;
+    private ArrayList<Float> mXValues;
+    private List<Float> mYValues1;
+    private List<Float> mYValues2;
 
     public ChartsPage1Controller(Context context) {
         super(context);
@@ -52,47 +57,24 @@ public class ChartsPage1Controller extends BaseController {
 
     @Override
     public void initData() {
-        BarChartManager barChartManager1 = new BarChartManager(mChart1);
-        BarChartManager barChartManager2 = new BarChartManager(mChart2);
+        mBarChartManager1 = new BarChartManager(mChart1);
+        mBarChartManager2 = new BarChartManager(mChart2);
         //设置x轴的数据
-        ArrayList<Float> xValues = new ArrayList<>();
-        for (int i = 0; i <= 6; i++) {
-            xValues.add((float) i);
+        mXValues = new ArrayList<>();
+        for (int i = 1; i <= 7; i++) {
+            mXValues.add((float) i);
         }
 
         //设置y轴的数据()
-        List<List<Float>> yValues = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            List<Float> yValue = new ArrayList<>();
-            for (int j = 0; j <= 6; j++) {
-                yValue.add((float) (Math.random() * 100));
-            }
-            yValues.add(yValue);
-        }
+        mYValues1 = new ArrayList<>();
+        mYValues2 = new ArrayList<>();
 
-        //颜色集合
-        List<Integer> colours = new ArrayList<>();
-        colours.add(Color.GREEN);
-        colours.add(Color.BLUE);
-        colours.add(Color.RED);
-        colours.add(Color.CYAN);
-
-        //线的名字集合
-        List<String> names = new ArrayList<>();
-        names.add("睡眠时间");
-        names.add("折线二");
-        names.add("折线三");
-        names.add("折线四");
-
-        //创建多条折线的图表
-        barChartManager1.showBarChart(xValues, yValues.get(0), names.get(0), "睡眠分数");
-        barChartManager2.showBarChart(xValues, yValues.get(1), names.get(1), "使用时长");
     }
 
     @Override
     public void loadData() {
-        loadFromNet();
         setWeekDate();
+        loadFromNet();
     }
 
     @Override
@@ -103,12 +85,15 @@ public class ChartsPage1Controller extends BaseController {
     }
 
     private void loadFromNet() {
-        IhyRequest.getHistogramData(Constants.JSESSIONID, true, Constants.DEVICEID, getStartTime(ReportFragment.sCurrentTime), getEndTime(ReportFragment.sCurrentTime), new ResponseCallback() {
+        IhyRequest.getHistogramData(Constants.JSESSIONID, true, Constants.DEVICEID, getWeekStartTime(ReportFragment.sCurrentTime), getEndTime(ReportFragment.sCurrentTime), new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 HistogramData data = (HistogramData) var1;
                 if (data != null) {
-
+                    if (mCharsDataChangedListener != null) {
+                        mCharsDataChangedListener.onCharsDataChangedListener(data);
+                    }
+                    updateUI(data);
                 }
             }
 
@@ -117,6 +102,27 @@ public class ChartsPage1Controller extends BaseController {
                 ToastUtils.showToastDefault(var3);
             }
         });
+    }
+
+    private void updateUI(HistogramData data) {
+        List<Double> scoreValues = data.getScoreValues();
+        List<Double> usedTimeSecond = data.getUsedTimeSecond();
+        mYValues1.clear();
+        mYValues2.clear();
+
+        for (int i = 0; i < scoreValues.size(); i++) {
+            float aDouble = scoreValues.get(i).floatValue();
+            mYValues1.add(aDouble);
+        }
+
+        for (int i = 0; i < usedTimeSecond.size(); i++) {
+            float aDouble = usedTimeSecond.get(i).floatValue();
+            mYValues2.add(aDouble);
+        }
+        //创建多条折线的图表
+        mBarChartManager1.showBarChart(mXValues, mYValues1, "睡眠时间", "睡眠分数");
+        mBarChartManager2.showBarChart(mXValues, mYValues2, "使用时长", "使用时长");
+
     }
 
     public void setWeekDate() {
@@ -128,6 +134,14 @@ public class ChartsPage1Controller extends BaseController {
 
     }
 
+
+    public interface CharsDataChangedListener {
+        void onCharsDataChangedListener(HistogramData data);
+    }
+
+    public void setOnCharsDataChangedListener(CharsDataChangedListener listener) {
+        this.mCharsDataChangedListener = listener;
+    }
 
 
 }
