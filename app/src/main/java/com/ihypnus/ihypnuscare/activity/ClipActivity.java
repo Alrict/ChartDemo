@@ -8,7 +8,9 @@ import android.widget.ProgressBar;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.actionbar.ActionBar;
+import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.utils.ImageUtils;
+import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.widget.ClipImageBorderView;
 import com.ihypnus.ihypnuscare.widget.ClipZoomImageView;
 import com.ihypnus.ihypnuscare.widget.ImageLoaderUrlGenerator;
@@ -17,6 +19,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import javax.microedition.khronos.opengles.GL10;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -61,10 +65,12 @@ public class ClipActivity extends BaseActivity {
         bar.getRightText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                BaseDialogHelper.showLoadingDialog(ClipActivity.this, true, "压缩中...");
                 Bitmap headIcon = mClipZoomImageView.clip();
                 String headIconPath = ImageUtils.saveCacheImage(ClipActivity.this, "head.jpg", headIcon);
                 Intent intent = getIntent();
                 intent.putExtra("images_path", headIconPath);
+                BaseDialogHelper.dismissLoadingDialog();
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -76,11 +82,28 @@ public class ClipActivity extends BaseActivity {
 //        设置图片
         ImageLoaderUrlGenerator imageLoaderUrlGenerator = new ImageLoaderUrlGenerator();
         String url = imageLoaderUrlGenerator.getImageLoaderWrapUrl(imgPath);
-        ImageLoader.getInstance().displayImage(url, mClipZoomImageView,mOptions, new SimpleImageLoadingListener() {
+        ImageLoader.getInstance().displayImage(url, mClipZoomImageView, mOptions, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 super.onLoadingComplete(imageUri, view, loadedImage);
                 mProgressBar.setVisibility(View.GONE);
+                // 长图特殊处理
+                if (loadedImage == null) {
+                    return;
+                }
+                if (loadedImage.getHeight() >= GL10.GL_MAX_TEXTURE_SIZE) {
+                    int width = ViewUtils.getDimenPx(R.dimen.w980) > loadedImage.getWidth() ? ViewUtils.getDimenPx(R.dimen.w980) : loadedImage.getWidth();
+                    Bitmap bitmap = Bitmap.createBitmap(loadedImage, 0, 0,
+                            width,
+                            ViewUtils.getDimenPx(R.dimen.h616));
+                    mClipZoomImageView.setImageBitmap(bitmap);
+                } else if (loadedImage.getWidth() >= GL10.GL_MAX_TEXTURE_SIZE) {
+                    int height = ViewUtils.getDimenPx(R.dimen.h616) > loadedImage.getHeight() ? ViewUtils.getDimenPx(R.dimen.h616) : loadedImage.getHeight();
+                    Bitmap bitmap = Bitmap.createBitmap(loadedImage, 0, 0,
+                            ViewUtils.getDimenPx(R.dimen.w980),
+                            height);
+                    mClipZoomImageView.setImageBitmap(bitmap);
+                }
             }
 
             @Override

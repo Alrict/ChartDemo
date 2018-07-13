@@ -450,7 +450,7 @@ public class ImageUtils {
      * @param maxSize 图片目标大小 单位:KB
      * @return
      */
-    public static Bitmap comp(Bitmap image, int maxSize) {
+    public static Bitmap compress(Bitmap image, int maxSize) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 100, baos);
         if (baos.toByteArray().length / 1024 > 1024) {//判断如果图片大于1M,进行压缩避免在生成图片（BitmapFactory.decodeStream）时溢出
@@ -740,5 +740,46 @@ public class ImageUtils {
             return null;
         }
     }
+
+    /**
+     * 2.混合终极方法（尺寸、质量、JNI压缩）
+     *
+     * @param image    bitmap对象
+     * @param filePath 要保存的指定目录
+     * @Description: 通过JNI图片压缩把Bitmap保存到指定目录
+     */
+    public static void mixCompress(Bitmap image, String filePath) {
+        // 最大图片大小 1000KB
+//        int maxSize = 1000;
+//        // 获取尺寸压缩倍数
+//        int ratio = NativeUtil.getRatioSize(image.getWidth(), image.getHeight());
+//        // 压缩Bitmap到对应尺寸
+//        Bitmap result = Bitmap.createBitmap(image.getWidth() / ratio, image.getHeight() / ratio, Bitmap.Config.ARGB_8888);
+//        Canvas canvas = new Canvas(result);
+//        Rect rect = new Rect(0, 0, image.getWidth() / ratio, image.getHeight() / ratio);
+//        canvas.drawBitmap(image, null, rect, null);
+//
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        // 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+//        int quality = 100;
+//        result.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+//        // 循环判断如果压缩后图片是否大于最大值,大于继续压缩
+//        while (baos.toByteArray().length / 1024 > maxSize) {
+//            // 重置baos即清空baos
+//            baos.reset();
+//            // 每次都减少10
+//            quality -= 10;
+//            // 这里压缩options%，把压缩后的数据存放到baos中
+//            result.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+//        }
+//        // JNI调用保存图片到SD卡 这个关键
+//        NativeUtil.saveBitmap(result, quality, filePath, true);
+//        // 释放Bitmap
+//        if (result != null && !result.isRecycled()) {
+//            result.recycle();
+//            result = null;
+//        }
+    }
+
 
 }
