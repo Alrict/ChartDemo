@@ -90,21 +90,40 @@ public class ChartsPage2Controller extends BaseController {
 
         mYValue1.clear();
         mYValues2.clear();
+        float totalBreath = 0;
+        float totalAHI = 0;
+        int type1 = 0;
+        int type2 = 0;
         for (int i = 0; i <= 6; i++) {
+            float inp = averageInp.get(i).floatValue();
+            float exp = averageExp.get(i).floatValue();
+            totalBreath += (inp + exp);
             mYValue1.add(new BarEntry(
                     i,
-                    new float[]{averageInp.get(i).floatValue(), averageExp.get(i).floatValue()},
+                    new float[]{inp, exp},
                     mContext.getResources().getDrawable(R.mipmap.star)));
+        }
+        if (totalBreath == 0) {
+            //吸气压和呼气压均为0
+            type1 = 5;
+        } else {
+            type1 = 6;
         }
 
 
         for (int i = 0; i < ahi.size(); i++) {
             float aDouble = ahi.get(i).floatValue();
+            totalAHI += aDouble;
             mYValues2.add(aDouble);
         }
-        //创建多条折线的图表
-        mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "平均治疗压力", "平均治疗压力(厘米水柱)");
-        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", "AHI(次/小时)",false);
+        if (totalAHI == 0) {
+            type2 = 7;
+        } else {
+            type2 = 8;
+        }
+        //创建图表
+        mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "平均治疗压力", type1);
+        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", false, type2);
     }
 
     private int[] getColors() {

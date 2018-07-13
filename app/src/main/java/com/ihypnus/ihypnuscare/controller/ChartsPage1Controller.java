@@ -116,19 +116,42 @@ public class ChartsPage1Controller extends BaseController {
         List<Double> usedTimeSecond = data.getUsedTimeSecond();
         mYValues1.clear();
         mYValues2.clear();
-
+        int score = 0;
+        int sleepHour = 0;
+        int type1 = 0;
+        int type2 = 0;
         for (int i = 0; i < scoreValues.size(); i++) {
             float aDouble = scoreValues.get(i).floatValue();
+            if (aDouble == 0) {
+                score++;
+            }
             mYValues1.add(aDouble);
+        }
+        if (score == scoreValues.size()) {
+//            返回的睡眠分数都是0
+            type1 = 1;
+        } else {
+            type1 = 2;
         }
 
         for (int i = 0; i < usedTimeSecond.size(); i++) {
-            float aDouble = usedTimeSecond.get(i).floatValue();
+            float aDouble = usedTimeSecond.get(i).floatValue() / 3600;
+            if (aDouble == 0) {
+                sleepHour++;
+            }
             mYValues2.add(aDouble);
         }
-        //创建多条折线的图表
-        mBarChartManager1.showBarChart(mXValues, mYValues1, "睡眠时间", "睡眠分数", false);
-        mBarChartManager2.showBarChart(mXValues, mYValues2, "使用时长", "使用时长", false);
+        if (sleepHour == scoreValues.size()) {
+//            返回的使用时长都是0
+            type2 = 3;
+        } else {
+            //回的使用时长不是0,将秒转化成小时
+            type2 = 4;
+        }
+
+        //创建图表
+        mBarChartManager1.showBarChart(mXValues, mYValues1, "睡眠分数", false, type1);
+        mBarChartManager2.showBarChart(mXValues, mYValues2, "使用时长", false, type2);
 
     }
 

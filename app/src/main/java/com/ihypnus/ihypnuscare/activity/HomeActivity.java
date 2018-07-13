@@ -129,11 +129,11 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 if (mDeviceFragment == null) {
                     mDeviceFragment = new DeviceFragment();
                     transaction.add(R.id.fragment_container, mDeviceFragment);
-                } else {
-                    transaction.show(mDeviceFragment);
-                    if (null != mReportFragment) transaction.hide(mReportFragment);
-                    if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
                 }
+                transaction.show(mDeviceFragment);
+                if (null != mReportFragment) transaction.hide(mReportFragment);
+                if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
+
                 break;
 
             case R.id.rb_report:
@@ -141,11 +141,11 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 if (mReportFragment == null) {
                     mReportFragment = new ReportFragment();
                     transaction.add(R.id.fragment_container, mReportFragment);
-                } else {
-                    transaction.show(mReportFragment);
-                    if (null != mDeviceFragment) transaction.hide(mDeviceFragment);
-                    if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
                 }
+                transaction.show(mReportFragment);
+                if (null != mDeviceFragment) transaction.hide(mDeviceFragment);
+                if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
+
                 break;
 
             case R.id.rb_my_ihy:
@@ -153,11 +153,10 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 if (mMyIhyFragment == null) {
                     mMyIhyFragment = new MyIhyFragment();
                     transaction.add(R.id.fragment_container, mMyIhyFragment);
-                } else {
-                    transaction.show(mMyIhyFragment);
-                    if (null != mDeviceFragment) transaction.hide(mDeviceFragment);
-                    if (null != mReportFragment) transaction.hide(mReportFragment);
                 }
+                transaction.show(mMyIhyFragment);
+                if (null != mDeviceFragment) transaction.hide(mDeviceFragment);
+                if (null != mReportFragment) transaction.hide(mReportFragment);
                 break;
         }
         transaction.commit();

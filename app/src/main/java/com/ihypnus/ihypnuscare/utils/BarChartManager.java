@@ -42,7 +42,7 @@ public class BarChartManager {
     /**
      * 初始化BarChart
      */
-    private void initBarChart(String descriptionText, boolean showLegend) {
+    private void initBarChart(boolean showLegend, int type) {
         //背景颜色
         mBarChart.setBackgroundColor(Color.TRANSPARENT);
         //网格
@@ -68,14 +68,6 @@ public class BarChartManager {
         //右下角的描述文本
         Description description = new Description();
         description.setText("");
-////        description.setTextSize(ViewUtils.getDimenPx(R.dimen.w18));
-//        description.setTextColor(Color.parseColor("#bbc1d1"));
-//        float width = mBarChart.getWidth();
-//        float height = mBarChart.getHeight();
-//        LogOut.d("llw", "barchart的宽高:" + width + "," + height);
-////        description.setPosition(width / 2, height + 20);
-//        description.setYOffset(-ViewUtils.getDimenPx(R.dimen.h40));
-//        description.setXOffset(ViewUtils.getDimenPx(R.dimen.w30));
         mBarChart.setDescription(description);
 
 //        yAxis.setSpaceTop(34);   // 设置最大值到图标顶部的距离占所有数据范围的比例。默认10，y轴独有
@@ -85,10 +77,6 @@ public class BarChartManager {
         yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);  // 标签绘制位置。默认再坐标轴外面
 
         rightAxis.setEnabled(false);
-//        rightAxis.setDrawGridLines(false);
-//        rightAxis.setLabelCount(8, false);
-//        rightAxis.setSpaceTop(15f);
-//        rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
         // 轴颜色
         yAxis.setTextColor(Color.WHITE);  // 标签字体颜色
@@ -101,6 +89,8 @@ public class BarChartManager {
         // 那么如果x轴有线且有网格线，当刻度拉的正好位置时会覆盖到y轴的轴线，变为X轴网格线颜色，
         // 解决办法是，要么不画轴线，要么就是坐标轴稍微宽点
         xAxis.setAxisLineColor(Color.WHITE);
+        yAxis.setValueFormatter(new MyAxisValueFormatter(type));
+
 
         // X轴更多属性
 //        xAxis.setLabelRotationAngle(90);   // 标签倾斜
@@ -109,6 +99,20 @@ public class BarChartManager {
         yAxis.setDrawZeroLine(false);    // 绘制值为0的轴，默认false,其实比较有用的就是在柱形图，当有负数时，显示在0轴以下，其他的图这个可能会看到一些奇葩的效果
         yAxis.setZeroLineWidth(10);  // 0轴宽度
         yAxis.setZeroLineColor(Color.WHITE);   // 0轴颜色
+        yAxis.setAxisMinimum(0);
+        if (type == 1 || type == 2) {
+            //睡眠分数范围
+            yAxis.setAxisMaximum(100);
+        } else if (type == 3 || type == 4) {
+            //使用时长范围
+            yAxis.setAxisMaximum(24);
+        } else if (type == 5 || type == 6) {
+            //90%吸气压范围
+            yAxis.setAxisMaximum(120);
+        } else if (type == 7 || type == 8) {
+            //ahi范围
+            yAxis.setAxisMaximum(200);
+        }
 
         //图例 标签 设置
         Legend legend = mBarChart.getLegend();
@@ -163,10 +167,9 @@ public class BarChartManager {
      * @param xAxisValues
      * @param yAxisValues
      * @param label
-     * @param desc
      */
-    public void showBarChart(List<Float> xAxisValues, List<Float> yAxisValues, String label, String desc, boolean showLegend) {
-        initBarChart(desc, showLegend);
+    public void showBarChart(List<Float> xAxisValues, List<Float> yAxisValues, String label, boolean showLegend, int type) {
+        initBarChart(showLegend, type);
         ArrayList<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < xAxisValues.size(); i++) {
             entries.add(new BarEntry(xAxisValues.get(i), yAxisValues.get(i)));
@@ -175,15 +178,16 @@ public class BarChartManager {
         BarDataSet barDataSet = new BarDataSet(entries, label);
         barDataSet.setValueTextSize(9f);
         barDataSet.setFormSize(15.f);
+        barDataSet.setValueTextColor(Color.WHITE);
         ArrayList<Integer> colors = new ArrayList();
         for (int i = 0; i < yAxisValues.size(); i++) {
             Float aFloat = yAxisValues.get(i);
             if (aFloat >= 80) {
-                colors.add(Color.parseColor("#0093dd"));
+                colors.add(Color.parseColor("#85c226"));
             } else if (aFloat >= 60) {
                 colors.add(Color.parseColor("#e67817"));
             } else {
-                colors.add(Color.parseColor("#85c226"));
+                colors.add(Color.parseColor("#e67817"));
             }
         }
         barDataSet.setColors(colors);
@@ -203,10 +207,9 @@ public class BarChartManager {
      *
      * @param xAxisValues
      * @param yAxisValues
-     * @param labels
      */
-    public void showStackedBarChart(List<Float> xAxisValues, ArrayList<BarEntry> yAxisValues, String labels, String desc) {
-        initBarChart(desc, false);
+    public void showStackedBarChart(List<Float> xAxisValues, ArrayList<BarEntry> yAxisValues, String labels, int type) {
+        initBarChart(false, type);
         BarDataSet set1;
         if (mBarChart.getData() != null &&
                 mBarChart.getData().getDataSetCount() > 0) {
@@ -226,9 +229,8 @@ public class BarChartManager {
             dataSets.add(set1);
 
             BarData data = new BarData(dataSets);
-//            data.setValueFormatter(new MyValueFormatter());
             data.setValueTextColor(Color.WHITE);
-
+            data.setValueTextSize(9f);
             mBarChart.setData(data);
         }
 

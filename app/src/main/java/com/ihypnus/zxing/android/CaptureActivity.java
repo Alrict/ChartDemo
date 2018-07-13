@@ -45,6 +45,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
@@ -57,6 +58,7 @@ import com.google.zxing.ResultPoint;
 import com.google.zxing.common.HybridBinarizer;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.zxing.android.camera.CameraManager;
 import com.ihypnus.zxing.android.camera.CameraUtil;
@@ -85,7 +87,7 @@ import java.util.Map;
 public class CaptureActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener {
 
     private static final String TAG = CaptureActivity.class.getSimpleName();
-
+    private Gson mGson = new Gson();
     public CameraManager cameraManager;
     public CaptureActivityHandler handler;
     private Result savedResultToShow;
@@ -101,7 +103,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
     public SurfaceView surfaceView;
     public TextView txt_light;
     public TextView txt_cancle;
-//    public TextView txt_photo;
+    //    public TextView txt_photo;
 //    public View viewPhoto;
     private View focusIndex;
     /**
@@ -530,12 +532,35 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
             ToastUtils.showToastInCenter(CaptureActivity.this, getString(R.string.toasts_scan_failed));
             return;
         }
-        final String num = rawResult.getText().trim();
-      /*  if (StringUtils.hasSpecialCharacters(num)) {
-            ToastUtils.showToastInCenter(CaptureActivity.this, "未查询到相关订单信息");
+        String num = rawResult.getText().trim();
+
+        if (num.contains("Ver") && num.contains("ID") && num.contains("SN") && num.contains("Model")) {
+            //V2版本二维码
+            ScanDeviceBean bean = mGson.fromJson(num, ScanDeviceBean.class);
+            if (bean != null && !StringUtils.isNullOrEmpty(bean.getSN())) {
+                num = bean.getSN();
+            } else {
+                ToastUtils.showToastInCenter(CaptureActivity.this, "请扫描正确的二维码");
+                finish();
+                return;
+            }
+
+        } else if (num.contains("Ver") && num.contains("ID") && num.contains("SN")) {
+            //V1.9版本二维码
+            int start = num.lastIndexOf("SN");
+            if (num.length() > start + 3) {
+                num = num.substring(start + 3, num.length());
+            } else {
+                ToastUtils.showToastInCenter(CaptureActivity.this, "请扫描正确的二维码");
+                finish();
+                return;
+            }
+        } else {
+            ToastUtils.showToastInCenter(CaptureActivity.this, "请扫描正确的二维码");
             finish();
             return;
-        }*/
+        }
+
         playBeepSoundAndVibrate();//解码正确的声音播放
         setResult(RESULT_OK, new Intent().putExtra("id", num));
         finish();
@@ -613,7 +638,6 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
             return;
         }
     }
-
 
 
     public void restartPreviewAfterDelay(long delayMS) {
