@@ -23,8 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/w86"
-            android:checked="true"
             android:button="@drawable/circle_man_selector"
+            android:checked="true"
             android:textColor="@color/white"/>
 
         <RadioButton
@@ -87,12 +87,12 @@
         <TextView
             android:id="@+id/tv_person_name"
             style="@style/TextAppearanceMedium"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/w600"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/w60"
             android:layout_toLeftOf="@+id/tv_name_arrow"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:text="ihynus_app"
             android:textSize="@dimen/w38"/>
         <ImageView
@@ -167,12 +167,12 @@
         <TextView
             android:id="@+id/tv_person_height"
             style="@style/TextAppearanceMedium"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/w600"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/w60"
             android:layout_toLeftOf="@+id/tv_height_arrow"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:text="1.88 m"
             android:textSize="@dimen/w38"/>
         <ImageView
@@ -212,12 +212,12 @@
         <TextView
             android:id="@+id/tv_person_body_weight"
             style="@style/TextAppearanceMedium"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/w600"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/w60"
             android:layout_toLeftOf="@+id/tv_body_weight_arrow"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:text="56 kg"
             android:textSize="@dimen/w38"/>
         <ImageView
@@ -256,12 +256,12 @@
         <TextView
             android:id="@+id/tv_person_date_birth"
             style="@style/TextAppearanceMedium"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/w600"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/w60"
             android:layout_toLeftOf="@+id/iv_date_birth"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:text="1990-12-05"
             android:textSize="@dimen/w38"/>
         <ImageView
