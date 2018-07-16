@@ -255,7 +255,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
         @Override
         public void onTick(long l) {
             String tip = "";
-            if (l >= 1000) {
+            if (l >= 0) {
                 tip = String.valueOf(l / 1000) + " 秒";
                 mBtnVerificationCode.setClickable(false);
             } else {

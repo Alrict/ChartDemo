@@ -366,19 +366,18 @@ public class HomePageController extends BaseController implements View.OnClickLi
     private void updateData(int type) {
         long date = ReportFragment.sCurrentTime;
         long lastDay = date + (24L * 60L * 60L * 1000L * type);
+        if (lastDay > System.currentTimeMillis()) {
+            ToastUtils.showToastDefault("查询日期超出范围");
+            return;
+        }
         ReportFragment.sCurrentTime = lastDay;
         String dateByTime = DateTimeUtils.getStringDateByMounthDay(lastDay);
         LogOut.d("llw", "当前日期:" + dateByTime);
-        try {
-            String dayLast = DateTimeUtils.date2Chinese(dateByTime);
-//            refreshDatas(dayLast);
-            if (mChangeDateListener != null) {
-                mChangeDateListener.onChangeDateListener();
-            }
-        } catch (FormatException e) {
-            e.printStackTrace();
 
+        if (mChangeDateListener != null) {
+            mChangeDateListener.onChangeDateListener();
         }
+
     }
 
     public void reLoad(ImageView imageView) {

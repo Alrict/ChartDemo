@@ -74,7 +74,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private SpannableString mSpannableString;
     private String mProtocol;
     private Gson mGson = new Gson();
-    private TimerCountDown mTimerCountDown = new TimerCountDown(60 * 1000, 1000);
+    private TimerCountDown mTimerCountDown = new TimerCountDown(120 * 1000, 1000);
 
     @Override
     protected int setView() {
@@ -402,7 +402,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         @Override
         public void onTick(long l) {
             String tip = "";
-            if (l >= 1000) {
+            if (l >= 0) {
                 tip = String.valueOf(l / 1000) + " 秒";
                 mBtnVcerificationCode.setClickable(false);
             } else {

@@ -83,7 +83,6 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
                 ShadowDeviceBean deviceBean = (ShadowDeviceBean) var1;
-
                 bindView(deviceBean);
             }
 
@@ -118,7 +117,6 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
             case R.id.btn_setting:
                 if (mLight == 1) {
                     jumpToParameterSettingsActivity();
-
                 } else {
                     BaseDialogHelper.showMsgTipDialog(DeviceDetailActivity.this, "该设备处于离线状态,请检查设备网络状态");
                 }
@@ -136,6 +134,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
      */
     private void jumpToParameterSettingsActivity() {
         Intent intent = new Intent(this, ParameterSettingsActivity.class);
+        intent.putExtra("DEVICE_ID", mDeviceId);
         startActivity(intent);
     }
 

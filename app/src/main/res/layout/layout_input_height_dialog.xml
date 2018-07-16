@@ -45,7 +45,6 @@
             android:minHeight="@dimen/h120"
             android:padding="@dimen/w2"
             android:textColor="@color/text_content"
-            android:textIsSelectable="true"
             android:textSize="@dimen/w50"/>
 
         <LinearLayout

@@ -1,5 +1,6 @@
 package com.ihypnus.ihypnuscare.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.ihypnus.ihypnuscare.R;
@@ -24,7 +25,10 @@ public class ParameterSettingsActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setTitle(getResources().getString(R.string.parameter_setting));
+        Intent intent = getIntent();
+        String deviceId = intent.getStringExtra("DEVICE_ID");
+        setTitle(deviceId);
+//        setTitle(getResources().getString(R.string.parameter_setting));
     }
 
     @Override
