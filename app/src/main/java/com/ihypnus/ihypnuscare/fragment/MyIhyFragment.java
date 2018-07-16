@@ -9,10 +9,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -60,9 +62,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kr.co.namee.permissiongen.PermissionGen;
+import top.zibin.luban.CompressionPredicate;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -308,14 +314,98 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                             String account = mPersonMesVO.getAccount();
                             objectKeyPath = sObjectKeyPath + account;
                         }
-                        uploadUserPhoto(bucketName, objectKeyPath, imagePath);
-                        final Bitmap bitmap = mAvatarBitmap;
-
+                        compressImage(imagePath, objectKeyPath);
                     }
 
                     break;
             }
         }
+    }
+
+    /**
+     * 压缩图片
+     *
+     * @param imagePath
+     * @param objectKeyPath
+     */
+    private void compressImage(final String imagePath, final String objectKeyPath) {
+        Luban.with(mAct)
+                .load(imagePath)//传入原图
+                .ignoreBy(100)//不压缩的阈值，单位为K
+                .setTargetDir(getPath())//缓存压缩图片路径
+                .filter(new CompressionPredicate() {//设置开启压缩条件
+                    @Override
+                    public boolean apply(String path) {
+                        return !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif"));
+                    }
+                })
+                .setCompressListener(new OnCompressListener() {
+                    @Override
+                    public void onStart() {
+                        // TODO 压缩开始前调用，可以在方法内启动 loading UI
+                    }
+
+                    @Override
+                    public void onSuccess(File file) {
+                        // TODO 压缩成功后调用，返回压缩后的图片文件
+                        showResult(new File(imagePath), file);
+                        uploadUserPhoto(bucketName, objectKeyPath, file.getPath());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // TODO 当压缩过程出现问题时调用
+                    }
+                }).launch();
+    }
+
+    /**
+     * 获取缓存目录
+     *
+     * @return
+     */
+    private String getPath() {
+        String path = Environment.getExternalStorageDirectory() + "/hypnus/image/cache/";
+        File file = new File(path);
+        if (file.mkdirs()) {
+            return path;
+        }
+        return path;
+    }
+
+    /**
+     * 打印压缩前后的文件大小
+     *
+     * @param file1
+     * @param file2
+     */
+    private void showResult(File file1, File file2) {
+        int[] originSize = computeSize(file1);
+        int[] thumbSize = computeSize(file2);
+        String originArg = String.format(Locale.CHINA, "原图参数：%d*%d, %dk", originSize[0], originSize[1], file1.length() >> 10);
+        String thumbArg = String.format(Locale.CHINA, "压缩后参数：%d*%d, %dk", thumbSize[0], thumbSize[1], file2.length() >> 10);
+        LogOut.d("llw", originArg);
+        LogOut.d("llw", thumbArg);
+    }
+
+    /**
+     * 计算文件大小
+     *
+     * @param srcImg
+     * @return
+     */
+    private int[] computeSize(File srcImg) {
+        int[] size = new int[2];
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        options.inSampleSize = 1;
+
+        BitmapFactory.decodeFile(srcImg.getAbsolutePath(), options);
+        size[0] = options.outWidth;
+        size[1] = options.outHeight;
+
+        return size;
     }
 
     /**

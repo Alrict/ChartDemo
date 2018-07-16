@@ -22,6 +22,7 @@ import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
@@ -232,8 +233,23 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     }
 
     private void submitPersonInfos() {
-        double bmi = getBMI();
+        String weight = mTvPersonBodyWeight.getText().toString().trim();
+        mHeight = mTvPersonHeight.getText().toString().trim();
         String birthday = mTvPersonDateBirth.getText().toString().trim();
+        if (StringUtils.isNullOrEmpty(weight)) {
+            ToastUtils.showToastDefault("请输入您的体重");
+            return;
+        }
+        if (StringUtils.isNullOrEmpty(mHeight)) {
+            ToastUtils.showToastDefault("请输入您的身高");
+            return;
+        }
+        if (StringUtils.isNullOrEmpty(birthday)) {
+            ToastUtils.showToastDefault("请输入您的生日");
+            return;
+        }
+        double bmi = getBMI();
+
         String nickname = mTvName.getText().toString().trim();
         BaseDialogHelper.showLoadingDialog(this, true, "正在上传...");
         IhyRequest.updateinfo(Constants.JSESSIONID, true, nickname, mGender, birthday, mKg, mHeight, String.valueOf(bmi), new ResponseCallback() {
@@ -285,14 +301,24 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
 
     private void bindView(PersonMesVO personMesVO) {
         mTvName.setText(personMesVO.getAccount());
-        mTvPersonBodyWeight.setText(String.format("%s kg", String.valueOf(personMesVO.getWeight())));
-        int gender = personMesVO.getGender();
-        if (gender == 1) {
+        String weight = personMesVO.getWeight();
+        if (StringUtils.isNullOrEmpty(weight)) {
+            mTvPersonBodyWeight.setText("");
+        } else {
+            mTvPersonBodyWeight.setText(String.format("%s kg", personMesVO.getWeight()));
+        }
+        String gender = personMesVO.getGender();
+        if (gender.equals("1")) {
             mRg_gender.check(R.id.rb_man);
         } else {
             mRg_gender.check(R.id.rb_female);
         }
-        mTvPersonHeight.setText(String.format("%s cm", String.valueOf(personMesVO.getHeight())));
+        String height = personMesVO.getHeight();
+        if (StringUtils.isNullOrEmpty(height)) {
+            mTvPersonHeight.setText("");
+        } else {
+            mTvPersonHeight.setText(String.format("%s cm", personMesVO.getHeight()));
+        }
         mTvPersonDateBirth.setText(personMesVO.getBirthday());
     }
 
@@ -317,12 +343,17 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
 
         mHeight = mTvPersonHeight.getText().toString().trim();
         int i2 = mHeight.indexOf(" cm");
-        mHeight = mHeight.substring(0, i2);
-        try {
-            heightCm = Double.parseDouble(mHeight);
-        } catch (NumberFormatException e) {
+        if (i2 >= 0) {
+            mHeight = mHeight.substring(0, i2);
+            try {
+                heightCm = Double.parseDouble(mHeight);
+            } catch (NumberFormatException e) {
+                heightCm = 0;
+            }
+        } else {
             heightCm = 0;
         }
+
 
         double heightM = heightCm / 100d;
         double resultNo = heightM * heightM;

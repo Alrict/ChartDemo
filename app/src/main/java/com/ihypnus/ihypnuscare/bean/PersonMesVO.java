@@ -25,24 +25,24 @@ public class PersonMesVO extends BaseModel implements Parcelable{
 
     private String birthday;
     private String address;
-    private int gender;//性别： 0或者null——未知  1-男  2-女
+    private String gender;//性别： 0或者null——未知  1-男  2-女
     private String phone;
     private String headPath;
-    private int weight;
+    private String weight;
     private String account;
     private String email;
-    private int height;
+    private String height;
 
     protected PersonMesVO(Parcel in) {
         birthday = in.readString();
         address = in.readString();
-        gender = in.readInt();
+        gender = in.readString();
         phone = in.readString();
         headPath = in.readString();
-        weight = in.readInt();
+        weight = in.readString();
         account = in.readString();
         email = in.readString();
-        height = in.readInt();
+        height = in.readString();
     }
 
     public static final Creator<PersonMesVO> CREATOR = new Creator<PersonMesVO>() {
@@ -73,11 +73,11 @@ public class PersonMesVO extends BaseModel implements Parcelable{
         this.address = address;
     }
 
-    public int getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -97,11 +97,11 @@ public class PersonMesVO extends BaseModel implements Parcelable{
         this.headPath = headPath;
     }
 
-    public int getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
@@ -121,11 +121,11 @@ public class PersonMesVO extends BaseModel implements Parcelable{
         this.email = email;
     }
 
-    public int getHeight() {
+    public String getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 
@@ -138,12 +138,12 @@ public class PersonMesVO extends BaseModel implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(birthday);
         dest.writeString(address);
-        dest.writeInt(gender);
+        dest.writeString(gender);
         dest.writeString(phone);
         dest.writeString(headPath);
-        dest.writeInt(weight);
+        dest.writeString(weight);
         dest.writeString(account);
         dest.writeString(email);
-        dest.writeInt(height);
+        dest.writeString(height);
     }
 }

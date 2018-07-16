@@ -173,7 +173,7 @@
             android:layout_marginRight="@dimen/w60"
             android:layout_toLeftOf="@+id/tv_height_arrow"
             android:gravity="center_vertical|right"
-            android:text="1.88 m"
+            android:text="188 cm"
             android:textSize="@dimen/w38"/>
         <ImageView
             android:id="@+id/tv_height_arrow"
