@@ -2,14 +2,18 @@ package com.ihypnus.ihypnuscare.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.wifi.ScanResult;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.adapter.WifiListAdapter;
+import com.ihypnus.ihypnuscare.utils.ToastUtils;
+
+import java.util.ArrayList;
 
 /**
  * @Package com.kye.smart.wifitext.thread
@@ -18,51 +22,57 @@ import com.ihypnus.ihypnuscare.R;
  * @date: 2018/6/4 13:41
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class WifiDialogActivity extends Activity implements View.OnClickListener {
+public class WifiDialogActivity extends Activity {
 
-    private EditText mEtWifiPassWord;
-    private Button mBtnCancel;
-    private Button mBtnEnsure;
+
+    private ListView mListView;
+    private WifiListAdapter mWifiListAdapter;
+    private ArrayList<ScanResult> mWifiResultList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_wifi_dialog);
         bindViews();
+        initData();
         initEvent();
     }
 
-    private void initEvent() {
-        mBtnCancel.setOnClickListener(this);
-        mBtnEnsure.setOnClickListener(this);
-    }
-
     private void bindViews() {
-        mEtWifiPassWord = (EditText) findViewById(R.id.et_wifi_pass_word);
-        mBtnCancel = (Button) findViewById(R.id.btn_cancel);
-        mBtnEnsure = (Button) findViewById(R.id.btn_ensure);
+        mListView = (ListView) findViewById(R.id.listView);
+        mWifiListAdapter = new WifiListAdapter(this, R.layout.wifi_list_item);
+        mListView.setAdapter(mWifiListAdapter);
     }
 
+    private void initData() {
+        Intent intent = getIntent();
+        mWifiResultList = intent.getParcelableArrayListExtra("WIFI_RESULT");
+        mWifiListAdapter.clear();
+        mWifiListAdapter.addAll(mWifiResultList);
+    }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_cancel:
-                finish();
-                break;
+    private void initEvent() {
 
-            case R.id.btn_ensure:
-                String passWord = mEtWifiPassWord.getText().toString().trim();
-                if (passWord.length() > 0 && passWord.length() < 8) {
-                    Toast.makeText(WifiDialogActivity.this, getResources().getString(R.string.toast_err_tip), Toast.LENGTH_SHORT).show();
-                    mEtWifiPassWord.setText("");
-                    return;
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                mWifiManager.disconnect();
+                final ScanResult scanResult = mWifiListAdapter.getItem(position);
+                if (scanResult != null) {
+                    String ssid = scanResult.SSID;
+                    if (ssid != null) {
+                        Intent intent = getIntent();
+                        intent.putExtra("SSID", ssid);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    } else {
+                        ToastUtils.showToastDefault("请选择有效的目标wifi");
+                    }
+                } else {
+                    ToastUtils.showToastDefault("请选择有效的目标wifi");
                 }
-                Intent intent = new Intent();
-                intent.putExtra("PASSWORD", passWord);
-                setResult(RESULT_OK, intent);
-                finish();
-                break;
-        }
+
+            }
+        });
     }
 }

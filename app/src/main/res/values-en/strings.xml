@@ -60,6 +60,7 @@
     <string name="tv_female">Female</string>
     <string name="tv_multi_language">multi-language</string>
     <string name="tv_about">about</string>
+    <string name="change_pwd">change Password</string>
     <!--多语言设置-->
     <string name="setting_language_auto">Follow System</string>
     <string name="setting_language">set language</string>

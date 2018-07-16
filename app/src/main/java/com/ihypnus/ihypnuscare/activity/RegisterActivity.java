@@ -255,7 +255,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
                 ToastUtils.showToastDefault(RegisterActivity.this, var3);
-                jumpToPersonMsg();
+                //注册成功之后跳转至登录页面
+                finish();
+//                jumpToPersonMsg();
             }
 
             @Override

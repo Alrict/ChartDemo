@@ -52,7 +52,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     private ImageView mIvDateBirth;
     private Button mBtnLogin;
     private TimePickerView mPvTime;
-    private int mTyep;
+    private int mType;
     private String mKg;
     private String mHeight;
     private String mGender = "2";
@@ -155,9 +155,9 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     @Override
     protected void loadData() {
         Intent intent = getIntent();
-        mTyep = intent.getIntExtra("TYEP", 0);
+        mType = intent.getIntExtra("TYEP", 0);
         PersonMesVO personMsgBean = intent.getParcelableExtra("PERSON_MSG");
-        if (personMsgBean == null) {
+        if (personMsgBean == null && mType == 0) {
             getInfos();
         } else {
             bindView(personMsgBean);
@@ -240,7 +240,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                if (mTyep == 1) {
+                if (mType == 1) {
                     jumpToAddNewDevice();
                 } else {
                     setResult(RESULT_OK);

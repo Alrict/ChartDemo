@@ -36,7 +36,7 @@
         android:layout_below="@id/layout_photo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/h20"
-        android:text="iphynus_App"
+        android:text="hypnus_App"
         android:textColor="@color/white"
         android:textSize="@dimen/w38"/>
     <RelativeLayout

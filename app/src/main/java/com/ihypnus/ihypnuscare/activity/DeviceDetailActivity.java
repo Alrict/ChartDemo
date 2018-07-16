@@ -120,7 +120,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
 
             case R.id.btn_modify:
-//                jumpToWifi();
+                jumpToWifi();
                 break;
         }
     }
