@@ -1,6 +1,7 @@
 package com.ihypnus.ihypnuscare.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,8 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -28,11 +31,14 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.utils.WifiSettingManager;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -84,6 +90,21 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     private String mNewDeviceId;
     private ArrayList<ScanResult> mScanResults;
     private String mSSID;
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    ToastUtils.showToastDefault("wifi配置成功");
+                    EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(NewDeviceInformationActivity.class));
+                    EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(AddNwedeviceActivity.class));
+                    finish();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected int setView() {
@@ -237,6 +258,8 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
 
                     mOutputStream.flush();
                     closeScoket();
+                    //设置成功
+                    mHandler.obtainMessage(1, "设置成功").sendToTarget();
                 }
                 BaseDialogHelper.dismissLoadingDialog();
 

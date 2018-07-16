@@ -15,6 +15,25 @@ public class BaseFactory {
     }
 
     /**
+     * 关闭指定的页面
+     */
+    public static class CloseActivityEvent {
+        private Class<?> cls;
+
+        public CloseActivityEvent(Class<?> cls) {
+            this.cls = cls;
+        }
+
+        public Class<?> getCls() {
+            return cls;
+        }
+
+        public void setCls(Class<?> cls) {
+            this.cls = cls;
+        }
+    }
+
+    /**
      * 刷新数据
      */
     public static class RefreshAllEvent {
@@ -24,7 +43,7 @@ public class BaseFactory {
     /**
      * 刷新报告页面数据
      */
-    public static class RefreshReportInfoEvent{
+    public static class RefreshReportInfoEvent {
         String deviceId;
 
         public RefreshReportInfoEvent(String deviceId) {
@@ -40,7 +59,7 @@ public class BaseFactory {
         }
     }
 
-    public static class RefreshDeviceListInfoEvent{
+    public static class RefreshDeviceListInfoEvent {
         public RefreshDeviceListInfoEvent() {
 
         }

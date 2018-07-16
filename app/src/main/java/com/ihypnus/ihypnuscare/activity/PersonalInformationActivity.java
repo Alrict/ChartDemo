@@ -256,12 +256,12 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                if (mType == 1) {
-                    jumpToAddNewDevice();
-                } else {
+//                if (mType == 1) {
+//                    jumpToAddNewDevice();
+//                } else {
                     setResult(RESULT_OK);
                     finish();
-                }
+//                }
             }
 
             @Override

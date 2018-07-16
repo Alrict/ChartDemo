@@ -6,8 +6,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.utils.WifiSettingManager;
+
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -82,6 +85,14 @@ public class NewDeviceInformationActivity extends BaseActivity implements View.O
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             setResult(RESULT_OK);
+            finish();
+        }
+    }
+
+    @Subscribe
+    public void onEventMainThread(BaseFactory.CloseActivityEvent event) {
+        Class<?> cls = event.getCls();
+        if (cls == NewDeviceInformationActivity.class) {
             finish();
         }
     }

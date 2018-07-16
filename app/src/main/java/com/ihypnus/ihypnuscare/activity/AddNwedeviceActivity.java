@@ -169,7 +169,10 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Subscribe
-    public void onEventMainThread(BaseFactory.CloseAllEvent event) {
-        finish();
+    public void onEventMainThread(BaseFactory.CloseActivityEvent event) {
+        Class<?> cls = event.getCls();
+        if (cls == AddNwedeviceActivity.class) {
+            finish();
+        }
     }
 }
