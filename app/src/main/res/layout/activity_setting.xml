@@ -72,4 +72,14 @@
             style="@style/CommentDividingLineNoPadding"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
+    <Button
+        android:id="@+id/btn_login_out"
+        style="@style/CommentButtonStyle"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/w90"
+        android:layout_marginRight="@dimen/w90"
+        android:layout_marginTop="@dimen/h700"
+        android:gravity="center"
+        android:text="@string/login_out"
+        android:textSize="@dimen/w54"/>
 </LinearLayout>

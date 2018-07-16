@@ -1,5 +1,6 @@
 package com.ihypnus.ihypnuscare.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -19,12 +20,17 @@ import android.widget.TextView;
 
 import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
+import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -48,7 +54,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
     private Button mBtnConfirm;
     private ImageView mIvCodeLoading;
     private Animation mCodeLoadingAnim;
-    private TimerCountDown mTimerCountDown = new TimerCountDown(60 * 1000, 1000);
+    private TimerCountDown mTimerCountDown = new TimerCountDown(120 * 1000, 1000);
 
     @Override
     protected int setView() {
@@ -189,13 +195,14 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             return;
         }
         BaseDialogHelper.showLoadingDialog(this, true, "正在提交...");
-        IhyRequest.resetPassword(phone, true, pw1, pw2, new ResponseCallback() {
+        IhyRequest.getBackPassword(Constants.JSESSIONID, true, phone, code, pw2, new ResponseCallback() {
 
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(var3);
-                finish();
+                EventBus.getDefault().post(new BaseFactory.CloseAllEvent());
+                IhyApplication.mInstance.setUser(null);
+                jumpToActivity(LoginActivity.class);
             }
 
             @Override
@@ -204,6 +211,11 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                 ToastUtils.showToastDefault(var3);
             }
         });
+    }
+
+    private void jumpToActivity(Class<?> cls) {
+        Intent intent = new Intent(this, cls);
+        startActivity(intent);
     }
 
     /**

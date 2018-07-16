@@ -32,12 +32,30 @@ import java.util.HashMap;
 public class Volley {
     public static Volley me = new Volley();
     public final HashMap<String, String> staticInitRequestHead = new HashMap();
-    /** Default on-disk cache directory. */
+    /**
+     * Default on-disk cache directory.
+     */
     private static final String DEFAULT_CACHE_DIR = "volley";
 
+    /**
+     * 添加请求头
+     * @param keyHead
+     * @param valueHead
+     */
     public final void addInitRequestHead(String keyHead, String valueHead) {
-        if(!TextUtils.isEmpty(keyHead) && !TextUtils.isEmpty(valueHead)) {
+        if (!TextUtils.isEmpty(keyHead) && !TextUtils.isEmpty(valueHead)) {
             this.staticInitRequestHead.put(keyHead, valueHead);
+        }
+    }
+
+    /**
+     * 移除指定的某个请求头
+     *
+     * @param keyHead
+     */
+    public final void removeInitRequestHead(String keyHead) {
+        if (!TextUtils.isEmpty(keyHead) ) {
+            this.staticInitRequestHead.remove(keyHead);
         }
     }
 
@@ -45,7 +63,7 @@ public class Volley {
      * Creates a default instance of the worker pool and calls {@link RequestQueue#start()} on it.
      *
      * @param context A {@link Context} to use for creating the cache dir.
-     * @param stack An {@link HttpStack} to use for the network, or null for default.
+     * @param stack   An {@link HttpStack} to use for the network, or null for default.
      * @return A started {@link RequestQueue} instance.
      */
     public static RequestQueue newRequestQueue(Context context, HttpStack stack) {

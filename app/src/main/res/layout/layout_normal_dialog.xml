@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0000"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0000"
+                android:orientation="vertical">
 
 
     <LinearLayout
@@ -28,7 +28,7 @@
             android:singleLine="true"
             android:text="温馨提示"
             android:textColor="@color/text_content"
-            android:textSize="@dimen/w56" />
+            android:textSize="@dimen/w56"/>
 
         <LinearLayout
             android:id="@+id/linear_phone_view"
@@ -48,12 +48,12 @@
                 android:layout_marginBottom="@dimen/h90"
                 android:layout_marginTop="@dimen/h70"
                 android:gravity="center"
+                android:lineSpacingExtra="@dimen/h32"
                 android:padding="@dimen/w2"
                 android:text="这是是一个动态设置的提示框，请输入你想提示的content"
                 android:textColor="@color/text_content"
-                android:lineSpacingExtra="@dimen/h32"
                 android:textIsSelectable="true"
-                android:textSize="@dimen/w50" />
+                android:textSize="@dimen/w50"/>
 
 
         </LinearLayout>
@@ -61,7 +61,7 @@
 
         <View
             android:id="@+id/dialog_carout_divider"
-            style="@style/DividerLineHor" />
+            style="@style/DividerLineHor"/>
 
         <LinearLayout
             android:id="@+id/button_layout"
@@ -73,9 +73,10 @@
             <Button
                 android:id="@+id/button1"
                 style="@style/dialog_btn"
-                android:text="取消"
                 android:layout_height="@dimen/h140"
-                android:visibility="visible" />
+                android:text="取消"
+                android:textColor="@color/black_pure"
+                android:visibility="visible"/>
 
             <View
                 style="@style/DividerLineHor"
@@ -85,9 +86,10 @@
             <Button
                 android:id="@+id/button2"
                 style="@style/dialog_btn"
-                android:text="确定"
                 android:layout_height="@dimen/h140"
-                android:visibility="visible" />
+                android:text="确定"
+                android:textColor="@color/black_pure"
+                android:visibility="visible"/>
         </LinearLayout>
 
     </LinearLayout>

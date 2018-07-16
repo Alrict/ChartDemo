@@ -123,6 +123,8 @@ public class IhyApplication extends Application {
     public void setUser(LoginBean loginBean) {
         this.loginBean = loginBean;
         if (loginBean == null) {
+            Constants.JSESSIONID = "";
+            Constants.DEVICEID = "";
             return;
         }
         String jsessionid = loginBean.getJSESSIONID();

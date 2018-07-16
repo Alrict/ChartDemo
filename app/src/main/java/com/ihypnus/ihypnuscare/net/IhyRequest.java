@@ -2,6 +2,7 @@ package com.ihypnus.ihypnuscare.net;
 
 import com.android.volley.Request;
 import com.android.volley.ResponseCallback;
+import com.android.volley.toolbox.Volley;
 import com.ihypnus.ihypnuscare.bean.DefaultDeviceIdVO;
 import com.ihypnus.ihypnuscare.bean.DeviceListVO;
 import com.ihypnus.ihypnuscare.bean.HistogramData;
@@ -341,12 +342,13 @@ public class IhyRequest {
 
     /**
      * 获取设备参数以及状态信息
+     *
      * @param JSESSIONID
      * @param isCookie
      * @param deviceId
      * @param callback
      */
-    public static void getShadowDevice(String JSESSIONID, boolean isCookie,String deviceId, ResponseCallback callback) {
+    public static void getShadowDevice(String JSESSIONID, boolean isCookie, String deviceId, ResponseCallback callback) {
         String url = IhyAction.getShadowDevice;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("JSESSIONID", JSESSIONID);
@@ -355,6 +357,44 @@ public class IhyRequest {
         SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_JAVA_BEAN);
         httpRequest.setResponseJavaBean(ShadowDeviceBean.class);
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
+
+    /**
+     * APP找回密码
+     *
+     * @param JSESSIONID
+     * @param isCookie
+     * @param authCode
+     * @param newPassword
+     * @param callback
+     */
+    public static void getBackPassword(String JSESSIONID, boolean isCookie, String phone, String authCode, String newPassword, ResponseCallback callback) {
+        String url = IhyAction.getPwd;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("JSESSIONID", JSESSIONID);
+        params.put("isCookie", isCookie);
+        params.put("phone", phone);
+        params.put("authCode", authCode);
+        params.put("newPassword", newPassword);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
+
+    /**
+     * 用户登出
+     *
+     * @param JSESSIONID
+     * @param callback
+     */
+    public static void userLogout(String JSESSIONID, ResponseCallback callback) {
+        String url = IhyAction.logout;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("JSESSIONID", JSESSIONID);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        Volley.me.addInitRequestHead("Accept", "application/json");
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
 }

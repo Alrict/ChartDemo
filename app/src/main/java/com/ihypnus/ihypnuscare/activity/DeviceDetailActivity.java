@@ -35,6 +35,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
     private Button mBtnSetting;
     private Button mBtnModify;
     private String mDeviceId;
+    private int mLight;
 
     @Override
     protected int setView() {
@@ -97,9 +98,9 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
     private void bindView(ShadowDeviceBean deviceBean) {
         if (deviceBean != null) {
             String dataVersion = deviceBean.getData_version();
-            int light = deviceBean.getLight();
+            mLight = deviceBean.getLight();
             mTvVersion.setText(dataVersion);
-            if (light == 1) {
+            if (mLight == 1) {
                 mTvStatus.setText("在线");
                 mIvStatus.setImageDrawable(getResources().getDrawable(R.mipmap.icon_online));
             } else {
@@ -115,7 +116,11 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
         if (ViewUtils.isFastDoubleClick()) return;
         switch (view.getId()) {
             case R.id.btn_setting:
+                if (mLight == 1) {
 
+                } else {
+                    BaseDialogHelper.showMsgTipDialog(DeviceDetailActivity.this, "该设备处于离线状态,请检查设备网络状态");
+                }
 
                 break;
 

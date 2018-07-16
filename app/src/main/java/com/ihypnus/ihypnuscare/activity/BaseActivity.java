@@ -17,10 +17,13 @@ import android.widget.TextView;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.actionbar.ActionBar;
 import com.ihypnus.ihypnuscare.actionbar.ContentView;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StatusBarUtil;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.multilanguage.MultiLanguageUtil;
+
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -290,6 +293,11 @@ public abstract class BaseActivity extends Activity {
             finish();
         }
 
+    }
+
+    @Subscribe
+    public void onEventMainThread(BaseFactory.CloseAllEvent event) {
+        finish();
     }
 
     @Override

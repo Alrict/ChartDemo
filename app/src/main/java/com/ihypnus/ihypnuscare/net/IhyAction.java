@@ -83,5 +83,14 @@ public class IhyAction {
      * 获取设备参数以及状态信息
      */
     public static final String getShadowDevice = HOST + "hypnusMgr/app/device/getShadowDevice";
+    /**
+     * 找回密码
+     */
+    public static final String getPwd = HOST + "hypnusMgr/dmz/user/resetpwd";
+    /**
+     * 用户登出
+     */
+    public static final String logout = HOST + "hypnusMgr/logout";
+
 
 }

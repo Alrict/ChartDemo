@@ -223,7 +223,8 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:paddingLeft="@dimen/w86"
-        android:paddingRight="@dimen/w86">
+        android:paddingRight="@dimen/w86"
+        android:visibility="invisible">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -253,7 +254,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/h214"
             android:layout_marginLeft="@dimen/w86"
-            android:layout_marginRight="@dimen/w86">
+            android:layout_marginRight="@dimen/w86"
+            android:visibility="invisible">
 
 
             <LinearLayout

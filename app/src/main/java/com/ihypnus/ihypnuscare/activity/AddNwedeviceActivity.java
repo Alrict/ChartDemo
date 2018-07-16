@@ -13,10 +13,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.zxing.android.CaptureActivity;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
@@ -163,5 +166,10 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         Uri uri = Uri.fromParts("package", getPackageName(), null);
         intent.setData(uri);
+    }
+
+    @Subscribe
+    public void onEventMainThread(BaseFactory.CloseAllEvent event) {
+        finish();
     }
 }
