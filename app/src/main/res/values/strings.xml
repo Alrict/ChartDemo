@@ -60,5 +60,6 @@
     <string name="setting_traditional_chinese">繁體中文</string>
     <string name="login_out">退出登录</string>
     <string name="et_old_password">请输入原密码</string>
+    <string name="parameter_setting">参数设置</string>
 
 </resources>

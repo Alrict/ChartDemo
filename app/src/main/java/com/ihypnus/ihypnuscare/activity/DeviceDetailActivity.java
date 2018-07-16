@@ -117,6 +117,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.btn_setting:
                 if (mLight == 1) {
+                    jumpToParameterSettingsActivity();
 
                 } else {
                     BaseDialogHelper.showMsgTipDialog(DeviceDetailActivity.this, "该设备处于离线状态,请检查设备网络状态");
@@ -128,6 +129,14 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
                 jumpToWifi();
                 break;
         }
+    }
+
+    /**
+     * 跳转至参数设置页面
+     */
+    private void jumpToParameterSettingsActivity() {
+        Intent intent = new Intent(this, ParameterSettingsActivity.class);
+        startActivity(intent);
     }
 
     private void jumpToWifi() {

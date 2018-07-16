@@ -68,4 +68,5 @@
 
     <!--请输入原密码-->
     <string name="et_old_password">Please enter the original password</string>
+    <string name="parameter_setting">parameter settings</string>
 </resources>

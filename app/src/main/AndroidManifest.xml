@@ -190,6 +190,10 @@
             android:name=".activity.WifiSettingHistoryActivity"
             android:screenOrientation="portrait"/>
 
+        <!--参数设置页面-->
+        <activity
+            android:name=".activity.ParameterSettingsActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 
