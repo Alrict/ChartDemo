@@ -31,11 +31,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/w44"/>
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/h500"
-        android:layout_below="@id/tv_connect_wifi_tip"/>
+
 
     <Button
         android:id="@+id/bt_next"
@@ -58,7 +54,7 @@
         android:layout_marginLeft="@dimen/w80"
         android:layout_marginRight="@dimen/w80"
         android:gravity="center"
-        android:text="刷新WiFi列表"
+        android:text="去设置WI-FI"
         android:textSize="@dimen/w54"/>
 
 </RelativeLayout>

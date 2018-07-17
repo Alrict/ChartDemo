@@ -163,7 +163,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
                 break;
 
             case R.id.btn_add:
-                if (mInfoList.size() == 0 ) {
+                if (mInfoList.size() == 0) {
                     ToastUtils.showToastDefault("请绑定您的设备");
                     return;
                 }
@@ -316,6 +316,8 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onItemClick(View view, int postion) {
         DeviceListVO.ContentBean contentBean = mInfoList.get(postion);
-        jumpToDeviceDetail(contentBean);
+        if (contentBean != null && !StringUtils.isNullOrEmpty(contentBean.getDevice_id())) {
+            jumpToDeviceDetail(contentBean);
+        }
     }
 }

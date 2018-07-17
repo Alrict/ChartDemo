@@ -1,13 +1,16 @@
 package com.ihypnus.ihypnuscare.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @Package com.ihypnus.ihypnuscare.bean
  * @author: llw
- * @Description:
+ * @Description: 设备参数详情
  * @date: 2018/7/9 23:22
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class ShadowDeviceBean extends BaseModel {
+public class ShadowDeviceBean extends BaseModel implements Parcelable {
     /**
      * cur_state : OFFLINE
      * start_pressure : 40
@@ -101,6 +104,66 @@ public class ShadowDeviceBean extends BaseModel {
     private int st_in_p;
     private int flight_mode;
     private int autos_min_p;
+
+    protected ShadowDeviceBean(Parcel in) {
+        cur_state = in.readString();
+        start_pressure = in.readInt();
+        intelligent_stop = in.readInt();
+        temperature_unit = in.readInt();
+        data_version = in.readString();
+        backlight = in.readInt();
+        intelligent_start = in.readInt();
+        language = in.readInt();
+        cpap_p = in.readInt();
+        st_ex_p = in.readInt();
+        swi_time = in.readInt();
+        breath_ratio = in.readInt();
+        buckslope = in.readInt();
+        breath_rate = in.readInt();
+        t_ex_p = in.readInt();
+        cure_mode = in.readInt();
+        tv_alarm = in.readInt();
+        pipe = in.readInt();
+        leak_alarm = in.readInt();
+        ai_alarm = in.readInt();
+        dep_level = in.readInt();
+        bpap_ex_p = in.readInt();
+        mv_alarm = in.readInt();
+        mask = in.readInt();
+        t_in_p = in.readInt();
+        heattube_tem = in.readInt();
+        bpap_in_p = in.readInt();
+        screensaver = in.readInt();
+        inhale_sensitive = in.readInt();
+        exhale_sensitive = in.readInt();
+        deviceID = in.readString();
+        apap_max_p = in.readInt();
+        autos_max_p = in.readInt();
+        humidify_level = in.readInt();
+        dep_type = in.readInt();
+        breath_fit = in.readInt();
+        light = in.readInt();
+        machine = in.readInt();
+        boostslope = in.readInt();
+        pressure_support = in.readInt();
+        cure_delay = in.readInt();
+        apap_min_p = in.readInt();
+        st_in_p = in.readInt();
+        flight_mode = in.readInt();
+        autos_min_p = in.readInt();
+    }
+
+    public static final Creator<ShadowDeviceBean> CREATOR = new Creator<ShadowDeviceBean>() {
+        @Override
+        public ShadowDeviceBean createFromParcel(Parcel in) {
+            return new ShadowDeviceBean(in);
+        }
+
+        @Override
+        public ShadowDeviceBean[] newArray(int size) {
+            return new ShadowDeviceBean[size];
+        }
+    };
 
     public String getCur_state() {
         return cur_state;
@@ -460,5 +523,59 @@ public class ShadowDeviceBean extends BaseModel {
 
     public void setAutos_min_p(int autos_min_p) {
         this.autos_min_p = autos_min_p;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(cur_state);
+        dest.writeInt(start_pressure);
+        dest.writeInt(intelligent_stop);
+        dest.writeInt(temperature_unit);
+        dest.writeString(data_version);
+        dest.writeInt(backlight);
+        dest.writeInt(intelligent_start);
+        dest.writeInt(language);
+        dest.writeInt(cpap_p);
+        dest.writeInt(st_ex_p);
+        dest.writeInt(swi_time);
+        dest.writeInt(breath_ratio);
+        dest.writeInt(buckslope);
+        dest.writeInt(breath_rate);
+        dest.writeInt(t_ex_p);
+        dest.writeInt(cure_mode);
+        dest.writeInt(tv_alarm);
+        dest.writeInt(pipe);
+        dest.writeInt(leak_alarm);
+        dest.writeInt(ai_alarm);
+        dest.writeInt(dep_level);
+        dest.writeInt(bpap_ex_p);
+        dest.writeInt(mv_alarm);
+        dest.writeInt(mask);
+        dest.writeInt(t_in_p);
+        dest.writeInt(heattube_tem);
+        dest.writeInt(bpap_in_p);
+        dest.writeInt(screensaver);
+        dest.writeInt(inhale_sensitive);
+        dest.writeInt(exhale_sensitive);
+        dest.writeString(deviceID);
+        dest.writeInt(apap_max_p);
+        dest.writeInt(autos_max_p);
+        dest.writeInt(humidify_level);
+        dest.writeInt(dep_type);
+        dest.writeInt(breath_fit);
+        dest.writeInt(light);
+        dest.writeInt(machine);
+        dest.writeInt(boostslope);
+        dest.writeInt(pressure_support);
+        dest.writeInt(cure_delay);
+        dest.writeInt(apap_min_p);
+        dest.writeInt(st_in_p);
+        dest.writeInt(flight_mode);
+        dest.writeInt(autos_min_p);
     }
 }

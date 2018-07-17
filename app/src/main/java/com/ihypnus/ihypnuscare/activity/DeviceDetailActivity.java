@@ -36,6 +36,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
     private Button mBtnModify;
     private String mDeviceId;
     private String mCurState;
+    private ShadowDeviceBean mDeviceBean;
 
     @Override
     protected int setView() {
@@ -82,8 +83,8 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ShadowDeviceBean deviceBean = (ShadowDeviceBean) var1;
-                bindView(deviceBean);
+                mDeviceBean = (ShadowDeviceBean) var1;
+                bindView(mDeviceBean);
             }
 
             @Override
@@ -115,16 +116,23 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
         if (ViewUtils.isFastDoubleClick()) return;
         switch (view.getId()) {
             case R.id.btn_setting:
-                if (mCurState.equals("ONLINE")) {
-                    jumpToParameterSettingsActivity();
-                } else {
-                    BaseDialogHelper.showMsgTipDialog(DeviceDetailActivity.this, "该设备处于离线状态,请检查设备网络状态");
-                }
+                jumpToParameterSettingsActivity();
+//                if (mCurState.equals("ONLINE")) {
+//                    jumpToParameterSettingsActivity();
+//                } else {
+//                    BaseDialogHelper.showMsgTipDialog(DeviceDetailActivity.this, "该设备处于离线状态,请检查设备网络状态");
+//                }
 
                 break;
 
             case R.id.btn_modify:
                 jumpToWifi();
+//                if (mCurState.equals("ONLINE")) {
+//                    jumpToWifi();
+//                } else {
+//                    BaseDialogHelper.showMsgTipDialog(DeviceDetailActivity.this, "该设备处于离线状态,请检查设备网络状态");
+//                }
+
                 break;
         }
     }
@@ -134,10 +142,18 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
      */
     private void jumpToParameterSettingsActivity() {
         Intent intent = new Intent(this, ParameterSettingsActivity.class);
+        if (mDeviceBean != null) {
+            intent.putExtra("DEVICE_BEAN", mDeviceBean);
+        }
         intent.putExtra("DEVICE_ID", mDeviceId);
+
+
         startActivity(intent);
     }
 
+    /**
+     * 进入wifi配置页面
+     */
     private void jumpToWifi() {
         Intent intent = new Intent(this, WifiSettingHistoryActivity.class);
         startActivity(intent);

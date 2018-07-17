@@ -73,8 +73,7 @@ public class NewDeviceInformationActivity extends BaseActivity implements View.O
      * 跳转至wifi设置页面
      */
     private void jumpToWifiSettingActivity() {
-//        Intent intent = new Intent(this, WifiSettingTipActivity.class);
-        Intent intent = new Intent(this, WifiSettingHistoryActivity.class);
+        Intent intent = new Intent(this, WifiSettingTipActivity.class);
         intent.putExtra("NEW_DEVICE_ID", mNewDeviceId);
         startActivityForResult(intent, REQUEST_CODE);
 
