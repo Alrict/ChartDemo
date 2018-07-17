@@ -29,6 +29,7 @@ import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -200,6 +201,8 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
+                //登出
+                MobclickAgent.onProfileSignOff();
                 EventBus.getDefault().post(new BaseFactory.CloseAllEvent());
                 IhyApplication.mInstance.setUser(null);
                 jumpToActivity(LoginActivity.class);

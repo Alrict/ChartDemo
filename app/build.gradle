@@ -53,6 +53,12 @@ android {
             minifyEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+//            applicationId "com.ihypnus.ihypnuscare"
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "String", "CRASH_LOG", '".crashlog"'
+            //对应服务器地址
+            buildConfigField 'String', 'SERVER_URL', HOST_RELEASE.toString()
         }
         debug {
 
@@ -60,6 +66,12 @@ android {
             shrinkResources false
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+//            applicationId "com.ihypnus.ihypnuscare"
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "String", "CRASH_LOG", '"crashlog"'
+            //对应服务器地址
+            buildConfigField 'String', 'SERVER_URL', HOST_DEBUG.toString()
         }
     }
 
@@ -72,16 +84,31 @@ android {
         javaMaxHeapSize "16g"     //增加java堆内存大小
     }
 
+    flavorDimensions "default"
     // 可定义的产品特性:根据不同需求 选择相应模式 正式key,测试key
     productFlavors {
-
-        //正式环境
+        yingyongbao {dimension "default"}
+        huawei {dimension "default"}
+        baidu {dimension "default"}
+        xiaomi {dimension "default"}
+        qh360 {dimension "default"}
+        wandoujia {dimension "default"}
+        uc {dimension "default"}
+        meizu{dimension "default"}
+        google{dimension "default"}
+        //这里注意：渠道名称最好不要大写
+        productFlavors.all {
+            flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
+        /*//正式环境
         releaseApk {
             applicationId "com.ihypnus.ihypnuscare"
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "String", "CRASH_LOG", '".crashlog"'
             //对应服务器地址
             buildConfigField 'String', 'SERVER_URL', HOST_RELEASE.toString()
+
+
 
         }
 
@@ -92,6 +119,7 @@ android {
             buildConfigField "String", "CRASH_LOG", '"crashlog"'
             //对应服务器地址
             buildConfigField 'String', 'SERVER_URL', HOST_DEBUG.toString()
+
         }
 
         //测试环境，可调式，正式地址,有日志打印,
@@ -101,7 +129,7 @@ android {
             buildConfigField "String", "CRASH_LOG", '"crashlog"'
             //对应服务器地址
             buildConfigField 'String', 'SERVER_URL', HOST_RELEASE.toString()
-        }
+        }*/
     }
 
     /*生成打包文件名
@@ -112,7 +140,7 @@ android {
     * */
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
-            def fileName = "ihy_" + buildType.name + "_v${defaultConfig.versionName}-${releaseTime()}.apk"
+            def fileName = "ihy_" + buildType.name + "_v${defaultConfig.versionName}_${variant.productFlavors[0].name}-${releaseTime()}.apk"
             def outFile = output.outputFile
             if (outFile != null && outFile.name.endsWith('.apk')) {
                 outputFileName = fileName  //  output.outputFile 改为 outputFileName

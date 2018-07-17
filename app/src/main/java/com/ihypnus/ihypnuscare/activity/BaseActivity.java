@@ -22,6 +22,7 @@ import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StatusBarUtil;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.multilanguage.MultiLanguageUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -303,5 +304,17 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(MultiLanguageUtil.attachBaseContext(newBase));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

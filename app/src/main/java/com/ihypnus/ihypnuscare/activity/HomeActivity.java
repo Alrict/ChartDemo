@@ -23,6 +23,7 @@ import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
+import com.umeng.analytics.MobclickAgent;
 
 public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
@@ -179,6 +180,8 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             ToastUtils.showToastInCenter(getApplicationContext(), "再按一次退出程序");
             exitTime = System.currentTimeMillis();
         } else {
+            //登出
+            MobclickAgent.onProfileSignOff();
             finish();
         }
     }

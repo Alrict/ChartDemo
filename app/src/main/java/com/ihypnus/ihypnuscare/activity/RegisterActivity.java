@@ -29,6 +29,7 @@ import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.bean.UserInfo;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.dialog.IhyBaseDialog;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
@@ -171,6 +172,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         mIvWechart.setOnClickListener(this);
         mIvQq.setOnClickListener(this);
         mIvOther.setOnClickListener(this);
+        mTvProtocol.setOnClickListener(this);
 //        mSpannableString.setSpan(new ClickableSpan() {
 //            @Override
 //            public void onClick(View view) {
@@ -242,7 +244,31 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 //其他
 
                 break;
+            case R.id.tv_protocol:
+                //协议
+                showProtocol();
+                break;
         }
+    }
+
+    private void showProtocol() {
+        IhyBaseDialog.createKyeBaseDialog(this, R.layout.dialog_protocol, new IhyBaseDialog.DialogListener() {
+            @Override
+            public void bindView(View view, final IhyBaseDialog kyeBaseDialog) {
+                TextView title = (TextView) view.findViewById(R.id.title);
+                TextView content = (TextView) view.findViewById(R.id.content);
+                title.setText(R.string.tv_protocol_title);
+                content.setText(R.string.tv_protocol);
+                TextView back = (TextView) view.findViewById(R.id.btn_back);
+                back.setText("返回");
+                back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        kyeBaseDialog.dismiss();
+                    }
+                });
+            }
+        });
     }
 
     private void registerAppByNet() {

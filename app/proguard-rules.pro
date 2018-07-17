@@ -217,5 +217,21 @@
     @kr.co.namee.permissiongen.PermissionSuccess <methods>;
 }
 
+##################友盟代码混淆###################
+-keep class com.umeng.** {*;}
+
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep public class com.ihypnus.ihypnuscare.R$*{
+public static final int *;
+}
+
 
 

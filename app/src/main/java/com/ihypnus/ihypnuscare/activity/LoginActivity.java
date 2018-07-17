@@ -36,6 +36,7 @@ import com.ihypnus.ihypnuscare.utils.SP;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import kr.co.namee.permissiongen.PermissionGen;
 
@@ -262,7 +263,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     private void jumpToHomeActiity() {
         BaseDialogHelper.showLoadingDialog(this, false, "正在登入...");
-        String countNum = mEtCount.getText().toString().trim();
+        final String countNum = mEtCount.getText().toString().trim();
         String passWord = mEtPassWord.getText().toString().trim();
         IhyRequest.login(countNum, passWord, new ResponseCallback() {
             @Override
@@ -272,6 +273,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 IhyApplication.mInstance.setUser(loginBean);
                 if (loginBean != null && loginBean.getJSESSIONID() != null) {
                     jumpToHome();
+                    //当用户使用自有账号登录时，可以这样统计：
+                    MobclickAgent.onProfileSignIn(countNum);
                     String jsessionid = loginBean.getJSESSIONID();
                     LogOut.d("llw", jsessionid);
                 }

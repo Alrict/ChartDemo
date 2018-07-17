@@ -20,6 +20,7 @@ import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -118,6 +119,8 @@ public class ChanedPassWordActivity extends BaseActivity implements CompoundButt
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
+                //登出
+                MobclickAgent.onProfileSignOff();
                 EventBus.getDefault().post(new BaseFactory.CloseAllEvent());
                 IhyApplication.mInstance.setUser(null);
                 jumpToActivity(LoginActivity.class);

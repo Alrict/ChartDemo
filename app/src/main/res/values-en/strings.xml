@@ -69,4 +69,6 @@
     <!--请输入原密码-->
     <string name="et_old_password">Please enter the original password</string>
     <string name="parameter_setting">parameter settings</string>
+    <string name="tv_iknow">I Know It</string>
+    <string name="tv_protocol_title">iHypnusCare用户服务协议</string>
 </resources>

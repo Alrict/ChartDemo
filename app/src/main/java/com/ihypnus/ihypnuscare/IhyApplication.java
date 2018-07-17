@@ -1,6 +1,8 @@
 package com.ihypnus.ihypnuscare;
 
 import android.app.Application;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 
 import com.alibaba.sdk.android.oss.ClientConfiguration;
@@ -24,10 +26,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.stat.MtaSDkException;
 import com.tencent.stat.StatService;
 import com.tencent.stat.common.StatConstants;
+import com.umeng.commonsdk.UMConfigure;
 import com.wenming.library.LogReport;
 import com.wenming.library.save.imp.CrashWriter;
 import com.wenming.library.util.LogUtil;
@@ -106,9 +108,32 @@ public class IhyApplication extends Application {
         } else {
             //初始化腾讯MTA(用户操作行为/月活量等数据)
 //            initMTA(mInstance);
-            CrashReport.initCrashReport(mInstance);
+//            CrashReport.initCrashReport(mInstance);
+            /*
+            友盟统计
+注意: 即使您已经在AndroidManifest.xml中配置过appkey和channel值，
+也需要在App代码中调用初始化接口（如需要使用AndroidManifest.xml中配置好的appkey和channel值，
+UMConfigure.init调用中appkey和channel参数请置为null）。
+*/
+            UMConfigure.init(mInstance, null, null, UMConfigure.DEVICE_TYPE_PHONE, null);
+//            UMConfigure.init(mInstance, null, null, UMConfigure.DEVICE_TYPE_PHONE, null);
         }
+        LogOut.d("llw", "友盟:" + getApplicationMetaValue("UMENG_CHANNEL"));
 
+
+    }
+
+    private String getApplicationMetaValue(String name) {
+        String value = "";
+        try {
+            ApplicationInfo appInfo = getPackageManager()
+                    .getApplicationInfo(getPackageName(),
+                            PackageManager.GET_META_DATA);
+            value = appInfo.metaData.getString(name);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return value;
     }
 
     private void initMTA(Application app) {
