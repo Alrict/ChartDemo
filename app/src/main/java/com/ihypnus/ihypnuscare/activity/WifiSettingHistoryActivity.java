@@ -68,8 +68,8 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     private Button mBtNext;
     private int PORT = 8089;
 
-    private String IP = "192.168.43.192";
-    //    private String IP = "192.168.4.1"; //正式IP
+//    private String IP = "192.168.43.192";
+        private String IP = "192.168.4.1"; //正式IP
     private static final int WIFICIPHER_NOPASS = 1;
     private static final int WIFICIPHER_WEP = 2;
     private static final int WIFICIPHER_WPA = 3;

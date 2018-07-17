@@ -6,12 +6,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.adapter.CommentAdapter;
 import com.ihypnus.ihypnuscare.adapter.NormalStringAdapter;
 import com.ihypnus.ihypnuscare.bean.UsageInfos;
 import com.ihypnus.ihypnuscare.iface.BaseType;
@@ -286,6 +288,48 @@ public class BaseDialogHelper {
                     title.setVisibility(View.VISIBLE);
                     title.setText(mTitle);
                 }
+                if (!StringUtils.isNullOrEmpty(button)) {
+                    btn.setText(button);
+                }
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        kyeBaseDialog.dismiss();
+
+                    }
+                });
+
+            }
+        });
+        kyeBaseDialog.setCancelable(false);
+        kyeBaseDialog.setCanceledOnTouchOutside(false);
+    }
+
+    public static void showListDialog(final Activity context, final String mTitle, final String button, final List<String> list, final DialogListener listener) {
+        IhyBaseDialog kyeBaseDialog = IhyBaseDialog.createKyeBaseDialog(context, R.layout.dialog_list, new IhyBaseDialog.DialogListener() {
+            @Override
+            public void bindView(View view, final IhyBaseDialog kyeBaseDialog) {
+                TextView title = (TextView) view.findViewById(R.id.title);
+                ListView lv = (ListView) view.findViewById(R.id.lv);
+                Button btn = (Button) view.findViewById(R.id.button);
+                CommentAdapter adapter = new CommentAdapter(context, list);
+                lv.setAdapter(adapter);
+                if (StringUtils.isNullOrEmpty(mTitle)) {
+                    title.setVisibility(View.GONE);
+                } else {
+                    title.setVisibility(View.VISIBLE);
+                    title.setText(mTitle);
+                }
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        if (listener != null) {
+                            listener.onItemClick(i, list.get(i));
+                        }
+                        kyeBaseDialog.dismiss();
+                    }
+                });
                 if (!StringUtils.isNullOrEmpty(button)) {
                     btn.setText(button);
                 }

@@ -63,6 +63,7 @@
             android:layout_marginRight="@dimen/w50"
             android:orientation="horizontal">
             <LinearLayout
+                android:id="@+id/layout_content03"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -84,6 +85,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_content04"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/w80"
@@ -235,7 +237,7 @@
             android:layout_marginTop="@dimen/h20"
             android:orientation="horizontal">
             <LinearLayout
-                android:id="@+id/layout_trigger_sensitivity"
+                android:id="@+id/layout_content09"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -259,6 +261,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_content10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/w80"
@@ -291,7 +294,7 @@
             android:layout_marginTop="@dimen/h20"
             android:orientation="horizontal">
             <LinearLayout
-                android:id="@+id/layout_breath_sensitivity"
+                android:id="@+id/layout_content11"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -315,6 +318,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_content12"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/w80"
@@ -355,7 +359,7 @@
             android:layout_marginBottom="@dimen/h200"
             android:layout_marginLeft="@dimen/w90"
             android:layout_marginRight="@dimen/w90"
-            android:layout_marginTop="@dimen/h30"
+            android:layout_marginTop="@dimen/h50"
             android:gravity="center"
             android:text="确定"
             android:textSize="@dimen/w54"/>

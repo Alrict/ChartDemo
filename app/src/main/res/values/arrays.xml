@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--压力范围-->
+    <string-array name="kpalist">
+
+    </string-array>
+
+    <!--延迟时间-->
+    <string-array name="delaytimelist">
+        <item>关闭</item>
+        <item>5 min</item>
+        <item>10 min</item>
+        <item>15 min</item>
+        <item>20 min</item>
+        <item>25 min</item>
+        <item>30 min</item>
+        <item>35 min</item>
+        <item>40 min</item>
+        <item>45 min</item>
+
+
+    </string-array>
+
+</resources>
