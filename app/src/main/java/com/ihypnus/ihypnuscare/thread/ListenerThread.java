@@ -4,8 +4,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.ihypnus.ihypnuscare.activity.WifiSettingTipActivity;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -45,7 +43,7 @@ public class ListenerThread extends Thread {
                 if (serverSocket != null) {
                     socket = serverSocket.accept();
                     Message message = Message.obtain();
-                    message.what = WifiSettingTipActivity.DEVICE_CONNECTING;
+//                    message.what = WifiSettingTipActivity.DEVICE_CONNECTING;
                     handler.sendMessage(message);
                 }
 

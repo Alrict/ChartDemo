@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import com.ihypnus.ihypnuscare.activity.WifiSettingTipActivity;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 
 import java.io.DataOutputStream;
@@ -38,7 +37,7 @@ public class ConnectThread extends Thread {
         if (socket == null) {
             return;
         }
-        handler.sendEmptyMessage(WifiSettingTipActivity.DEVICE_CONNECTED);
+//        handler.sendEmptyMessage(WifiSettingTipActivity.DEVICE_CONNECTED);
         try {
             //获取数据流
             inputStream = socket.getInputStream();
@@ -54,7 +53,7 @@ public class ConnectThread extends Thread {
                     System.arraycopy(buffer, 0, data, 0, bytes);
 
                     Message message = Message.obtain();
-                    message.what = WifiSettingTipActivity.GET_MSG;
+//                    message.what = WifiSettingTipActivity.GET_MSG;
                     Bundle bundle = new Bundle();
                     bundle.putString("MSG", new String(data));
                     message.setData(bundle);

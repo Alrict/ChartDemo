@@ -67,8 +67,9 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     private LinearLayout mLayoutPwd;
     private Button mBtNext;
     private int PORT = 8089;
-    private String IP = "192.168.43.146";
-    //    private String IP = "192.168.4.1";
+
+    private String IP = "192.168.43.192";
+    //    private String IP = "192.168.4.1"; //正式IP
     private static final int WIFICIPHER_NOPASS = 1;
     private static final int WIFICIPHER_WEP = 2;
     private static final int WIFICIPHER_WPA = 3;
@@ -355,7 +356,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
 //                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "正在获取IP地址...");
                         } else if (state == NetworkInfo.DetailedState.CONNECTED) {
 //                            showIndeterminateProgressDialog(true, "连接成功");
-                            IP = getIp();
+//                            IP = getIp();
                             LogOut.d("llw", "当前链接wifi的ip:" + IP);
                             mWifiSettingManager.startScan();
                         } else if (state == NetworkInfo.DetailedState.FAILED) {
