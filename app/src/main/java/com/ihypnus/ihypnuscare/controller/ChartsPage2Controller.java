@@ -68,7 +68,7 @@ public class ChartsPage2Controller extends BaseController {
 
     @Override
     public void loadData() {
-        setWeekDate();
+//        setWeekDate();
     }
 
     @Override

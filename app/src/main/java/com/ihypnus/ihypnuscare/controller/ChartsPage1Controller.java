@@ -73,8 +73,8 @@ public class ChartsPage1Controller extends BaseController {
 
     @Override
     public void loadData() {
-        setWeekDate();
-        loadFromNet();
+//        setWeekDate();
+//        loadFromNet();
     }
 
     @Override
