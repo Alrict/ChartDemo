@@ -411,7 +411,28 @@ public class HomePageController extends BaseController implements View.OnClickLi
         if (usetimes == null || usetimes.size() == 0) {
             return;
         }
-        BaseDialogHelper.showListDialog(mContext, "使用时段", "返回", usetimes);
+        BaseDialogHelper.showListDialog(mContext, "使用时段", "返回", usetimes, new DialogListener() {
+            @Override
+            public void onClick(BaseType baseType) {
+
+            }
+
+            @Override
+            public void onItemClick(long postion, String text) {
+                if (!StringUtils.isNullOrEmpty(text) && text.contains(",")) {
+                    String[] time = text.split(",");
+                    if (time[0].length() >= 16 && time[1].length() >= 16) {
+                        String starttime = time[0].substring(11, 16);
+                        String endTime = time[1].substring(11, 16);
+                        mTvUsageLongData.setText(starttime + "~" + endTime);
+                        loadDataByNet(time[0], time[1], null);
+                    } else {
+                        mTvUsageLongData.setText("--~--");
+                    }
+                }
+
+            }
+        });
 //        BaseDialogHelper.showMsgTipDialog(mContext, "显示使用时间段");
     }
 

@@ -259,8 +259,8 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
 //                if (mType == 1) {
 //                    jumpToAddNewDevice();
 //                } else {
-                    setResult(RESULT_OK);
-                    finish();
+                setResult(RESULT_OK);
+                finish();
 //                }
             }
 
@@ -333,6 +333,9 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
         double bmi;
         String weight = mTvPersonBodyWeight.getText().toString().trim();
         int i1 = weight.indexOf(" kg");
+        if (i1 == -1) {
+            i1 = 0;
+        }
         mKg = weight.substring(0, i1);
         try {
             weightKg = Double.parseDouble(mKg);

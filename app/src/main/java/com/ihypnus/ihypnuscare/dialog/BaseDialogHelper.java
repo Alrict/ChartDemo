@@ -273,7 +273,7 @@ public class BaseDialogHelper {
      * @param button
      * @param list
      */
-    public static void showListDialog(final Context context, final String mTitle, final String button, final List<UsageInfos.UsetimesBean> list) {
+    public static void showListDialog(final Context context, final String mTitle, final String button, final List<UsageInfos.UsetimesBean> list, final DialogListener listener) {
         IhyBaseDialog kyeBaseDialog = IhyBaseDialog.createKyeBaseDialog(context, R.layout.dialog_list, new IhyBaseDialog.DialogListener() {
             @Override
             public void bindView(View view, final IhyBaseDialog kyeBaseDialog) {
@@ -282,6 +282,18 @@ public class BaseDialogHelper {
                 Button btn = (Button) view.findViewById(R.id.button);
                 NormalStringAdapter adapter = new NormalStringAdapter(context, list);
                 lv.setAdapter(adapter);
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String starttime = list.get(position).getStarttime();
+                        String endTime = list.get(position).getEndTime();
+
+                        if (listener != null) {
+                            listener.onItemClick(position, starttime+","+endTime);
+                        }
+                        kyeBaseDialog.dismiss();
+                    }
+                });
                 if (StringUtils.isNullOrEmpty(mTitle)) {
                     title.setVisibility(View.GONE);
                 } else {

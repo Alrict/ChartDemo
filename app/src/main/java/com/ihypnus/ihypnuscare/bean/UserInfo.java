@@ -7,7 +7,7 @@ package com.ihypnus.ihypnuscare.bean;
  * @date: 2018/6/20 11:29
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class UserInfo {
+public class UserInfo extends BaseModel {
     private String phone;
     private String password;
 

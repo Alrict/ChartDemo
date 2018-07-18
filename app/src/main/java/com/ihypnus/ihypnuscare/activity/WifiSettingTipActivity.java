@@ -83,6 +83,9 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
         }
     }
 
+    /**
+     * 绑定设备
+     */
     private void bindDevice() {
         BaseDialogHelper.showLoadingDialog(this, true, "正在提交...");
         IhyRequest.bindDevice(Constants.JSESSIONID, true, mNewDeviceId, new ResponseCallback() {
@@ -104,6 +107,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     private void jumpToHomeActivity() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+        EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(NewDeviceInformationActivity.class));
         EventBus.getDefault().post(new BaseFactory.RefreshDeviceListInfoEvent());
         finish();
     }

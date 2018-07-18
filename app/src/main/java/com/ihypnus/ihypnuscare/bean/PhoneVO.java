@@ -7,7 +7,7 @@ package com.ihypnus.ihypnuscare.bean;
  * @date: 2018/6/21 13:44
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class PhoneVO {
+public class PhoneVO extends BaseModel{
     private String phone;
 
     public PhoneVO(String phone) {

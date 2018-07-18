@@ -84,6 +84,10 @@ public class IhyAction {
      */
     public static final String getShadowDevice = HOST + "hypnusMgr/app/device/getShadowDevice";
     /**
+     * 更新设备参数
+     */
+    public static final String updateShadowDevice = HOST + "hypnusMgr/app/device/updateShadowDevice";
+    /**
      * 找回密码
      */
     public static final String getPwd = HOST + "hypnusMgr/dmz/user/resetpwd";

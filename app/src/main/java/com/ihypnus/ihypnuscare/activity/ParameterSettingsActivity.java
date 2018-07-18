@@ -22,6 +22,8 @@ import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -64,6 +66,11 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
     private int mCureMode;
     private ArrayList<String> mKpaList;
     private ArrayList<String> mDelayTimeList;
+    private ArrayList<String> mReleaseKpaLv;
+    private ArrayList<String> mSpeed;
+    private ArrayList<String> mComfortLv;
+    private Map<String, Object> mParams = new HashMap<String, Object>();
+    private ArrayList<String> mPressureRelease;
 
     @Override
     protected int setView() {
@@ -110,6 +117,15 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
         setTitle(deviceId);
         //压力范围
         mKpaList = new ArrayList<>();
+        //释压水平
+        mReleaseKpaLv = new ArrayList<>();
+        //升压/降压速度
+        mSpeed = new ArrayList<>();
+        //舒适度
+        mComfortLv = new ArrayList<>();
+        //呼气释压
+        mPressureRelease = new ArrayList<>();
+
         for (int i = 0; i <= 52; i++) {
             float value = (float) (4 + (i * 0.5));
             mKpaList.add(value + " cmH₂O");
@@ -118,6 +134,18 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
 
         String[] delaytimeArray = getResources().getStringArray(R.array.delaytimelist);
         mDelayTimeList.addAll(Arrays.asList(delaytimeArray));
+
+        String[] release_kpa_lv = getResources().getStringArray(R.array.release_kpa_lv);
+        mReleaseKpaLv.addAll(Arrays.asList(release_kpa_lv));
+
+        String[] kpa_speed = getResources().getStringArray(R.array.kpa_speed);
+        mSpeed.addAll(Arrays.asList(kpa_speed));
+
+        String[] comfort_lv = getResources().getStringArray(R.array.comfort_lv);
+        mComfortLv.addAll(Arrays.asList(comfort_lv));
+
+        String[] expiratory_pressure_release = getResources().getStringArray(R.array.expiratory_pressure_release);
+        mPressureRelease.addAll(Arrays.asList(expiratory_pressure_release));
 
         ShadowDeviceBean deviceBean = intent.getParcelableExtra("DEVICE_BEAN");
         if (deviceBean == null) {
@@ -182,7 +210,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
 
                 mTvTitle06.setText("延迟时间");
-                mTvValue06.setText(deviceBean.getCure_delay() + "min");
+                mTvValue06.setText(deviceBean.getCure_delay() + " min");
 
                 mTvTitle07.setText("呼气释压");
                 mTvValue07.setText(deviceBean.getDep_type() + "");
@@ -269,44 +297,44 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
 
             case R.id.tv_value05:
                 //起始压力
-                showListDialog(mKpaList, mTvValue05);
+                showListDialog(mKpaList, mTvValue05, "start_pressure");
                 break;
             case R.id.tv_value06:
                 //延迟时间
-                showListDialog(mDelayTimeList, mTvValue06);
+                showListDialog(mDelayTimeList, mTvValue06, "cure_delay");
 
                 break;
             case R.id.tv_value07:
 
                 if (mCureMode <= 1) {
                     //呼气释压
-                    showListDialog(mKpaList, mTvValue07);
+                    showListDialog(mPressureRelease, mTvValue07, "dep_type");
                 } else {
                     //呼气舒适度
-
+                    showListDialog(mComfortLv, mTvValue07, "breath_fit");
                 }
                 break;
             case R.id.tv_value08:
 
                 if (mCureMode <= 1) {
                     //释压水平
-                    showListDialog(mKpaList, mTvValue08);
+                    showListDialog(mReleaseKpaLv, mTvValue08, "dep_level");
                 } else {
                     //升压速度
-
+                    showListDialog(mSpeed, mTvValue08, "boostslope");
                 }
                 break;
             case R.id.tv_value09:
-
                 //吸气灵敏度
+                showListDialog(mSpeed, mTvValue09, "inhale_sensitive");
                 break;
             case R.id.tv_value10:
                 //降压速度
-
+                showListDialog(mSpeed, mTvValue10, "buckslope");
                 break;
             case R.id.tv_value11:
                 //呼气灵敏度
-
+                showListDialog(mSpeed, mTvValue11, "exhale_sensitive");
                 break;
 
 
@@ -315,10 +343,31 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 break;
 
             case R.id.btn_confirm:
-
-
+                updateParameterInfos();
                 break;
         }
+    }
+
+    private void updateParameterInfos() {
+        mParams.put("JSESSIONID", Constants.JSESSIONID);
+        mParams.put("isCookie", true);
+        mParams.put("deviceId", Constants.DEVICEID);
+        mParams.put("deviceID", Constants.DEVICEID);
+
+        BaseDialogHelper.showLoadingDialog(this, true, "正在上传...");
+        IhyRequest.updateShadowDevice(mParams, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                finish();
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
+            }
+        });
     }
 
     /**
@@ -327,7 +376,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
      * @param list
      * @param textView
      */
-    private void showListDialog(ArrayList<String> list, final TextView textView) {
+    private void showListDialog(ArrayList<String> list, final TextView textView, final String key) {
         BaseDialogHelper.showListDialog(this, "", "返回", list, new DialogListener() {
             @Override
             public void onClick(BaseType baseType) {
@@ -337,6 +386,21 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
             @Override
             public void onItemClick(long postion, String s) {
                 textView.setText(s);
+                if (s.contains(" min")) {
+                    s = s.replace(" min", "");
+                }
+                if (s.contains(" cmH₂O")) {
+                    s = s.replace(" cmH₂O", "");
+                    if (key.equals("start_pressure")) {
+                        double v = Double.parseDouble(s);
+                        int startPressure = (int) (v * 10);
+                        s = String.valueOf(startPressure);
+                    }
+                }
+                if (s.equals("关闭")) {
+                    s = "0";
+                }
+                mParams.put(key, s);
             }
         });
     }
@@ -349,7 +413,9 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
      */
     private String initTextView(String text) {
         if (!StringUtils.isNullOrEmpty(text)) {
-            return text + "cmH₂O";
+            int i = Integer.parseInt(text);
+            float i1 = i / 10f;
+            return i1 + "cmH₂O";
         }
         return "";
     }

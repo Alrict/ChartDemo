@@ -361,6 +361,21 @@ public class IhyRequest {
     }
 
     /**
+     * 更新设备参数
+     *
+     * @param params
+     * @param callback
+     */
+    public static void updateShadowDevice(Map<String, Object> params, ResponseCallback callback) {
+        String url = IhyAction.updateShadowDevice;
+
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+//        httpRequest.setResponseJavaBean(ShadowDeviceBean.class);
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
+
+    /**
      * APP找回密码
      *
      * @param JSESSIONID
