@@ -391,7 +391,7 @@ public class IhyRequest {
         params.put("isCookie", isCookie);
         params.put("phone", phone);
         params.put("authCode", authCode);
-        params.put("newPassword", newPassword);
+        params.put("newPwd", newPassword);
         SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
         NetRequestHelper.getInstance().add(httpRequest, url);

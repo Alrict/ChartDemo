@@ -236,14 +236,16 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
         String weight = mTvPersonBodyWeight.getText().toString().trim();
         mHeight = mTvPersonHeight.getText().toString().trim();
         String birthday = mTvPersonDateBirth.getText().toString().trim();
-        if (StringUtils.isNullOrEmpty(weight)) {
-            ToastUtils.showToastDefault("请输入您的体重");
-            return;
-        }
         if (StringUtils.isNullOrEmpty(mHeight)) {
             ToastUtils.showToastDefault("请输入您的身高");
             return;
         }
+
+        if (StringUtils.isNullOrEmpty(weight)) {
+            ToastUtils.showToastDefault("请输入您的体重");
+            return;
+        }
+
         if (StringUtils.isNullOrEmpty(birthday)) {
             ToastUtils.showToastDefault("请输入您的生日");
             return;

@@ -359,7 +359,18 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                finish();
+                BaseDialogHelper.showSimpleDialog(ParameterSettingsActivity.this, "参数设置成功", "下次治疗将使用新的设置", "确定", new DialogListener() {
+                    @Override
+                    public void onClick(BaseType baseType) {
+                        finish();
+                    }
+
+                    @Override
+                    public void onItemClick(long postion, String s) {
+
+                    }
+                });
+
             }
 
             @Override
