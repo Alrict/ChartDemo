@@ -175,6 +175,10 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
             if (null != data) {
                 String time = initTime(data);
                 long longTime = DateTimeUtils.getSimpleLongTime(time);
+                if (longTime > System.currentTimeMillis()) {
+                    ToastUtils.showToastDefault("查询日期超出范围");
+                    return;
+                }
                 sCurrentTime = longTime;
                 refreshCharsWeek();
 
@@ -233,7 +237,6 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
             mChartsPage3Controller.updateUI(data.getTpInValues(), data.getAhiValues());
         }
 
-
     }
 
     /**
@@ -245,5 +248,11 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     public void onCharsDataChangedErrorListener(String errMsg) {
         mIvRefresh.clearAnimation();
         ToastUtils.showToastDefault(errMsg);
+    }
+
+    @Subscribe
+    public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
+        LogOut.d("llw", "报告页面更新了语言");
+        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
     }
 }

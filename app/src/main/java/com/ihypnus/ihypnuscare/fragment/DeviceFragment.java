@@ -185,8 +185,8 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
                 BaseDialogHelper.showMsgTipDialog(mAct, "设置成功");
-                EventBus.getDefault().post(new BaseFactory.RefreshReportInfoEvent(mDeviceId));
                 Constants.DEVICEID = mDeviceId;
+                EventBus.getDefault().post(new BaseFactory.RefreshReportInfoEvent(mDeviceId));
             }
 
             @Override
@@ -298,8 +298,13 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void setDeviceCheckedCallback(int oldPosition, int position, ImageView imageView) {
         imageView.setImageDrawable(getResources().getDrawable(R.mipmap.ic_circle_checked));
-        mInfoList.get(oldPosition).setIsChecked(0);
-        mInfoList.get(position).setIsChecked(1);
+        if (oldPosition == -1) {
+            mInfoList.get(position).setIsChecked(1);
+        } else {
+            mInfoList.get(oldPosition).setIsChecked(0);
+            mInfoList.get(oldPosition).setIsChecked(1);
+        }
+
         mDeviceId = mInfoList.get(position).getDevice_id();
         mAdapter.setList(mInfoList);
         mNeedRefresh = oldPosition != position;

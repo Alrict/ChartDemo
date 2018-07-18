@@ -54,7 +54,7 @@
         android:layout_marginLeft="@dimen/w86"
         android:layout_marginRight="@dimen/w86"
         android:gravity="center"
-        android:text="设置为使用中的设备"
+        android:text="@string/tv_set_as_default"
         android:textSize="@dimen/w54"/>
 
 

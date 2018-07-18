@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import com.ihypnus.multilanguage.MultiLanguageUtil;
+
 /**
  * @Package com.ihypnus.ihypnuscare.fragment
  * @author: llw
@@ -122,5 +124,10 @@ public abstract class BaseFragment extends Fragment {
         } catch (Exception e) {
             // TODO: handle exception
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(MultiLanguageUtil.attachBaseContext(context));
     }
 }

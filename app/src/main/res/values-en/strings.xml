@@ -49,7 +49,7 @@
     </string>
     <string name="socket_err">Connection failed, please try again</string>
     <string name="tv_person_msg">Personal Information</string>
-    <string name="use_protocol">Agree to iHypnusCare Terms of Use</string>
+    <string name="use_protocol">同意&#160;iHypnusCare使用条款</string>
     <string name="tv_infos_tip1">For a more accurate sleep report, make sure that the information
         provided is true and valid
     </string>
@@ -173,4 +173,5 @@
     <string name="tv_tip_no_default_device">您目前未设置默认设备</string>
     <string name="tv_seach_device_list">查看设备</string>
     <string name="tv_tip_add_new_device">新增设备</string>
+    <string name="tv_set_as_default">set as default device</string>
 </resources>

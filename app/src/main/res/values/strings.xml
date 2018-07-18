@@ -255,5 +255,6 @@
     <string name="tv_tip_no_default_device">您目前未设置默认设备</string>
     <string name="tv_seach_device_list">查看设备</string>
     <string name="tv_tip_add_new_device">新增设备</string>
+    <string name="tv_set_as_default">设置为使用中的设备</string>
 
 </resources>

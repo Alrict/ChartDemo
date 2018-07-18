@@ -52,7 +52,7 @@ public class ClipActivity extends BaseActivity {
     protected void init(Bundle savedInstanceState) {
         //这步必须要加
         mClipZoomImageView.setHorizontalPadding((int) getResources().getDimension(R.dimen.w100));
-        mClipImageBorderView.setHorizontalPadding((int) getResources().getDimension(R.dimen.w100));
+        mClipImageBorderView.setHorizontalPadding((int) getResources().getDimension(R.dimen.w140));
         setTitle(getString(R.string.tv_change_photo));
     }
 

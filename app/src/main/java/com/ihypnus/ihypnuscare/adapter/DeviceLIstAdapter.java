@@ -37,7 +37,7 @@ public class DeviceLIstAdapter extends BaseAdapter<DeviceLIstAdapter.ViewHolder>
     private final Context mAct;
     private List<DeviceListVO.ContentBean> mDataList;
     private DeviceCheckListener mDeviceCheckListener;
-    private int mOldPosition;
+    private int mOldPosition = -1;
 
     public DeviceLIstAdapter(Context context, List<DeviceListVO.ContentBean> dataList) {
         super(context);

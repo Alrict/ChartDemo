@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.IhyApplication;
+import com.ihypnus.widget.LanguageChangableView;
 
 
 /**
@@ -188,18 +190,36 @@ public class ViewUtils {
 
         return (scrollY > 0) || (scrollY < scrollDifference - 1);
     }
+
     /**
      * EditText禁用换行按键
      *
      * @param editText 需要设置的EditText
-     *
      */
     public static void setSingleLine(EditText editText) {
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                return (event.getKeyCode()== KeyEvent.KEYCODE_ENTER);
+                return (event.getKeyCode() == KeyEvent.KEYCODE_ENTER);
             }
         });
+    }
+
+    /**
+     * 更新语言
+     *
+     * @param view
+     */
+    public static void updateViewLanguage(View view) {
+        if (view instanceof ViewGroup) {
+            ViewGroup vg = (ViewGroup) view;
+            int count = vg.getChildCount();
+            for (int i = 0; i < count; i++) {
+                updateViewLanguage(vg.getChildAt(i));
+            }
+        } else if (view instanceof LanguageChangableView) {
+            LanguageChangableView tv = (LanguageChangableView) view;
+            tv.reLoadLanguage();
+        }
     }
 }

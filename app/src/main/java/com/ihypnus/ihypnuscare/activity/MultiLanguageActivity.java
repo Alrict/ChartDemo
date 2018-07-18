@@ -1,15 +1,17 @@
 package com.ihypnus.ihypnuscare.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.multilanguage.LanguageType;
 import com.ihypnus.multilanguage.MultiLanguageUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -140,11 +142,13 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
         }
 
         MultiLanguageUtil.getInstance().updateLanguage(selectedLanguage);
-        Intent intent = new Intent(MultiLanguageActivity.this, SettingActivity.class);
+
+        EventBus.getDefault().post(new BaseFactory.UpdateLanguageEvent());
+      /*  Intent intent = new Intent(MultiLanguageActivity.this, SettingActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         if (selectedLanguage == LanguageType.LANGUAGE_FOLLOW_SYSTEM) {
 //            System.exit(0);
-        }
+        }*/
     }
 }

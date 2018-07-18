@@ -8,6 +8,8 @@ package com.ihypnus.ihypnuscare.eventbusfactory;
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
 public class BaseFactory {
+
+
     /**
      * 关闭全局事件
      */
@@ -66,7 +68,7 @@ public class BaseFactory {
     }
 
     public static class CheckFragment {
-       private int type;
+        private int type;
 
         public CheckFragment(int type) {
             this.type = type;
@@ -79,5 +81,11 @@ public class BaseFactory {
         public void setType(int type) {
             this.type = type;
         }
+    }
+
+    /**
+     * 更新语言
+     */
+    public static class UpdateLanguageEvent {
     }
 }
