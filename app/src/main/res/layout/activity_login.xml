@@ -100,7 +100,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="4"
                 android:background="@null"
-                android:hint="请输入账号"
+                android:hint="@string/tv_input_account"
                 android:inputType="number"
                 android:maxLength="11"
                 android:singleLine="true"
@@ -108,11 +108,11 @@
 
             <ImageView
                 android:id="@+id/img_login_account_clear2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/h56"
+                android:layout_height="@dimen/h56"
                 android:layout_gravity="center_vertical"
                 android:padding="@dimen/w8"
-                android:src="@drawable/login_accout_clear_selector"
+                android:src="@mipmap/icon_delete"
                 android:visibility="invisible"/>
 
         </LinearLayout>
@@ -147,7 +147,7 @@
             android:layout_marginLeft="@dimen/w56"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="请输入密码"
+            android:hint="@string/tv_input_pwd"
             android:inputType="textPassword"
             android:maxLength="20"
             android:singleLine="true"
@@ -184,7 +184,7 @@
         android:layout_marginRight="@dimen/w86"
         android:layout_marginTop="@dimen/h194"
         android:gravity="center"
-        android:text="登录"
+        android:text="@string/tv_login"
         android:textSize="@dimen/w54"/>
 
     <RelativeLayout
@@ -203,7 +203,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:autoLink="all"
-            android:text="立即注册？"
+            android:text="@string/tv_regist"
             android:textColor="@color/white"/>
 
         <TextView
@@ -213,7 +213,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:autoLink="all"
-            android:text="忘记密码？"
+            android:text="@string/tv_forget__pwd"
             android:textColor="@color/white"/>
     </RelativeLayout>
 
@@ -238,7 +238,7 @@
             <TextView
                 style="@style/TextAppearanceMedium"
                 android:layout_marginLeft="@dimen/w40"
-                android:text="其他登录方式"
+                android:text="@string/tv_other_login_method"
                 android:textColor="#c2c1bd"/>
 
             <View

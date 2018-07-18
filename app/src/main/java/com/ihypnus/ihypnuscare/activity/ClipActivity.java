@@ -53,7 +53,7 @@ public class ClipActivity extends BaseActivity {
         //这步必须要加
         mClipZoomImageView.setHorizontalPadding((int) getResources().getDimension(R.dimen.w100));
         mClipImageBorderView.setHorizontalPadding((int) getResources().getDimension(R.dimen.w100));
-        setTitle("更换头像");
+        setTitle(getString(R.string.tv_change_photo));
     }
 
     @Override
@@ -61,11 +61,11 @@ public class ClipActivity extends BaseActivity {
 
 
         ActionBar bar = getSupportedActionBar();
-        bar.setRightText("确定");
+        bar.setRightText(getString(R.string.btn_confirm));
         bar.getRightText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BaseDialogHelper.showLoadingDialog(ClipActivity.this, true, "压缩中...");
+                BaseDialogHelper.showLoadingDialog(ClipActivity.this, true, getString(R.string.tv_compressing));
                 Bitmap headIcon = mClipZoomImageView.clip();
                 String headIconPath = ImageUtils.saveCacheImage(ClipActivity.this, "head.jpg", headIcon);
                 Intent intent = getIntent();

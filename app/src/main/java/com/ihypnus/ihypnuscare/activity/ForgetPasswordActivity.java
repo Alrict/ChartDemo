@@ -55,7 +55,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
     private Button mBtnConfirm;
     private ImageView mIvCodeLoading;
     private Animation mCodeLoadingAnim;
-    private TimerCountDown mTimerCountDown = new TimerCountDown(120 * 1000, 1000);
+    private TimerCountDown mTimerCountDown = new TimerCountDown(120 * 1000 + 500, 1000);
 
     @Override
     protected int setView() {
@@ -90,7 +90,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setTitle("密码找回");
+        setTitle(getString(R.string.tv_title_pwd_back));
         //获取验证码动画
         mCodeLoadingAnim = AnimationUtils.loadAnimation(this, R.anim.login_code_loading);
         LinearInterpolator lin = new LinearInterpolator();
@@ -172,7 +172,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
         if (pw1.length() < 6) {
             mEtNewPassword.setText("");
             mEtNewPassword2.setText("");
-            BaseDialogHelper.showMsgTipDialog(this, "密码长度必须大于6位");
+            BaseDialogHelper.showMsgTipDialog(this, getString(R.string.tv_pwd_error_length));
             return;
         }
 
@@ -185,17 +185,17 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
         if (pw2.length() < 6) {
             mEtNewPassword.setText("");
             mEtNewPassword2.setText("");
-            BaseDialogHelper.showMsgTipDialog(this, "密码长度必须大于6位");
+            BaseDialogHelper.showMsgTipDialog(this, getString(R.string.tv_pwd_error_length));
             return;
         }
 
         if (!pw1.equals(pw2)) {
             mEtNewPassword.setText("");
             mEtNewPassword2.setText("");
-            BaseDialogHelper.showMsgTipDialog(this, "两次输入的密码不一致,请重新输入");
+            BaseDialogHelper.showMsgTipDialog(this, getString(R.string.tv_pwd_error_different));
             return;
         }
-        BaseDialogHelper.showLoadingDialog(this, true, "正在提交...");
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.onloading));
         IhyRequest.getBackPassword(Constants.JSESSIONID, true, phone, code, pw2, new ResponseCallback() {
 
             @Override
@@ -234,12 +234,17 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                 mBtnVerificationCode.setVisibility(View.VISIBLE);
                 mIvCodeLoading.setVisibility(View.GONE);
                 mIvCodeLoading.clearAnimation();
-                mTimerCountDown.start();
+                mBtnVerificationCode.setEnabled(false);
+                if (mTimerCountDown != null) {
+                    mTimerCountDown.cancel();
+                    mTimerCountDown.start();
+                }
             }
 
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 ToastUtils.showToastDefault(var3);
+                mBtnVerificationCode.setEnabled(true);
                 mBtnVerificationCode.setVisibility(View.VISIBLE);
                 mIvCodeLoading.setVisibility(View.GONE);
                 mIvCodeLoading.clearAnimation();
@@ -257,20 +262,14 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
 
         @Override
         public void onTick(long l) {
-            String tip = "";
-            if (l >= 0) {
-                tip = String.valueOf(l / 1000) + " 秒";
-                mBtnVerificationCode.setClickable(false);
-            } else {
-                mBtnVerificationCode.setClickable(true);
-                tip = "获取验证码";
-            }
+            String tip= String.valueOf(l / 1000) + getString(R.string.tv_text_second);
             mBtnVerificationCode.setText(tip);
         }
 
         @Override
         public void onFinish() {
-
+            mBtnVerificationCode.setEnabled(true);
+            mBtnVerificationCode.setText(R.string.tv_get_vertify_code);
         }
     }
 

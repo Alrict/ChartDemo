@@ -104,6 +104,6 @@
         android:layout_marginRight="@dimen/w90"
         android:layout_marginTop="@dimen/h300"
         android:gravity="center"
-        android:text="确认"
+        android:text="@string/ok"
         android:textSize="@dimen/w54"/>
 </LinearLayout>

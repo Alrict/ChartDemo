@@ -24,7 +24,7 @@ public class HelpCenterActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setTitle("帮助中心");
+        setTitle(getString(R.string.tv_help_center));
     }
 
     @Override

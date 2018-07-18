@@ -62,7 +62,7 @@ public class ChanedPassWordActivity extends BaseActivity implements CompoundButt
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setTitle("修改密码");
+        setTitle(getString(R.string.tv_modify_text));
     }
 
     @Override
@@ -93,7 +93,7 @@ public class ChanedPassWordActivity extends BaseActivity implements CompoundButt
             return;
         }
         if (!StringUtils.vertifyPassWord(newPwd1)) {
-            ToastUtils.showToastDefault("请输入6-14位的密码,支持数字与大小写字母");
+            ToastUtils.showToastDefault(getString(R.string.pwd_error_tip));
             mNewPassword.setText("");
             return;
         }
@@ -104,16 +104,16 @@ public class ChanedPassWordActivity extends BaseActivity implements CompoundButt
         }
 
         if (!StringUtils.vertifyPassWord(newPwd2)) {
-            ToastUtils.showToastDefault("请输入6-14位的密码,支持数字与大小写字母");
+            ToastUtils.showToastDefault(getString(R.string.pwd_error_tip));
             mEtNewPWD2.setText("");
             return;
         }
 
         if (!newPwd1.equals(newPwd2)) {
-            ToastUtils.showToastDefault("两次输入的密码不一致,请重新输入");
+            ToastUtils.showToastDefault(getString(R.string.pwd_different_error));
             return;
         }
-        BaseDialogHelper.showLoadingDialog(this, true, "正在提交...");
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.onloading));
 
         IhyRequest.resetPassword(Constants.JSESSIONID, true, oldPwd, newPwd1, new ResponseCallback() {
             @Override

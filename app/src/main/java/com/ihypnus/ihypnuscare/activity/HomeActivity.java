@@ -122,7 +122,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
      */
     private void reTryExit() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
-            ToastUtils.showToastInCenter(getApplicationContext(), "再按一次退出程序");
+            ToastUtils.showToastInCenter(getApplicationContext(), getString(R.string.tv_toast_exit_if_double));
             exitTime = System.currentTimeMillis();
         } else {
             //登出

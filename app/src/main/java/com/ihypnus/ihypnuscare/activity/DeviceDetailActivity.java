@@ -62,7 +62,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
             setTitle(mDeviceId);
             String model = bean.getModel();
             if (StringUtils.isNullOrEmpty(model)) {
-                mTvModelType.setText("未知");
+                mTvModelType.setText(R.string.tv_unknow);
             } else {
                 mTvModelType.setText(bean.getModel());
             }
@@ -78,7 +78,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void loadData() {
-        BaseDialogHelper.showLoadingDialog(this, true, "正在加载...");
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.onloading));
         IhyRequest.getShadowDevice(Constants.JSESSIONID, true, mDeviceId, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
@@ -101,10 +101,10 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
             mCurState = deviceBean.getCur_state();
             mTvVersion.setText(dataVersion);
             if (mCurState.equals("ONLINE")) {
-                mTvStatus.setText("在线");
+                mTvStatus.setText(R.string.tv_online);
                 mIvStatus.setImageDrawable(getResources().getDrawable(R.mipmap.icon_online));
             } else {
-                mTvStatus.setText("离线");
+                mTvStatus.setText(R.string.tv_offline);
                 mIvStatus.setImageDrawable(getResources().getDrawable(R.mipmap.icon_out_line));
             }
         }

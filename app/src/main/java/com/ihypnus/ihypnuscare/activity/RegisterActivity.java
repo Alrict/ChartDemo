@@ -75,7 +75,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private SpannableString mSpannableString;
     private String mProtocol;
     private Gson mGson = new Gson();
-    private TimerCountDown mTimerCountDown = new TimerCountDown(120 * 1000, 1000);
+    private TimerCountDown mTimerCountDown = new TimerCountDown(120 * 1000 + 500, 1000);
 
     @Override
     protected int setView() {
@@ -158,7 +158,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String password = mEtPassWord.getText().toString().trim();
                 if (s.length() > 0 && index >= 0) {
                     if (!StringUtils.vertifyIllegal(password)) {
-                        ToastUtils.showToastDefault("输入的字符不合法!");
+                        ToastUtils.showToastDefault(getString(R.string.tv_toast_illegal_string));
                         s.delete(index, index + 1);
                     }
                 }
@@ -260,7 +260,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 title.setText(R.string.tv_protocol_title);
                 content.setText(R.string.tv_protocol);
                 TextView back = (TextView) view.findViewById(R.id.btn_back);
-                back.setText("返回");
+                back.setText(getString(R.string.tv_btn_back));
                 back.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -272,7 +272,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void registerAppByNet() {
-        BaseDialogHelper.showLoadingDialog(this, true, "正在登入");
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.onloading));
         UserInfo userInfo = new UserInfo(mEtCount.getText().toString().trim(), mEtPassWord.getText().toString().trim());
         String deviceId = mEtDeviceCode.getText().toString().trim();
 
@@ -319,7 +319,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             return false;
         }
         if (!StringUtils.vertifyPassWord(passWord)) {
-            ToastUtils.showToastDefault("请输入6-14位的密码,支持数字与大小写字母");
+            ToastUtils.showToastDefault(getString(R.string.pwd_error_tip));
             return false;
         }
 
@@ -332,6 +332,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String deviceSn = mEtDeviceCode.getText().toString().trim();
         if (StringUtils.isNullOrEmpty(deviceSn)) {
             ToastUtils.showToastDefault(this, mEtDeviceCode.getHint().toString());
+            return false;
+        }
+        boolean checked = mCbProtocol.isChecked();
+        if (!checked) {
+            ToastUtils.showToastDefault(this, getString(R.string.tv_toast_agree));
             return false;
         }
 
@@ -427,20 +432,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         @Override
         public void onTick(long l) {
-            String tip = "";
-            if (l >= 0) {
-                tip = String.valueOf(l / 1000) + " 秒";
-                mBtnVcerificationCode.setClickable(false);
-            } else {
-                mBtnVcerificationCode.setClickable(true);
-                tip = "获取验证码";
-            }
+            String tip = String.valueOf(l / 1000) + getString(R.string.tv_text_second);
             mBtnVcerificationCode.setText(tip);
         }
 
         @Override
         public void onFinish() {
-
+            mBtnVcerificationCode.setEnabled(true);
+            mBtnVcerificationCode.setText(getString(R.string.tv_get_vertify_code));
         }
     }
 
@@ -458,12 +457,17 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 mIvCodeLoading.clearAnimation();
                 mBtnVcerificationCode.setVisibility(View.VISIBLE);
                 mIvCodeLoading.setVisibility(View.GONE);
-                mTimerCountDown.start();
+                mBtnVcerificationCode.setEnabled(false);
+                if (mTimerCountDown != null) {
+                    mTimerCountDown.cancel();
+                    mTimerCountDown.start();
+                }
             }
 
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 ToastUtils.showToastDefault(var3);
+                mBtnVcerificationCode.setEnabled(true);
                 mIvCodeLoading.clearAnimation();
                 mBtnVcerificationCode.setVisibility(View.VISIBLE);
                 mIvCodeLoading.setVisibility(View.GONE);
@@ -490,7 +494,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void vertifyPhoneNum(final String account) {
-        BaseDialogHelper.showLoadingDialog(this, true, "正在验证...");
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.tv_verifying));
         IhyRequest.VerifyPhoneNumber(account, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
@@ -503,7 +507,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 BaseDialogHelper.dismissLoadingDialog();
                 if (!StringUtils.isNullOrEmpty(var3)) {
 //                    BaseDialogHelper.showMsgTipDialog(RegisterActivity.this, var3);
-                    BaseDialogHelper.showSimpleDialog(RegisterActivity.this, "温馨提示", account + " " + var3);
+                    BaseDialogHelper.showSimpleDialog(RegisterActivity.this, getString(R.string.tip_msg), account + " " + var3);
                     mEtCount.setText("");
                 }
             }

@@ -175,7 +175,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
     }
 
     private void getParameterInfos(String deviceId) {
-        BaseDialogHelper.showLoadingDialog(this, true, "正在加载...");
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.tv_isloading));
         IhyRequest.getShadowDevice(Constants.JSESSIONID, true, deviceId, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
@@ -194,28 +194,28 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
 
     private void bindView(ShadowDeviceBean deviceBean) {
         mCureMode = deviceBean.getCure_mode();
-        mTvTitle01.setText("当前模式");
+        mTvTitle01.setText(R.string.tv_text_current_model);
         mTvValue01.setText(sCurrentModel[mCureMode]);
         switch (mCureMode) {
             //"CPAP", "APAP", "S", "Auto-S", "T", "ST"
             case 0:
                 //CPAP
-                mTvTitle02.setText("治疗压力");
+                mTvTitle02.setText(R.string.tv_text_zlyl);
                 mTvValue02.setText(initTextView(deviceBean.getCpap_p() + ""));
 
                 mLayoutContent03.setVisibility(View.INVISIBLE);
                 mLayoutContent04.setVisibility(View.INVISIBLE);
 
-                mTvTitle05.setText("起始压力");
+                mTvTitle05.setText(R.string.tv_text_qsyl);
                 mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
 
-                mTvTitle06.setText("延迟时间");
+                mTvTitle06.setText(R.string.tv_text_ycsj);
                 mTvValue06.setText(deviceBean.getCure_delay() + " min");
 
-                mTvTitle07.setText("呼气释压");
+                mTvTitle07.setText(R.string.tv_hqyl);
                 mTvValue07.setText(deviceBean.getDep_type() + "");
 
-                mTvTitle08.setText("释压水平");
+                mTvTitle08.setText(R.string.tv_text_sysp);
                 mTvValue08.setText(initTextView(deviceBean.getDep_level() + ""));
 
                 mLayoutContent09.setVisibility(View.INVISIBLE);
@@ -226,24 +226,24 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
 
             case 1:
                 //APAP
-                mTvTitle02.setText("最小压力");
+                mTvTitle02.setText(R.string.tv_text_min_pressure);
                 mTvValue02.setText(initTextView(deviceBean.getApap_min_p() + ""));
 
                 mLayoutContent03.setVisibility(View.INVISIBLE);
 
-                mTvTitle04.setText("最大压力");
+                mTvTitle04.setText(R.string.tv_text_zdyl);
                 mTvValue04.setText(initTextView(deviceBean.getApap_max_p() + ""));
 
-                mTvTitle05.setText("起始压力");
+                mTvTitle05.setText(R.string.tv_text_start_pressure);
                 mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
 
-                mTvTitle06.setText("延迟时间");
+                mTvTitle06.setText(R.string.tv_text_ycsj);
                 mTvValue06.setText(deviceBean.getCure_delay() + "min");
 
-                mTvTitle07.setText("呼气释压");
+                mTvTitle07.setText(R.string.tv_hqyl);
                 mTvValue07.setText(deviceBean.getDep_type() + "");
 
-                mTvTitle08.setText("释压水平");
+                mTvTitle08.setText(R.string.tv_text_sysp);
                 mTvValue08.setText(initTextView(deviceBean.getDep_level() + ""));
 
                 mLayoutContent09.setVisibility(View.INVISIBLE);
@@ -258,33 +258,33 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 //ST
                 //T
                 //S //Auto-S
-                mTvTitle02.setText("吸气压力");
+                mTvTitle02.setText(R.string.tv_text_xqyl);
                 mTvValue02.setText(initTextView(deviceBean.getBpap_in_p() + ""));
 
                 mLayoutContent03.setVisibility(View.INVISIBLE);
 
-                mTvTitle04.setText("呼气压力");
+                mTvTitle04.setText(R.string.tv_text_hqyl);
                 mTvValue04.setText(initTextView(deviceBean.getBpap_ex_p() + ""));
 
-                mTvTitle05.setText("起始压力");
+                mTvTitle05.setText(R.string.tv_text_qsyl);
                 mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
 
-                mTvTitle06.setText("延迟时间");
+                mTvTitle06.setText(R.string.tv_text_ycsj);
                 mTvValue06.setText(deviceBean.getCure_delay() + "min");
 
-                mTvTitle07.setText("呼气舒适度");
+                mTvTitle07.setText(R.string.tv_hqssd);
                 mTvValue07.setText(deviceBean.getBreath_fit() + "");
 
-                mTvTitle08.setText("升压速度");
+                mTvTitle08.setText(R.string.tv_text_sysd);
                 mTvValue08.setText(deviceBean.getBoostslope() + "");
 
-                mTvTitle09.setText("吸气灵敏度");
+                mTvTitle09.setText(R.string.tv_text_xqlmd);
                 mTvValue09.setText(deviceBean.getInhale_sensitive() + "");
 
-                mTvTitle10.setText("降压速度");
+                mTvTitle10.setText(R.string.tv_text_down_speed);
                 mTvValue10.setText(deviceBean.getBuckslope() + "");
 
-                mTvTitle11.setText("呼气灵敏度");
+                mTvTitle11.setText(R.string.tv_hqlmd);
                 mTvValue11.setText(deviceBean.getExhale_sensitive() + "");
                 break;
         }
@@ -354,12 +354,12 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
         mParams.put("deviceId", Constants.DEVICEID);
         mParams.put("deviceID", Constants.DEVICEID);
 
-        BaseDialogHelper.showLoadingDialog(this, true, "正在上传...");
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.tv_isloading));
         IhyRequest.updateShadowDevice(mParams, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                BaseDialogHelper.showSimpleDialog(ParameterSettingsActivity.this, "参数设置成功", "下次治疗将使用新的设置", "确定", new DialogListener() {
+                BaseDialogHelper.showSimpleDialog(ParameterSettingsActivity.this, getString(R.string.tv_tittle_setparmeter), getString(R.string.tv_tip_use_new_setting), getString(R.string.ok), new DialogListener() {
                     @Override
                     public void onClick(BaseType baseType) {
                         finish();
@@ -388,7 +388,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
      * @param textView
      */
     private void showListDialog(ArrayList<String> list, final TextView textView, final String key) {
-        BaseDialogHelper.showListDialog(this, "", "返回", list, new DialogListener() {
+        BaseDialogHelper.showListDialog(this, "", getString(R.string.tv_btn_back), list, new DialogListener() {
             @Override
             public void onClick(BaseType baseType) {
 
@@ -408,7 +408,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                         s = String.valueOf(startPressure);
                     }
                 }
-                if (s.equals("关闭")) {
+                if (s.equals(getString(R.string.tv_text_close))) {
                     s = "0";
                 }
                 mParams.put(key, s);

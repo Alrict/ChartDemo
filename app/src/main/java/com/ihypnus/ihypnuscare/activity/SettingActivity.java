@@ -56,7 +56,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setTitle("设置");
+        setTitle(getString(R.string.tv_setting));
     }
 
     @Override
@@ -87,7 +87,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 jumpToActivity(ChanedPassWordActivity.class);
                 break;
             case R.id.btn_login_out:
-                BaseDialogHelper.showNormalDialog(SettingActivity.this, getResources().getString(R.string.tip_msg), "是否退出当前账户？", "确定", "取消", new DialogListener() {
+                BaseDialogHelper.showNormalDialog(SettingActivity.this, getResources().getString(R.string.tip_msg), getString(R.string.tv_exit_current_account), getString(R.string.ok), getString(R.string.cancel), new DialogListener() {
                     @Override
                     public void onClick(BaseType baseType) {
                         if (baseType == BaseType.NO) {
@@ -108,7 +108,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
      * 是否退出登录
      */
     private void loginOut() {
-        BaseDialogHelper.showLoadingDialog(this, true, "正在退出登录...");
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.tv_logout_loading));
         IhyRequest.userLogout(Constants.JSESSIONID, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {

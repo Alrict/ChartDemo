@@ -100,7 +100,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setTitle("个人信息");
+        setTitle(getString(R.string.tv_person_msg));
         //时间选择器
         Calendar selectedDate = Calendar.getInstance();
         Calendar startDate = Calendar.getInstance();
@@ -116,10 +116,10 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
                 mTvPersonDateBirth.setText(DateTimeUtils.getTimeFromDate(date, "yyyy-MM-dd"));
             }
         })
-                .setCancelText("取消")//取消按钮文字
-                .setSubmitText("确定")//确认按钮文字
+                .setCancelText(getString(R.string.cancel))//取消按钮文字
+                .setSubmitText(getString(R.string.ok))//确认按钮文字
                 .setTitleSize(20)//标题文字大小
-                .setTitleText("出生日期")//标题文字
+                .setTitleText(getString(R.string.tv_text_birthday))//标题文字
                 .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
                 .isCyclic(true)//是否循环滚动
                 .setTitleColor(getResources().getColor(R.color.text_content))//标题文字颜色
@@ -187,7 +187,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
             case R.id.tv_person_name:
             case R.id.tv_name_arrow:
                 //修改姓名
-                BaseDialogHelper.showInputNameDialog(PersonalInformationActivity.this, "请输入您的昵称", new BaseDialogHelper.NumberInputListener() {
+                BaseDialogHelper.showInputNameDialog(PersonalInformationActivity.this, getString(R.string.tv_tip_your_name), new BaseDialogHelper.NumberInputListener() {
                     @Override
                     public void onNumberInputListener(String l) {
                         mTvName.setText(l);
@@ -199,7 +199,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
             case R.id.tv_person_height:
             case R.id.tv_height_arrow:
                 //修改身高
-                BaseDialogHelper.showInputNumberDialog(PersonalInformationActivity.this, "请输入您的身高(单位:cm)", "请输入您的身高", new BaseDialogHelper.NumberInputListener() {
+                BaseDialogHelper.showInputNumberDialog(PersonalInformationActivity.this, getString(R.string.tv_tip_yout_heigth), getString(R.string.tv_input_your_heigth), new BaseDialogHelper.NumberInputListener() {
                     @Override
                     public void onNumberInputListener(String l) {
                         mTvPersonHeight.setText(String.format("%s cm", l));
@@ -211,7 +211,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
             case R.id.tv_person_body_weight:
             case R.id.tv_body_weight_arrow:
                 //修改体重
-                BaseDialogHelper.showInputNumberDialog(PersonalInformationActivity.this, "请输入您的体重(单位:kg)", "请输入您的体重", new BaseDialogHelper.NumberInputListener() {
+                BaseDialogHelper.showInputNumberDialog(PersonalInformationActivity.this, getString(R.string.tv_tip_your_weigth), getString(R.string.tv_input_your_weigth), new BaseDialogHelper.NumberInputListener() {
                     @Override
                     public void onNumberInputListener(String l) {
                         mTvPersonBodyWeight.setText(String.format("%s kg", l));
@@ -237,23 +237,22 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
         mHeight = mTvPersonHeight.getText().toString().trim();
         String birthday = mTvPersonDateBirth.getText().toString().trim();
         if (StringUtils.isNullOrEmpty(mHeight)) {
-            ToastUtils.showToastDefault("请输入您的身高");
+            ToastUtils.showToastDefault(getString(R.string.tv_tip_yout_heigth));
             return;
         }
-
         if (StringUtils.isNullOrEmpty(weight)) {
-            ToastUtils.showToastDefault("请输入您的体重");
+            ToastUtils.showToastDefault(getString(R.string.tv_input_your_weigth));
             return;
         }
 
         if (StringUtils.isNullOrEmpty(birthday)) {
-            ToastUtils.showToastDefault("请输入您的生日");
+            ToastUtils.showToastDefault(getString(R.string.tv_input_your_birthday));
             return;
         }
         double bmi = getBMI();
 
         String nickname = mTvName.getText().toString().trim();
-        BaseDialogHelper.showLoadingDialog(this, true, "正在上传...");
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.onloading));
         IhyRequest.updateinfo(Constants.JSESSIONID, true, nickname, mGender, birthday, mKg, mHeight, String.valueOf(bmi), new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
@@ -283,7 +282,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     }
 
     public void getInfos() {
-        BaseDialogHelper.showLoadingDialog(this, true, "正在加载");
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.onloading));
         IhyRequest.getinfos(Constants.JSESSIONID, true, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {

@@ -19,7 +19,7 @@
             style="@style/TextAppearanceMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="当前版本:"/>
+            android:text="@string/tv_verson"/>
         <TextView
             android:id="@+id/tv_verson"
             style="@style/TextAppearanceMedium"
@@ -35,5 +35,5 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/h50"
-        android:text="广州和普乐健康科技有限公司版权所有"/>
+        android:text="@string/tv_company_name"/>
 </RelativeLayout>

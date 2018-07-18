@@ -40,7 +40,7 @@
             android:drawableTop="@drawable/navigation_device"
             android:gravity="center"
             android:paddingTop="@dimen/w30"
-            android:text="设备"
+            android:text="@string/rb_device"
             android:textColor="@color/white"
             android:textSize="@dimen/w44"/>
 
@@ -53,7 +53,7 @@
             android:drawableTop="@drawable/navigation_report"
             android:gravity="center"
             android:paddingTop="@dimen/w30"
-            android:text="报告"
+            android:text="@string/rb_report"
             android:textColor="@color/white"/>
 
 
@@ -66,7 +66,7 @@
             android:drawableTop="@drawable/navigation_ihy"
             android:gravity="center"
             android:paddingTop="@dimen/w30"
-            android:text="我的"
+            android:text="@string/rb_my_ihy"
             android:textColor="@color/white"/>
     </RadioGroup>
 

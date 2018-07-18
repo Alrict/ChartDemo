@@ -86,7 +86,7 @@ public class MyInfosActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void init(Bundle savedInstanceState) {
 //        getSupportedActionBar().setVisibility(View.GONE);
-        setTitle("个人资料");
+        setTitle(getString(R.string.tv_title_person_info));
     }
 
     @Override

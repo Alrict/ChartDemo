@@ -48,7 +48,7 @@ public class SelectDateActivity extends BaseActivity {
         if (title != null)
             setTitle(title);
         else*/
-        setTitle("选择日期");
+        setTitle(getString(R.string.tv_select_date));
 
         // 2, 初始化日期格式化工具
         mFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
@@ -82,14 +82,14 @@ public class SelectDateActivity extends BaseActivity {
                     mCalendar2.setTime(date2);
                     return;
                 } catch (ParseException e) {
-                    ToastUtils.showToastDefault(this, "传入的日期格式错误!");
+                    ToastUtils.showToastDefault(this, getString(R.string.tv_toast_format_error));
                 }
             }
             try {
                 Date date = mFormat.parse(time);
                 mCalendar.setTime(date);
             } catch (ParseException e) {
-                ToastUtils.showToastDefault(this, "传入的日期格式错误!");
+                ToastUtils.showToastDefault(this, getString(R.string.tv_toast_format_error));
             }
         }
     }

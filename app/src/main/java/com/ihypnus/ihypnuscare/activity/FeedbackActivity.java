@@ -24,7 +24,7 @@ public class FeedbackActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setTitle("意见反馈");
+        setTitle(getString(R.string.tv_text_feed_back));
     }
 
     @Override

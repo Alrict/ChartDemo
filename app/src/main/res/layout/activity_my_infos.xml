@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="头像"/>
+            android:text="@string/tv_photo_img"/>
 
         <ImageView
             android:id="@+id/tv_photo_arrow"

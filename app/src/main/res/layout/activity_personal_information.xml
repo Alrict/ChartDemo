@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="昵称"
+            android:text="@string/tv_short_name"
             android:textSize="@dimen/w38"/>
         <TextView
             android:id="@+id/tv_person_name"
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="性别"
+            android:text="@string/tv_gender"
             android:textSize="@dimen/w38"/>
         <TextView
             android:id="@+id/tv_person_gender"
@@ -162,7 +162,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="身高"
+            android:text="@string/tv_heigth"
             android:textSize="@dimen/w38"/>
         <TextView
             android:id="@+id/tv_person_height"
@@ -207,7 +207,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="体重"
+            android:text="@string/tv_weigth"
             android:textSize="@dimen/w38"/>
         <TextView
             android:id="@+id/tv_person_body_weight"
@@ -251,7 +251,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="出生日期"
+            android:text="@string/tv_text_birthday"
             android:textSize="@dimen/w38"/>
         <TextView
             android:id="@+id/tv_person_date_birth"
@@ -283,7 +283,7 @@
         android:layout_marginRight="@dimen/w90"
         android:layout_marginTop="@dimen/h100"
         android:gravity="center"
-        android:text="确定"
+        android:text="@string/ok"
         android:textSize="@dimen/w54"/>
     <TextView
         android:id="@+id/tv_infos_tip1"

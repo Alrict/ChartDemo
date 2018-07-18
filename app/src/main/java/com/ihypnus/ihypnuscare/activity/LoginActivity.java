@@ -262,7 +262,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void jumpToHomeActiity() {
-        BaseDialogHelper.showLoadingDialog(this, false, "正在登入...");
+        BaseDialogHelper.showLoadingDialog(this, false, getString(R.string.tv_loading_login));
         final String countNum = mEtCount.getText().toString().trim();
         String passWord = mEtPassWord.getText().toString().trim();
         IhyRequest.login(countNum, passWord, new ResponseCallback() {

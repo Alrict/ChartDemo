@@ -66,10 +66,10 @@ public class WifiDialogActivity extends Activity {
                         setResult(RESULT_OK, intent);
                         finish();
                     } else {
-                        ToastUtils.showToastDefault("请选择有效的目标wifi");
+                        ToastUtils.showToastDefault(getString(R.string.tv_toast_show_corect_wiifi));
                     }
                 } else {
-                    ToastUtils.showToastDefault("请选择有效的目标wifi");
+                    ToastUtils.showToastDefault(getString(R.string.tv_toast_show_corect_wiifi));
                 }
 
             }

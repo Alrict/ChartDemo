@@ -32,7 +32,6 @@
         android:textSize="@dimen/w44"/>
 
 
-
     <Button
         android:id="@+id/bt_next"
         style="@style/CommentButtonStyle"
@@ -54,7 +53,7 @@
         android:layout_marginLeft="@dimen/w80"
         android:layout_marginRight="@dimen/w80"
         android:gravity="center"
-        android:text="去设置WI-FI"
+        android:text="@string/bt_set_wifi"
         android:textSize="@dimen/w54"/>
 
 </RelativeLayout>

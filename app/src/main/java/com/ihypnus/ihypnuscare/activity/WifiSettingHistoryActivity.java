@@ -68,8 +68,8 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     private Button mBtNext;
     private int PORT = 8089;
 
-//    private String IP = "192.168.43.192";
-        private String IP = "192.168.4.1"; //正式IP
+    //    private String IP = "192.168.43.192";
+    private String IP = "192.168.4.1"; //正式IP
     private static final int WIFICIPHER_NOPASS = 1;
     private static final int WIFICIPHER_WEP = 2;
     private static final int WIFICIPHER_WPA = 3;
@@ -98,7 +98,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    ToastUtils.showToastDefault("wifi配置成功");
+                    ToastUtils.showToastDefault(getString(R.string.tv_toast_wifi_set_success));
                     EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(NewDeviceInformationActivity.class));
                     EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(AddNwedeviceActivity.class));
                     finish();
@@ -124,14 +124,14 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setTitle("配置WiFi");
+        setTitle(getString(R.string.tv_title_wifi_setting));
         mScanResults = new ArrayList<>();
 
         //注册广播
         initBroadcastReceiver();
         //初始化wifiManager
         mWifiSettingManager = WifiSettingManager.getInstance().initWifiManager(this);
-        BaseDialogHelper.showLoadingDialog(this, true, "正在扫描wifi...");
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.tv_wifi_loading));
         //扫描wifi
         mWifiSettingManager.startScan();
         //wifiManager
@@ -188,7 +188,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     private boolean checkInfos() {
         String ssid = mTvSsid.getText().toString().trim();
         if (StringUtils.isNullOrEmpty(ssid)) {
-            ToastUtils.showToastDefault("请选择您想连接的wifi热点");
+            ToastUtils.showToastDefault(getString(R.string.tv_toast_target_wifi));
             return false;
         }
 
@@ -211,7 +211,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     private void jumpToWifiList() {
         if (mScanResults == null || mScanResults.size() == 0) {
             WifiSettingManager.getInstance().initWifiManager(this).startScan();
-            Toast.makeText(this, "正在获取附近wifi信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.tv_toast_get_wifi, Toast.LENGTH_SHORT).show();
             return;
         }
         Intent intent = new Intent(this, WifiDialogActivity.class);
@@ -339,20 +339,20 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
 
                     NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                     if (info.getState().equals(NetworkInfo.State.DISCONNECTED)) {
-                        showIndeterminateProgressDialog(true, "连接已断开");
+                        showIndeterminateProgressDialog(true, getString(R.string.tv_wifi_disconnect));
                     } else if (info.getState().equals(NetworkInfo.State.CONNECTED)) {
 //                        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 //                        final WifiInfo wifiInfo = wifiManager.getConnectionInfo();
 //                        showIndeterminateProgressDialog(true, "已连接到网络");
                         NetworkInfo.DetailedState state = info.getDetailedState();
                         if (state == NetworkInfo.DetailedState.CONNECTING) {
-                            showIndeterminateProgressDialog(true, "连接中...");
+                            showIndeterminateProgressDialog(true, getString(R.string.tv_connecting));
 //                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "连接中...");
                         } else if (state == NetworkInfo.DetailedState.AUTHENTICATING) {
-                            showIndeterminateProgressDialog(true, "正在验证身份信息...");
+                            showIndeterminateProgressDialog(true, getString(R.string.tv_toast_wifi_vertifying));
 //                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "正在验证身份信息...");
                         } else if (state == NetworkInfo.DetailedState.OBTAINING_IPADDR) {
-                            showIndeterminateProgressDialog(true, "正在获取IP地址..");
+                            showIndeterminateProgressDialog(true, getString(R.string.tv_wifi_ip_get));
 //                            ToastUtils.showToastDefault(WifiSettingTipActivity.this, "正在获取IP地址...");
                         } else if (state == NetworkInfo.DetailedState.CONNECTED) {
 //                            showIndeterminateProgressDialog(true, "连接成功");
@@ -360,7 +360,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
                             LogOut.d("llw", "当前链接wifi的ip:" + IP);
                             mWifiSettingManager.startScan();
                         } else if (state == NetworkInfo.DetailedState.FAILED) {
-                            showIndeterminateProgressDialog(true, "请检测您的手机是否成功连接Hypnus_AP热点");
+                            showIndeterminateProgressDialog(true, getString(R.string.tv_connect_wifi_faile));
                         }
                     }
 
@@ -418,7 +418,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
      * @param pwd  密码
      */
     private void setWifiMsg(String ssid, String pwd) {
-        BaseDialogHelper.showLoadingDialog(this, true, "正在为您的设备配置wifi信息");
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.tv_set_wifi_going));
         HashMap<String, String> map = new HashMap<>();
         map.put("ssid", ssid);
         map.put("pwd", pwd);
