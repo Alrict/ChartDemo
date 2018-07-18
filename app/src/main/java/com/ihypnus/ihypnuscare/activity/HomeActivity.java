@@ -9,11 +9,15 @@ import android.view.View;
 import android.widget.RadioGroup;
 
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.fragment.DeviceFragment;
 import com.ihypnus.ihypnuscare.fragment.MyIhyFragment;
 import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
@@ -27,6 +31,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     protected int setView() {
+        EventBus.getDefault().register(this);
         return R.layout.activity_home;
     }
 
@@ -147,5 +152,47 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         if (mMyIhyFragment != null && requestCode == 1) {
             mMyIhyFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+    @Subscribe
+    public void onEventMainThread(BaseFactory.CheckFragment event) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        int type = event.getType();
+        switch (type) {
+            case 0:
+                //设备
+                if (mDeviceFragment == null) {
+                    mDeviceFragment = new DeviceFragment();
+                    transaction.add(R.id.fragment_container, mDeviceFragment);
+                }
+                transaction.show(mDeviceFragment);
+                if (null != mReportFragment) transaction.hide(mReportFragment);
+                if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
+                break;
+
+            case 1:
+                //报告
+                if (mReportFragment == null) {
+                    mReportFragment = new ReportFragment();
+                    transaction.add(R.id.fragment_container, mReportFragment);
+                }
+                transaction.show(mReportFragment);
+                if (null != mDeviceFragment) transaction.hide(mDeviceFragment);
+                if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
+                break;
+
+            case 2:
+                //我的
+                if (mMyIhyFragment == null) {
+                    mMyIhyFragment = new MyIhyFragment();
+                    transaction.add(R.id.fragment_container, mMyIhyFragment);
+                }
+                transaction.show(mMyIhyFragment);
+                if (null != mDeviceFragment) transaction.hide(mDeviceFragment);
+                if (null != mReportFragment) transaction.hide(mReportFragment);
+                break;
+        }
+        transaction.commit();
+
     }
 }

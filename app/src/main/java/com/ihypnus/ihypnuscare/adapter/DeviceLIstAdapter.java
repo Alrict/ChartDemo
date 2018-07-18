@@ -20,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
@@ -97,15 +98,19 @@ public class DeviceLIstAdapter extends BaseAdapter<DeviceLIstAdapter.ViewHolder>
         TextView tvDeviceModel;
         TextView tvDeviceNo;
         ImageView ivSelected;
+        LinearLayout layoutContainer;
 
         public ViewHolder(View itemView, OnItemClickListener listener) {
             super(itemView);
             mListener = listener;
-            // 为ItemView添加点击事件
-            itemView.setOnClickListener(this);
+
+
+            layoutContainer = (LinearLayout) itemView.findViewById(R.id.layout_container);
             tvDeviceModel = (TextView) itemView.findViewById(R.id.tv_device_model);
             tvDeviceNo = (TextView) itemView.findViewById(R.id.tv_device_no);
             ivSelected = (ImageView) itemView.findViewById(R.id.iv_selected);
+            // 为ItemView添加点击事件
+            layoutContainer.setOnClickListener(this);
         }
 
         public void setData(DeviceListVO.ContentBean deviceInfoVO) {

@@ -252,5 +252,8 @@
     <string name="tv_wifi_ip_get">正在获取IP地址..</string>
     <string name="tv_connect_wifi_faile">请检测您的手机是否成功连接Hypnus_AP热点</string>
     <string name="tv_set_wifi_going">正在为您的设备配置wifi信息</string>
+    <string name="tv_tip_no_default_device">您目前未设置默认设备</string>
+    <string name="tv_seach_device_list">查看设备</string>
+    <string name="tv_tip_add_new_device">新增设备</string>
 
 </resources>

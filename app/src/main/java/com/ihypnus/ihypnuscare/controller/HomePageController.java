@@ -20,6 +20,7 @@ import com.ihypnus.ihypnuscare.bean.DefaultDeviceIdVO;
 import com.ihypnus.ihypnuscare.bean.UsageInfos;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
@@ -30,6 +31,8 @@ import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.widget.CircleProgressBarView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -146,17 +149,25 @@ public class HomePageController extends BaseController implements View.OnClickLi
 //                    loadDataByNet(getStartTime(currentTime), getEndTime(currentTime), null);
 
                 } else {
-                    BaseDialogHelper.showSimpleDialog(mContext, "温馨提示", "您目前未绑定任何相关设备", "前去绑定", new DialogListener() {
-                        @Override
-                        public void onClick(BaseType baseType) {
-                            jumpToBindDeviceActivity();
-                        }
+                    BaseDialogHelper.showNormalDialog(mContext, mContext.getString(R.string.tip_msg), mContext.getString(R.string.tv_tip_no_default_device),
+                            mContext.getString(R.string.tv_seach_device_list), mContext.getString(R.string.tv_tip_add_new_device), new DialogListener() {
+                                @Override
+                                public void onClick(BaseType baseType) {
+                                    if (baseType == BaseType.NO) {
+                                        //查看设备列表
+                                        EventBus.getDefault().post(new BaseFactory.CheckFragment(0));
 
-                        @Override
-                        public void onItemClick(long postion, String s) {
+                                    } else {
+                                        //新增设备
+                                        jumpToBindDeviceActivity();
+                                    }
+                                }
 
-                        }
-                    });
+                                @Override
+                                public void onItemClick(long postion, String s) {
+
+                                }
+                            });
                 }
 
             }

@@ -64,4 +64,20 @@ public class BaseFactory {
 
         }
     }
+
+    public static class CheckFragment {
+       private int type;
+
+        public CheckFragment(int type) {
+            this.type = type;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+    }
 }
