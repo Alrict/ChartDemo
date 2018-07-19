@@ -16,7 +16,6 @@ import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
@@ -31,7 +30,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     protected int setView() {
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
         return R.layout.activity_home;
     }
 

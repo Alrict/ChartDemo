@@ -56,7 +56,7 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setTitle(getResources().getString(R.string.add_new_device));
+        setTitle(R.string.add_new_device);
     }
 
     @Override

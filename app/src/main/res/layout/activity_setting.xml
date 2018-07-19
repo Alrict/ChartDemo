@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/layout_multi_language"
         style="@style/CommentRelativeLayout">
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_multi_language"
             style="@style/TextAppearanceMedium"
             android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
     <RelativeLayout
         android:id="@+id/layout_about"
         style="@style/CommentRelativeLayout">
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_about"
             style="@style/TextAppearanceMedium"
             android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
     <RelativeLayout
         android:id="@+id/layout_change_pwd"
         style="@style/CommentRelativeLayout">
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_change_pwd"
             style="@style/TextAppearanceMedium"
             android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
             style="@style/CommentDividingLineNoPadding"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
-    <Button
+    <com.ihypnus.widget.AppButton
         android:id="@+id/btn_login_out"
         style="@style/CommentButtonStyle"
         android:layout_gravity="center_horizontal"

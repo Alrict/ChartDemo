@@ -67,7 +67,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         }
         mStartTime = System.currentTimeMillis();
         // TIME 秒后跳转到下个界面
-        startCountDown(5);
+        startCountDown(3);
     }
 
     @Override

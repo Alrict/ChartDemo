@@ -28,6 +28,7 @@ import com.ihypnus.ihypnuscare.widget.VerticalViewPager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -250,7 +251,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         ToastUtils.showToastDefault(errMsg);
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
         LogOut.d("llw", "报告页面更新了语言");
         ViewUtils.updateViewLanguage(findViewById(android.R.id.content));

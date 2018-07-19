@@ -103,7 +103,7 @@
     <string name="tv_input_vertify_code">请输入验证码</string>
     <string name="tv_input_new_pass_word">请输入新密码</string>
     <string name="tv_input_new_pass_word_again">请再次输入新密码</string>
-    <string name="tv_help_center">帮助中心</string>
+    <string name="tv_help_center">Help center</string>
     <string name="tv_toast_exit_if_double">再按一次退出程序</string>
     <string name="rb_device">设备</string>
     <string name="rb_report">报告</string>
@@ -115,7 +115,7 @@
     <string name="tv_regist">立即注册？</string>
     <string name="tv_forget__pwd">忘记密码？</string>
     <string name="tv_other_login_method">其他登录方式</string>
-    <string name="tv_title_person_info">个人资料</string>
+    <string name="tv_title_person_info">personal information</string>
     <string name="tv_photo_img">头像</string>
     <string name="tv_isloading">正在加载...</string>
     <string name="tv_text_current_model">当前模式</string>
@@ -155,7 +155,7 @@
     <string name="tv_title_regist">注册</string>
     <string name="tv_select_date">选择日期</string>
     <string name="tv_toast_format_error">传入的日期格式错误!</string>
-    <string name="tv_setting">设置</string>
+    <string name="tv_setting">Settings</string>
     <string name="tv_exit_current_account">是否退出当前账户？</string>
     <string name="tv_logout_loading">正在退出登录...</string>
     <string name="tv_toast_show_corect_wiifi">请选择有效的目标wifi</string>
@@ -171,7 +171,18 @@
     <string name="tv_connect_wifi_faile">请检测您的手机是否成功连接Hypnus_AP热点</string>
     <string name="tv_set_wifi_going">正在为您的设备配置wifi信息</string>
     <string name="tv_tip_no_default_device">您目前未设置默认设备</string>
-    <string name="tv_seach_device_list">查看设备</string>
-    <string name="tv_tip_add_new_device">新增设备</string>
+    <string name="tv_seach_device_list">View device</string>
+    <string name="tv_tip_add_new_device">Add device</string>
     <string name="tv_set_as_default">set as default device</string>
+    <string name="tv_text_week_title">Weekly statistics</string>
+    <string name="tv_sleep_score">Sleep score</string>
+    <string name="tv_status_bad">不太好</string>
+    <string name="tv_status_normal">还不错</string>
+    <string name="tv_status_good">非常好</string>
+    <string name="tv_text_use_time">使用时长</string>
+    <string name="tv_text_ahi">AHI</string>
+    <string name="tv_90per_in_breath">90%吸气压力</string>
+    <string name="tv_text_suggestion">Feedback</string>
+    <string name="tv_text_device_manager">Equipment management</string>
+    <string name="setting_language_title">language settings</string>
 </resources>

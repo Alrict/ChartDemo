@@ -3,6 +3,7 @@ package com.ihypnus.ihypnuscare.actionbar;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.StringRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,6 +97,19 @@ public class ActionBar extends FrameLayout implements OnRippleCompleteListener {
         this.onActionBarListener = onActionBarListener;
     }
 
+    public void setTitle(@StringRes int strId , Drawable drawable) {
+        // float titleSize =
+        // getContext().getResources().getDimension(R.dimen.gd_arrow_offset);
+        if (mTitleView != null) {
+            mTitleView.setText(strId);
+
+            // drawable.setBounds(left, top, right, bottom)
+            if (drawable != null)
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            mTitleView.setCompoundDrawables(drawable, null, null, null);
+        }
+    }
+
     public void setTitle(CharSequence title, Drawable drawable) {
         // float titleSize =
         // getContext().getResources().getDimension(R.dimen.gd_arrow_offset);
@@ -110,6 +124,10 @@ public class ActionBar extends FrameLayout implements OnRippleCompleteListener {
 
     public void setTitle(CharSequence title) {
         mTitleView.setText(title);
+    }
+
+    public void setTitle(@StringRes int strId) {
+        mTitleView.setTextById(strId);
     }
 
     public void setLeftDrawable(int drawableId) {

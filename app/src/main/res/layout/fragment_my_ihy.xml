@@ -55,14 +55,14 @@
             android:layout_marginLeft="@dimen/w80"
             android:src="@mipmap/ic_user_white"/>
 
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_person_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/w80"
             android:layout_toRightOf="@+id/iv_icon_user"
-            android:text="个人资料"
+            android:text="@string/tv_title_person_info"
             android:textColor="@color/white"
             android:textSize="@dimen/w44"/>
         <ImageView
@@ -98,14 +98,14 @@
             android:layout_marginLeft="@dimen/w80"
             android:src="@mipmap/ic_book_help"/>
 
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/w80"
             android:layout_toRightOf="@+id/iv_ic_help"
-            android:text="帮助中心"
+            android:text="@string/tv_help_center"
             android:textColor="@color/white"
             android:textSize="@dimen/w44"/>
         <ImageView
@@ -139,13 +139,13 @@
             android:layout_marginLeft="@dimen/w80"
             android:src="@mipmap/ic_suggestions"/>
 
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/w80"
             android:layout_toRightOf="@+id/iv_ic_suggestion"
-            android:text="意见反馈"
+            android:text="@string/tv_text_suggestion"
             android:textColor="@color/white"
             android:textSize="@dimen/w44"/>
         <ImageView
@@ -179,13 +179,13 @@
             android:layout_marginLeft="@dimen/w80"
             android:src="@mipmap/ic_settings"/>
 
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/w80"
             android:layout_toRightOf="@+id/ic_settings"
-            android:text="设置"
+            android:text="@string/tv_setting"
             android:textColor="@color/white"
             android:textSize="@dimen/w44"/>
         <ImageView

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,11 @@ import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StatusBarUtil;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
-import com.ihypnus.multilanguage.MultiLanguageUtil;
 import com.umeng.analytics.MobclickAgent;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -129,6 +131,7 @@ public abstract class BaseActivity extends Activity {
      * 此方法在Activity中方法onCreate之前调用此方法
      */
     protected void preCreate() {
+        EventBus.getDefault().register(this);
     }
 
     public void setStatusBar(int color) {
@@ -211,6 +214,13 @@ public abstract class BaseActivity extends Activity {
         getSupportedActionBar().setTitle(title);
     }
 
+    @Override
+    public void setTitle(@StringRes int strId) {
+        super.setTitle(strId);
+        getSupportedActionBar().setTitle(strId);
+    }
+
+
     /**
      * 设置标题栏左上角的文案，左上角的icon可见
      */
@@ -224,12 +234,6 @@ public abstract class BaseActivity extends Activity {
         mLeftTitleText.setLayoutParams(layoutParams);
     }
 
-
-    @Override
-    public void setTitle(int titleId) {
-        super.setTitle(titleId);
-        setTitle(getString(titleId));
-    }
 
     /**
      * 设置actionBar相关事件
@@ -301,10 +305,10 @@ public abstract class BaseActivity extends Activity {
         finish();
     }
 
-    @Override
+/*    @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(MultiLanguageUtil.attachBaseContext(newBase));
-    }
+    }*/
 
     @Override
     public void onResume() {
@@ -316,5 +320,17 @@ public abstract class BaseActivity extends Activity {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
+        LogOut.d("llw", "baseActivity页面更新了语言");
+        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

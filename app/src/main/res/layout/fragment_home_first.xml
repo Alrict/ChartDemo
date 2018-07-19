@@ -19,7 +19,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_page_last"/>
-        <TextView
+         <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
         app:trackBarLength="@dimen/h32"
         app:trackBarWidth="@dimen/h4"/>
 
-    <TextView
+    <com.ihypnus.widget.AppTextView
         android:id="@+id/tv_usage_long"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
             android:text="7"
             android:textColor="@color/white"
             android:textSize="@dimen/h74"/>
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/w10"
@@ -99,7 +99,7 @@
             android:text="49"
             android:textColor="@color/white"
             android:textSize="@dimen/h74"/>
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/w10"
@@ -140,7 +140,7 @@
         android:layout_below="@id/layout_time"
         android:layout_marginTop="@dimen/h30">
 
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_useage_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -170,7 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
-            <TextView
+            <com.ihypnus.widget.AppTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -187,7 +187,7 @@
                 android:textColor="@color/gray_white"
                 android:textSize="@dimen/w38"/>
 
-            <TextView
+            <com.ihypnus.widget.AppTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/h40"
@@ -211,7 +211,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
-            <TextView
+            <com.ihypnus.widget.AppTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -228,7 +228,7 @@
                 android:textColor="@color/gray_white"
                 android:textSize="@dimen/w38"/>
 
-            <TextView
+            <com.ihypnus.widget.AppTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/h40"
@@ -252,7 +252,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
-            <TextView
+            <com.ihypnus.widget.AppTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

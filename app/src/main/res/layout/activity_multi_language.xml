@@ -9,7 +9,8 @@
         style="@style/CommentDividingLineNoPadding"/>
     <RelativeLayout
         android:id="@+id/layout_followsytem"
-        style="@style/CommentRelativeLayout">
+        style="@style/CommentRelativeLayout"
+        android:visibility="gone">
         <TextView
             android:id="@+id/tv_followsystem"
             style="@style/TextAppearanceMedium"

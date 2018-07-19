@@ -62,7 +62,7 @@ public class ChanedPassWordActivity extends BaseActivity implements CompoundButt
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setTitle(getString(R.string.tv_modify_text));
+        setTitle(R.string.tv_modify_text);
     }
 
     @Override

@@ -10,7 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
+import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.multilanguage.MultiLanguageUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * @Package com.ihypnus.ihypnuscare.fragment
@@ -129,5 +135,11 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(MultiLanguageUtil.attachBaseContext(context));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
+        LogOut.d("llw", "fragment页面更新了语言");
+        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
     }
 }

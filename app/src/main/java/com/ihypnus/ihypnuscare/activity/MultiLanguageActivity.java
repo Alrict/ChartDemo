@@ -1,6 +1,9 @@
 package com.ihypnus.ihypnuscare.activity;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -8,10 +11,13 @@ import android.widget.RelativeLayout;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
+import com.ihypnus.multilanguage.CommSharedUtil;
 import com.ihypnus.multilanguage.LanguageType;
 import com.ihypnus.multilanguage.MultiLanguageUtil;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Locale;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -122,27 +128,31 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
             case R.id.layout_followsytem:
                 setSimplifiedVisible();
                 selectedLanguage = LanguageType.LANGUAGE_FOLLOW_SYSTEM;
+                switchLanguage(Locale.CHINA);
 
                 break;
             case R.id.layout_simplified_chinese:
                 setSimplifiedVisible();
                 selectedLanguage = LanguageType.LANGUAGE_CHINESE_SIMPLIFIED;
+                switchLanguage(Locale.SIMPLIFIED_CHINESE);
 
                 break;
 
             case R.id.layout_traditional_chinese:
                 setTraditionalVisible();
                 selectedLanguage = LanguageType.LANGUAGE_CHINESE_TRADITIONAL;
+                switchLanguage(Locale.TRADITIONAL_CHINESE);
                 break;
 
             case R.id.layout_english:
                 setEnglishVisible();
                 selectedLanguage = LanguageType.LANGUAGE_EN;
+                switchLanguage(Locale.ENGLISH);
                 break;
         }
 
-        MultiLanguageUtil.getInstance().updateLanguage(selectedLanguage);
-
+//        MultiLanguageUtil.getInstance().updateLanguage(selectedLanguage);
+        CommSharedUtil.getInstance(this).putInt(MultiLanguageUtil.SAVE_LANGUAGE, selectedLanguage);
         EventBus.getDefault().post(new BaseFactory.UpdateLanguageEvent());
       /*  Intent intent = new Intent(MultiLanguageActivity.this, SettingActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -150,5 +160,13 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
         if (selectedLanguage == LanguageType.LANGUAGE_FOLLOW_SYSTEM) {
 //            System.exit(0);
         }*/
+    }
+
+    public void switchLanguage(Locale locale) {
+        Configuration config = getResources().getConfiguration();// 获得设置对象
+        Resources resources = getResources();// 获得res资源对象
+        DisplayMetrics dm = resources.getDisplayMetrics();// 获得屏幕参数：主要是分辨率，像素等。
+        config.locale = locale; // 简体中文
+        resources.updateConfiguration(config, dm);
     }
 }

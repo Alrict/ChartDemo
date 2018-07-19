@@ -18,10 +18,13 @@ import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -41,6 +44,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected int setView() {
+//        EventBus.getDefault().register(this);
         return R.layout.activity_setting;
     }
 
@@ -56,7 +60,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setTitle(getString(R.string.tv_setting));
+        setTitle(R.string.tv_setting);
     }
 
     @Override
@@ -130,6 +134,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private void jumpToActivity(Class<?> cls) {
         Intent intent = new Intent(this, cls);
         startActivity(intent);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
+        LogOut.d("llw", "SettingActivity页面更新了语言");
+        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
     }
 
 }

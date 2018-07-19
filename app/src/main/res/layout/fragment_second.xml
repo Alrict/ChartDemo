@@ -13,9 +13,9 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="visible">
-        <TextView
+        <com.ihypnus.widget.AppTextView
             style="@style/TextAppearanceMedium"
-            android:text="周统计数据"
+            android:text="@string/tv_text_week_title"
             android:textSize="@dimen/w34"/>
         <TextView
             android:id="@+id/tv_date"
@@ -51,11 +51,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
-            <TextView
+            <com.ihypnus.widget.AppTextView
                 style="@style/TextAppearanceMedium"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/h30"
-                android:text="睡眠分数"/>
+                android:text="@string/tv_sleep_score"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -74,7 +74,7 @@
         <TextView
             style="@style/TextAppearanceMedium"
             android:layout_marginLeft="@dimen/w10"
-            android:text="不太好"
+            android:text="@string/tv_status_bad"
             android:textColor="@color/gray_white"
             android:textSize="@dimen/w38"/>
         <TextView
@@ -85,7 +85,7 @@
         <TextView
             style="@style/TextAppearanceMedium"
             android:layout_marginLeft="@dimen/w10"
-            android:text="还不错"
+            android:text="@string/tv_status_normal"
             android:textColor="@color/gray_white"
             android:textSize="@dimen/w38"/>
         <TextView
@@ -96,7 +96,7 @@
         <TextView
             style="@style/TextAppearanceMedium"
             android:layout_marginLeft="@dimen/w10"
-            android:text="非常好"
+            android:text="@string/tv_status_good"
             android:textColor="@color/gray_white"
             android:textSize="@dimen/w38"/>
     </LinearLayout>
@@ -128,12 +128,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
-            <TextView
+            <com.ihypnus.widget.AppTextView
                 style="@style/TextAppearanceMedium"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/h30"
                 android:layout_marginTop="@dimen/h30"
-                android:text="使用时长"/>
+                android:text="@string/tv_text_use_time"/>
         </LinearLayout>
     </LinearLayout>
 

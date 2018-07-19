@@ -10,12 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/h160"
     >
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_device_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="设备管理"
+            android:text="@string/tv_text_device_manager"
             android:textColor="@color/white"
             android:textSize="@dimen/w54"/>
 
@@ -45,7 +45,7 @@
         android:layout_marginRight="@dimen/w96"
         android:layout_marginTop="@dimen/h178"/>
 
-    <Button
+    <com.ihypnus.widget.AppButton
         android:id="@+id/btn_add"
         style="@style/CommentButtonStyle"
         android:layout_width="match_parent"
