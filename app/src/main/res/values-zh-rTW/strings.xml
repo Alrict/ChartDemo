@@ -266,5 +266,6 @@
     <string name="tv_90per_in_breath">90%吸氣壓力</string>
     <string name="tv_text_suggestion">意見反饋</string>
     <string name="tv_text_device_manager">設備管理</string>
+    <string name="tv_reset_pwd_succee">修改密码成功,请重新登录</string>
 
 </resources>

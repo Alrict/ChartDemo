@@ -127,7 +127,11 @@ public class BaseDialogHelper {
                 if (!TextUtils.isEmpty(ButtonName)) {
                     btnOk.setText(ButtonName);
                 }
-                title.setText(mTitle);
+                if (StringUtils.isNullOrEmpty(mTitle)) {
+                    title.setVisibility(View.GONE);
+                } else {
+                    title.setText(mTitle);
+                }
                 message.setText(mMessage);
                 btnOk.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -289,7 +293,7 @@ public class BaseDialogHelper {
                         String endTime = list.get(position).getEndTime();
 
                         if (listener != null) {
-                            listener.onItemClick(position, starttime+","+endTime);
+                            listener.onItemClick(position, starttime + "," + endTime);
                         }
                         kyeBaseDialog.dismiss();
                     }

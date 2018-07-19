@@ -185,4 +185,5 @@
     <string name="tv_text_suggestion">Feedback</string>
     <string name="tv_text_device_manager">Equipment management</string>
     <string name="setting_language_title">language settings</string>
+    <string name="tv_reset_pwd_succee">修改密码成功,请重新登录</string>
 </resources>

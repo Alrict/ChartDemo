@@ -147,6 +147,7 @@ UMConfigure.init调用中appkey和channel参数请置为null）。
         if (loginBean == null) {
             Constants.JSESSIONID = "";
             Constants.DEVICEID = "";
+            Volley.me.removeInitRequestHead("Cookie");
             return;
         }
         String jsessionid = loginBean.getJSESSIONID();

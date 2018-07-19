@@ -17,6 +17,8 @@ import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
+import com.ihypnus.ihypnuscare.iface.BaseType;
+import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
@@ -136,9 +138,19 @@ public class ChanedPassWordActivity extends BaseActivity implements CompoundButt
 
     }
 
-    private void jumpToActivity(Class<?> cls) {
-        Intent intent = new Intent(this, cls);
-        startActivity(intent);
+    private void jumpToActivity(final Class<?> cls) {
+        BaseDialogHelper.showSimpleDialog(this, null, getString(R.string.tv_reset_pwd_succee), getString(R.string.ok), new DialogListener() {
+            @Override
+            public void onClick(BaseType baseType) {
+                Intent intent = new Intent(ChanedPassWordActivity.this, cls);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemClick(long postion, String s) {
+
+            }
+        });
     }
 
     @Override

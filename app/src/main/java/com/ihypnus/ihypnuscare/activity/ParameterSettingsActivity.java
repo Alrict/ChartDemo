@@ -362,6 +362,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 BaseDialogHelper.showSimpleDialog(ParameterSettingsActivity.this, getString(R.string.tv_tittle_setparmeter), getString(R.string.tv_tip_use_new_setting), getString(R.string.ok), new DialogListener() {
                     @Override
                     public void onClick(BaseType baseType) {
+                        setResult(RESULT_OK);
                         finish();
                     }
 

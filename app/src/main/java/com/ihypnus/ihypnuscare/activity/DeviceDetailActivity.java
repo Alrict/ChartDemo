@@ -78,6 +78,10 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void loadData() {
+        loadParameterInfos();
+    }
+
+    private void loadParameterInfos() {
         BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.onloading));
         IhyRequest.getShadowDevice(Constants.JSESSIONID, true, mDeviceId, new ResponseCallback() {
             @Override
@@ -148,7 +152,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
         intent.putExtra("DEVICE_ID", mDeviceId);
 
 
-        startActivity(intent);
+        startActivityForResult(intent, 122);
     }
 
     /**
@@ -157,5 +161,13 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
     private void jumpToWifi() {
         Intent intent = new Intent(this, WifiSettingHistoryActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 122) {
+            loadParameterInfos();
+        }
     }
 }

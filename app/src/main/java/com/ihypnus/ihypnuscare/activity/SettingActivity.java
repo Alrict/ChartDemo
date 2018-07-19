@@ -131,9 +131,20 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         });
     }
 
-    private void jumpToActivity(Class<?> cls) {
-        Intent intent = new Intent(this, cls);
-        startActivity(intent);
+    private void jumpToActivity(final Class<?> cls) {
+        BaseDialogHelper.showSimpleDialog(this, null, getString(R.string.tv_reset_pwd_succee), getString(R.string.ok), new DialogListener() {
+            @Override
+            public void onClick(BaseType baseType) {
+                Intent intent = new Intent(SettingActivity.this, cls);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemClick(long postion, String s) {
+
+            }
+        });
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
