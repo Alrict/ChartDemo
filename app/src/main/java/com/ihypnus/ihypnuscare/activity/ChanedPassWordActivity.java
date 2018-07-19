@@ -125,7 +125,7 @@ public class ChanedPassWordActivity extends BaseActivity implements CompoundButt
                 MobclickAgent.onProfileSignOff();
                 EventBus.getDefault().post(new BaseFactory.CloseAllEvent());
                 IhyApplication.mInstance.setUser(null);
-                jumpToActivity(LoginActivity.class);
+                jumpToActivity(LoginActivity.class,1);
 
             }
 
@@ -138,7 +138,7 @@ public class ChanedPassWordActivity extends BaseActivity implements CompoundButt
 
     }
 
-    private void jumpToActivity(final Class<?> cls) {
+    private void jumpToActivity(final Class<?> cls, int type) {
         BaseDialogHelper.showSimpleDialog(this, null, getString(R.string.tv_reset_pwd_succee), getString(R.string.ok), new DialogListener() {
             @Override
             public void onClick(BaseType baseType) {

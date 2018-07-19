@@ -81,14 +81,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         if (ViewUtils.isFastDoubleClick()) return;
         switch (v.getId()) {
             case R.id.layout_multi_language:
-                jumpToActivity(MultiLanguageActivity.class);
+                jumpToActivity(MultiLanguageActivity.class, 0);
                 break;
 
             case R.id.layout_about:
-                jumpToActivity(AboutCompanyInfosActivity.class);
+                jumpToActivity(AboutCompanyInfosActivity.class, 0);
                 break;
             case R.id.layout_change_pwd:
-                jumpToActivity(ChanedPassWordActivity.class);
+                jumpToActivity(ChanedPassWordActivity.class, 0);
                 break;
             case R.id.btn_login_out:
                 BaseDialogHelper.showNormalDialog(SettingActivity.this, getResources().getString(R.string.tip_msg), getString(R.string.tv_exit_current_account), getString(R.string.ok), getString(R.string.cancel), new DialogListener() {
@@ -120,7 +120,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 Volley.me.removeInitRequestHead("Accept");
                 EventBus.getDefault().post(new BaseFactory.CloseAllEvent());
                 IhyApplication.mInstance.setUser(null);
-                jumpToActivity(LoginActivity.class);
+                jumpToActivity(LoginActivity.class, 1);
             }
 
             @Override
@@ -131,19 +131,25 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         });
     }
 
-    private void jumpToActivity(final Class<?> cls) {
-        BaseDialogHelper.showSimpleDialog(this, null, getString(R.string.tv_reset_pwd_succee), getString(R.string.ok), new DialogListener() {
-            @Override
-            public void onClick(BaseType baseType) {
-                Intent intent = new Intent(SettingActivity.this, cls);
-                startActivity(intent);
-            }
+    private void jumpToActivity(final Class<?> cls, int type) {
+        if (type == 0) {
+            Intent intent = new Intent(SettingActivity.this, cls);
+            startActivity(intent);
+        } else {
+            BaseDialogHelper.showSimpleDialog(this, null, getString(R.string.tv_reset_pwd_succee), getString(R.string.ok), new DialogListener() {
+                @Override
+                public void onClick(BaseType baseType) {
+                    Intent intent = new Intent(SettingActivity.this, cls);
+                    startActivity(intent);
+                }
 
-            @Override
-            public void onItemClick(long postion, String s) {
+                @Override
+                public void onItemClick(long postion, String s) {
 
-            }
-        });
+                }
+            });
+        }
+
 
     }
 
