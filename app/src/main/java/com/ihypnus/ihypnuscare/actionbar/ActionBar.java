@@ -26,7 +26,7 @@ public class ActionBar extends FrameLayout implements OnRippleCompleteListener {
     private RippleView mRightView;
     private RippleView mRightView2;
     private ImageView mRightIcon;
-    private TextView mRightText;
+    private MarqueeTextView mRightText;
     private TextView mRightText2;
     private OnActionBarListener onActionBarListener;
     /**
@@ -83,7 +83,7 @@ public class ActionBar extends FrameLayout implements OnRippleCompleteListener {
         mLeftIcon = (ImageView) findViewById(R.id.action_left_img);
         mRightView = (RippleView) findViewById(R.id.action_bar_right);
         mRightView2 = (RippleView) findViewById(R.id.action_bar_right2);
-        mRightText = (TextView) findViewById(R.id.action_right_txt);
+        mRightText = (MarqueeTextView) findViewById(R.id.action_right_txt);
         mRightText2 = (TextView) findViewById(R.id.action_right_txt2);
         mRightIcon = (ImageView) findViewById(R.id.action_right_img);
         mMiddleView.setEnabled(false);
@@ -176,7 +176,7 @@ public class ActionBar extends FrameLayout implements OnRippleCompleteListener {
         mRightView.setEnabled(true);
         mRightIcon.setVisibility(View.GONE);
         mRightText.setVisibility(View.VISIBLE);
-        mRightText.setText(textId);
+        mRightText.setTextById(textId);
     }
 
     public void setRightText(String text) {

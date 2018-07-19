@@ -61,7 +61,7 @@ public class ClipActivity extends BaseActivity {
 
 
         ActionBar bar = getSupportedActionBar();
-        bar.setRightText(getString(R.string.btn_confirm));
+        bar.setRightText(R.string.btn_confirm);
         bar.getRightText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

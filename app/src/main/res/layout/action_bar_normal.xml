@@ -98,7 +98,7 @@
             android:minWidth="@dimen/w140"
             app:rv_centered="true">
 
-            <TextView
+            <com.ihypnus.ihypnuscare.actionbar.MarqueeTextView
                 android:id="@+id/action_right_txt"
                 style="@style/ActionBarContentText"
                 android:layout_width="wrap_content"

@@ -15,7 +15,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/w160">
-        <TextView
+        <com.ihypnus.widget.AppTextView
             style="@style/TextAppearanceMedium"
             android:text="@string/tv_text_model"
             android:textColor="@color/white"/>
@@ -38,7 +38,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/w160">
-        <TextView
+        <com.ihypnus.widget.AppTextView
             style="@style/TextAppearanceMedium"
             android:text="@string/tv_text_version"
             android:textColor="@color/white"/>

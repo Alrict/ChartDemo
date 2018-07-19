@@ -29,7 +29,7 @@
         android:background="#2A3354"
         android:orientation="horizontal">
 
-        <RadioButton
+        <com.ihypnus.widget.AppRadioButton
             android:id="@+id/rb_device"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -44,7 +44,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/w44"/>
 
-        <RadioButton
+        <com.ihypnus.widget.AppRadioButton
             android:id="@+id/rb_report"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -57,7 +57,7 @@
             android:textColor="@color/white"/>
 
 
-        <RadioButton
+        <com.ihypnus.widget.AppRadioButton
             android:id="@+id/rb_my_ihy"
             android:layout_width="0dp"
             android:layout_height="match_parent"

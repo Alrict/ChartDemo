@@ -41,8 +41,6 @@ import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.activity.ClipActivity;
-import com.ihypnus.ihypnuscare.activity.FeedbackActivity;
-import com.ihypnus.ihypnuscare.activity.HelpCenterActivity;
 import com.ihypnus.ihypnuscare.activity.PersonalInformationActivity;
 import com.ihypnus.ihypnuscare.activity.SettingActivity;
 import com.ihypnus.ihypnuscare.bean.OssTokenVO;
@@ -163,11 +161,13 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                 break;
 
             case R.id.layout_help:
-                jumpToActivity(102, HelpCenterActivity.class);
+                BaseDialogHelper.showMsgTipDialog(mAct, "暂未开放次功能,敬请期待!");
+//                jumpToActivity(102, HelpCenterActivity.class);
                 break;
 
             case R.id.layout_suggestions:
-                jumpToActivity(103, FeedbackActivity.class);
+                BaseDialogHelper.showMsgTipDialog(mAct, "暂未开放次功能,敬请期待!");
+//                jumpToActivity(103, FeedbackActivity.class);
                 break;
 
             case R.id.layout_settings:

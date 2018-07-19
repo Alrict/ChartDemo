@@ -3,13 +3,12 @@ package com.ihypnus.ihypnuscare;
 import android.app.Application;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.util.DisplayMetrics;
 
-import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.OSS;
-import com.alibaba.sdk.android.oss.OSSClient;
-import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
-import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 import com.ihypnus.ihypnuscare.bean.LoginBean;
@@ -33,6 +32,8 @@ import com.umeng.commonsdk.UMConfigure;
 import com.wenming.library.LogReport;
 import com.wenming.library.save.imp.CrashWriter;
 import com.wenming.library.util.LogUtil;
+
+import java.util.Locale;
 
 
 /**
@@ -60,21 +61,17 @@ public class IhyApplication extends Application {
         initImageLoadConfig(this);
         initVariable();
         initLogReport();
-//        initOSSClient();
+        //设置语言
+        Locale languageLocale = MultiLanguageUtil.getInstance().getLanguageLocale();
+        switchLanguage(languageLocale);
     }
 
-    private void initOSSClient() {
-        String endpoint = "http://oss-cn-shanghai.aliyuncs.com";
-        String stsServer = "hypnus-app-resource.oss-cn-shanghai.aliyuncs.com";
-//推荐使用OSSAuthCredentialsProvider。token过期可以及时更新
-        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
-        //该配置类如果不设置，会有默认配置，具体可看该类
-        ClientConfiguration conf = new ClientConfiguration();
-        conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒
-        conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒
-        conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
-        conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
-        mOssClient = new OSSClient(getApplicationContext(), endpoint, credentialProvider);
+    public void switchLanguage(Locale locale) {
+        Configuration config = getResources().getConfiguration();// 获得设置对象
+        Resources resources = getResources();// 获得res资源对象
+        DisplayMetrics dm = resources.getDisplayMetrics();// 获得屏幕参数：主要是分辨率，像素等。
+        config.locale = locale; // 简体中文
+        resources.updateConfiguration(config, dm);
     }
 
     /**
