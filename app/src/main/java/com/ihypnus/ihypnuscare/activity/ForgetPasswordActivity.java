@@ -24,16 +24,17 @@ import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
-import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.umeng.analytics.MobclickAgent;
 
-import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -203,10 +204,6 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                //登出
-                MobclickAgent.onProfileSignOff();
-                EventBus.getDefault().post(new BaseFactory.CloseAllEvent());
-                IhyApplication.mInstance.setUser(null);
                 jumpToActivity(LoginActivity.class);
             }
 
@@ -222,6 +219,9 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
         BaseDialogHelper.showSimpleDialog(this, null, getString(R.string.tv_reset_pwd_succee), getString(R.string.ok), new DialogListener() {
             @Override
             public void onClick(BaseType baseType) {
+                //登出
+                MobclickAgent.onProfileSignOff();
+                IhyApplication.mInstance.setUser(null);
                 Intent intent = new Intent(ForgetPasswordActivity.this, cls);
                 startActivity(intent);
             }
@@ -243,6 +243,18 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 ToastUtils.showToastDefault(var3);
+                String s2 = String.valueOf(var1);
+                try {
+                    JSONObject jsonObject = new JSONObject(s2);
+                    String jsessionid = jsonObject.getString("JSESSIONID");
+                    if (StringUtils.isNullOrEmpty(jsessionid)) {
+                        jsessionid = "";
+                    }
+                    Constants.JSESSIONID = jsessionid;
+                    LogOut.d("llw", "获取手机验证码jsessionid:" + jsessionid);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 mBtnVerificationCode.setVisibility(View.VISIBLE);
                 mIvCodeLoading.setVisibility(View.GONE);
                 mIvCodeLoading.clearAnimation();
@@ -274,7 +286,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
 
         @Override
         public void onTick(long l) {
-            String tip= String.valueOf(l / 1000) + getString(R.string.tv_text_second);
+            String tip = String.valueOf(l / 1000) + getString(R.string.tv_text_second);
             mBtnVerificationCode.setText(tip);
         }
 

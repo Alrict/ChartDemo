@@ -124,6 +124,7 @@
         <activity
             android:name="com.ihypnus.ihypnuscare.activity.HomeActivity"
             android:configChanges="layoutDirection|locale"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
         <!--wifi输入密码弹窗-->

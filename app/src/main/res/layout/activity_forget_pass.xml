@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:padding="@dimen/w8"
-                android:src="@drawable/login_accout_clear_selector"
+                android:src="@mipmap/icon_delete"
                 android:visibility="invisible"/>
 
         </LinearLayout>

@@ -186,4 +186,10 @@
     <string name="tv_text_device_manager">Equipment management</string>
     <string name="setting_language_title">language settings</string>
     <string name="tv_reset_pwd_succee">修改密码成功,请重新登录</string>
+    <string name="tv_zdxqyl">最大吸气压力</string>
+    <string name="tv_zdylzc">最大压力支持</string>
+    <string name="tv_zdhqyl">最大呼气压力</string>
+    <string name="tv_cflmd">吸气灵敏度</string>
+    <string name="tv_breath_rate">呼吸频率</string>
+    <string name="tv_breath_ration">呼吸比</string>
 </resources>

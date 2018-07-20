@@ -22,7 +22,6 @@ import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -117,9 +116,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                Volley.me.removeInitRequestHead("Accept");
-                EventBus.getDefault().post(new BaseFactory.CloseAllEvent());
-                IhyApplication.mInstance.setUser(null);
+
                 jumpToActivity(LoginActivity.class, 1);
             }
 
@@ -136,18 +133,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             Intent intent = new Intent(SettingActivity.this, cls);
             startActivity(intent);
         } else {
-            BaseDialogHelper.showSimpleDialog(this, null, getString(R.string.tv_reset_pwd_succee), getString(R.string.ok), new DialogListener() {
-                @Override
-                public void onClick(BaseType baseType) {
-                    Intent intent = new Intent(SettingActivity.this, cls);
-                    startActivity(intent);
-                }
-
-                @Override
-                public void onItemClick(long postion, String s) {
-
-                }
-            });
+            Volley.me.removeInitRequestHead("Accept");
+            IhyApplication.mInstance.setUser(null);
+            Intent intent = new Intent(SettingActivity.this, cls);
+            startActivity(intent);
         }
 
 

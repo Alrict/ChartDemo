@@ -265,6 +265,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         BaseDialogHelper.showLoadingDialog(this, false, getString(R.string.tv_loading_login));
         final String countNum = mEtCount.getText().toString().trim();
         String passWord = mEtPassWord.getText().toString().trim();
+        IhyApplication.mInstance.setUser(null);
         IhyRequest.login(countNum, passWord, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {

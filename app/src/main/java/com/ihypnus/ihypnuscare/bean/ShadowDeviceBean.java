@@ -98,7 +98,8 @@ public class ShadowDeviceBean extends BaseModel implements Parcelable {
     private int light;
     private int machine;
     private int boostslope;
-    private int pressure_support;
+    private int pressure_support;//最大压力支持
+    private int defind_1;//最小压力支持
     private int cure_delay;
     private int apap_min_p;
     private int st_in_p;
@@ -146,6 +147,7 @@ public class ShadowDeviceBean extends BaseModel implements Parcelable {
         machine = in.readInt();
         boostslope = in.readInt();
         pressure_support = in.readInt();
+        defind_1 = in.readInt();
         cure_delay = in.readInt();
         apap_min_p = in.readInt();
         st_in_p = in.readInt();
@@ -572,10 +574,19 @@ public class ShadowDeviceBean extends BaseModel implements Parcelable {
         dest.writeInt(machine);
         dest.writeInt(boostslope);
         dest.writeInt(pressure_support);
+        dest.writeInt(defind_1);
         dest.writeInt(cure_delay);
         dest.writeInt(apap_min_p);
         dest.writeInt(st_in_p);
         dest.writeInt(flight_mode);
         dest.writeInt(autos_min_p);
+    }
+
+    public int getDefind_1() {
+        return defind_1;
+    }
+
+    public void setDefind_1(int defind_1) {
+        this.defind_1 = defind_1;
     }
 }

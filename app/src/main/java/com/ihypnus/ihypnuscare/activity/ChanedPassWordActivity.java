@@ -16,15 +16,12 @@ import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
-import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
-
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -121,10 +118,6 @@ public class ChanedPassWordActivity extends BaseActivity implements CompoundButt
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                //登出
-                MobclickAgent.onProfileSignOff();
-                EventBus.getDefault().post(new BaseFactory.CloseAllEvent());
-                IhyApplication.mInstance.setUser(null);
                 jumpToActivity(LoginActivity.class,1);
 
             }
@@ -142,8 +135,13 @@ public class ChanedPassWordActivity extends BaseActivity implements CompoundButt
         BaseDialogHelper.showSimpleDialog(this, null, getString(R.string.tv_reset_pwd_succee), getString(R.string.ok), new DialogListener() {
             @Override
             public void onClick(BaseType baseType) {
+                //登出
+                MobclickAgent.onProfileSignOff();
+                IhyApplication.mInstance.setUser(null);
+//                EventBus.getDefault().post(new BaseFactory.CloseAllEvent());
                 Intent intent = new Intent(ChanedPassWordActivity.this, cls);
                 startActivity(intent);
+
             }
 
             @Override

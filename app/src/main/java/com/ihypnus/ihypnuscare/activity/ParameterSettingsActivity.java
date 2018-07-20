@@ -55,6 +55,10 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
     private TextView mTvValue10;
     private TextView mTvTitle11;
     private TextView mTvValue11;
+    private TextView mTvTitle13;
+    private TextView mTvValue13;
+    private TextView mTvTitle14;
+    private TextView mTvValue14;
     private Button mBtnCancel;
     private Button mBtnConfirm;
     private static final String[] sCurrentModel = {"CPAP", "APAP", "S", "Auto-S", "T", "ST"};
@@ -71,6 +75,9 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
     private ArrayList<String> mComfortLv;
     private Map<String, Object> mParams = new HashMap<String, Object>();
     private ArrayList<String> mPressureRelease;
+    private ShadowDeviceBean mDeviceBean;
+    private LinearLayout mLayoutContent13;
+    private LinearLayout mLayoutContent14;
 
     @Override
     protected int setView() {
@@ -101,6 +108,10 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
         mTvValue10 = (TextView) findViewById(R.id.tv_value10);
         mTvTitle11 = (TextView) findViewById(R.id.tv_title11);
         mTvValue11 = (TextView) findViewById(R.id.tv_value11);
+        mTvTitle13 = (TextView) findViewById(R.id.tv_title13);
+        mTvValue13 = (TextView) findViewById(R.id.tv_value13);
+        mTvTitle14 = (TextView) findViewById(R.id.tv_title14);
+        mTvValue14 = (TextView) findViewById(R.id.tv_value14);
         mBtnCancel = (Button) findViewById(R.id.btn_cancel);
         mBtnConfirm = (Button) findViewById(R.id.btn_confirm);
         mLayoutContent03 = (LinearLayout) findViewById(R.id.layout_content03);
@@ -108,6 +119,8 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
         mLayoutContent09 = (LinearLayout) findViewById(R.id.layout_content09);
         mLayoutContent10 = (LinearLayout) findViewById(R.id.layout_content10);
         mLayoutContent11 = (LinearLayout) findViewById(R.id.layout_content11);
+        mLayoutContent13 = (LinearLayout) findViewById(R.id.layout_content13);
+        mLayoutContent14 = (LinearLayout) findViewById(R.id.layout_content14);
     }
 
     @Override
@@ -147,11 +160,11 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
         String[] expiratory_pressure_release = getResources().getStringArray(R.array.expiratory_pressure_release);
         mPressureRelease.addAll(Arrays.asList(expiratory_pressure_release));
 
-        ShadowDeviceBean deviceBean = intent.getParcelableExtra("DEVICE_BEAN");
-        if (deviceBean == null) {
+        mDeviceBean = intent.getParcelableExtra("DEVICE_BEAN");
+        if (mDeviceBean == null) {
             getParameterInfos(deviceId);
         } else {
-            bindView(deviceBean);
+            bindView(mDeviceBean);
         }
     }
 
@@ -180,8 +193,8 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ShadowDeviceBean deviceBean = (ShadowDeviceBean) var1;
-                bindView(deviceBean);
+                mDeviceBean = (ShadowDeviceBean) var1;
+                bindView(mDeviceBean);
             }
 
             @Override
@@ -205,6 +218,8 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
 
                 mLayoutContent03.setVisibility(View.INVISIBLE);
                 mLayoutContent04.setVisibility(View.INVISIBLE);
+                mLayoutContent13.setVisibility(View.INVISIBLE);
+                mLayoutContent14.setVisibility(View.INVISIBLE);
 
                 mTvTitle05.setText(R.string.tv_text_qsyl);
                 mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
@@ -222,6 +237,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mLayoutContent10.setVisibility(View.INVISIBLE);
                 mLayoutContent11.setVisibility(View.INVISIBLE);
 
+
                 break;
 
             case 1:
@@ -233,6 +249,9 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
 
                 mTvTitle04.setText(R.string.tv_text_zdyl);
                 mTvValue04.setText(initTextView(deviceBean.getApap_max_p() + ""));
+
+                mLayoutContent13.setVisibility(View.INVISIBLE);
+                mLayoutContent14.setVisibility(View.INVISIBLE);
 
                 mTvTitle05.setText(R.string.tv_text_start_pressure);
                 mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
@@ -252,40 +271,152 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 break;
 
             case 2:
-            case 3:
-            case 4:
-            case 5:
-                //ST
-                //T
-                //S //Auto-S
+                //S
+                //吸气压力
                 mTvTitle02.setText(R.string.tv_text_xqyl);
                 mTvValue02.setText(initTextView(deviceBean.getBpap_in_p() + ""));
 
                 mLayoutContent03.setVisibility(View.INVISIBLE);
-
+                //呼气压力
                 mTvTitle04.setText(R.string.tv_text_hqyl);
                 mTvValue04.setText(initTextView(deviceBean.getBpap_ex_p() + ""));
-
+                //起始压力
                 mTvTitle05.setText(R.string.tv_text_qsyl);
                 mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
-
+                //延迟时间
                 mTvTitle06.setText(R.string.tv_text_ycsj);
                 mTvValue06.setText(deviceBean.getCure_delay() + "min");
-
+                //呼气舒适度
                 mTvTitle07.setText(R.string.tv_hqssd);
                 mTvValue07.setText(deviceBean.getBreath_fit() + "");
-
+                //升压速度
                 mTvTitle08.setText(R.string.tv_text_sysd);
                 mTvValue08.setText(deviceBean.getBoostslope() + "");
-
-                mTvTitle09.setText(R.string.tv_text_xqlmd);
+                //吸气灵敏度 todo 取哪个字段?
+                mTvTitle09.setText(R.string.tv_cflmd);
                 mTvValue09.setText(deviceBean.getInhale_sensitive() + "");
-
+                //降压速度
                 mTvTitle10.setText(R.string.tv_text_down_speed);
                 mTvValue10.setText(deviceBean.getBuckslope() + "");
-
+                //呼气灵敏度
                 mTvTitle11.setText(R.string.tv_hqlmd);
                 mTvValue11.setText(deviceBean.getExhale_sensitive() + "");
+                break;
+
+            case 3:
+                //Auto-S
+                //最大吸气压力
+                mTvTitle02.setText(R.string.tv_zdxqyl);
+                mTvValue02.setText(initTextView(deviceBean.getAutos_max_p() + ""));
+                //最大压力支持
+                mLayoutContent03.setVisibility(View.VISIBLE);
+                mTvTitle03.setText(R.string.tv_zdylzc);
+                mTvValue03.setText(initTextView(deviceBean.getPressure_support() + ""));
+                //最大呼气压力
+                mTvTitle04.setText(R.string.tv_zdhqyl);
+                mTvValue04.setText(initTextView(deviceBean.getAutos_min_p() + ""));
+                //最小压力支持 todo 换字段
+                mLayoutContent13.setVisibility(View.VISIBLE);
+                mTvTitle13.setText(R.string.tv_text_qsyl);
+                mTvValue13.setText(initTextView(deviceBean.getDefind_1() + ""));
+                mLayoutContent14.setVisibility(View.INVISIBLE);
+
+                //起始压力
+                mTvTitle05.setText(R.string.tv_text_qsyl);
+                mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
+                //延迟时间
+                mTvTitle06.setText(R.string.tv_text_ycsj);
+                mTvValue06.setText(deviceBean.getCure_delay() + "min");
+                //呼气舒适度
+                mTvTitle07.setText(R.string.tv_hqssd);
+                mTvValue07.setText(deviceBean.getBreath_fit() + "");
+                //升压速度
+                mTvTitle08.setText(R.string.tv_text_sysd);
+                mTvValue08.setText(deviceBean.getBoostslope() + "");
+                //吸气灵敏度
+                mTvTitle09.setText(R.string.tv_cflmd);
+                mTvValue09.setText(deviceBean.getInhale_sensitive() + "");
+                //降压速度
+                mTvTitle10.setText(R.string.tv_text_down_speed);
+                mTvValue10.setText(deviceBean.getBuckslope() + "");
+                //呼气灵敏度
+                mTvTitle11.setText(R.string.tv_hqlmd);
+                mTvValue11.setText(deviceBean.getExhale_sensitive() + "");
+
+                break;
+
+            case 4:
+                //BPAP-T
+                //吸气压力
+                mTvTitle02.setText(R.string.tv_text_xqyl);
+                mTvValue02.setText(initTextView(deviceBean.getT_in_p() + ""));
+                //呼吸频率
+                mLayoutContent03.setVisibility(View.VISIBLE);
+                mTvTitle03.setText(R.string.tv_breath_rate);
+                mTvValue03.setText(deviceBean.getBreath_rate() + "");
+                //呼气压力
+                mTvTitle04.setText(R.string.tv_text_hqyl);
+                mTvValue04.setText(initTextView(deviceBean.getT_ex_p() + ""));
+                //呼吸比
+                mLayoutContent13.setVisibility(View.VISIBLE);
+                mTvTitle13.setText(R.string.tv_breath_ration);
+                mTvValue13.setText(deviceBean.getBreath_ratio() + "");
+                mLayoutContent14.setVisibility(View.INVISIBLE);
+
+                //起始压力
+                mTvTitle05.setText(R.string.tv_text_qsyl);
+                mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
+                //延迟时间
+                mTvTitle06.setText(R.string.tv_text_ycsj);
+                mTvValue06.setText(deviceBean.getCure_delay() + "min");
+                //升压速度
+                mTvTitle07.setText(R.string.tv_text_sysd);
+                mTvValue07.setText(deviceBean.getBoostslope() + "");
+                //降压速度
+                mTvTitle08.setText(R.string.tv_text_down_speed);
+                mTvValue08.setText(deviceBean.getBuckslope() + "");
+                mLayoutContent09.setVisibility(View.INVISIBLE);
+                mLayoutContent10.setVisibility(View.INVISIBLE);
+                mLayoutContent11.setVisibility(View.INVISIBLE);
+                break;
+
+            case 5:
+                //BPAP-ST
+                //吸气压力
+                mTvTitle02.setText(R.string.tv_text_xqyl);
+                mTvValue02.setText(initTextView(deviceBean.getSt_in_p() + ""));
+                //呼吸频率
+                mLayoutContent03.setVisibility(View.VISIBLE);
+                mTvTitle03.setText(R.string.tv_zdylzc);
+                mTvValue03.setText(initTextView(deviceBean.getBreath_rate() + ""));
+                //呼气压力
+                mTvTitle04.setText(R.string.tv_text_hqyl);
+                mTvValue04.setText(initTextView(deviceBean.getSt_ex_p() + ""));
+                //呼吸比
+                mLayoutContent13.setVisibility(View.VISIBLE);
+                mTvTitle13.setText(R.string.tv_text_qsyl);
+                mTvValue13.setText(initTextView(deviceBean.getBreath_ratio() + ""));
+                mLayoutContent14.setVisibility(View.INVISIBLE);
+
+                //起始压力
+                mTvTitle05.setText(R.string.tv_text_qsyl);
+                mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
+                //延迟时间
+                mTvTitle06.setText(R.string.tv_text_ycsj);
+                mTvValue06.setText(deviceBean.getCure_delay() + "min");
+                //呼气灵敏度
+                mTvTitle07.setText(R.string.tv_hqlmd);
+                mTvValue07.setText(deviceBean.getExhale_sensitive() + "");
+                //升压速度
+                mTvTitle08.setText(R.string.tv_text_sysd);
+                mTvValue08.setText(deviceBean.getBoostslope() + "");
+                //吸气灵敏度
+                mTvTitle09.setText(R.string.tv_cflmd);
+                mTvValue09.setText(deviceBean.getBoostslope() + "");
+                //降压速度
+                mTvTitle10.setText(R.string.tv_text_down_speed);
+                mTvValue10.setText(deviceBean.getBuckslope() + "");
+                mLayoutContent11.setVisibility(View.INVISIBLE);
                 break;
         }
     }
@@ -306,35 +437,56 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.tv_value07:
 
-                if (mCureMode <= 1) {
+                if (mCureMode == 0 || mCureMode == 1) {
                     //呼气释压
                     showListDialog(mPressureRelease, mTvValue07, "dep_type");
-                } else {
+                } else if (mCureMode == 2 || mCureMode == 3) {
                     //呼气舒适度
                     showListDialog(mComfortLv, mTvValue07, "breath_fit");
+                } else if (mCureMode == 4) {
+                    //升压速度
+                    showListDialog(mSpeed, mTvValue07, "boostslope");
+                } else if (mCureMode == 5) {
+                    //呼气灵敏度
+                    showListDialog(mSpeed, mTvValue07, "exhale_sensitive");
                 }
                 break;
             case R.id.tv_value08:
 
-                if (mCureMode <= 1) {
+                if (mCureMode == 0 || mCureMode == 1) {
                     //释压水平
                     showListDialog(mReleaseKpaLv, mTvValue08, "dep_level");
-                } else {
+                } else if (mCureMode == 2 || mCureMode == 3 || mCureMode == 5) {
                     //升压速度
                     showListDialog(mSpeed, mTvValue08, "boostslope");
+                } else if (mCureMode == 4) {
+                    //降压速度
+                    showListDialog(mSpeed, mTvValue08, "buckslope");
                 }
                 break;
             case R.id.tv_value09:
-                //吸气灵敏度
-                showListDialog(mSpeed, mTvValue09, "inhale_sensitive");
+
+                if (mCureMode == 2 || mCureMode == 3 || mCureMode == 5) {
+                    //吸气灵敏度
+                    showListDialog(mSpeed, mTvValue09, "inhale_sensitive");
+                }
+
                 break;
             case R.id.tv_value10:
-                //降压速度
-                showListDialog(mSpeed, mTvValue10, "buckslope");
+
+                if (mCureMode == 2 || mCureMode == 3 || mCureMode == 5) {
+                    //降压速度
+                    showListDialog(mSpeed, mTvValue10, "buckslope");
+                }
+
                 break;
             case R.id.tv_value11:
-                //呼气灵敏度
-                showListDialog(mSpeed, mTvValue11, "exhale_sensitive");
+
+                if (mCureMode == 2 || mCureMode == 3) {
+                    //呼气灵敏度
+                    showListDialog(mSpeed, mTvValue11, "exhale_sensitive");
+                }
+
                 break;
 
 
@@ -397,6 +549,8 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
 
             @Override
             public void onItemClick(long postion, String s) {
+                //起始压力受治疗压力的限制、起始压力应小于等于呼气压力
+
                 textView.setText(s);
                 if (s.contains(" min")) {
                     s = s.replace(" min", "");
@@ -405,6 +559,14 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                     s = s.replace(" cmH₂O", "");
                     if (key.equals("start_pressure")) {
                         double v = Double.parseDouble(s);
+                        if (mCureMode == 0) {
+                            //cpap 模式，起始压力小于 治疗压力
+                            int cpap_p = mDeviceBean.getCpap_p();
+                            if (v > cpap_p) {
+                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, "起始压力不能大于于治疗压力");
+                                return;
+                            }
+                        }
                         int startPressure = (int) (v * 10);
                         s = String.valueOf(startPressure);
                     }

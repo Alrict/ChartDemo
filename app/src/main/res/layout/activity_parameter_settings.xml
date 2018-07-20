@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:visibility="invisible">
+                android:visibility="visible">
                 <TextView
                     android:id="@+id/tv_title03"
                     style="@style/TextAppearanceMedium"
@@ -97,6 +97,58 @@
                     android:text="治疗压力"/>
                 <TextView
                     android:id="@+id/tv_value04"
+                    style="@style/TextAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/h100"
+                    android:layout_marginTop="@dimen/h10"
+                    android:background="@drawable/bg_comment_btn_default"
+                    android:gravity="center"
+                    android:text="CPAP"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/w50"
+            android:layout_marginRight="@dimen/w50"
+            android:layout_marginTop="@dimen/h50"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/layout_content13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="visible">
+                <TextView
+                    android:id="@+id/tv_title13"
+                    style="@style/TextAppearanceMedium"
+                    android:text="当前模式"/>
+                <TextView
+                    android:id="@+id/tv_value13"
+                    style="@style/TextAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/h100"
+                    android:layout_marginTop="@dimen/h10"
+                    android:background="@drawable/bg_comment_btn_default"
+                    android:gravity="center"
+                    android:text="CPAP"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_content14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/w80"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_title14"
+                    style="@style/TextAppearanceMedium"
+                    android:text="治疗压力"/>
+                <TextView
+                    android:id="@+id/tv_value14"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/h100"

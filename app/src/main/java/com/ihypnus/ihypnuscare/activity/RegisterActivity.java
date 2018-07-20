@@ -173,6 +173,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         mIvQq.setOnClickListener(this);
         mIvOther.setOnClickListener(this);
         mTvProtocol.setOnClickListener(this);
+        mImgLoginAccountClear.setOnClickListener(this);
 //        mSpannableString.setSpan(new ClickableSpan() {
 //            @Override
 //            public void onClick(View view) {
@@ -194,7 +195,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         if (ViewUtils.isFastDoubleClick()) return;
         switch (v.getId()) {
+
+            case R.id.img_login_account_clear2:
+                //清除手机号
+                mEtCount.setText("");
+                break;
+
             case R.id.btn_vcerification_code:
+                //获取验证码
                 String countNo = mEtCount.getText().toString().trim();
                 if (StringUtils.isNullOrEmpty(countNo)) {
                     ToastUtils.showToastDefault(RegisterActivity.this, mEtCount.getHint().toString());
@@ -488,6 +496,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void afterTextChanged(Editable s) {
         String account = mEtCount.getText().toString().trim();
+        mImgLoginAccountClear.setVisibility(account.length() > 0 ? View.VISIBLE : View.INVISIBLE);
         if (account.length() == 11) {
             vertifyPhoneNum(account);
         }
