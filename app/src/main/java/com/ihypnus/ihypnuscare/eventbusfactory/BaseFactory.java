@@ -88,4 +88,10 @@ public class BaseFactory {
      */
     public static class UpdateLanguageEvent {
     }
+
+    /**
+     * 更新报告页面的 头部日期显示
+     */
+    public static class UpdateDataLanguage {
+    }
 }

@@ -12,11 +12,12 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.widget.LanguageChangableView;
 
 /**
  * 自定义环形进度条
  */
-public class CircleProgressBarView extends View {
+public class CircleProgressBarView extends View implements LanguageChangableView {
     /**
      * 进度条所占用的角度
      */
@@ -51,7 +52,7 @@ public class CircleProgressBarView extends View {
     private Paint mOutterCirclePaint;
     private Paint mInnerCirclePain;
     private String mSleepStatus = "";
-    private String[] statusArray = {"无数据", "不太好", "还不错", "非常好"};
+    private String[] statusArray = {getContext().getString(R.string.tv_no_datas), getContext().getString(R.string.tv_stutus_not_good), getContext().getString(R.string.tv_status_is_good), getContext().getString(R.string.tv_status_very_good)};
     private int mOutterCircleRadius;
     private int mTrackBarColor;
     private int mTrackBarWidth;
@@ -310,14 +311,14 @@ public class CircleProgressBarView extends View {
         //分
         mMiddleTextPaint.setColor(Color.WHITE);
         mMiddleTextPaint.setTextSize((float) mMiddleRightTextSize);
-        mMiddleTextPaint.getTextBounds("分", 0, 1, textBounds);
+        mMiddleTextPaint.getTextBounds(getContext().getString(R.string.tv_fraction), 0, 1, textBounds);
         float h11 = textBounds.height();
-        canvas.drawText("分", centerX + textLen / 2 + 5, centerY + h1 / 2 + h11 / 2 + 5, mMiddleTextPaint);
+        canvas.drawText(getContext().getString(R.string.tv_fraction), centerX + textLen / 2 + 5, centerY + h1 / 2 + h11 / 2 + 5, mMiddleTextPaint);
 
 
         //最上面文字:睡眠分数
         mTopTextPaint.setTextSize(mTopTextSize);
-        String topText = "睡眠分数";
+        String topText = getContext().getString(R.string.tv_circle_sleep_score);
         float topTextLen = mTopTextPaint.measureText(topText);
         //计算文字高度
         mTopTextPaint.getTextBounds(topText, 0, 3, textBounds);
@@ -334,9 +335,22 @@ public class CircleProgressBarView extends View {
             mBottomTextPaint.setColor(Color.parseColor("#ffE67817"));
         }
         mBottomTextPaint.setTextSize(mBottomTextSize);
-        text = mSleepStatus;
-        textLen = mBottomTextPaint.measureText(text);
-        canvas.drawText(text, centerX - textLen / 2, centerY + centerY / 2 + textBounds.height() / 4, mBottomTextPaint);
+
+        String bottomText="";
+        if (progress == -1) {
+            //网络异常/无数据
+            //, , , getContext().getString(R.string.tv_status_very_good)
+            bottomText = getContext().getString(R.string.tv_no_datas);
+        } else if (progress >= 80) {
+            bottomText = getContext().getString(R.string.tv_status_very_good);
+        } else if (progress > 60) {
+            bottomText = getContext().getString(R.string.tv_status_is_good);
+        } else {
+            bottomText = getContext().getString(R.string.tv_stutus_not_good);
+        }
+
+        textLen = mBottomTextPaint.measureText(bottomText);
+        canvas.drawText(bottomText, centerX - textLen / 2, centerY + centerY / 2 + textBounds.height() / 4, mBottomTextPaint);
     }
 
     private void drawTextBg(Canvas canvas) {
@@ -454,5 +468,25 @@ public class CircleProgressBarView extends View {
 
 
         return a;
+    }
+
+    @Override
+    public void setTextById(int id) {
+
+    }
+
+    @Override
+    public void setTextWithString(String text) {
+
+    }
+
+    @Override
+    public void setTextByArrayAndIndex(int arrId, int arrIndex) {
+
+    }
+
+    @Override
+    public void reLoadLanguage() {
+
     }
 }

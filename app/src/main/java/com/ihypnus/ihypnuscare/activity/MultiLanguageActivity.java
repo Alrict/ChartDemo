@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.multilanguage.CommSharedUtil;
@@ -154,6 +155,7 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
 //        MultiLanguageUtil.getInstance().updateLanguage(selectedLanguage);
         CommSharedUtil.getInstance(this).putInt(MultiLanguageUtil.SAVE_LANGUAGE, selectedLanguage);
         EventBus.getDefault().post(new BaseFactory.UpdateLanguageEvent());
+        EventBus.getDefault().post(new BaseFactory.UpdateDataLanguage());
       /*  Intent intent = new Intent(MultiLanguageActivity.this, SettingActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -163,6 +165,7 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
     }
 
     public void switchLanguage(Locale locale) {
+        Constants.LANGUAGE_TYPE = locale;
         Configuration config = getResources().getConfiguration();// 获得设置对象
         Resources resources = getResources();// 获得res资源对象
         DisplayMetrics dm = resources.getDisplayMetrics();// 获得屏幕参数：主要是分辨率，像素等。

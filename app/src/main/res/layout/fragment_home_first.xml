@@ -19,7 +19,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_page_last"/>
-         <com.ihypnus.widget.AppTextView
+        <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,10 +62,10 @@
         android:id="@+id/tv_usage_long"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/pb"
+        android:layout_below="@+id/pb"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/h50"
-        android:text="使用时长"
+        android:layout_marginTop="17dp"
+        android:text="@string/tv_text_use_time"
         android:textColor="#c1bcb9"
         android:textSize="@dimen/w38"/>
 
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/w10"
             android:paddingRight="@dimen/w10"
-            android:text="时"
+            android:text="@string/tv_time_hours"
             android:textColor="@color/white"
             android:textSize="@dimen/w36"/>
         <TextView
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/w10"
             android:paddingRight="@dimen/w10"
-            android:text="分"
+            android:text="@string/tv_time_minute"
             android:textColor="@color/white"
             android:textSize="@dimen/w36"/>
     </LinearLayout>
@@ -145,7 +145,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="使用详情"
+            android:text="@string/tv_usage_detail"
             android:textColor="#c1bcb9"
             android:textSize="@dimen/w38"/>
         <View
@@ -174,7 +174,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="设备模式"
+                android:text="@string/tv_device_model"
                 android:textColor="@color/gray_white"
                 android:textSize="@dimen/w38"/>
             <TextView
@@ -192,7 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/h40"
                 android:gravity="center"
-                android:text="平均漏气"
+                android:text="@string/tv_average_leak"
                 android:textColor="@color/gray_white"
                 android:textSize="@dimen/w38"/>
             <TextView
@@ -215,7 +215,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="90%吸气压力"
+                android:text="@string/tv_90per_in_breath"
                 android:textColor="@color/gray_white"
                 android:textSize="@dimen/w38"/>
             <TextView
@@ -233,7 +233,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/h40"
                 android:gravity="center"
-                android:text="AHI"
+                android:text="@string/tv_text_ahi"
                 android:textColor="@color/gray_white"
                 android:textSize="@dimen/w38"/>
             <TextView
@@ -256,7 +256,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="呼气压力"
+                android:text="@string/tv_text_hqyl"
                 android:textColor="@color/gray_white"
                 android:textSize="@dimen/w38"/>
             <TextView

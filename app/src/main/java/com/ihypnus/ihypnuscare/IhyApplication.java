@@ -63,6 +63,7 @@ public class IhyApplication extends Application {
         initLogReport();
         //设置语言
         Locale languageLocale = MultiLanguageUtil.getInstance().getLanguageLocale();
+        Constants.LANGUAGE_TYPE = languageLocale;
         switchLanguage(languageLocale);
     }
 
@@ -70,7 +71,7 @@ public class IhyApplication extends Application {
         Configuration config = getResources().getConfiguration();// 获得设置对象
         Resources resources = getResources();// 获得res资源对象
         DisplayMetrics dm = resources.getDisplayMetrics();// 获得屏幕参数：主要是分辨率，像素等。
-        config.locale = locale; // 简体中文
+        config.locale = locale;
         resources.updateConfiguration(config, dm);
     }
 

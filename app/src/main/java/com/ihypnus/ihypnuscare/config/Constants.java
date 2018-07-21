@@ -2,6 +2,8 @@ package com.ihypnus.ihypnuscare.config;
 
 import com.ihypnus.ihypnuscare.bean.BaseModel;
 
+import java.util.Locale;
+
 /**
  * @Package com.ihypnus.ihypnuscare
  * @author: llw
@@ -31,4 +33,8 @@ public class Constants extends BaseModel {
      * 设备Id
      */
     public static String DEVICEID = "";
+    /**
+     * 当前语言类型
+     */
+    public static Locale LANGUAGE_TYPE;
 }

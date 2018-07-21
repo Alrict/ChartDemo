@@ -540,7 +540,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
             if (bean != null && !StringUtils.isNullOrEmpty(bean.getSN())) {
                 num = bean.getSN();
             } else {
-                ToastUtils.showToastInCenter(CaptureActivity.this, "请扫描正确的二维码");
+                ToastUtils.showToastInCenter(CaptureActivity.this, getString(R.string.tv_toast_scan_error));
                 finish();
                 return;
             }
@@ -551,12 +551,12 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
             if (num.length() > start + 3) {
                 num = num.substring(start + 3, num.length());
             } else {
-                ToastUtils.showToastInCenter(CaptureActivity.this, "请扫描正确的二维码");
+                ToastUtils.showToastInCenter(CaptureActivity.this, getString(R.string.tv_toast_scan_error));
                 finish();
                 return;
             }
         } else {
-            ToastUtils.showToastInCenter(CaptureActivity.this, "请扫描正确的二维码");
+            ToastUtils.showToastInCenter(CaptureActivity.this, getString(R.string.tv_toast_scan_error));
             finish();
             return;
         }

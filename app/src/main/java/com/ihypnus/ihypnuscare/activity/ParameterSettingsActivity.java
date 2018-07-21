@@ -228,7 +228,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mTvValue06.setText(deviceBean.getCure_delay() + " min");
 
                 mTvTitle07.setText(R.string.tv_hqyl);
-                mTvValue07.setText(deviceBean.getDep_type() + "");
+                mTvValue07.setText(mPressureRelease.get(deviceBean.getDep_type()) + "");
 
                 mTvTitle08.setText(R.string.tv_text_sysp);
                 mTvValue08.setText(initTextView(deviceBean.getDep_level() + ""));
@@ -260,7 +260,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mTvValue06.setText(deviceBean.getCure_delay() + "min");
 
                 mTvTitle07.setText(R.string.tv_hqyl);
-                mTvValue07.setText(deviceBean.getDep_type() + "");
+                mTvValue07.setText(mPressureRelease.get(deviceBean.getDep_type()) + "");
 
                 mTvTitle08.setText(R.string.tv_text_sysp);
                 mTvValue08.setText(initTextView(deviceBean.getDep_level() + ""));
@@ -562,7 +562,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                         if (mCureMode == 0) {
                             //cpap 模式，起始压力小于 治疗压力
                             int cpap_p = mDeviceBean.getCpap_p();
-                            if (v > cpap_p) {
+                            if (v * 10 > cpap_p) {
                                 BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, "起始压力不能大于于治疗压力");
                                 return;
                             }
@@ -570,6 +570,10 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                         int startPressure = (int) (v * 10);
                         s = String.valueOf(startPressure);
                     }
+                }
+
+                if (key.equals("dep_type")) {
+                    s = String.valueOf(postion);
                 }
                 if (s.equals(getString(R.string.tv_text_close))) {
                     s = "0";

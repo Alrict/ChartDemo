@@ -266,12 +266,26 @@
     <string name="tv_90per_in_breath">90%吸氣壓力</string>
     <string name="tv_text_suggestion">意見反饋</string>
     <string name="tv_text_device_manager">設備管理</string>
-    <string name="tv_reset_pwd_succee">修改密码成功,请重新登录</string>
-    <string name="tv_zdxqyl">最大吸气压力</string>
-    <string name="tv_zdylzc">最大压力支持</string>
-    <string name="tv_zdhqyl">最大呼气压力</string>
-    <string name="tv_cflmd">吸气灵敏度</string>
-    <string name="tv_breath_rate">呼吸频率</string>
+    <string name="tv_reset_pwd_succee">修改密碼成功,請重新登錄</string>
+    <string name="tv_zdxqyl">最大吸氣壓力</string>
+    <string name="tv_zdylzc">最大壓力支持</string>
+    <string name="tv_zdhqyl">最大呼氣壓力</string>
+    <string name="tv_cflmd">吸氣靈敏度</string>
+    <string name="tv_breath_rate">呼吸頻率</string>
     <string name="tv_breath_ration">呼吸比</string>
+    <string name="tv_toast_scan_error">請掃描正確的二維碼</string>
+    <string name="tv_no_datas">無數據</string>
+    <string name="tv_stutus_not_good">不太好</string>
+    <string name="tv_status_is_good">還不錯</string>
+    <string name="tv_status_very_good">非常好</string>
+    <string name="tv_circle_sleep_score">睡眠分數</string>
+    <string name="tv_fraction">分</string>
+    <string name="tv_title_use_period">使用時段</string>
+    <string name="tv_toast_data_error">查詢日期超出範圍</string>
+    <string name="tv_time_hours">時</string>
+    <string name="tv_time_minute">分</string>
+    <string name="tv_usage_detail">使用詳情</string>
+    <string name="tv_device_model">設備模式</string>
+    <string name="tv_average_leak">平均漏氣</string>
 
 </resources>

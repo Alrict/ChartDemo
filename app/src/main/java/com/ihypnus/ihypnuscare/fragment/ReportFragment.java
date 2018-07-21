@@ -177,7 +177,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
                 String time = initTime(data);
                 long longTime = DateTimeUtils.getSimpleLongTime(time);
                 if (longTime > System.currentTimeMillis()) {
-                    ToastUtils.showToastDefault("查询日期超出范围");
+                    ToastUtils.showToastDefault(mAct.getString(R.string.tv_toast_data_error));
                     return;
                 }
                 sCurrentTime = longTime;
@@ -255,5 +255,12 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
         LogOut.d("llw", "报告页面更新了语言");
         ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(BaseFactory.UpdateDataLanguage event) {
+        if (mHomePageController != null) {
+            mHomePageController.setData();
+        }
     }
 }

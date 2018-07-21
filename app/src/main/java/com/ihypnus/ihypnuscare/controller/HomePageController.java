@@ -35,6 +35,7 @@ import com.ihypnus.ihypnuscare.widget.CircleProgressBarView;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @Package com.ihypnus.ihypnuscare.controller
@@ -133,7 +134,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
     }
 
     private void getDefaultDeviceInfos() {
-        BaseDialogHelper.showLoadingDialog(mContext, true, "正在加载...");
+        BaseDialogHelper.showLoadingDialog(mContext, true, mContext.getString(R.string.onloading));
         IhyRequest.getDefaultDeviceId(Constants.JSESSIONID, true, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
@@ -193,22 +194,37 @@ public class HomePageController extends BaseController implements View.OnClickLi
     @Override
     public void refreshData() {
         LogOut.d("llw", "报告页首页刷新");
-        long date = ReportFragment.sCurrentTime;
+        long date = setData();
         loadDataByNet(getStartTime(date), getEndTime(date), null);
+    }
+
+    /**
+     * 设置头部日期
+     * @return
+     */
+    public long setData() {
+        long date = ReportFragment.sCurrentTime;
+
         String dateTime = DateTimeUtils.getStringDateTime(date);
         String time = null;
         try {
-            time = DateTimeUtils.date2Chinese(dateTime);
+            if (Constants.LANGUAGE_TYPE == Locale.ENGLISH) {
+                time = DateTimeUtils.date2English(dateTime);
+            } else {
+                time = DateTimeUtils.date2Chinese(dateTime);
+            }
+
         } catch (FormatException e) {
             e.printStackTrace();
             time = "";
         }
         mTvData.setText(time);
+        return date;
     }
 
 
     private void loadDataByNet(String startTime, String endTime, final ImageView imageView) {
-        BaseDialogHelper.showLoadingDialog(mContext, true, "正在加载...");
+        BaseDialogHelper.showLoadingDialog(mContext, true, mContext.getString(R.string.onloading));
         IhyRequest.getEvents(Constants.JSESSIONID, Constants.DEVICEID, startTime, endTime, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
@@ -294,8 +310,8 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
             UsageInfos.PressureBean pressure = usageInfos.getPressure();
             if (pressure != null) {
-                nHaleKpa = String.valueOf(pressure.getTpIn()) + "cmH2O";
-                expirationKpa = String.valueOf(pressure.getTpEx()) + "cmH2O";
+                nHaleKpa = String.valueOf(pressure.getTpIn()) + "cmH₂O";
+                expirationKpa = String.valueOf(pressure.getTpEx()) + "cmH₂O";
             } else {
                 nHaleKpa = "--";
                 expirationKpa = "--";
@@ -361,7 +377,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
                         modeName = getModelName(mode1);
                     }
                 } else {
-                    modeName = "未知";
+                    modeName = mContext.getString(R.string.tv_unknow);
                 }
                 break;
         }
@@ -422,7 +438,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
         if (usetimes == null || usetimes.size() == 0) {
             return;
         }
-        BaseDialogHelper.showListDialog(mContext, "使用时段", "返回", usetimes, new DialogListener() {
+        BaseDialogHelper.showListDialog(mContext, mContext.getString(R.string.tv_title_use_period), mContext.getString(R.string.tv_btn_back), usetimes, new DialogListener() {
             @Override
             public void onClick(BaseType baseType) {
 
@@ -436,7 +452,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
                         String starttime = time[0].substring(11, 16);
                         String endTime = time[1].substring(11, 16);
                         mTvUsageLongData.setText(starttime + "~" + endTime);
-                        loadDataByNet(time[0], time[1], null);
+//                        loadDataByNet(time[0], time[1], null);
                     } else {
                         mTvUsageLongData.setText("--~--");
                     }
@@ -454,7 +470,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
         long date = ReportFragment.sCurrentTime;
         long lastDay = date + (24L * 60L * 60L * 1000L * type);
         if (lastDay > System.currentTimeMillis()) {
-            ToastUtils.showToastDefault("查询日期超出范围");
+            ToastUtils.showToastDefault(mContext.getString(R.string.tv_toast_data_error));
             return;
         }
         ReportFragment.sCurrentTime = lastDay;

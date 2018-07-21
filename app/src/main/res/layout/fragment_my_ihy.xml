@@ -25,7 +25,7 @@
             android:layout_width="@dimen/h210"
             android:layout_height="@dimen/h210"
             android:scaleType="fitXY"
-            android:src="@mipmap/icon_man"/>
+            android:src="@mipmap/icon_default_photo"/>
 
     </FrameLayout>
 

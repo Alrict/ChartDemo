@@ -47,8 +47,8 @@ public class DateTimeUtils {
      * @throws FormatException
      */
     public static String getWeekRangDates(long currentTimeMils) {
-        String startTime = getMonthDayDateTime(currentTimeMils- (7L * 24L * 60L * 60L * 1000L));
-        String endTime = getMonthDayDateTime(currentTimeMils );
+        String startTime = getMonthDayDateTime(currentTimeMils - (7L * 24L * 60L * 60L * 1000L));
+        String endTime = getMonthDayDateTime(currentTimeMils);
         if (currentTimeMils <= 0) {
             return "";
         } else if (startTime.split("-").length == 2 && endTime.split("-").length == 2) {
@@ -1053,6 +1053,7 @@ public class DateTimeUtils {
 
     private static final String[] CN_NUMBER = {"", "一", "二", "三", "四", "五", "六", "七", "八", "九"};
 
+    //将日期转化成中文格式
     public static String date2Chinese(String date) throws FormatException {
         StringBuilder sb = new StringBuilder();
         String[] split = date.split("-");
@@ -1091,6 +1092,28 @@ public class DateTimeUtils {
             sb.append("三十").append(CN_NUMBER[day % 10]);
         }
         sb.append("日");
+        return sb.toString();
+    }
+
+    //日
+    private static final String[] EN_DAY = {"", "一", "二", "三", "四", "五", "六", "七", "八", "九"};
+    //月份
+    private static final String[] EN_MONTH = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"};
+
+    //将日期转化成英文格式
+    public static String date2English(String date) throws FormatException {
+        StringBuilder sb = new StringBuilder();
+        String[] split = date.split("-");
+        if (split.length != 3) {
+            throw new FormatException();
+        }
+        //解析日份
+        int day = Integer.parseInt(split[2]);
+        sb.append(day);
+        //解析月份
+        int mon = Integer.parseInt(split[1]) - 1;
+        sb.append(EN_MONTH[mon]);
+
         return sb.toString();
     }
 

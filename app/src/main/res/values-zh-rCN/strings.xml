@@ -273,5 +273,19 @@
     <string name="tv_cflmd">吸气灵敏度</string>
     <string name="tv_breath_rate">呼吸频率</string>
     <string name="tv_breath_ration">呼吸比</string>
+    <string name="tv_toast_scan_error">请扫描正确的二维码</string>
+    <string name="tv_no_datas">无数据</string>
+    <string name="tv_stutus_not_good">不太好</string>
+    <string name="tv_status_is_good">还不错</string>
+    <string name="tv_status_very_good">非常好</string>
+    <string name="tv_circle_sleep_score">睡眠分数</string>
+    <string name="tv_fraction">分</string>
+    <string name="tv_title_use_period">使用时段</string>
+    <string name="tv_toast_data_error">查询日期超出范围</string>
+    <string name="tv_time_hours">时</string>
+    <string name="tv_time_minute">分</string>
+    <string name="tv_usage_detail">使用详情</string>
+    <string name="tv_device_model">设备模式</string>
+    <string name="tv_average_leak">平均漏气</string>
 
 </resources>

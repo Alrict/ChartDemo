@@ -96,7 +96,9 @@
     <string name="tv_text_feed_back">Feedback</string>
     <string name="tv_title_pwd_back">recover password</string>
     <string name="tv_pwd_error_length">Password must be longer than 6 digits</string>
-    <string name="tv_pwd_error_different">The passwords entered twice do not match, please re-enter</string>
+    <string name="tv_pwd_error_different">The passwords entered twice do not match, please
+        re-enter
+    </string>
     <string name="tv_text_second">&#160;s</string>
     <string name="tv_get_vertify_code">获取验证码</string>
     <string name="tv_text_input_account">Please enter the phone number</string>
@@ -136,7 +138,7 @@
     <string name="tv_hqlmd">呼气灵敏度</string>
     <string name="tv_tittle_setparmeter">参数设置成功</string>
     <string name="tv_tip_use_new_setting">下次治疗将使用新的设置</string>
-    <string name="tv_btn_back">返回</string>
+    <string name="tv_btn_back">Back</string>
     <string name="tv_text_close">关闭</string>
     <string name="tv_text_birthday">出生日期</string>
     <string name="tv_tip_your_name">请输入您的昵称</string>
@@ -179,7 +181,7 @@
     <string name="tv_status_bad">不太好</string>
     <string name="tv_status_normal">还不错</string>
     <string name="tv_status_good">非常好</string>
-    <string name="tv_text_use_time">使用时长</string>
+    <string name="tv_text_use_time"> Use Length</string>
     <string name="tv_text_ahi">AHI</string>
     <string name="tv_90per_in_breath">90%吸气压力</string>
     <string name="tv_text_suggestion">Feedback</string>
@@ -192,4 +194,18 @@
     <string name="tv_cflmd">吸气灵敏度</string>
     <string name="tv_breath_rate">呼吸频率</string>
     <string name="tv_breath_ration">呼吸比</string>
+    <string name="tv_toast_scan_error">请扫描正确的二维码</string>
+    <string name="tv_no_datas">no data</string>
+    <string name="tv_stutus_not_good">bad</string>
+    <string name="tv_status_is_good">normal</string>
+    <string name="tv_status_very_good">good</string>
+    <string name="tv_circle_sleep_score">score</string>
+    <string name="tv_fraction">PP</string>
+    <string name="tv_title_use_period">Use period</string>
+    <string name="tv_toast_data_error">Query date is out of range</string>
+    <string name="tv_time_hours">H</string>
+    <string name="tv_time_minute">M</string>
+    <string name="tv_usage_detail">Use details</string>
+    <string name="tv_device_model">Device mode</string>
+    <string name="tv_average_leak">Average leak</string>
 </resources>
