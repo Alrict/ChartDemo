@@ -57,7 +57,7 @@ public class BarChartManager {
 
         //设置动画效果
         mBarChart.animateY(3000, Easing.EasingOption.Linear);
-        mBarChart.animateX(3000, Easing.EasingOption.Linear);
+//        mBarChart.animateX(3000, Easing.EasingOption.Linear);
 
 
         xAxis.setEnabled(true); // 轴线是否可编辑,默认true
@@ -100,19 +100,19 @@ public class BarChartManager {
         yAxis.setZeroLineWidth(10);  // 0轴宽度
         yAxis.setZeroLineColor(Color.WHITE);   // 0轴颜色
         yAxis.setAxisMinimum(0);
-        if (type == 1 || type == 2) {
-            //睡眠分数范围
-            yAxis.setAxisMaximum(100);
-        } else if (type == 3 || type == 4) {
-            //使用时长范围
-            yAxis.setAxisMaximum(24);
-        } else if (type == 5 || type == 6) {
-            //90%吸气压范围
-            yAxis.setAxisMaximum(120);
-        } else if (type == 7 || type == 8) {
-            //ahi范围
-            yAxis.setAxisMaximum(200);
-        }
+//        if (type == 1 || type == 2) {
+//            //睡眠分数范围
+//            yAxis.setAxisMaximum(100);
+//        } else if (type == 3 || type == 4) {
+//            //使用时长范围
+//            yAxis.setAxisMaximum(24);
+//        } else if (type == 5 || type == 6) {
+//            //90%吸气压范围
+//            yAxis.setAxisMaximum(120);
+//        } else if (type == 7 || type == 8) {
+//            //ahi范围
+//            yAxis.setAxisMaximum(200);
+//        }
 
         //图例 标签 设置
         Legend legend = mBarChart.getLegend();
@@ -218,7 +218,7 @@ public class BarChartManager {
             mBarChart.getData().notifyDataChanged();
             mBarChart.notifyDataSetChanged();
         } else {
-            set1 = new BarDataSet(yAxisValues, "90%吸气压力");
+            set1 = new BarDataSet(yAxisValues, "90%压力");
             set1.setDrawIcons(false);
             set1.setLabel(labels);
             set1.setColors(getColors());

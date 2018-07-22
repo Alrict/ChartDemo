@@ -289,6 +289,8 @@
     <string name="tv_average_leak">平均漏氣</string>
     <string name="tv_toast_curent_device_offline">該設備處於離線狀態,請檢查設備網絡狀態</string>
     <string name="tv_text_load_errot">获取数据失败,是否重新获取?</string>
-    <string name="tv_90per_preassure">90%压力</string>
+    <string name="tv_90per_preassure">90%壓力</string>
+    <string name="tv_90in_pre">90%吸氣壓力</string>
+    <string name="tv_90ex_pre">90%呼氣壓力</string>
 
 </resources>

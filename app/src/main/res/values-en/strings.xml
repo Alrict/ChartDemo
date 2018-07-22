@@ -178,10 +178,10 @@
     <string name="tv_set_as_default">set as default device</string>
     <string name="tv_text_week_title">Weekly statistics</string>
     <string name="tv_sleep_score">Sleep score</string>
-    <string name="tv_status_bad">不太好</string>
-    <string name="tv_status_normal">还不错</string>
-    <string name="tv_status_good">非常好</string>
-    <string name="tv_text_use_time"> Use Length</string>
+    <string name="tv_status_bad">Bad</string>
+    <string name="tv_status_normal">Normal</string>
+    <string name="tv_status_good">Good</string>
+    <string name="tv_text_use_time">Use Length</string>
     <string name="tv_text_ahi">AHI</string>
     <string name="tv_90per_in_breath">90%吸气压力</string>
     <string name="tv_text_suggestion">Feedback</string>
@@ -208,7 +208,11 @@
     <string name="tv_usage_detail">Use details</string>
     <string name="tv_device_model">Device mode</string>
     <string name="tv_average_leak">Average leak</string>
-    <string name="tv_toast_curent_device_offline">The device is offline, please check the device network status</string>
+    <string name="tv_toast_curent_device_offline">The device is offline, please check the device
+        network status
+    </string>
     <string name="tv_text_load_errot">获取数据失败,是否重新获取?</string>
-    <string name="tv_90per_preassure">90%压力</string>
+    <string name="tv_90per_preassure">90% pressure</string>
+    <string name="tv_90in_pre">90% in-pressure</string>
+    <string name="tv_90ex_pre">90% ex-pressure</string>
 </resources>

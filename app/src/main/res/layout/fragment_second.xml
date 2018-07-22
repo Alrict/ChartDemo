@@ -55,6 +55,7 @@
                 style="@style/TextAppearanceMedium"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/h30"
+                android:textSize="@dimen/w38"
                 android:text="@string/tv_sleep_score"/>
         </LinearLayout>
     </LinearLayout>
