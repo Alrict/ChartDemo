@@ -3,7 +3,10 @@ package com.ihypnus.ihypnuscare.controller;
 import android.content.Context;
 import android.view.View;
 
+import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
+
+import java.util.Locale;
 
 /**
  * @Package com.ihypnus.ihypnuscare
@@ -77,6 +80,11 @@ public abstract class BaseController {
     }
 
     public String getWeekRang(long currentTime) {
-        return DateTimeUtils.getWeekRangDates(currentTime);
+        if (Constants.LANGUAGE_TYPE == Locale.ENGLISH) {
+            return DateTimeUtils.getEnglishWeekRangDates(currentTime);
+        } else {
+            return DateTimeUtils.getWeekRangDates(currentTime);
+        }
+
     }
 }

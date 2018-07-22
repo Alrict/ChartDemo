@@ -37,10 +37,11 @@ public class BaseDialogHelper {
                                                 String left,
                                                 String right, final DialogListener listener) {
 
-        NormalDialog normalDialog = new NormalDialog(context).setmCannelText(left).setmConfirmText(right).setmTileText(title).setmContent(message);
+         NormalDialog normalDialog = new NormalDialog(context).setmCannelText(left).setmConfirmText(right).setmTileText(title).setmContent(message);
         normalDialog.setNormalDialogListenner(new DialogListener() {
             @Override
             public void onClick(BaseType baseType) {
+
                 if (baseType == BaseType.NO) {
                     listener.onClick(BaseType.NO);
                 } else if (baseType == BaseType.OK) {

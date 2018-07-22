@@ -46,6 +46,28 @@ public class DateTimeUtils {
      * @return
      * @throws FormatException
      */
+    public static String getEnglishWeekRangDates(long currentTimeMils) {
+        String startTime = getMonthDayDateTime(currentTimeMils - (7L * 24L * 60L * 60L * 1000L));
+        String endTime = getMonthDayDateTime(currentTimeMils);
+        if (currentTimeMils <= 0) {
+            return "";
+        } else if (startTime.split("-").length == 2 && endTime.split("-").length == 2) {
+            String[] startTimesplit = startTime.split("-");
+            String[] endTimesplit = endTime.split("-");
+            String month1 = startTimesplit[0];
+            String startMonth = EN_MONTH[Integer.parseInt(month1) - 1];
+            String startDay = startTimesplit[1];
+            String endMonth = endTimesplit[0];
+            endMonth = EN_MONTH[Integer.parseInt(endMonth) - 1];
+            String endDay = endTimesplit[1] ;
+            LogOut.d("llw", startMonth + startDay + "~" + endMonth + endDay);
+            return  startDay +startMonth + "~" + endDay+ endMonth ;
+        } else {
+            return "";
+        }
+
+    }
+
     public static String getWeekRangDates(long currentTimeMils) {
         String startTime = getMonthDayDateTime(currentTimeMils - (7L * 24L * 60L * 60L * 1000L));
         String endTime = getMonthDayDateTime(currentTimeMils);

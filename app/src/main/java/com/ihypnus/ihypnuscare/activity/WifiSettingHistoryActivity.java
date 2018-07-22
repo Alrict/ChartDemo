@@ -328,7 +328,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
                     switch (wifiState) {
                         case WifiManager.WIFI_STATE_ENABLED:
                             //获取到wifi开启的广播时，开始扫描
-                            mWifiSettingManager.startScan();
+//                            mWifiSettingManager.startScan();
                             break;
                         case WifiManager.WIFI_STATE_DISABLED:
                             //wifi关闭发出的广播
@@ -358,7 +358,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
 //                            showIndeterminateProgressDialog(true, "连接成功");
 //                            IP = getIp();
                             LogOut.d("llw", "当前链接wifi的ip:" + IP);
-                            mWifiSettingManager.startScan();
+//                            mWifiSettingManager.startScan();
                         } else if (state == NetworkInfo.DetailedState.FAILED) {
                             showIndeterminateProgressDialog(true, getString(R.string.tv_connect_wifi_faile));
                         }

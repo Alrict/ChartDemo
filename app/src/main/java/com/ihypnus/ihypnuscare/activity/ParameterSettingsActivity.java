@@ -209,6 +209,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
         mCureMode = deviceBean.getCure_mode();
         mTvTitle01.setText(R.string.tv_text_current_model);
         mTvValue01.setText(sCurrentModel[mCureMode]);
+        int cure_delay = deviceBean.getCure_delay();
         switch (mCureMode) {
             //"CPAP", "APAP", "S", "Auto-S", "T", "ST"
             case 0:
@@ -225,13 +226,20 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
 
                 mTvTitle06.setText(R.string.tv_text_ycsj);
-                mTvValue06.setText(deviceBean.getCure_delay() + " min");
+
+                if (cure_delay <= 0) {
+                    mTvValue06.setText(getString(R.string.tv_text_close));
+                } else {
+                    mTvValue06.setText(deviceBean.getCure_delay() + " min");
+                }
 
                 mTvTitle07.setText(R.string.tv_hqyl);
                 mTvValue07.setText(mPressureRelease.get(deviceBean.getDep_type()) + "");
 
                 mTvTitle08.setText(R.string.tv_text_sysp);
-                mTvValue08.setText(initTextView(deviceBean.getDep_level() + ""));
+                if (mDeviceBean.getDep_level() >= 1) {
+                    mTvValue08.setText(mReleaseKpaLv.get(mDeviceBean.getDep_level() - 1));
+                }
 
                 mLayoutContent09.setVisibility(View.INVISIBLE);
                 mLayoutContent10.setVisibility(View.INVISIBLE);
@@ -242,13 +250,13 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
 
             case 1:
                 //APAP
-                mTvTitle02.setText(R.string.tv_text_min_pressure);
-                mTvValue02.setText(initTextView(deviceBean.getApap_min_p() + ""));
+                mTvTitle04.setText(R.string.tv_text_min_pressure);
+                mTvValue04.setText(initTextView(deviceBean.getApap_min_p() + ""));
 
                 mLayoutContent03.setVisibility(View.INVISIBLE);
 
-                mTvTitle04.setText(R.string.tv_text_zdyl);
-                mTvValue04.setText(initTextView(deviceBean.getApap_max_p() + ""));
+                mTvTitle02.setText(R.string.tv_text_zdyl);
+                mTvValue02.setText(initTextView(deviceBean.getApap_max_p() + ""));
 
                 mLayoutContent13.setVisibility(View.INVISIBLE);
                 mLayoutContent14.setVisibility(View.INVISIBLE);
@@ -257,13 +265,20 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
 
                 mTvTitle06.setText(R.string.tv_text_ycsj);
-                mTvValue06.setText(deviceBean.getCure_delay() + "min");
+
+                if (cure_delay <= 0) {
+                    mTvValue06.setText(getString(R.string.tv_text_close));
+                } else {
+                    mTvValue06.setText(deviceBean.getCure_delay() + " min");
+                }
 
                 mTvTitle07.setText(R.string.tv_hqyl);
                 mTvValue07.setText(mPressureRelease.get(deviceBean.getDep_type()) + "");
 
                 mTvTitle08.setText(R.string.tv_text_sysp);
-                mTvValue08.setText(initTextView(deviceBean.getDep_level() + ""));
+                if (mDeviceBean.getDep_level() >= 1) {
+                    mTvValue08.setText(mReleaseKpaLv.get(mDeviceBean.getDep_level() - 1));
+                }
 
                 mLayoutContent09.setVisibility(View.INVISIBLE);
                 mLayoutContent10.setVisibility(View.INVISIBLE);
@@ -280,12 +295,19 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 //呼气压力
                 mTvTitle04.setText(R.string.tv_text_hqyl);
                 mTvValue04.setText(initTextView(deviceBean.getBpap_ex_p() + ""));
+                mLayoutContent13.setVisibility(View.INVISIBLE);
+                mLayoutContent14.setVisibility(View.INVISIBLE);
+
                 //起始压力
                 mTvTitle05.setText(R.string.tv_text_qsyl);
                 mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
                 //延迟时间
                 mTvTitle06.setText(R.string.tv_text_ycsj);
-                mTvValue06.setText(deviceBean.getCure_delay() + "min");
+                if (cure_delay <= 0) {
+                    mTvValue06.setText(getString(R.string.tv_text_close));
+                } else {
+                    mTvValue06.setText(deviceBean.getCure_delay() + " min");
+                }
                 //呼气舒适度
                 mTvTitle07.setText(R.string.tv_hqssd);
                 mTvValue07.setText(deviceBean.getBreath_fit() + "");
@@ -326,7 +348,11 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
                 //延迟时间
                 mTvTitle06.setText(R.string.tv_text_ycsj);
-                mTvValue06.setText(deviceBean.getCure_delay() + "min");
+                if (cure_delay <= 0) {
+                    mTvValue06.setText(getString(R.string.tv_text_close));
+                } else {
+                    mTvValue06.setText(deviceBean.getCure_delay() + " min");
+                }
                 //呼气舒适度
                 mTvTitle07.setText(R.string.tv_hqssd);
                 mTvValue07.setText(deviceBean.getBreath_fit() + "");
@@ -368,7 +394,11 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
                 //延迟时间
                 mTvTitle06.setText(R.string.tv_text_ycsj);
-                mTvValue06.setText(deviceBean.getCure_delay() + "min");
+                if (cure_delay <= 0) {
+                    mTvValue06.setText(getString(R.string.tv_text_close));
+                } else {
+                    mTvValue06.setText(deviceBean.getCure_delay() + " min");
+                }
                 //升压速度
                 mTvTitle07.setText(R.string.tv_text_sysd);
                 mTvValue07.setText(deviceBean.getBoostslope() + "");
@@ -403,7 +433,11 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mTvValue05.setText(initTextView(deviceBean.getStart_pressure() + ""));
                 //延迟时间
                 mTvTitle06.setText(R.string.tv_text_ycsj);
-                mTvValue06.setText(deviceBean.getCure_delay() + "min");
+                if (cure_delay <= 0) {
+                    mTvValue06.setText(getString(R.string.tv_text_close));
+                } else {
+                    mTvValue06.setText(deviceBean.getCure_delay() + " min");
+                }
                 //呼气灵敏度
                 mTvTitle07.setText(R.string.tv_hqlmd);
                 mTvValue07.setText(deviceBean.getExhale_sensitive() + "");
@@ -550,11 +584,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
             @Override
             public void onItemClick(long postion, String s) {
                 //起始压力受治疗压力的限制、起始压力应小于等于呼气压力
-
                 textView.setText(s);
-                if (s.contains(" min")) {
-                    s = s.replace(" min", "");
-                }
                 if (s.contains(" cmH₂O")) {
                     s = s.replace(" cmH₂O", "");
                     if (key.equals("start_pressure")) {
@@ -564,17 +594,29 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                             int cpap_p = mDeviceBean.getCpap_p();
                             if (v * 10 > cpap_p) {
                                 BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, "起始压力不能大于于治疗压力");
+                                textView.setText(initTextView(mDeviceBean.getCpap_p() + ""));
                                 return;
                             }
+                        } else if (mCureMode == 1) {
+
                         }
                         int startPressure = (int) (v * 10);
                         s = String.valueOf(startPressure);
                     }
                 }
 
+                if (s.contains(" min")) {
+                    s = s.replace(" min", "");
+                }
+
+
                 if (key.equals("dep_type")) {
                     s = String.valueOf(postion);
                 }
+                if (s.equals(getString(R.string.tv_text_close))) {
+                    s = "0";
+                }
+
                 if (s.equals(getString(R.string.tv_text_close))) {
                     s = "0";
                 }
@@ -593,7 +635,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
         if (!StringUtils.isNullOrEmpty(text)) {
             int i = Integer.parseInt(text);
             float i1 = i / 10f;
-            return i1 + "cmH₂O";
+            return i1 + " cmH₂O";
         }
         return "";
     }

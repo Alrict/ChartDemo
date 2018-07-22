@@ -180,7 +180,7 @@
     <string name="tv_pwd_error_length">密碼長度必須大於6位</string>
     <string name="tv_pwd_error_different">兩次輸入的密碼不一致,請重新輸入</string>
     <string name="tv_text_second">&#160;秒</string>
-        <string name="tv_get_vertify_code">獲取驗證碼</string>
+    <string name="tv_get_vertify_code">獲取驗證碼</string>
     <string name="tv_text_input_account">請輸入手機號碼</string>
     <string name="tv_input_vertify_code">請輸入驗證碼</string>
     <string name="tv_input_new_pass_word">請輸入新密碼</string>
@@ -287,5 +287,8 @@
     <string name="tv_usage_detail">使用詳情</string>
     <string name="tv_device_model">設備模式</string>
     <string name="tv_average_leak">平均漏氣</string>
+    <string name="tv_toast_curent_device_offline">該設備處於離線狀態,請檢查設備網絡狀態</string>
+    <string name="tv_text_load_errot">获取数据失败,是否重新获取?</string>
+    <string name="tv_90per_preassure">90%压力</string>
 
 </resources>

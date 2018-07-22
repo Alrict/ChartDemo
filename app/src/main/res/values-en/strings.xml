@@ -208,4 +208,7 @@
     <string name="tv_usage_detail">Use details</string>
     <string name="tv_device_model">Device mode</string>
     <string name="tv_average_leak">Average leak</string>
+    <string name="tv_toast_curent_device_offline">The device is offline, please check the device network status</string>
+    <string name="tv_text_load_errot">获取数据失败,是否重新获取?</string>
+    <string name="tv_90per_preassure">90%压力</string>
 </resources>

@@ -55,7 +55,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/h30"
                 android:layout_marginTop="@dimen/h30"
-                android:text="@string/tv_90per_in_breath"/>
+                android:text="@string/tv_90per_preassure"/>
         </LinearLayout>
     </LinearLayout>
 

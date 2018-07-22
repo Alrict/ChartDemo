@@ -264,6 +264,7 @@
     <string name="tv_text_use_time">使用时长</string>
     <string name="tv_text_ahi">AHI</string>
     <string name="tv_90per_in_breath">90%吸气压力</string>
+    <string name="tv_90per_preassure">90%压力</string>
     <string name="tv_text_suggestion">意见反馈</string>
     <string name="tv_text_device_manager">设备管理</string>
     <string name="tv_reset_pwd_succee">修改密码成功,请重新登录</string>
@@ -287,5 +288,7 @@
     <string name="tv_usage_detail">使用详情</string>
     <string name="tv_device_model">设备模式</string>
     <string name="tv_average_leak">平均漏气</string>
+    <string name="tv_toast_curent_device_offline">该设备处于离线状态,请检查设备网络状态</string>
+    <string name="tv_text_load_errot">获取数据失败,是否重新获取?</string>
 
 </resources>

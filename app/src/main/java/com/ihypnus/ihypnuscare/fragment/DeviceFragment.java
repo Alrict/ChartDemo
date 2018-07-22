@@ -302,7 +302,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
             mInfoList.get(position).setIsChecked(1);
         } else {
             mInfoList.get(oldPosition).setIsChecked(0);
-            mInfoList.get(oldPosition).setIsChecked(1);
+            mInfoList.get(position).setIsChecked(1);
         }
 
         mDeviceId = mInfoList.get(position).getDevice_id();

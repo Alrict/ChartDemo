@@ -14,9 +14,10 @@ import com.ihypnus.ihypnuscare.bean.DeviceListVO;
 import com.ihypnus.ihypnuscare.bean.ShadowDeviceBean;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.iface.BaseType;
+import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
-import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
 /**
@@ -94,7 +95,22 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(var3);
+                BaseDialogHelper.showNormalDialog(DeviceDetailActivity.this, getString(R.string.tip_msg), getString(R.string.tv_text_load_errot), getString(R.string.cancel), getString(R.string.ok), new DialogListener() {
+                    @Override
+                    public void onClick(BaseType baseType) {
+                        if (BaseType.OK == baseType) {
+                            loadParameterInfos();
+                        } else {
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onItemClick(long postion, String s) {
+
+                    }
+                });
+//                ToastUtils.showToastDefault(var3);
             }
         });
     }
@@ -120,22 +136,22 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
         if (ViewUtils.isFastDoubleClick()) return;
         switch (view.getId()) {
             case R.id.btn_setting:
-                jumpToParameterSettingsActivity();
-//                if (mCurState.equals("ONLINE")) {
-//                    jumpToParameterSettingsActivity();
-//                } else {
-//                    BaseDialogHelper.showMsgTipDialog(DeviceDetailActivity.this, "该设备处于离线状态,请检查设备网络状态");
-//                }
+//                jumpToParameterSettingsActivity();
+                if (mCurState.equals("ONLINE")) {
+                    jumpToParameterSettingsActivity();
+                } else {
+                    BaseDialogHelper.showMsgTipDialog(DeviceDetailActivity.this, getString(R.string.tv_toast_curent_device_offline));
+                }
 
                 break;
 
             case R.id.btn_modify:
-                jumpToWifi();
-//                if (mCurState.equals("ONLINE")) {
-//                    jumpToWifi();
-//                } else {
-//                    BaseDialogHelper.showMsgTipDialog(DeviceDetailActivity.this, "该设备处于离线状态,请检查设备网络状态");
-//                }
+//                jumpToWifi();
+                if (mCurState.equals("ONLINE")) {
+                    jumpToWifi();
+                } else {
+                    BaseDialogHelper.showMsgTipDialog(DeviceDetailActivity.this, getString(R.string.tv_toast_curent_device_offline));
+                }
 
                 break;
         }

@@ -262,5 +262,11 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         if (mHomePageController != null) {
             mHomePageController.setData();
         }
+        if (mChartsPage1Controller != null) {
+            mChartsPage1Controller.setWeekDate();
+        }
+        if (mChartsPage2Controller != null) {
+            mChartsPage2Controller.setWeekDate();
+        }
     }
 }

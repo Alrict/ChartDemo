@@ -83,6 +83,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center"
+                android:lines="1"
                 android:textColor="@color/white"/>
             <CheckBox
                 android:id="@+id/cb_visible"
