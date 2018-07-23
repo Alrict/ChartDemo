@@ -215,4 +215,5 @@
     <string name="tv_90per_preassure">90% pressure</string>
     <string name="tv_90in_pre">90% in-pressure</string>
     <string name="tv_90ex_pre">90% ex-pressure</string>
+    <string name="tv_account">Account</string>
 </resources>

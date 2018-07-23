@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="@string/tv_short_name"
+            android:text="@string/tv_account"
             android:textSize="@dimen/w38"/>
         <TextView
             android:id="@+id/tv_person_name"

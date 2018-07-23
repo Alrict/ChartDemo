@@ -26,6 +26,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_chart1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -51,6 +52,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
             <com.ihypnus.widget.AppTextView
+                android:id="@+id/tv_90press"
                 style="@style/TextAppearanceMedium"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/h30"
@@ -58,6 +60,7 @@
                 android:text="@string/tv_90per_preassure"
                 android:textSize="@dimen/w38"/>
             <LinearLayout
+                android:id="@+id/layout_90press_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -69,7 +72,7 @@
                     android:layout_height="@dimen/w30"
                     android:background="@drawable/circle_90in"
                 />
-                <TextView
+                <com.ihypnus.widget.AppTextView
                     style="@style/TextAppearanceMedium"
                     android:layout_marginLeft="@dimen/w10"
                     android:text="@string/tv_90in_pre"
@@ -80,7 +83,7 @@
                     android:layout_height="@dimen/w30"
                     android:layout_marginLeft="@dimen/w20"
                     android:background="@drawable/circle_yellow"/>
-                <TextView
+                <com.ihypnus.widget.AppTextView
                     style="@style/TextAppearanceMedium"
                     android:layout_marginLeft="@dimen/w10"
                     android:text="@string/tv_90ex_pre"
@@ -106,6 +109,7 @@
             app:textColor="@color/white"
             app:textSize="@dimen/w38"/>
         <LinearLayout
+            android:id="@+id/layout_chart2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="@dimen/w100"
@@ -117,6 +121,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
             <com.ihypnus.widget.AppTextView
+                android:id="@+id/tv_ahi"
                 style="@style/TextAppearanceMedium"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/h30"

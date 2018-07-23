@@ -76,9 +76,9 @@
         <meta-data android:name="UMENG_APPKEY" android:value="5b4d5291a40fa32d870000cf"/>
         <meta-data android:name="UMENG_CHANNEL" android:value="${UMENG_CHANNEL_VALUE}"/>
 
-        <activity android:name=".activity.SplashActivity"
-                  android:theme="@style/AppTheme.Splash"
-        >
+        <activity android:name=".activity.LoginActivity"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -92,12 +92,12 @@
             android:screenOrientation="portrait"/>
 
         <!--登入界面-->
-        <activity
+      <!--  <activity
             android:name=".activity.LoginActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden"/>-->
 
         <!--注册界面-->
         <activity
@@ -123,9 +123,10 @@
         <!--主界面-->
         <activity
             android:name="com.ihypnus.ihypnuscare.activity.HomeActivity"
-            android:configChanges="layoutDirection|locale"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
 
         <!--wifi输入密码弹窗-->
         <activity

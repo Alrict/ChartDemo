@@ -248,6 +248,13 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onCharsDataChangedErrorListener(String errMsg) {
         mIvRefresh.clearAnimation();
+        if (mChartsPage2Controller != null) {
+            mChartsPage2Controller.showErrorView();
+        }
+
+        if (mChartsPage3Controller != null) {
+            mChartsPage3Controller.showErrorView();
+        }
         ToastUtils.showToastDefault(errMsg);
     }
 

@@ -30,6 +30,8 @@ public class ChartsPage3Controller extends BaseController {
     private ArrayList<Float> mXValues;
     private List<Float> mYValues1;
     private List<Float> mYValues2;
+    private LinearLayout mLayoutChart1;
+    private LinearLayout mLayoutChart2;
 
     public ChartsPage3Controller(Context context) {
         super(context);
@@ -40,6 +42,8 @@ public class ChartsPage3Controller extends BaseController {
         View rootView = View.inflate(mContext, R.layout.fragment_fourth, null);
         mChart1 = (BarChart) rootView.findViewById(R.id.chart1);
         mChart2 = (BarChart) rootView.findViewById(R.id.chart2);
+        mLayoutChart1 = (LinearLayout) rootView.findViewById(R.id.layout_chart1);
+        mLayoutChart2 = (LinearLayout) rootView.findViewById(R.id.layout_chart2);
         //周统计数据
         mLayoutWeekData = (LinearLayout) rootView.findViewById(R.id.layout_week_data);
         //周统计数据时间范围
@@ -103,7 +107,13 @@ public class ChartsPage3Controller extends BaseController {
             mYValues2.add(aDouble);
         }
         //创建多条折线的图表
-        mBarChartManager1.showBarChart(mXValues, mYValues1, "90%吸气压力(厘米水柱)",  false,0);
-        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI(次/小时)", false,0);
+        mBarChartManager1.showBarChart(mXValues, mYValues1, "90%吸气压力(厘米水柱)", false, 0);
+        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI(次/小时)", false, 0);
+    }
+
+
+    public void showErrorView() {
+        mLayoutChart1.setVisibility(View.INVISIBLE);
+        mLayoutChart1.setVisibility(View.INVISIBLE);
     }
 }

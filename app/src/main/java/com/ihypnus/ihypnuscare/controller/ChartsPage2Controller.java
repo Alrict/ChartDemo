@@ -32,6 +32,8 @@ public class ChartsPage2Controller extends BaseController {
     private ArrayList<Float> mXValues;
     private List<Float> mYValues2;
     private ArrayList<BarEntry> mYValue1;
+    private LinearLayout mLayoutChart1;
+    private LinearLayout mLayoutChart2;
 
     public ChartsPage2Controller(Context context) {
         super(context);
@@ -41,6 +43,10 @@ public class ChartsPage2Controller extends BaseController {
     public View initView() {
         View rootView = View.inflate(mContext, R.layout.fragment_third, null);
         mChart1 = (BarChart) rootView.findViewById(R.id.chart1);
+
+        mLayoutChart1 = (LinearLayout) rootView.findViewById(R.id.layout_chart1);
+        mLayoutChart2 = (LinearLayout) rootView.findViewById(R.id.layout_chart2);
+
         mChart2 = (BarChart) rootView.findViewById(R.id.chart2);
         //周统计数据
         mLayoutWeekData = (LinearLayout) rootView.findViewById(R.id.layout_week_data);
@@ -87,7 +93,8 @@ public class ChartsPage2Controller extends BaseController {
     }
 
     public void updateUI(List<Double> averageInp, List<Double> averageExp, List<Double> ahi) {
-
+        mLayoutChart1.setVisibility(View.VISIBLE);
+        mLayoutChart1.setVisibility(View.VISIBLE);
         mYValue1.clear();
         mYValues2.clear();
         float totalBreath = 0;
@@ -100,7 +107,7 @@ public class ChartsPage2Controller extends BaseController {
             totalBreath += (inp + exp);
             mYValue1.add(new BarEntry(
                     i,
-                    new float[]{inp, exp},
+                    new float[]{exp, inp},
                     mContext.getResources().getDrawable(R.mipmap.star)));
         }
         if (totalBreath == 0) {
@@ -124,6 +131,11 @@ public class ChartsPage2Controller extends BaseController {
         //创建图表
         mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "平均治疗压力", type1);
         mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", false, type2);
+    }
+
+    public void showErrorView() {
+        mLayoutChart1.setVisibility(View.INVISIBLE);
+        mLayoutChart1.setVisibility(View.INVISIBLE);
     }
 
     private int[] getColors() {

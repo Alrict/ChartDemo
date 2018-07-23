@@ -38,6 +38,9 @@ public class ChartsPage1Controller extends BaseController {
     private ArrayList<Float> mXValues;
     private List<Float> mYValues1;
     private List<Float> mYValues2;
+    private LinearLayout mLayoutChart1;
+    private LinearLayout mLayoutChart2;
+    private LinearLayout mLayoutChart1Status;
 
     public ChartsPage1Controller(Context context) {
         super(context);
@@ -48,6 +51,9 @@ public class ChartsPage1Controller extends BaseController {
         View rootView = View.inflate(mContext, R.layout.fragment_second, null);
         mChart1 = (BarChart) rootView.findViewById(R.id.chart1);
         mChart2 = (BarChart) rootView.findViewById(R.id.chart2);
+        mLayoutChart1 = (LinearLayout) rootView.findViewById(R.id.layout_chart1);
+        mLayoutChart1Status = (LinearLayout) rootView.findViewById(R.id.layout_chart1_status);
+        mLayoutChart2 = (LinearLayout) rootView.findViewById(R.id.layout_chart2);
         //周统计数据
         mLayoutWeekData = (LinearLayout) rootView.findViewById(R.id.layout_week_data);
         //周统计数据时间范围
@@ -59,6 +65,7 @@ public class ChartsPage1Controller extends BaseController {
     public void initData() {
         mBarChartManager1 = new BarChartManager(mChart1);
         mBarChartManager2 = new BarChartManager(mChart2);
+
         //设置x轴的数据
         mXValues = new ArrayList<>();
         for (int i = 1; i <= 7; i++) {
@@ -98,6 +105,7 @@ public class ChartsPage1Controller extends BaseController {
                     if (mCharsDataChangedListener != null) {
                         mCharsDataChangedListener.onCharsDataChangedErrorListener("请求data为null");
                     }
+                    showErrorView();
                 }
             }
 
@@ -107,6 +115,7 @@ public class ChartsPage1Controller extends BaseController {
                 if (mCharsDataChangedListener != null) {
                     mCharsDataChangedListener.onCharsDataChangedErrorListener(var3);
                 }
+                showErrorView();
             }
         });
     }
@@ -116,6 +125,9 @@ public class ChartsPage1Controller extends BaseController {
         List<Double> usedTimeSecond = data.getUsedTimeSecond();
         mYValues1.clear();
         mYValues2.clear();
+        mLayoutChart1.setVisibility(View.VISIBLE);
+        mLayoutChart1Status.setVisibility(View.VISIBLE);
+        mLayoutChart1.setVisibility(View.VISIBLE);
         int score = 0;
         int sleepHour = 0;
         int type1 = 0;
@@ -154,6 +166,13 @@ public class ChartsPage1Controller extends BaseController {
         mBarChartManager2.showBarChart(mXValues, mYValues2, "使用时长", false, type2);
 
     }
+
+    public void showErrorView() {
+        mLayoutChart1.setVisibility(View.INVISIBLE);
+        mLayoutChart1Status.setVisibility(View.INVISIBLE);
+        mLayoutChart1.setVisibility(View.INVISIBLE);
+    }
+
 
     public void setWeekDate() {
         mTvDate.setText(getWeekRang(ReportFragment.sCurrentTime));

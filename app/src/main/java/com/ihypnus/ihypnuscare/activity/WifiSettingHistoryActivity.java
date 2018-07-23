@@ -79,6 +79,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     public static final int SEND_MSG_SUCCSEE = 3;//发送消息成功
     public static final int SEND_MSG_ERROR = 4;//发送消息失败
     public static final int GET_MSG = 6;//获取新消息
+    public static final int WIFI_SCAN_PERMISSION_CODE = 102;//获取wifi权限
 
     private WifiManager mWifiManager;
     private WifiSettingManager mWifiSettingManager;
@@ -126,7 +127,9 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     protected void init(Bundle savedInstanceState) {
         setTitle(getString(R.string.tv_title_wifi_setting));
         mScanResults = new ArrayList<>();
-
+        //wifi权限校验
+        // 没有获取到权限，做特殊处理
+        checkWifiPermission();
         //注册广播
         initBroadcastReceiver();
         //初始化wifiManager
@@ -328,7 +331,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
                     switch (wifiState) {
                         case WifiManager.WIFI_STATE_ENABLED:
                             //获取到wifi开启的广播时，开始扫描
-//                            mWifiSettingManager.startScan();
+                            mWifiSettingManager.startScan();
                             break;
                         case WifiManager.WIFI_STATE_DISABLED:
                             //wifi关闭发出的广播
@@ -358,7 +361,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
 //                            showIndeterminateProgressDialog(true, "连接成功");
 //                            IP = getIp();
                             LogOut.d("llw", "当前链接wifi的ip:" + IP);
-//                            mWifiSettingManager.startScan();
+                            mWifiSettingManager.startScan();
                         } else if (state == NetworkInfo.DetailedState.FAILED) {
                             showIndeterminateProgressDialog(true, getString(R.string.tv_connect_wifi_faile));
                         }

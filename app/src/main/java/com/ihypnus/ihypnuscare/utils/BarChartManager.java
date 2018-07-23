@@ -100,19 +100,20 @@ public class BarChartManager {
         yAxis.setZeroLineWidth(10);  // 0轴宽度
         yAxis.setZeroLineColor(Color.WHITE);   // 0轴颜色
         yAxis.setAxisMinimum(0);
-//        if (type == 1 || type == 2) {
-//            //睡眠分数范围
-//            yAxis.setAxisMaximum(100);
-//        } else if (type == 3 || type == 4) {
-//            //使用时长范围
-//            yAxis.setAxisMaximum(24);
-//        } else if (type == 5 || type == 6) {
-//            //90%吸气压范围
-//            yAxis.setAxisMaximum(120);
-//        } else if (type == 7 || type == 8) {
-//            //ahi范围
-//            yAxis.setAxisMaximum(200);
-//        }
+        yAxis.resetAxisMaximum();
+        if (type == 1) {
+            //睡眠分数范围
+            yAxis.setAxisMaximum(100);
+        } else if (type == 3) {
+            //使用时长范围
+            yAxis.setAxisMaximum(24);
+        } else if (type == 5) {
+            //90%吸气压范围
+            yAxis.setAxisMaximum(120);
+        } else if (type == 7) {
+            //ahi范围
+            yAxis.setAxisMaximum(200);
+        }
 
         //图例 标签 设置
         Legend legend = mBarChart.getLegend();
@@ -253,10 +254,8 @@ public class BarChartManager {
 
         // have as many colors as stack-values per entry
         int[] colors = new int[stacksize];
-
-        for (int i = 0; i < colors.length; i++) {
-            colors[i] = ColorTemplate.MATERIAL_COLORS[i];
-        }
+        colors[0] = ColorTemplate.MATERIAL_COLORS[1];
+        colors[1] = ColorTemplate.MATERIAL_COLORS[0];
 
         return colors;
     }

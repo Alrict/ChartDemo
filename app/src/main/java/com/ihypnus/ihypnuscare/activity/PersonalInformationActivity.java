@@ -71,7 +71,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
         mRbMan = (RadioButton) findViewById(R.id.rb_man);
         //女性
         mRbFemale = (RadioButton) findViewById(R.id.rb_female);
-        //昵称
+        //帐号
         mTvName = (TextView) findViewById(R.id.tv_person_name);
         mTvNameArrow = (ImageView) findViewById(R.id.tv_name_arrow);
 
@@ -184,7 +184,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     public void onClick(View view) {
         if (ViewUtils.isFastDoubleClick()) return;
         switch (view.getId()) {
-            case R.id.tv_person_name:
+//            case R.id.tv_person_name:
             case R.id.tv_name_arrow:
                 //修改姓名
                 BaseDialogHelper.showInputNameDialog(PersonalInformationActivity.this, getString(R.string.tv_tip_your_name), new BaseDialogHelper.NumberInputListener() {

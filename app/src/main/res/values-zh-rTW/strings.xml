@@ -292,5 +292,6 @@
     <string name="tv_90per_preassure">90%壓力</string>
     <string name="tv_90in_pre">90%吸氣壓力</string>
     <string name="tv_90ex_pre">90%呼氣壓力</string>
+    <string name="tv_account">帳號</string>
 
 </resources>
