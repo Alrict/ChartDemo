@@ -81,7 +81,7 @@
             android:id="@+id/tv_hours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="7"
+            android:text="-"
             android:textColor="@color/white"
             android:textSize="@dimen/h74"/>
         <com.ihypnus.widget.AppTextView
@@ -96,7 +96,7 @@
             android:id="@+id/tv_minues"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="49"
+            android:text="-"
             android:textColor="@color/white"
             android:textSize="@dimen/h74"/>
         <com.ihypnus.widget.AppTextView
@@ -120,7 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="12:23~20:36"
+            android:text="--~--"
             android:textColor="@color/white"
             android:textSize="@dimen/w54"/>
 
@@ -183,7 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/h24"
                 android:gravity="center"
-                android:text="APAP"
+                android:text="--"
                 android:textColor="@color/gray_white"
                 android:textSize="@dimen/w38"/>
 
@@ -200,7 +200,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="5.6L/min"
+                android:text="--"
                 android:textColor="@color/gray_white"
                 android:textSize="@dimen/w38"/>
         </LinearLayout>
@@ -224,7 +224,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/h24"
                 android:gravity="center"
-                android:text="11cmH2O"
+                android:text="--"
                 android:textColor="@color/gray_white"
                 android:textSize="@dimen/w38"/>
 
@@ -241,7 +241,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="11"
+                android:text="--"
                 android:textColor="@color/gray_white"
                 android:textSize="@dimen/w38"/>
         </LinearLayout>
@@ -265,7 +265,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/h24"
                 android:gravity="center"
-                android:text="4cmH2O"
+                android:text="--"
                 android:textColor="@color/gray_white"
                 android:textSize="@dimen/w38"/>
 
