@@ -74,29 +74,29 @@
             android:layout_height="@dimen/w30"
             android:background="@drawable/circle_orange"
         />
-        <TextView
+        <com.ihypnus.widget.AppTextView
             style="@style/TextAppearanceMedium"
             android:layout_marginLeft="@dimen/w10"
             android:text="@string/tv_status_bad"
             android:textColor="@color/gray_white"
             android:textSize="@dimen/w38"/>
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:layout_width="@dimen/w30"
             android:layout_height="@dimen/w30"
             android:layout_marginLeft="@dimen/w20"
             android:background="@drawable/circle_blue_chart"/>
-        <TextView
+        <com.ihypnus.widget.AppTextView
             style="@style/TextAppearanceMedium"
             android:layout_marginLeft="@dimen/w10"
             android:text="@string/tv_status_normal"
             android:textColor="@color/gray_white"
             android:textSize="@dimen/w38"/>
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:layout_width="@dimen/w30"
             android:layout_height="@dimen/w30"
             android:layout_marginLeft="@dimen/w20"
             android:background="@drawable/circle_green"/>
-        <TextView
+        <com.ihypnus.widget.AppTextView
             style="@style/TextAppearanceMedium"
             android:layout_marginLeft="@dimen/w10"
             android:text="@string/tv_status_good"
