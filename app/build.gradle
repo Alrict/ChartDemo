@@ -87,15 +87,15 @@ android {
     flavorDimensions "default"
     // 可定义的产品特性:根据不同需求 选择相应模式 正式key,测试key
     productFlavors {
-        yingyongbao {dimension "default"}
-        huawei {dimension "default"}
-        baidu {dimension "default"}
-        xiaomi {dimension "default"}
-        qh360 {dimension "default"}
-        wandoujia {dimension "default"}
-        uc {dimension "default"}
-        meizu{dimension "default"}
-        google{dimension "default"}
+        yingyongbao { dimension "default" }
+        huawei { dimension "default" }
+        baidu { dimension "default" }
+        xiaomi { dimension "default" }
+        qh360 { dimension "default" }
+        wandoujia { dimension "default" }
+        uc { dimension "default" }
+        meizu { dimension "default" }
+        google { dimension "default" }
         //这里注意：渠道名称最好不要大写
         productFlavors.all {
             flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
@@ -184,4 +184,6 @@ dependencies {
     implementation 'com.aliyun.dpa:oss-android-sdk:2.8.3'
     //图片压缩处理
     implementation 'top.zibin:Luban:1.1.7'
+    //ui适配库导入
+    implementation 'com.zhy:autolayout:1.4.5'
 }

@@ -1,6 +1,5 @@
 package com.ihypnus.ihypnuscare.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +22,7 @@ import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StatusBarUtil;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.umeng.analytics.MobclickAgent;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -35,7 +35,7 @@ import org.greenrobot.eventbus.ThreadMode;
  * @date: 2018/5/14 13:42
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends AutoLayoutActivity{
     /**
      * 隐藏状态条 默认显示
      * 请在方法{@link #preCreate} 初始化这个变量
