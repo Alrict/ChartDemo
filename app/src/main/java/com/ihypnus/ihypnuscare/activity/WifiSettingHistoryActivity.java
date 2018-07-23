@@ -320,7 +320,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
                             mScanResults.add(scanResults.get(i));
                         }
                     }
-                    if (mScanResults.size() > 0) {
+                    if (mScanResults.size() > 0 && StringUtils.isNullOrEmpty(mTvSsid.getText().toString().trim())) {
                         mTvSsid.setText(mScanResults.get(0).SSID);
                     }
 
