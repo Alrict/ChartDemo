@@ -17,7 +17,7 @@
             style="@style/TextAppearanceMedium"
             android:text="@string/tv_text_week_title"
             android:textSize="@dimen/w34"/>
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_date"
             style="@style/TextAppearanceMedium"
             android:layout_marginTop="@dimen/w24"

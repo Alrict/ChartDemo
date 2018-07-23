@@ -31,6 +31,7 @@ import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.widget.CircleProgressBarView;
+import com.ihypnus.widget.AppTextView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -45,7 +46,7 @@ import java.util.Locale;
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
 public class HomePageController extends BaseController implements View.OnClickListener {
-    private TextView mTvData;
+    private AppTextView mTvData;
     private CircleProgressBarView mPb;
     private LinearLayout mLayoutWeekData;
     private TextView mTvDate;
@@ -71,7 +72,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
     public View initView() {
         View rootView = View.inflate(mContext, R.layout.fragment_home_first, null);
         //日期
-        mTvData = (TextView) rootView.findViewById(R.id.tv_data);
+        mTvData = (AppTextView) rootView.findViewById(R.id.tv_data);
         //前一天
         mIvLastWeek = (ImageView) rootView.findViewById(R.id.iv_last_week);
         //后一天
@@ -113,16 +114,21 @@ public class HomePageController extends BaseController implements View.OnClickLi
     public void initData() {
         mIvLastWeek.setOnClickListener(this);
         mIvNextWeek.setOnClickListener(this);
+        String time = null;
         try {
             String currentDate = DateTimeUtils.getCurrentDate();
-            String date = DateTimeUtils.date2Chinese(currentDate);
+            if (Constants.LANGUAGE_TYPE == Locale.ENGLISH) {
+                time = DateTimeUtils.date2English(currentDate);
+            } else {
+                time = DateTimeUtils.date2Chinese(currentDate);
+            }
 //            setDate(System.currentTimeMillis(),this);
-            mTvData.setText(date);
+
         } catch (FormatException e) {
+            time = "";
             e.printStackTrace();
-
         }
-
+        mTvData.setText(time);
         mLayoutTime.setOnClickListener(this);
 
 
@@ -200,6 +206,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
     /**
      * 设置头部日期
+     *
      * @return
      */
     public long setData() {

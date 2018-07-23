@@ -112,6 +112,10 @@ public class ChanedPassWordActivity extends BaseActivity implements CompoundButt
             ToastUtils.showToastDefault(getString(R.string.pwd_different_error));
             return;
         }
+        if (oldPwd.equals(newPwd1)||oldPwd.equals(newPwd2)){
+            ToastUtils.showToastDefault(getString(R.string.tv_toast_old_new_pwd));
+            return;
+        }
         BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.onloading));
 
         IhyRequest.resetPassword(Constants.JSESSIONID, true, oldPwd, newPwd1, new ResponseCallback() {

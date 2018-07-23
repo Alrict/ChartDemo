@@ -10,6 +10,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -51,17 +52,31 @@ public class MultiLanguageUtil {
      */
     public void setConfiguration() {
         Locale targetLocale = getLanguageLocale();
+        LogOut.d("llw", "設置系統語言類型：" + targetLocale.toString());
         Configuration configuration = mContext.getResources().getConfiguration();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             configuration.setLocale(targetLocale);
         } else {
             configuration.locale = targetLocale;
         }
-            Resources resources = mContext.getResources();
-            DisplayMetrics dm = resources.getDisplayMetrics();
-            resources.updateConfiguration(configuration, dm);//语言更换生效的代码!
+        Resources resources = mContext.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        resources.updateConfiguration(configuration, dm);//语言更换生效的代码!
     }
 
+    public void setConfiguration(Context context) {
+        Locale targetLocale = getLanguageLocale();
+        LogOut.d("llw", "設置系統語言類型：" + targetLocale.toString());
+        Configuration configuration = context.getResources().getConfiguration();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            configuration.setLocale(targetLocale);
+        } else {
+            configuration.locale = targetLocale;
+        }
+        Resources resources = context.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        resources.updateConfiguration(configuration, dm);//语言更换生效的代码!
+    }
     /**
      * 如果不是英文、简体中文、繁体中文，默认返回简体中文
      *
@@ -69,8 +84,9 @@ public class MultiLanguageUtil {
      */
     public Locale getLanguageLocale() {
         int languageType = CommSharedUtil.getInstance(mContext).getInt(MultiLanguageUtil.SAVE_LANGUAGE, 0);
+        LogOut.d("llw","语言类型"+languageType);
         if (languageType == LanguageType.LANGUAGE_FOLLOW_SYSTEM) {
-            Locale sysLocale= getSysLocale();
+            Locale sysLocale = getSysLocale();
             return sysLocale;
         } else if (languageType == LanguageType.LANGUAGE_EN) {
             return Locale.ENGLISH;
@@ -112,7 +128,7 @@ public class MultiLanguageUtil {
     }
 
     public String getLanguageName(Context context) {
-        int languageType = CommSharedUtil.getInstance(context).getInt(MultiLanguageUtil.SAVE_LANGUAGE,LanguageType.LANGUAGE_FOLLOW_SYSTEM);
+        int languageType = CommSharedUtil.getInstance(context).getInt(MultiLanguageUtil.SAVE_LANGUAGE, LanguageType.LANGUAGE_FOLLOW_SYSTEM);
         if (languageType == LanguageType.LANGUAGE_EN) {
             return mContext.getString(R.string.setting_language_english);
         } else if (languageType == LanguageType.LANGUAGE_CHINESE_SIMPLIFIED) {
@@ -125,16 +141,17 @@ public class MultiLanguageUtil {
 
     /**
      * 获取到用户保存的语言类型
+     *
      * @return
      */
     public int getLanguageType() {
         int languageType = CommSharedUtil.getInstance(mContext).getInt(MultiLanguageUtil.SAVE_LANGUAGE, LanguageType.LANGUAGE_FOLLOW_SYSTEM);
-         if (languageType == LanguageType.LANGUAGE_CHINESE_SIMPLIFIED) {
+        if (languageType == LanguageType.LANGUAGE_CHINESE_SIMPLIFIED) {
             return LanguageType.LANGUAGE_CHINESE_SIMPLIFIED;
         } else if (languageType == LanguageType.LANGUAGE_CHINESE_TRADITIONAL) {
             return LanguageType.LANGUAGE_CHINESE_TRADITIONAL;
         } else if (languageType == LanguageType.LANGUAGE_FOLLOW_SYSTEM) {
-           return LanguageType.LANGUAGE_FOLLOW_SYSTEM;
+            return LanguageType.LANGUAGE_FOLLOW_SYSTEM;
         }
         Log.e(TAG, "getLanguageType" + languageType);
         return languageType;
@@ -153,7 +170,7 @@ public class MultiLanguageUtil {
     private static Context createConfigurationResources(Context context) {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
-        Locale locale=getInstance().getLanguageLocale();
+        Locale locale = getInstance().getLanguageLocale();
         configuration.setLocale(locale);
         return context.createConfigurationContext(configuration);
     }

@@ -293,5 +293,6 @@
     <string name="tv_90in_pre">90%吸气压力</string>
     <string name="tv_90ex_pre">90%呼气压力</string>
     <string name="tv_account">帐号</string>
+    <string name="tv_toast_old_new_pwd">新密码请勿与原密码相同</string>
 
 </resources>

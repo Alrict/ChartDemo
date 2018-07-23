@@ -78,6 +78,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
     private ShadowDeviceBean mDeviceBean;
     private LinearLayout mLayoutContent13;
     private LinearLayout mLayoutContent14;
+    private String mDeviceId;
 
     @Override
     protected int setView() {
@@ -126,8 +127,9 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
     @Override
     protected void init(Bundle savedInstanceState) {
         Intent intent = getIntent();
-        String deviceId = intent.getStringExtra("DEVICE_ID");
-        setTitle(deviceId);
+        //当前选中设备的deviceId
+        mDeviceId = intent.getStringExtra("DEVICE_ID");
+        setTitle(mDeviceId);
         //压力范围
         mKpaList = new ArrayList<>();
         //释压水平
@@ -161,8 +163,9 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
         mPressureRelease.addAll(Arrays.asList(expiratory_pressure_release));
 
         mDeviceBean = intent.getParcelableExtra("DEVICE_BEAN");
+
         if (mDeviceBean == null) {
-            getParameterInfos(deviceId);
+            getParameterInfos(mDeviceId);
         } else {
             bindView(mDeviceBean);
         }
@@ -537,8 +540,8 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
     private void updateParameterInfos() {
         mParams.put("JSESSIONID", Constants.JSESSIONID);
         mParams.put("isCookie", true);
-        mParams.put("deviceId", Constants.DEVICEID);
-        mParams.put("deviceID", Constants.DEVICEID);
+        mParams.put("deviceId", mDeviceId);//当前设备的id
+        mParams.put("deviceID", mDeviceBean.getDeviceID());//获取影子设备信息中返回的id
 
         BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.tv_isloading));
         IhyRequest.updateShadowDevice(mParams, new ResponseCallback() {

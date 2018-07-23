@@ -216,4 +216,5 @@
     <string name="tv_90in_pre">90% in-pressure</string>
     <string name="tv_90ex_pre">90% ex-pressure</string>
     <string name="tv_account">Account</string>
+    <string name="tv_toast_old_new_pwd">新密码请勿与原密码相同</string>
 </resources>

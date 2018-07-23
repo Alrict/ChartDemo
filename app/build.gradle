@@ -185,5 +185,5 @@ dependencies {
     //图片压缩处理
     implementation 'top.zibin:Luban:1.1.7'
     //ui适配库导入
-    implementation 'com.zhy:autolayout:1.4.5'
+//    implementation 'com.zhy:autolayout:1.4.5'
 }

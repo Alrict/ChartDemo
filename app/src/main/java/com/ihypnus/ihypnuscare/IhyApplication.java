@@ -1,6 +1,7 @@
 package com.ihypnus.ihypnuscare;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -61,10 +62,8 @@ public class IhyApplication extends Application {
         initImageLoadConfig(this);
         initVariable();
         initLogReport();
-        //设置语言
-        Locale languageLocale = MultiLanguageUtil.getInstance().getLanguageLocale();
-        Constants.LANGUAGE_TYPE = languageLocale;
-        switchLanguage(languageLocale);
+        //设置当前语言类型
+        Constants.LANGUAGE_TYPE = MultiLanguageUtil.getInstance().getLanguageLocale();
     }
 
     public void switchLanguage(Locale locale) {
@@ -201,4 +200,17 @@ UMConfigure.init调用中appkey和channel参数请置为null）。
 
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiLanguageUtil.init(this);
+        MultiLanguageUtil.getInstance().setConfiguration();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        MultiLanguageUtil.init(this);
+        MultiLanguageUtil.getInstance().setConfiguration(getApplicationContext());
+    }
 }
