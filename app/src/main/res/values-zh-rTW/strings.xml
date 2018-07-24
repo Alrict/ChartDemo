@@ -156,7 +156,7 @@
     <string name="tv_verson">當前版本:</string>
     <string name="tv_company_name">廣州和普樂健康科技有限公司版權所有</string>
     <string name="add_new_device">添加設備</string>
-    <string name="hint_input_device_sn">請輸入或掃一掃設備SN</string>
+    <string name="hint_input_device_sn">請掃一掃設備SN</string>
     <string name="bt_next">下一步</string>
     <string name="tv_modify_text">修改密碼</string>
     <string name="pwd_error_tip">請輸入6-14位的密碼,支持數字與大小寫字母</string>

@@ -337,7 +337,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mLayoutContent03.setVisibility(View.VISIBLE);
                 mTvTitle03.setText(R.string.tv_zdylzc);
                 mTvValue03.setText(initTextView(deviceBean.getPressure_support() + ""));
-                //最大呼气压力
+                //最小呼气压力
                 mTvTitle04.setText(R.string.tv_zdhqyl);
                 mTvValue04.setText(initTextView(deviceBean.getAutos_min_p() + ""));
                 //最小压力支持 todo 换字段
@@ -389,7 +389,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 //呼吸比
                 mLayoutContent13.setVisibility(View.VISIBLE);
                 mTvTitle13.setText(R.string.tv_breath_ration);
-                mTvValue13.setText(deviceBean.getBreath_ratio() + "");
+                mTvValue13.setText("1:" + deviceBean.getBreath_ratio());
                 mLayoutContent14.setVisibility(View.INVISIBLE);
 
                 //起始压力
@@ -428,7 +428,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 //呼吸比
                 mLayoutContent13.setVisibility(View.VISIBLE);
                 mTvTitle13.setText(R.string.tv_text_qsyl);
-                mTvValue13.setText(initTextView(deviceBean.getBreath_ratio() + ""));
+                mTvValue13.setText("1:" + deviceBean.getBreath_ratio());
                 mLayoutContent14.setVisibility(View.INVISIBLE);
 
                 //起始压力
@@ -601,7 +601,40 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                                 return;
                             }
                         } else if (mCureMode == 1) {
-
+                            int apap_min_p = mDeviceBean.getApap_min_p();
+                            if (v * 10 > apap_min_p) {
+                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, "起始压力不能大于最小压力");
+                                textView.setText(initTextView(mDeviceBean.getApap_min_p() + ""));
+                                return;
+                            }
+                        } else if (mCureMode == 2) {
+                            int bpap_ex_p = mDeviceBean.getBpap_ex_p();
+                            if (v * 10 > bpap_ex_p) {
+                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, "起始压力不能大于呼气压力");
+                                textView.setText(initTextView(mDeviceBean.getBpap_ex_p() + ""));
+                                return;
+                            }
+                        } else if (mCureMode == 3) {
+                            int autos_min_p = mDeviceBean.getAutos_min_p();
+                            if (v * 10 > autos_min_p) {
+                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, "起始压力不能大于最小呼气压力");
+                                textView.setText(initTextView(mDeviceBean.getAutos_min_p() + ""));
+                                return;
+                            }
+                        } else if (mCureMode == 4) {
+                            int t_ex_p = mDeviceBean.getT_ex_p();
+                            if (v * 10 > t_ex_p) {
+                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, "起始压力不能大于呼气压力");
+                                textView.setText(initTextView(mDeviceBean.getT_ex_p() + ""));
+                                return;
+                            }
+                        } else if (mCureMode == 5) {
+                            int st_ex_p = mDeviceBean.getSt_ex_p();
+                            if (v * 10 > st_ex_p) {
+                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, "起始压力不能大于呼气压力");
+                                textView.setText(initTextView(mDeviceBean.getSt_ex_p() + ""));
+                                return;
+                            }
                         }
                         int startPressure = (int) (v * 10);
                         s = String.valueOf(startPressure);

@@ -137,8 +137,8 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     protected void initEvent() {
         mRg_gender.setOnCheckedChangeListener(this);
 
-        mTvName.setOnClickListener(this);
-        mTvNameArrow.setOnClickListener(this);
+//        mTvName.setOnClickListener(this);
+//        mTvNameArrow.setOnClickListener(this);
 
         mTvPersonHeight.setOnClickListener(this);
         mTvHeightArrow.setOnClickListener(this);

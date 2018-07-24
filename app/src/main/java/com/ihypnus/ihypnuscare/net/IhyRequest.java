@@ -13,6 +13,7 @@ import com.ihypnus.ihypnuscare.bean.PhoneVO;
 import com.ihypnus.ihypnuscare.bean.ShadowDeviceBean;
 import com.ihypnus.ihypnuscare.bean.UsageInfos;
 import com.ihypnus.ihypnuscare.bean.UserInfo;
+import com.ihypnus.ihypnuscare.config.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -407,6 +408,23 @@ public class IhyRequest {
         String url = IhyAction.logout;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("JSESSIONID", JSESSIONID);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        Volley.me.addInitRequestHead("Accept", "application/json");
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
+
+
+    /**
+     * 获取设备的型号等信息
+     * @param deviceId
+     * @param callback
+     */
+    public static void getDeviceInfos(String deviceId, ResponseCallback callback) {
+        String url = IhyAction.deviceDetail;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("JSESSIONID", Constants.JSESSIONID);
+        params.put("deviceId", deviceId);
         SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
         Volley.me.addInitRequestHead("Accept", "application/json");
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);

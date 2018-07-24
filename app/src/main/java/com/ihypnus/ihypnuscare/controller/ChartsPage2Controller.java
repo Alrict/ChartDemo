@@ -11,8 +11,10 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 import com.ihypnus.ihypnuscare.utils.BarChartManager;
+import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -61,9 +63,6 @@ public class ChartsPage2Controller extends BaseController {
         mBarChartManager2 = new BarChartManager(mChart2);
         //设置x轴的数据
         mXValues = new ArrayList<>();
-        for (int i = 1; i <= 7; i++) {
-            mXValues.add((float) i);
-        }
 
         //设置y轴的数据()
         mYValue1 = new ArrayList<BarEntry>();
@@ -101,13 +100,26 @@ public class ChartsPage2Controller extends BaseController {
         float totalAHI = 0;
         int type1 = 0;
         int type2 = 0;
+        //X坐标放日期,吸气压力大于呼气压力,AHI显示以为小数;3.新增/注册的时设备只能扫描,不可输入
+        long currentTime = ReportFragment.sCurrentTime;
+        mXValues.clear();
+        for (int i = 7; i >= 1; i--) {
+            long l = currentTime - (i * 24L * 60L * 60L * 1000L);
+            String monthDayDateTime = DateTimeUtils.getMonthDayDateTime(l);
+            String[] split = monthDayDateTime.split("-");
+            if (split.length == 2) {
+                String s = split[1];
+                int i1 = Integer.parseInt(s);
+                mXValues.add((float) i1);
+            }
+        }
         for (int i = 0; i <= 6; i++) {
             float inp = averageInp.get(i).floatValue();
             float exp = averageExp.get(i).floatValue();
             totalBreath += (inp + exp);
             mYValue1.add(new BarEntry(
-                    i,
-                    new float[]{exp, inp},
+                    mXValues.get(i),
+                    new float[]{exp / 10, inp / 10},
                     mContext.getResources().getDrawable(R.mipmap.star)));
         }
         if (totalBreath == 0) {
@@ -123,13 +135,14 @@ public class ChartsPage2Controller extends BaseController {
             totalAHI += aDouble;
             mYValues2.add(aDouble);
         }
-        if (totalAHI == 0) {
+        Float max = Collections.max(mYValues2);
+        if (totalAHI == 0||max<=40) {
             type2 = 7;
         } else {
             type2 = 8;
         }
         //创建图表
-        mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "平均治疗压力", type1);
+        mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "平均治疗压力", type1,averageInp,averageExp);
         mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", false, type2);
     }
 

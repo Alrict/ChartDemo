@@ -1,7 +1,13 @@
 package com.ihypnus.ihypnuscare.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -80,6 +86,14 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void loadData() {
         loadParameterInfos();
+        //todo 获取设备model并判断该设备是否具有wifi模块
+        //根据第六位的'W'
+   /*     String model = "";
+        if (model.length() >= 6 && String.valueOf(model.indexOf(5)).equals("W")) {
+            mBtSetWifi.setVisibility(View.VISIBLE);
+        } else {
+            mBtSetWifi.setVisibility(View.GONE);
+        }*/
     }
 
     private void loadParameterInfos() {
@@ -136,6 +150,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
         if (ViewUtils.isFastDoubleClick()) return;
         switch (view.getId()) {
             case R.id.btn_setting:
+                //参数设置
 //                jumpToParameterSettingsActivity();
                 if (mCurState.equals("ONLINE")) {
                     jumpToParameterSettingsActivity();
@@ -146,13 +161,10 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
 
             case R.id.btn_modify:
-//                jumpToWifi();
-                if (mCurState.equals("ONLINE")) {
-                    jumpToWifi();
-                } else {
-                    BaseDialogHelper.showMsgTipDialog(DeviceDetailActivity.this, getString(R.string.tv_toast_curent_device_offline));
-                }
-
+                //wifi设置
+                jumpToWifi();
+                //校验wifi
+//                checkTargetWifi();
                 break;
         }
     }
@@ -175,8 +187,58 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
      * 进入wifi配置页面
      */
     private void jumpToWifi() {
+//  点击配置wifi时校验当前链接的热点是否是目标热点
         Intent intent = new Intent(this, WifiSettingHistoryActivity.class);
         startActivity(intent);
+    }
+
+    private void checkTargetWifi() {
+        String tips = "前去连接名为Hypnus_AP的热点";
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        if (wifiManager != null) {
+            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            if (wifiInfo != null && wifiInfo.getSSID().equals("\"Hypnus_AP\"")) {
+                jumpToWifi();
+            } else {
+                String ssid = wifiInfo.getSSID();
+                if (!StringUtils.isNullOrEmpty(ssid)) {
+                    tips = "当前连接的热点为:" + ssid + ",请" + tips;
+                }
+                showTipDialog(tips);
+            }
+        } else {
+            showTipDialog(tips);
+        }
+    }
+
+    private void showTipDialog(String tip) {
+        BaseDialogHelper.showNormalDialog(DeviceDetailActivity.this, getString(R.string.tip_msg), tip, getString(R.string.cancel), getString(R.string.ok), new DialogListener() {
+            @Override
+            public void onClick(BaseType baseType) {
+                if (BaseType.OK == baseType) {
+                    Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onItemClick(long postion, String s) {
+
+            }
+        });
+    }
+
+    /**
+     * 判断当前Wifi是否可用
+     **/
+    private boolean isWifiEnable(Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context.getApplicationContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (manager == null) {
+            return false;
+        }
+        NetworkInfo mWifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return !(mWifi == null || !mWifi.isConnected());
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.ihypnus.ihypnuscare.activity;
 
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,7 +14,10 @@ import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
+import com.ihypnus.ihypnuscare.iface.BaseType;
+import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
+import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
@@ -54,6 +60,10 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
 
 
     private void jumpToWifiSettingActivity() {
+        //仅当选中的设备具有 WiFi 模块时，进入设备配置界面有此按钮。
+//        若选中的设备是带有移动传输模块，则无“更改 WiFi”按钮。
+//        点击“更改 WiFi”按钮后，进入到 WiFi 配置界面，可更改设备连接使
+//        用的 WiFi 网络
         Intent intent = new Intent(this, WifiSettingHistoryActivity.class);
         intent.putExtra("NEW_DEVICE_ID", mNewDeviceId);
         startActivity(intent);
@@ -63,6 +73,15 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     protected void loadData() {
         Intent intent = getIntent();
         mNewDeviceId = intent.getStringExtra("NEW_DEVICE_ID");
+        //todo 获取设备model并判断该设备是否具有wifi模块
+        //根据第六位的'W'
+   /*     String model = "";
+        if (model.length() >= 6 && String.valueOf(model.indexOf(5)).equals("W")) {
+            mBtSetWifi.setVisibility(View.VISIBLE);
+        } else {
+            mBtSetWifi.setVisibility(View.GONE);
+        }*/
+
 
     }
 
@@ -74,13 +93,52 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.bt_next:
                 //设置好了
-                bindDevice();
+                checkTargetWifi();
                 break;
             case R.id.bt_set_wifi:
                 //配置wifi
                 jumpToWifiSettingActivity();
                 break;
         }
+    }
+
+    /**
+     * 校验当前连接的wifi
+     */
+    private void checkTargetWifi() {
+        String tips = "前去连接名为Hypnus_AP的热点";
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        if (wifiManager != null) {
+            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            if (wifiInfo != null && wifiInfo.getSSID().equals("Hypnus_AP")) {
+                jumpToHomeActivity();
+            } else {
+                String ssid = wifiInfo.getSSID();
+                if (!StringUtils.isNullOrEmpty(ssid)) {
+                    tips = "当前连接的热点为:" + ssid + ",请" + tips;
+                }
+                showTipDialog(tips);
+            }
+        } else {
+            showTipDialog(tips);
+        }
+    }
+
+    private void showTipDialog(String tip) {
+        BaseDialogHelper.showNormalDialog(WifiSettingTipActivity.this, getString(R.string.tip_msg), tip, getString(R.string.cancel), getString(R.string.ok), new DialogListener() {
+            @Override
+            public void onClick(BaseType baseType) {
+                if (BaseType.OK == baseType) {
+                    Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onItemClick(long postion, String s) {
+
+            }
+        });
     }
 
     /**

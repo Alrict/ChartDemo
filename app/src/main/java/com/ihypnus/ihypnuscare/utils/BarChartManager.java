@@ -42,7 +42,12 @@ public class BarChartManager {
     /**
      * 初始化BarChart
      */
+
     private void initBarChart(boolean showLegend, int type) {
+        initBarChart(showLegend, type, null, null);
+    }
+
+    private void initBarChart(boolean showLegend, int type, List<Double> averageInp, List<Double> averageExp) {
         //背景颜色
         mBarChart.setBackgroundColor(Color.TRANSPARENT);
         //网格
@@ -89,7 +94,11 @@ public class BarChartManager {
         // 那么如果x轴有线且有网格线，当刻度拉的正好位置时会覆盖到y轴的轴线，变为X轴网格线颜色，
         // 解决办法是，要么不画轴线，要么就是坐标轴稍微宽点
         xAxis.setAxisLineColor(Color.WHITE);
-        yAxis.setValueFormatter(new MyAxisValueFormatter(type));
+        if (averageInp != null && averageExp != null) {
+            yAxis.setValueFormatter(new MyAxisValueFormatter(type, averageInp, averageExp));
+        } else {
+            yAxis.setValueFormatter(new MyAxisValueFormatter(type));
+        }
 
 
         // X轴更多属性
@@ -112,7 +121,7 @@ public class BarChartManager {
             yAxis.setAxisMaximum(120);
         } else if (type == 7) {
             //ahi范围
-            yAxis.setAxisMaximum(200);
+            yAxis.setAxisMaximum(40);
         }
 
         //图例 标签 设置
@@ -209,8 +218,8 @@ public class BarChartManager {
      * @param xAxisValues
      * @param yAxisValues
      */
-    public void showStackedBarChart(List<Float> xAxisValues, ArrayList<BarEntry> yAxisValues, String labels, int type) {
-        initBarChart(false, type);
+    public void showStackedBarChart(List<Float> xAxisValues, ArrayList<BarEntry> yAxisValues, String labels, int type, List<Double> averageInp, List<Double> averageExp) {
+        initBarChart(false, type, averageInp, averageExp);
         BarDataSet set1;
         if (mBarChart.getData() != null &&
                 mBarChart.getData().getDataSetCount() > 0) {

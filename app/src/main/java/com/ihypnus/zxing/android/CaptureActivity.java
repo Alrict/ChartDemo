@@ -533,12 +533,14 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
             return;
         }
         String num = rawResult.getText().trim();
+        String model = "";
 
         if (num.contains("Ver") && num.contains("ID") && num.contains("SN") && num.contains("Model")) {
             //V2版本二维码
             ScanDeviceBean bean = mGson.fromJson(num, ScanDeviceBean.class);
             if (bean != null && !StringUtils.isNullOrEmpty(bean.getSN())) {
                 num = bean.getSN();
+                model = bean.getModel();
             } else {
                 ToastUtils.showToastInCenter(CaptureActivity.this, getString(R.string.tv_toast_scan_error));
                 finish();
@@ -547,6 +549,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
 
         } else if (num.contains("Ver") && num.contains("ID") && num.contains("SN")) {
             //V1.9版本二维码
+            //“Ver: V1.19-00036\nID:393035393436470b00390029\nSN:CP70100506S”
             int start = num.lastIndexOf("SN");
             if (num.length() > start + 3) {
                 num = num.substring(start + 3, num.length());
@@ -560,9 +563,11 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
             finish();
             return;
         }
-
+        Intent intent = getIntent();
+        intent.putExtra("id", num);
+        intent.putExtra("model", model);
         playBeepSoundAndVibrate();//解码正确的声音播放
-        setResult(RESULT_OK, new Intent().putExtra("id", num));
+        setResult(RESULT_OK, intent);
         finish();
     }
 

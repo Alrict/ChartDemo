@@ -120,7 +120,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
     /**
      * 获取用户绑定的设备列表信息
      */
-    private void getDataList() {
+    public void getDataList() {
         IhyRequest.getDeviceListInfos(Constants.JSESSIONID, true, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {

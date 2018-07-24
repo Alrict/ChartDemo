@@ -28,14 +28,13 @@
         android:layout_height="@dimen/h180"
         android:layout_below="@+id/line1"
         android:orientation="horizontal">
-        <com.ihypnus.widget.AppEditText
+        <com.ihypnus.widget.AppTextView
             android:id="@+id/et_input_device_sn"
             style="@style/TextAppearanceMedium"
             android:layout_width="0dp"
             android:layout_height="@dimen/h180"
             android:layout_marginLeft="@dimen/w60"
             android:layout_weight="1"
-            android:background="@null"
             android:gravity="center"
             android:hint="@string/hint_input_device_sn"
             android:singleLine="true"
@@ -68,6 +67,7 @@
         android:layout_marginLeft="@dimen/w96"
         android:layout_marginRight="@dimen/w96"
         android:gravity="center"
+        android:visibility="invisible"
         android:text="@string/bt_next"
         android:textSize="@dimen/w54"/>
 

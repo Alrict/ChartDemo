@@ -163,35 +163,17 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 if (mDeviceFragment == null) {
                     mDeviceFragment = new DeviceFragment();
                     transaction.add(R.id.fragment_container, mDeviceFragment);
+                    transaction.show(mDeviceFragment);
+                    if (null != mReportFragment) transaction.hide(mReportFragment);
+                    if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
+                    transaction.commit();
+                } else {
+                    if (null != mReportFragment) transaction.hide(mReportFragment);
+                    if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
+                    mDeviceFragment.getDataList();
                 }
-                transaction.show(mDeviceFragment);
-                if (null != mReportFragment) transaction.hide(mReportFragment);
-                if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
-                break;
-
-            case 1:
-                //报告
-                if (mReportFragment == null) {
-                    mReportFragment = new ReportFragment();
-                    transaction.add(R.id.fragment_container, mReportFragment);
-                }
-                transaction.show(mReportFragment);
-                if (null != mDeviceFragment) transaction.hide(mDeviceFragment);
-                if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
-                break;
-
-            case 2:
-                //我的
-                if (mMyIhyFragment == null) {
-                    mMyIhyFragment = new MyIhyFragment();
-                    transaction.add(R.id.fragment_container, mMyIhyFragment);
-                }
-                transaction.show(mMyIhyFragment);
-                if (null != mDeviceFragment) transaction.hide(mDeviceFragment);
-                if (null != mReportFragment) transaction.hide(mReportFragment);
                 break;
         }
-        transaction.commit();
 
     }
 }

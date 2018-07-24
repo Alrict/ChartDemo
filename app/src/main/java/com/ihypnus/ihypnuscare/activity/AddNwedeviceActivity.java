@@ -9,16 +9,22 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.android.volley.ResponseCallback;
+import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.config.Constants;
+import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
+import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
+import com.ihypnus.widget.AppTextView;
 import com.ihypnus.zxing.android.CaptureActivity;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import kr.co.namee.permissiongen.PermissionFail;
@@ -37,7 +43,7 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
     private ImageView mIvScan;
     private final int REQUEST_CODE_SCAN = 122;
     private final int REQUEST_CODE_INFO = 123;
-    private EditText mEtInputDeviceSn;
+    private AppTextView mEtInputDeviceSn;
     private Button mBtNext;
     private String TAG = "AddNwedeviceActivity";
     private int REQUEST_CAMERA = 132;
@@ -92,6 +98,7 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
             case R.id.bt_next:
                 //下一步
                 String deviceId = mEtInputDeviceSn.getText().toString().trim();
+                bindDeviceId(deviceId);
                 if (!StringUtils.isNullOrEmpty(deviceId)) {
                     jumpToNewDeviceInformationActivity(deviceId);
                 } else {
@@ -99,6 +106,10 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
         }
+    }
+
+    private void bindDeviceId(String deviceId) {
+
     }
 
     /**
@@ -130,15 +141,80 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
             String deviceSN = data.getStringExtra("id");
+            String model = data.getStringExtra("model");
             if (!StringUtils.isNullOrEmpty(deviceSN)) {
                 mEtInputDeviceSn.setText(deviceSN);
-                mEtInputDeviceSn.setSelection(deviceSN.length());
+                //绑定次设备
+                bindDevice(deviceSN, model);
             }
         } else if (requestCode == REQUEST_CODE_INFO && resultCode == RESULT_OK) {
             setResult(RESULT_OK);
             finish();
         }
     }
+
+    /**
+     * 绑定设备
+     */
+    private void bindDevice(final String deviceId, final String model) {
+        BaseDialogHelper.showLoadingDialog(this, true, "正在提交...");
+        IhyRequest.bindDevice(Constants.JSESSIONID, true, deviceId, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+//                BaseDialogHelper.dismissLoadingDialog();
+//                ToastUtils.showToastDefault(var3);
+                //判断该设备号是否支持wifi设置
+                if (model.length() >= 6 && model.substring(5, 5).equals("W")) {
+
+                    //设备是V2.0版本以上的,且支持wifi设置
+                    BaseDialogHelper.dismissLoadingDialog();
+                    mBtNext.setVisibility(View.VISIBLE);
+
+                } else if (model.length() >= 6 && !String.valueOf(model.indexOf(5)).equals("W")) {
+                    //设备是V2.0版本以上的,不支持wifi设置,返回设备列表界面并刷新
+                    BaseDialogHelper.dismissLoadingDialog();
+                    EventBus.getDefault().post(new BaseFactory.CheckFragment(0));
+                    finish();
+                } else {
+                    //调用接口获取该设备的信息,根据model字段判断是否需要显示下一步按钮
+                    getDeviceInfos(deviceId);
+                }
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
+            }
+        });
+    }
+
+    private void getDeviceInfos(String deviceId) {
+
+        IhyRequest.getDeviceInfos(deviceId, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                //判断该设备号是否支持wifi设置
+             /*   if (model.length() >= 6 && String.valueOf(model.indexOf(5)).equals("W")) {
+                    //设备是V2.0版本以上的,且支持wifi设置
+                    mBtNext.setVisibility(View.VISIBLE);
+                } else {
+                    //调用接口获取该设备的信息,根据model字段判断是否需要显示下一步按钮
+                    mBtNext.setVisibility(View.INVISIBLE);
+                    EventBus.getDefault().post(new BaseFactory.CheckFragment(0));
+                    finish();
+                }*/
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
+            }
+        });
+    }
+
 
     /**
      * 申请权限的回调，

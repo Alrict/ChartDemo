@@ -12,12 +12,6 @@
     >
 
 
-        <View
-            android:id="@+id/line"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/h1"
-            android:layout_alignParentBottom="true"
-            android:background="@color/main_color_blue"/>
     </RelativeLayout>
 
 
@@ -55,5 +49,11 @@
         android:gravity="center"
         android:text="@string/bt_set_wifi"
         android:textSize="@dimen/w54"/>
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h1"
+        android:layout_alignParentStart="true" android:layout_alignParentTop="true"
+        android:background="@color/main_color_blue"/>
 
 </RelativeLayout>

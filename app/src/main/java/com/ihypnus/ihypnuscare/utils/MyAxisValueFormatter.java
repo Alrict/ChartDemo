@@ -3,20 +3,38 @@ package com.ihypnus.ihypnuscare.utils;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class MyAxisValueFormatter implements IAxisValueFormatter {
 
     private DecimalFormat mFormat;
     private int mType;
+    private List<Double> mAverageInp;
+    private List<Double> mAverageExp;
 
     public MyAxisValueFormatter(int type) {
         mType = type;
     }
 
+    public MyAxisValueFormatter(int type, List<Double> averageInp, List<Double> averageExp) {
+        mType = type;
+        mAverageInp = averageInp;
+        mAverageExp = averageExp;
+    }
+
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
-
+        if (mAverageExp != null && mAverageInp != null) {
+            LogOut.d("llw", "90%压力柱状图:" + value);
+        }
+        if (mType == 7 || mType == 8) {
+            //ahi范围
+            BigDecimal bg = new BigDecimal(value);
+            double f1 = bg.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+            return f1 + "";
+        }
     /*    if (mType == 1 || mType == 2) {
             //睡眠分数
             return String.valueOf(Math.round(value));

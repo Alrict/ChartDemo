@@ -95,6 +95,10 @@ public class IhyAction {
      * 用户登出
      */
     public static final String logout = HOST + "hypnusMgr/logout";
+    /**
+     * 查询设备model等信息
+     */
+    public static final String deviceDetail = HOST + "hypnusMgr/logout";
 
 
 }

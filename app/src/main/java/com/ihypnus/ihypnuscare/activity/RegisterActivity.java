@@ -60,7 +60,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private EditText mEtPassWord;
     private CheckBox mCbVisible;
     private EditText mEtVcerificationCode;
-    private EditText mEtDeviceCode;
+    private TextView mEtDeviceCode;
     private ImageView mIvScan;
     private CheckBox mCbProtocol;
     private TextView mTvProtocol;
@@ -109,7 +109,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         mBtnVcerificationCode = (Button) findViewById(R.id.btn_vcerification_code);
 
         //设备SN
-        mEtDeviceCode = (EditText) findViewById(R.id.et_device_code);
+        mEtDeviceCode = (TextView) findViewById(R.id.et_device_code);
         mIvScan = (ImageView) findViewById(R.id.iv_scan);
 
         //协议
@@ -382,7 +382,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             String deviceSN = data.getStringExtra("id");
             if (!StringUtils.isNullOrEmpty(deviceSN)) {
                 mEtDeviceCode.setText(deviceSN);
-                mEtDeviceCode.setSelection(deviceSN.length());
+//                mEtDeviceCode.setSelection(deviceSN.length());
             }
         }
     }

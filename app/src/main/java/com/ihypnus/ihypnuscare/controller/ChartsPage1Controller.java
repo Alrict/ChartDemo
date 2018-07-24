@@ -14,6 +14,7 @@ import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.BarChartManager;
+import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 
@@ -68,9 +69,7 @@ public class ChartsPage1Controller extends BaseController {
 
         //设置x轴的数据
         mXValues = new ArrayList<>();
-        for (int i = 1; i <= 7; i++) {
-            mXValues.add((float) i);
-        }
+
 
         //设置y轴的数据()
         mYValues1 = new ArrayList<>();
@@ -125,6 +124,18 @@ public class ChartsPage1Controller extends BaseController {
         List<Double> usedTimeSecond = data.getUsedTimeSecond();
         mYValues1.clear();
         mYValues2.clear();
+        mXValues.clear();
+        long currentTime = ReportFragment.sCurrentTime;
+        for (int i = 7; i >= 1; i--) {
+            long l = currentTime - (i * 24L * 60L * 60L * 1000L);
+            String monthDayDateTime = DateTimeUtils.getMonthDayDateTime(l);
+            String[] split = monthDayDateTime.split("-");
+            if (split.length == 2) {
+                String s = split[1];
+                int i1 = Integer.parseInt(s);
+                mXValues.add((float) i1);
+            }
+        }
         mLayoutChart1.setVisibility(View.VISIBLE);
         mLayoutChart1Status.setVisibility(View.VISIBLE);
         mLayoutChart1.setVisibility(View.VISIBLE);

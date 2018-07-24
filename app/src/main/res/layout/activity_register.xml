@@ -236,14 +236,14 @@
             android:visibility="invisible"/>
 
 
-        <EditText
+        <TextView
             android:id="@+id/et_device_code"
             style="@style/TextAppearanceMedium"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/w56"
             android:layout_weight="1"
-            android:background="@null"
             android:hint="@string/hint_input_device_sn"
             android:singleLine="true"
             android:textCursorDrawable="@drawable/cursor_color"/>

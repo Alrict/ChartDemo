@@ -156,7 +156,7 @@
     <string name="tv_verson">当前版本:</string>
     <string name="tv_company_name">广州和普乐健康科技有限公司版权所有</string>
     <string name="add_new_device">添加设备</string>
-    <string name="hint_input_device_sn">请输入或扫一扫设备SN</string>
+    <string name="hint_input_device_sn">请扫一扫设备SN</string>
     <string name="bt_next">下一步</string>
     <string name="tv_modify_text">修改密码</string>
     <string name="pwd_error_tip">请输入6-14位的密码,支持数字与大小写字母</string>
