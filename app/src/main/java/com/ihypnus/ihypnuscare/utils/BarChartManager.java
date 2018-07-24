@@ -84,8 +84,7 @@ public class BarChartManager {
         rightAxis.setEnabled(false);
 
         // 轴颜色
-        yAxis.setTextColor(Color.WHITE);  // 标签字体颜色
-        yAxis.setTextColor(Color.WHITE);
+        yAxis.setTextColor(Color.WHITE);  // Y轴标签字体颜色
         yAxis.setTextSize(10);    // 标签字体大小，dp，6-24之间，默认为10dp
         yAxis.setTypeface(null);    // 标签字体
         yAxis.setGridColor(Color.TRANSPARENT);    // 网格线颜色，默认GRAY
@@ -107,7 +106,7 @@ public class BarChartManager {
 
         yAxis.setDrawZeroLine(false);    // 绘制值为0的轴，默认false,其实比较有用的就是在柱形图，当有负数时，显示在0轴以下，其他的图这个可能会看到一些奇葩的效果
         yAxis.setZeroLineWidth(10);  // 0轴宽度
-        yAxis.setZeroLineColor(Color.WHITE);   // 0轴颜色
+        yAxis.setZeroLineColor(Color.WHITE);   // Y坐标轴颜色
         yAxis.setAxisMinimum(0);
         yAxis.resetAxisMaximum();
         if (type == 1) {
@@ -225,6 +224,8 @@ public class BarChartManager {
                 mBarChart.getData().getDataSetCount() > 0) {
             set1 = (BarDataSet) mBarChart.getData().getDataSetByIndex(0);
             set1.setValues(yAxisValues);
+            //设置是否显示柱子上面的数值
+            set1.setDrawValues(false);
             mBarChart.getData().notifyDataChanged();
             mBarChart.notifyDataSetChanged();
         } else {
@@ -232,6 +233,8 @@ public class BarChartManager {
             set1.setDrawIcons(false);
             set1.setLabel(labels);
             set1.setColors(getColors());
+            //设置是否显示柱子上面的数值
+            set1.setDrawValues(false);
             set1.setStackLabels(new String[]{"吸气压力", "呼气压力"});
             set1.setValueTextColor(Color.WHITE);
 

@@ -110,7 +110,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         if (wifiManager != null) {
             WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-            if (wifiInfo != null && wifiInfo.getSSID().equals("Hypnus_AP")) {
+            if (wifiInfo != null && wifiInfo.getSSID().equals("\"Hypnus_AP\"")) {
                 jumpToHomeActivity();
             } else {
                 String ssid = wifiInfo.getSSID();

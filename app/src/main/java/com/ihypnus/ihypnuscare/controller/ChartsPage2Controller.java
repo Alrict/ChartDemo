@@ -1,17 +1,26 @@
 package com.ihypnus.ihypnuscare.controller;
 
 import android.content.Context;
+import android.graphics.RectF;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.MPPointF;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 import com.ihypnus.ihypnuscare.utils.BarChartManager;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
+import com.ihypnus.ihypnuscare.utils.MyAxisValueFormatter;
+import com.ihypnus.ihypnuscare.widget.XYMarkerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +33,7 @@ import java.util.List;
  * @date: 2018/6/21 14:18
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class ChartsPage2Controller extends BaseController {
+public class ChartsPage2Controller extends BaseController implements OnChartValueSelectedListener {
     private BarChart mChart1;
     private BarChart mChart2;
     private LinearLayout mLayoutWeekData;
@@ -50,6 +59,9 @@ public class ChartsPage2Controller extends BaseController {
         mLayoutChart2 = (LinearLayout) rootView.findViewById(R.id.layout_chart2);
 
         mChart2 = (BarChart) rootView.findViewById(R.id.chart2);
+        XYMarkerView mv = new XYMarkerView(mContext, new MyAxisValueFormatter(0));
+        mv.setChartView(mChart2); // For bounds control
+        mChart2.setMarker(mv); // Set the marker to the chart
         //周统计数据
         mLayoutWeekData = (LinearLayout) rootView.findViewById(R.id.layout_week_data);
         //周统计数据时间范围
@@ -67,7 +79,7 @@ public class ChartsPage2Controller extends BaseController {
         //设置y轴的数据()
         mYValue1 = new ArrayList<BarEntry>();
         mYValues2 = new ArrayList<>();
-
+        mChart2.setOnChartValueSelectedListener(this);
 
     }
 
@@ -124,6 +136,7 @@ public class ChartsPage2Controller extends BaseController {
         }
         if (totalBreath == 0) {
             //吸气压和呼气压均为0
+            mChart2.setNoDataText(mContext.getString(R.string.tv_has_no_data));
             type1 = 5;
         } else {
             type1 = 6;
@@ -136,13 +149,14 @@ public class ChartsPage2Controller extends BaseController {
             mYValues2.add(aDouble);
         }
         Float max = Collections.max(mYValues2);
-        if (totalAHI == 0||max<=40) {
+        if (totalAHI == 0 || max <= 40) {
             type2 = 7;
+            mChart2.setNoDataText(mContext.getString(R.string.tv_has_no_data));
         } else {
             type2 = 8;
         }
         //创建图表
-        mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "平均治疗压力", type1,averageInp,averageExp);
+        mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "平均治疗压力", type1, averageInp, averageExp);
         mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", false, type2);
     }
 
@@ -163,5 +177,31 @@ public class ChartsPage2Controller extends BaseController {
         }
 
         return colors;
+    }
+
+    protected RectF mOnValueSelectedRectF = new RectF();
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        if (e == null)
+            return;
+
+        RectF bounds = mOnValueSelectedRectF;
+        mChart2.getBarBounds((BarEntry) e, bounds);
+        MPPointF position = mChart2.getPosition(e, YAxis.AxisDependency.LEFT);
+
+        Log.i("bounds", bounds.toString());
+        Log.i("position", position.toString());
+
+        Log.i("x-index",
+                "low: " + mChart2.getLowestVisibleX() + ", high: "
+                        + mChart2.getHighestVisibleX());
+
+        MPPointF.recycleInstance(position);
+    }
+
+    @Override
+    public void onNothingSelected() {
+
     }
 }
