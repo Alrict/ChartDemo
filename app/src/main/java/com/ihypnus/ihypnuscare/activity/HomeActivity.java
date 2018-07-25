@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioGroup;
 
+import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.fragment.DeviceFragment;
@@ -130,6 +131,10 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             exitTime = System.currentTimeMillis();
         } else {
             //登出
+            if (mReportFragment != null) {
+                ReportFragment.sCurrentTime = System.currentTimeMillis();
+            }
+            IhyApplication.mInstance.setUser(null);
             MobclickAgent.onProfileSignOff();
             finish();
         }
