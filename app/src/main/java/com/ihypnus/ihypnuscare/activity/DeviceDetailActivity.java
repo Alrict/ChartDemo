@@ -131,6 +131,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
                 ToastUtils.showToastDefault(var3);
+                mBtnModify.setVisibility(View.INVISIBLE);
             }
         });
     }

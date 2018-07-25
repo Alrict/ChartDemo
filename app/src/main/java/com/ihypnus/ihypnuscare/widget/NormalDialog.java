@@ -14,13 +14,12 @@ import com.ihypnus.ihypnuscare.iface.DialogListener;
 
 /**
  * @version V1.0
- * @createAuthor （keke）
+ * @createAuthor llw
  * @createDate 2017/5/15 0015
  * @updateAuthor
  * @updateDate
- * @company 跨越速运
+ * @company
  * @description 公用的dialog
- * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
 public class NormalDialog extends BaseDialog implements View.OnClickListener {
 

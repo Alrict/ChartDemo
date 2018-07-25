@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -63,7 +64,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import kr.co.namee.permissiongen.PermissionGen;
 import top.zibin.luban.CompressionPredicate;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
@@ -184,11 +184,34 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.avatar:
                 //头像
-                createSelectDialog();
-
+                //检测相机拍照和存储权限
+                checkPermissions();
                 break;
         }
 
+    }
+
+    /**
+     * 相机拍照及存储权健检测
+     */
+    private void checkPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int photoPermission = ContextCompat.checkSelfPermission(mAct, Manifest.permission.CAMERA);
+            int readPermission = ContextCompat.checkSelfPermission(mAct, Manifest.permission.READ_EXTERNAL_STORAGE);
+            int writePermission = ContextCompat.checkSelfPermission(mAct, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (photoPermission != PackageManager.PERMISSION_GRANTED
+                    || readPermission != PackageManager.PERMISSION_GRANTED
+                    || writePermission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(mAct,
+                        new String[]{Manifest.permission.CAMERA,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CAMERA);
+            } else {
+                createSelectDialog();
+            }
+        } else {
+            createSelectDialog();
+        }
     }
 
     /**
@@ -212,7 +235,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
         dialogview.findViewById(R.id.get_from_cam).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//检查相机权限
+                //检查相机权限
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestCameraPermission();
                 } else {
@@ -251,16 +274,12 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
      * 申请相机权限
      */
     private void requestCameraPermission() {
-
-        PermissionGen.with(mAct)
-                .addRequestCode(100)
-                .permissions(Manifest.permission.CAMERA)
-                .request();
-        Log.i("llw", "相机权限未被授予，需要申请！");
-        // 相机权限未被授予，需要申请！
-        ActivityCompat.requestPermissions(mAct, new String[]{Manifest.permission.CAMERA},
-                REQUEST_CAMERA);
-
+        int checkCallPhonePermission = ContextCompat.checkSelfPermission(mAct, Manifest.permission.CAMERA);
+        if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(mAct, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+        } else {
+            mOutputImageFile = TakePhotosUtils.takePicture(mAct, REQUEST_CAMERA);
+        }
     }
 
     private void jumpToActivity(int requestCode, Class<?> cls) {
@@ -428,7 +447,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CAMERA) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length == 3 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //同意相机权限
                 //拍照
                 mOutputImageFile = TakePhotosUtils.takePicture(mAct, REQUEST_CAMERA);
@@ -456,13 +475,13 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
             @Override
             public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
-                Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                Log.d("llw", "currentSize: " + currentSize + " totalSize: " + totalSize);
             }
         });
         OSSAsyncTask task = mOssClient.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
             @Override
             public void onSuccess(PutObjectRequest request, PutObjectResult result) {
-                Log.d("PutObject", "UploadSuccess");
+                Log.d("llw", "UploadSuccess");
             }
 
             @Override
@@ -474,10 +493,10 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                 }
                 if (serviceException != null) {
                     // 服务异常
-                    Log.e("oss", "ErrorCode:" + serviceException.getErrorCode());
-                    Log.e("oss", "RequestId:" + serviceException.getRequestId());
-                    Log.e("oss", "HostId:" + serviceException.getHostId());
-                    Log.e("oss", "RawMessage:" + serviceException.getRawMessage());
+                    Log.e("llw", "oss onFailure ErrorCode:" + serviceException.getErrorCode());
+                    Log.e("llw", "oss onFailure RequestId:" + serviceException.getRequestId());
+                    Log.e("llw", "oss onFailure HostId:" + serviceException.getHostId());
+                    Log.e("llw", "oss onFailure RawMessage:" + serviceException.getRawMessage());
                 }
             }
         });

@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class TakePhotosUtils {
                 appCacheDir = new File(Environment.getExternalStorageDirectory(), "Android/data/" + act.getPackageName() + "/cache/");
             }
         } else {
-            ToastUtils.showToastInCenter(act,"未检出到SD卡,无法调取相机");
+            ToastUtils.showToastInCenter(act, "未检出到SD卡,无法调取相机");
             return appCacheDir;
         }
 //        创建目录
@@ -62,7 +63,8 @@ public class TakePhotosUtils {
                 if (Build.VERSION.SDK_INT >= 24) {
                     ContentValues contentValues = new ContentValues(1);
                     contentValues.put(MediaStore.Images.Media.DATA, imageFile.getAbsolutePath());
-                    uri = act.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                    uri = FileProvider.getUriForFile(act, "com.ihypnus.fileprovider",imageFile);
+//                    uri = act.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
                 } else {
                     uri = Uri.fromFile(imageFile);
                     intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
@@ -71,7 +73,7 @@ public class TakePhotosUtils {
                 act.startActivityForResult(intent, requestCode);
             }
         } catch (SecurityException e) {
-            ToastUtils.showToastDefault(act,"请检查相机权限是否打开");
+            ToastUtils.showToastDefault(act, "请检查相机权限是否打开");
         } catch (Exception e) {
 
         }
@@ -105,7 +107,7 @@ public class TakePhotosUtils {
                 appCacheDir = new File(Environment.getExternalStorageDirectory(), "Android/data/" + act.getPackageName() + "/cache/");
             }
         } else {
-            ToastUtils.showToastInCenter(act,"未检出到SD卡,无法调取相机");
+            ToastUtils.showToastInCenter(act, "未检出到SD卡,无法调取相机");
             return appCacheDir;
         }
 //        创建目录
@@ -136,7 +138,7 @@ public class TakePhotosUtils {
                 fragment.startActivityForResult(intent, requestCode);
             }
         } catch (SecurityException e) {
-            ToastUtils.showToastDefault(act,"请检查相机权限是否打开");
+            ToastUtils.showToastDefault(act, "请检查相机权限是否打开");
         }
         return imageFile;
     }

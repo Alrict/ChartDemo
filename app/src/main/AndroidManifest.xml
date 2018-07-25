@@ -71,6 +71,16 @@
             android:name="BUGLY_APPID"
             android:value="ed6aa3c12c"/>
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.ihypnus.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+
         <!--适配标准-->
         <!--<meta-data android:name="design_width" android:value="1080"/>-->
         <!--<meta-data android:name="design_height" android:value="1920"/>-->
@@ -96,12 +106,12 @@
             android:screenOrientation="portrait"/>
 
         <!--登入界面-->
-      <!--  <activity
-            android:name=".activity.LoginActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>-->
+        <!--  <activity
+              android:name=".activity.LoginActivity"
+              android:configChanges="orientation|screenSize|keyboardHidden"
+              android:launchMode="singleTask"
+              android:screenOrientation="portrait"
+              android:windowSoftInputMode="stateHidden"/>-->
 
         <!--注册界面-->
         <activity

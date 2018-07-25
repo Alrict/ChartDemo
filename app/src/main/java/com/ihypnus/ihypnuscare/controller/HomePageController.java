@@ -189,7 +189,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
                         if (BaseType.OK == baseType) {
                             //重新获取默认设备
                             getDefaultDeviceInfos();
-                        } else {
+                        } else if (BaseType.NO == baseType){
                             EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(HomeActivity.class));
                         }
 
