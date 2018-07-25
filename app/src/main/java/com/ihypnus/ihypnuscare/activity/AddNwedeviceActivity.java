@@ -168,7 +168,7 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
                     BaseDialogHelper.dismissLoadingDialog();
                     mBtNext.setVisibility(View.VISIBLE);
 
-                } else if (model.length() >= 6 && !String.valueOf(model.indexOf(5)).equals("W")) {
+                } else if (model.length() >= 6 && !model.substring(5, 6).equals("W")) {
                     //设备是V2.0版本以上的,不支持wifi设置,返回设备列表界面并刷新
                     BaseDialogHelper.dismissLoadingDialog();
 
@@ -202,7 +202,7 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
                 if (deviceModelVO != null && !StringUtils.isNullOrEmpty(deviceModelVO.getModel())) {
                     String model = deviceModelVO.getModel();
                     //判断该设备号是否支持wifi设置
-                    if (model.length() >= 6 && String.valueOf(model.indexOf(5)).equals("W")) {
+                    if (model.length() >= 6 && model.substring(5, 6).equals("W")) {
                         //设备是V2.0版本以上的,且支持wifi设置
                         mBtNext.setVisibility(View.VISIBLE);
                     } else {

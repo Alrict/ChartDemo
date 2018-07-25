@@ -1,6 +1,7 @@
 package com.ihypnus.ihypnuscare.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.os.Bundle;
@@ -11,9 +12,18 @@ import android.widget.ListView;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.WifiListAdapter;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
+import com.ihypnus.ihypnuscare.utils.ViewUtils;
+import com.ihypnus.multilanguage.MultiLanguageUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * @Package com.kye.smart.wifitext.thread
@@ -32,6 +42,7 @@ public class WifiDialogActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         setContentView(R.layout.acitivity_wifi_dialog);
         bindViews();
         initData();
@@ -74,5 +85,23 @@ public class WifiDialogActivity extends Activity {
 
             }
         });
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(MultiLanguageUtil.attachBaseContext(newBase, getAppLanguage(newBase)));
+    }
+
+    private Locale getAppLanguage(Context context) {
+        MultiLanguageUtil.init(context);
+        return MultiLanguageUtil.getInstance().getLanguageLocale();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
+        LogOut.d("llw", "baseActivity页面更新了语言");
+        recreate();
+        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
+        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
     }
 }

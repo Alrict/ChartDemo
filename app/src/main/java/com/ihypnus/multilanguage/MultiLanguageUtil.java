@@ -69,7 +69,13 @@ public class MultiLanguageUtil {
         LogOut.d("llw", "updateResources中的语言类型:" + language.toString());
         Resources resources = context.getResources();
         Locale locale = getLocaleByLanguage(language);
-
+        int type = 2;
+        if (locale == Locale.ENGLISH) {
+            type = 1;
+        } else if (locale == Locale.TRADITIONAL_CHINESE) {
+            type = 3;
+        }
+        CommSharedUtil.getInstance(context).putInt(MultiLanguageUtil.SAVE_LANGUAGE, type);
         Configuration configuration = resources.getConfiguration();
         configuration.setLocale(locale);
         configuration.setLocales(new LocaleList(locale));
@@ -88,7 +94,7 @@ public class MultiLanguageUtil {
                 }
             }
         }
-        return Locale.ENGLISH;
+        return Locale.SIMPLIFIED_CHINESE;
     }
 
     private static boolean isSupportLanguage(Locale language) {
@@ -155,7 +161,6 @@ public class MultiLanguageUtil {
 
     private String getSystemLanguage(Locale locale) {
         return locale.getLanguage() + "_" + locale.getCountry();
-
     }
 
     //以上获取方式需要特殊处理一下

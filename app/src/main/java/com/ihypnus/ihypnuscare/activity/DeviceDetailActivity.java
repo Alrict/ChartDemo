@@ -17,6 +17,7 @@ import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.bean.DeviceListVO;
+import com.ihypnus.ihypnuscare.bean.DeviceModelVO;
 import com.ihypnus.ihypnuscare.bean.ShadowDeviceBean;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
@@ -24,6 +25,7 @@ import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
+import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
 /**
@@ -85,7 +87,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void loadData() {
-        loadParameterInfos();
+        getDeviceInfos(mDeviceId);
         //todo 获取设备model并判断该设备是否具有wifi模块
         //根据第六位的'W'
    /*     String model = "";
@@ -96,6 +98,46 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
         }*/
     }
 
+    /**
+     * 获取设备model,判断是否可以使用wifi设置模块
+     *
+     * @param deviceId
+     */
+    private void getDeviceInfos(final String deviceId) {
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.tv_isloading));
+        IhyRequest.getDeviceInfos(deviceId, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                DeviceModelVO deviceModelVO = (DeviceModelVO) var1;
+                if (deviceModelVO != null && !StringUtils.isNullOrEmpty(deviceModelVO.getModel())) {
+                    String model = deviceModelVO.getModel();
+                    //判断该设备号是否支持wifi设置
+                    if (model.length() >= 6 && model.substring(5, 6).equals("W")) {
+                        //设备是V2.0版本以上的,且支持wifi设置
+                        mBtnModify.setVisibility(View.VISIBLE);
+                    } else {
+                        //调用接口获取该设备的信息,根据model字段判断是否需要显示wifi配置按钮
+                        mBtnModify.setVisibility(View.INVISIBLE);
+                    }
+                } else {
+                    mBtnModify.setVisibility(View.INVISIBLE);
+                }
+                loadParameterInfos();
+
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
+            }
+        });
+    }
+
+    /**
+     * 获取影子设备信息
+     */
     private void loadParameterInfos() {
         BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.onloading));
         IhyRequest.getShadowDevice(Constants.JSESSIONID, true, mDeviceId, new ResponseCallback() {
@@ -188,7 +230,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
      */
     private void jumpToWifi() {
 //  点击配置wifi时校验当前链接的热点是否是目标热点
-        Intent intent = new Intent(this, WifiSettingHistoryActivity.class);
+        Intent intent = new Intent(this, NewDeviceInformationActivity.class);
         startActivity(intent);
     }
 
