@@ -90,7 +90,7 @@ public class DeviceLIstAdapter extends BaseAdapter<DeviceLIstAdapter.ViewHolder>
                 }
             }
         });
-        holder.setData(mDataList.get(position));
+        holder.setData(mDataList.get(position), mAct);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -113,11 +113,11 @@ public class DeviceLIstAdapter extends BaseAdapter<DeviceLIstAdapter.ViewHolder>
             layoutContainer.setOnClickListener(this);
         }
 
-        public void setData(DeviceListVO.ContentBean deviceInfoVO) {
+        public void setData(DeviceListVO.ContentBean deviceInfoVO, Context context) {
             String model = deviceInfoVO.getModel();
             String device_id = deviceInfoVO.getDevice_id();
 
-            this.tvDeviceModel.setText(StringUtils.isNullOrEmpty(model) ? "未知" : model);
+            this.tvDeviceModel.setText(StringUtils.isNullOrEmpty(model) ? context.getString(R.string.tv_unknow) : model);
             this.tvDeviceNo.setText(StringUtils.isNullOrEmpty(device_id) ? "" : device_id);
         }
 

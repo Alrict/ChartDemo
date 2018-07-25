@@ -223,4 +223,5 @@
     <string name="tv_tip_current_wifi">The currently connected hotspot is:</string>
     <string name="tv_tip_please">,please</string>
     <string name="tv_btn_exit">Exit</string>
+    <string name="tv_default_unknow">未知</string>
 </resources>

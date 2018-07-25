@@ -258,11 +258,11 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         ToastUtils.showToastDefault(errMsg);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
-        LogOut.d("llw", "报告页面更新了语言");
-        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
+//        LogOut.d("llw", "报告页面更新了语言");
+//        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
+//    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(BaseFactory.UpdateDataLanguage event) {

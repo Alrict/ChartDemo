@@ -33,7 +33,6 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +60,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected int setView() {
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
         return R.layout.fragment_device;
     }
 
@@ -327,9 +326,9 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
-        LogOut.d("llw", "fragment页面更新了语言");
-        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
+//        LogOut.d("llw", "fragment页面更新了语言");
+//        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
+//    }
 }
