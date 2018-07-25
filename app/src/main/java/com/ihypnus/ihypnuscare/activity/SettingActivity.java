@@ -14,16 +14,11 @@ import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
-import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
-import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -142,10 +137,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
-        LogOut.d("llw", "SettingActivity页面更新了语言");
-        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+////    public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
+////        LogOut.d("llw", "SettingActivity页面更新了语言");
+////        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
+////    }
 
 }

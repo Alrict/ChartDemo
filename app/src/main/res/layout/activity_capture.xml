@@ -61,7 +61,7 @@
                 android:paddingRight="30dp"
                 android:paddingTop="8dp"
                 android:singleLine="true"
-                android:text="取消"
+                android:text="@string/cancel"
                 android:textColor="@color/white"
                 android:textSize="@dimen/w44" />
         </RelativeLayout>
@@ -82,7 +82,7 @@
                 android:paddingRight="30dp"
                 android:paddingTop="8dp"
                 android:singleLine="true"
-                android:text="开灯"
+                android:text="@string/activity_scan_open"
                 android:textColor="@color/white"
                 android:textSize="@dimen/w44" />
         </RelativeLayout>

@@ -57,9 +57,11 @@ import com.google.zxing.Result;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.common.HybridBinarizer;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
+import com.ihypnus.multilanguage.MultiLanguageUtil;
 import com.ihypnus.zxing.android.camera.CameraManager;
 import com.ihypnus.zxing.android.camera.CameraUtil;
 import com.ihypnus.zxing.android.decode.CaptureActivityHandler;
@@ -69,10 +71,15 @@ import com.ihypnus.zxing.android.decode.InactivityTimer;
 import com.ihypnus.zxing.android.decode.IntentSource;
 import com.ihypnus.zxing.android.view.ViewfinderView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Hashtable;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -128,6 +135,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        EventBus.getDefault().register(this);
         CameraUtil.init(this);
 
 
@@ -297,6 +305,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
 
     @Override
     protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
         if (inactivityTimer != null) {
             inactivityTimer.shutdown();
         }
@@ -829,5 +838,20 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
                 focusIndex.setVisibility(View.INVISIBLE);
             }
         }, 700);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
+        recreate();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(MultiLanguageUtil.attachBaseContext(newBase, getAppLanguage(newBase)));
+    }
+
+    private Locale getAppLanguage(Context context) {
+        MultiLanguageUtil.init(context);
+        return MultiLanguageUtil.getInstance().getLanguageLocale();
     }
 }

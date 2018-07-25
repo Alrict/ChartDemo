@@ -69,6 +69,7 @@ public class MultiLanguageUtil {
         LogOut.d("llw", "updateResources中的语言类型:" + language.toString());
         Resources resources = context.getResources();
         Locale locale = getLocaleByLanguage(language);
+        LogOut.d("llw", "updateResources中的locale:" + locale.toString());
         int type = 2;
         if (locale == Locale.ENGLISH) {
             type = 1;
