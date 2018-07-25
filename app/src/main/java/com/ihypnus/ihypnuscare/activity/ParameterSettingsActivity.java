@@ -20,6 +20,7 @@ import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -389,7 +390,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 //呼吸比
                 mLayoutContent13.setVisibility(View.VISIBLE);
                 mTvTitle13.setText(R.string.tv_breath_ration);
-                mTvValue13.setText("1:" + deviceBean.getBreath_ratio());
+                mTvValue13.setText(initRatioText(deviceBean.getBreath_ratio()));
                 mLayoutContent14.setVisibility(View.INVISIBLE);
 
                 //起始压力
@@ -420,15 +421,15 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mTvValue02.setText(initTextView(deviceBean.getSt_in_p() + ""));
                 //呼吸频率
                 mLayoutContent03.setVisibility(View.VISIBLE);
-                mTvTitle03.setText(R.string.tv_zdylzc);
-                mTvValue03.setText(initTextView(deviceBean.getBreath_rate() + ""));
+                mTvTitle03.setText(R.string.tv_breath_rate);
+                mTvValue03.setText(deviceBean.getBreath_rate() + "");
                 //呼气压力
                 mTvTitle04.setText(R.string.tv_text_hqyl);
                 mTvValue04.setText(initTextView(deviceBean.getSt_ex_p() + ""));
                 //呼吸比
                 mLayoutContent13.setVisibility(View.VISIBLE);
-                mTvTitle13.setText(R.string.tv_text_qsyl);
-                mTvValue13.setText("1:" + deviceBean.getBreath_ratio());
+                mTvTitle13.setText(R.string.tv_breath_ration);
+                mTvValue13.setText(initRatioText(deviceBean.getBreath_ratio()));
                 mLayoutContent14.setVisibility(View.INVISIBLE);
 
                 //起始压力
@@ -674,5 +675,12 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
             return i1 + " cmH₂O";
         }
         return "";
+    }
+
+    private String initRatioText(int rate) {
+        double v = 1 + (rate * 0.5);
+        BigDecimal bg = new BigDecimal(v);
+        double f1 = bg.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return "1:" + f1;
     }
 }

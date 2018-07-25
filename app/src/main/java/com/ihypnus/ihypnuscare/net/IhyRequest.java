@@ -5,6 +5,7 @@ import com.android.volley.ResponseCallback;
 import com.android.volley.toolbox.Volley;
 import com.ihypnus.ihypnuscare.bean.DefaultDeviceIdVO;
 import com.ihypnus.ihypnuscare.bean.DeviceListVO;
+import com.ihypnus.ihypnuscare.bean.DeviceModelVO;
 import com.ihypnus.ihypnuscare.bean.HistogramData;
 import com.ihypnus.ihypnuscare.bean.LoginBean;
 import com.ihypnus.ihypnuscare.bean.OssTokenVO;
@@ -13,7 +14,6 @@ import com.ihypnus.ihypnuscare.bean.PhoneVO;
 import com.ihypnus.ihypnuscare.bean.ShadowDeviceBean;
 import com.ihypnus.ihypnuscare.bean.UsageInfos;
 import com.ihypnus.ihypnuscare.bean.UserInfo;
-import com.ihypnus.ihypnuscare.config.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -394,6 +394,7 @@ public class IhyRequest {
         params.put("authCode", authCode);
         params.put("newPwd", newPassword);
         SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        Volley.me.addInitRequestHead("Cookie", "JSESSIONID=" + JSESSIONID);
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
@@ -417,17 +418,18 @@ public class IhyRequest {
 
     /**
      * 获取设备的型号等信息
+     *
      * @param deviceId
      * @param callback
      */
     public static void getDeviceInfos(String deviceId, ResponseCallback callback) {
         String url = IhyAction.deviceDetail;
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("JSESSIONID", Constants.JSESSIONID);
+//        params.put("JSESSIONID", Constants.JSESSIONID);
         params.put("deviceId", deviceId);
         SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
-        Volley.me.addInitRequestHead("Accept", "application/json");
-        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_JAVA_BEAN);
+        httpRequest.setResponseJavaBean(DeviceModelVO.class);
         NetRequestHelper.getInstance().add(httpRequest, url);
     }
 }

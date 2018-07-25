@@ -60,8 +60,8 @@ public class ChartsPage2Controller extends BaseController implements OnChartValu
 
         mChart2 = (BarChart) rootView.findViewById(R.id.chart2);
         XYMarkerView mv = new XYMarkerView(mContext, new MyAxisValueFormatter(0));
-        mv.setChartView(mChart2); // For bounds control
-        mChart2.setMarker(mv); // Set the marker to the chart
+        mv.setChartView(mChart1); // For bounds control
+        mChart1.setMarker(mv); // Set the marker to the chart
         //周统计数据
         mLayoutWeekData = (LinearLayout) rootView.findViewById(R.id.layout_week_data);
         //周统计数据时间范围
@@ -79,7 +79,7 @@ public class ChartsPage2Controller extends BaseController implements OnChartValu
         //设置y轴的数据()
         mYValue1 = new ArrayList<BarEntry>();
         mYValues2 = new ArrayList<>();
-        mChart2.setOnChartValueSelectedListener(this);
+        mChart1.setOnChartValueSelectedListener(this);
 
     }
 
@@ -105,7 +105,7 @@ public class ChartsPage2Controller extends BaseController implements OnChartValu
 
     public void updateUI(List<Double> averageInp, List<Double> averageExp, List<Double> ahi) {
         mLayoutChart1.setVisibility(View.VISIBLE);
-        mLayoutChart1.setVisibility(View.VISIBLE);
+        mLayoutChart2.setVisibility(View.VISIBLE);
         mYValue1.clear();
         mYValues2.clear();
         float totalBreath = 0;
@@ -156,7 +156,7 @@ public class ChartsPage2Controller extends BaseController implements OnChartValu
             type2 = 8;
         }
         //创建图表
-        mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "平均治疗压力", type1, averageInp, averageExp);
+        mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "90%压力", type1, averageInp, averageExp);
         mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", false, type2);
     }
 
@@ -187,15 +187,16 @@ public class ChartsPage2Controller extends BaseController implements OnChartValu
             return;
 
         RectF bounds = mOnValueSelectedRectF;
-        mChart2.getBarBounds((BarEntry) e, bounds);
-        MPPointF position = mChart2.getPosition(e, YAxis.AxisDependency.LEFT);
+        mChart1.getBarBounds((BarEntry) e, bounds);
+        MPPointF position = mChart1.getPosition(e, YAxis.AxisDependency.LEFT);
 
         Log.i("bounds", bounds.toString());
-        Log.i("position", position.toString());
+        Log.i("value", String.valueOf(((BarEntry) e).getYVals()));
+        Log.i("position", "X:" + position.getX() + ",Y:" + position.getY());
 
         Log.i("x-index",
-                "low: " + mChart2.getLowestVisibleX() + ", high: "
-                        + mChart2.getHighestVisibleX());
+                "low: " + mChart1.getLowestVisibleX() + ", high: "
+                        + mChart1.getHighestVisibleX());
 
         MPPointF.recycleInstance(position);
     }

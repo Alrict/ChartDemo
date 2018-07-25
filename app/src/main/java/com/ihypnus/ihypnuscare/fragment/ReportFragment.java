@@ -266,6 +266,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(BaseFactory.UpdateDataLanguage event) {
+        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
         if (mHomePageController != null) {
             mHomePageController.setData();
         }

@@ -107,6 +107,15 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                         mIvDefaultPhoto.setVisibility(View.GONE);
                     }
                     break;
+                case 2:
+                    if (imageByteArray != null) {
+                        mDownLoadPic = getPicFromBytes(imageByteArray, null);
+                        if (mDownLoadPic != null) {
+                            mCircleImageView.setImageBitmap(mDownLoadPic);
+                            mIvDefaultPhoto.setVisibility(View.GONE);
+                        }
+                    }
+                    break;
             }
         }
     };
@@ -477,15 +486,15 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
     /*
      * 从oss下载
      */
-    private byte[] downLoadUserPhoto(String bucketName, String objectKey) {
-        if (mOssClient == null) return new byte[0];
+    private void downLoadUserPhoto(String bucketName, String objectKey) {
+        if (mOssClient == null) return;
         // 构造下载文件请求
         GetObjectRequest get = new GetObjectRequest(bucketName, objectKey);
         OSSAsyncTask task = mOssClient.asyncGetObject(get, new OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
             @Override
             public void onSuccess(GetObjectRequest request, GetObjectResult result) {
                 // 请求成功
-                Log.d("Content-Length", "" + result.getContentLength());
+                Log.d("llw", "oss图片加载成功,size:" + (result.getContentLength() / 1024) + "KB");
                 InputStream inputStream = result.getObjectContent();
                 byte[] buffer = new byte[2048];
                 ByteArrayOutputStream outStream = new ByteArrayOutputStream();
@@ -504,6 +513,10 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                } finally {
+                    if (mHandler != null) {
+                        mHandler.sendEmptyMessage(2);
+                    }
                 }
             }
 
@@ -516,20 +529,16 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                 }
                 if (serviceException != null) {
                     // 服务异常
-                    Log.e("oss", "ErrorCode:" + serviceException.getErrorCode());
-                    Log.e("oss", "RequestId:" + serviceException.getRequestId());
-                    Log.e("oss", "HostId:" + serviceException.getHostId());
-                    Log.e("oss", "RawMessage:" + serviceException.getRawMessage());
+                    Log.e("llw", "ErrorCode:" + serviceException.getErrorCode());
+                    Log.e("llw", "RequestId:" + serviceException.getRequestId());
+                    Log.e("llw", "HostId:" + serviceException.getHostId());
+                    Log.e("llw", "RawMessage:" + serviceException.getRawMessage());
                 }
             }
         });
 // task.cancel(); // 可以取消任务
 // task.waitUntilFinished(); // 如果需要等待任务完成
 
-        while (imageByteArray == null) {
-
-        }
-        return imageByteArray;
     }
 
 
@@ -605,8 +614,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                     objectKeyPath = sObjectKeyPath;
                 }
                 LogOut.d("llw", "objectKeyPath:" + objectKeyPath);
-                mDownLoadPic = getPicFromBytes(downLoadUserPhoto(bucketName, objectKeyPath), null);
-                mHandler.sendEmptyMessage(1);
+                downLoadUserPhoto(bucketName, objectKeyPath);
             }
         }).start();
 

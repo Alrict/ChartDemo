@@ -181,4 +181,11 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         }
 
     }
+
+    @Subscribe
+    public void eventMainThread(BaseFactory.CloseActivityEvent event) {
+        if (event.getCls() == HomeActivity.class) {
+            finish();
+        }
+    }
 }

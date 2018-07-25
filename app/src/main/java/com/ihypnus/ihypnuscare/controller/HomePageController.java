@@ -16,6 +16,7 @@ import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.activity.AddNwedeviceActivity;
+import com.ihypnus.ihypnuscare.activity.HomeActivity;
 import com.ihypnus.ihypnuscare.bean.DefaultDeviceIdVO;
 import com.ihypnus.ihypnuscare.bean.UsageInfos;
 import com.ihypnus.ihypnuscare.config.Constants;
@@ -182,11 +183,16 @@ public class HomePageController extends BaseController implements View.OnClickLi
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                BaseDialogHelper.showSimpleDialog(mContext, mContext.getString(R.string.tip_msg), "获取默认设备失败,请重新操作", mContext.getString(R.string.ok), new DialogListener() {
+                BaseDialogHelper.showNormalDialog(mContext, mContext.getString(R.string.tip_msg), mContext.getString(R.string.tv_load_default_device_error), mContext.getString(R.string.tv_btn_exit), mContext.getString(R.string.ok), new DialogListener() {
                     @Override
                     public void onClick(BaseType baseType) {
-                        //重新获取默认设备
-                        getDefaultDeviceInfos();
+                        if (BaseType.OK == baseType) {
+                            //重新获取默认设备
+                            getDefaultDeviceInfos();
+                        } else {
+                            EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(HomeActivity.class));
+                        }
+
                     }
 
                     @Override

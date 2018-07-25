@@ -295,5 +295,10 @@
     <string name="tv_account">帳號</string>
     <string name="tv_toast_old_new_pwd">新密码请勿与原密码相同</string>
     <string name="tv_has_no_data">暂无数据</string>
+    <string name="tv_load_default_device_error">获取默认设备失败,请重新操作</string>
+    <string name="tv_tip_to_connect_wifi">前去连接名为Hypnus_AP的热点</string>
+    <string name="tv_tip_current_wifi">当前连接的热点为:</string>
+    <string name="tv_tip_please">,请</string>
+    <string name="tv_btn_exit">退出</string>
 
 </resources>

@@ -106,7 +106,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
      * 校验当前连接的wifi
      */
     private void checkTargetWifi() {
-        String tips = "前去连接名为Hypnus_AP的热点";
+        String tips = getString(R.string.tv_tip_to_connect_wifi);
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         if (wifiManager != null) {
             WifiInfo wifiInfo = wifiManager.getConnectionInfo();
@@ -115,7 +115,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
             } else {
                 String ssid = wifiInfo.getSSID();
                 if (!StringUtils.isNullOrEmpty(ssid)) {
-                    tips = "当前连接的热点为:" + ssid + ",请" + tips;
+                    tips = getString(R.string.tv_tip_current_wifi) + ssid + getString(R.string.tv_tip_please) + tips;
                 }
                 showTipDialog(tips);
             }

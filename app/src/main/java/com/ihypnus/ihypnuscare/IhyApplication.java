@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.DisplayMetrics;
 
 import com.alibaba.sdk.android.oss.OSS;
@@ -200,17 +202,22 @@ UMConfigure.init调用中appkey和channel参数请置为null）。
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiLanguageUtil.init(this);
-        MultiLanguageUtil.getInstance().setConfiguration();
+        super.attachBaseContext(MultiLanguageUtil.attachBaseContext(base, getAppLanguage(base)));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        MultiLanguageUtil.init(this);
-        MultiLanguageUtil.getInstance().setConfiguration(getApplicationContext());
+        MultiLanguageUtil.init(getApplicationContext());
+        MultiLanguageUtil.getInstance().setConfiguration();
+    }
+
+    private Locale getAppLanguage(Context context) {
+        MultiLanguageUtil.init(context);
+        return MultiLanguageUtil.getInstance().getLanguageLocale();
     }
 }
