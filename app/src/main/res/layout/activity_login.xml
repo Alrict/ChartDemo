@@ -17,7 +17,7 @@
             style="@style/TextAppearanceMedium"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="登录"/>
+            android:text="@string/tv_login"/>
         <View
             android:id="@+id/line"
             style="@style/DividerLineHor"

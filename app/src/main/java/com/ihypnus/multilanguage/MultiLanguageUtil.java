@@ -60,6 +60,22 @@ public class MultiLanguageUtil {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return updateResources(context, language);
         } else {
+            Resources resources = context.getResources();
+            Locale locale = getLocaleByLanguage(language);
+            LogOut.d("llw", "android M以下版本中的locale:" + locale.toString());
+            int type = 2;
+            if (locale == Locale.ENGLISH) {
+                LogOut.d("llw", "android M以下版本中的type:Locale.ENGLISH");
+                type = 1;
+            } else if (locale == Locale.TRADITIONAL_CHINESE) {
+                LogOut.d("llw", "android M以下版本中的type:Locale.TRADITIONAL_CHINESE");
+                type = 3;
+            }
+            CommSharedUtil.getInstance(context).putInt(MultiLanguageUtil.SAVE_LANGUAGE, type);
+            Configuration configuration = resources.getConfiguration();
+            LogOut.d("llw", "android M以下版本最终设置的语言类型:" + locale);
+            configuration.setLocale(locale);
+            resources.updateConfiguration(configuration, null);
             return context;
         }
     }
@@ -85,7 +101,7 @@ public class MultiLanguageUtil {
 
     public static Locale getLocaleByLanguage(Locale language) {
         LogOut.d("llw", "application中的语言类型:" + language.toString());
-        if (isSupportLanguage(language)) {
+        if (language == Locale.ENGLISH || language == Locale.TRADITIONAL_CHINESE || language == Locale.SIMPLIFIED_CHINESE) {
             return language;
         } else {
             Locale locale = Locale.getDefault();

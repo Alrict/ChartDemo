@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.config.Constants;
+import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.multilanguage.CommSharedUtil;
@@ -127,12 +128,14 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
         int selectedLanguage = 0;
         switch (v.getId()) {
             case R.id.layout_followsytem:
+                BaseDialogHelper.showLoadingDialog(MultiLanguageActivity.this, true, getString(R.string.loading_default_messsage));
                 setSimplifiedVisible();
                 selectedLanguage = LanguageType.LANGUAGE_FOLLOW_SYSTEM;
                 switchLanguage(Locale.CHINA);
 
                 break;
             case R.id.layout_simplified_chinese:
+                BaseDialogHelper.showLoadingDialog(MultiLanguageActivity.this, true, getString(R.string.loading_default_messsage));
                 setSimplifiedVisible();
                 selectedLanguage = LanguageType.LANGUAGE_CHINESE_SIMPLIFIED;
                 switchLanguage(Locale.SIMPLIFIED_CHINESE);
@@ -140,12 +143,14 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
                 break;
 
             case R.id.layout_traditional_chinese:
+                BaseDialogHelper.showLoadingDialog(MultiLanguageActivity.this, true, getString(R.string.loading_default_messsage));
                 setTraditionalVisible();
                 selectedLanguage = LanguageType.LANGUAGE_CHINESE_TRADITIONAL;
                 switchLanguage(Locale.TRADITIONAL_CHINESE);
                 break;
 
             case R.id.layout_english:
+                BaseDialogHelper.showLoadingDialog(MultiLanguageActivity.this, true, getString(R.string.loading_default_messsage));
                 setEnglishVisible();
                 selectedLanguage = LanguageType.LANGUAGE_EN;
                 switchLanguage(Locale.ENGLISH);
@@ -155,6 +160,7 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
 //        MultiLanguageUtil.getInstance().updateLanguage(selectedLanguage);
         CommSharedUtil.getInstance(this).putInt(MultiLanguageUtil.SAVE_LANGUAGE, selectedLanguage);
         EventBus.getDefault().post(new BaseFactory.UpdateLanguageEvent());
+        BaseDialogHelper.dismissLoadingDialog();
         finish();
     }
 
