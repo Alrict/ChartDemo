@@ -76,6 +76,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private String mProtocol;
     private Gson mGson = new Gson();
     private TimerCountDown mTimerCountDown = new TimerCountDown(120 * 1000 + 500, 1000);
+    private boolean mVertifySuccess = false;
 
     @Override
     protected int setView() {
@@ -208,6 +209,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     ToastUtils.showToastDefault(RegisterActivity.this, mEtCount.getHint().toString());
                     return;
                 }
+                if (countNo.length() < 11) {
+                    ToastUtils.showToastDefault(RegisterActivity.this, getString(R.string.tv_toast_phone_error));
+                    return;
+                }
                 mIvCodeLoading.setVisibility(View.VISIBLE);
                 mBtnVcerificationCode.setVisibility(View.GONE);
                 mIvCodeLoading.startAnimation(mCodeLoadingAnim);
@@ -318,6 +323,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String account = mEtCount.getText().toString().trim();
         if (StringUtils.isNullOrEmpty(account)) {
             ToastUtils.showToastDefault(this, mEtCount.getHint().toString());
+            return false;
+        }
+
+        if (account.length() < 11) {
+            ToastUtils.showToastDefault(RegisterActivity.this, getString(R.string.tv_toast_phone_error));
             return false;
         }
 
@@ -462,6 +472,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 ToastUtils.showToastDefault(var3);
+                mVertifySuccess = true;
                 mIvCodeLoading.clearAnimation();
                 mBtnVcerificationCode.setVisibility(View.VISIBLE);
                 mIvCodeLoading.setVisibility(View.GONE);

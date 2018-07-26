@@ -343,7 +343,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mTvValue04.setText(initTextView(deviceBean.getAutos_min_p() + ""));
                 //最小压力支持 todo 换字段
                 mLayoutContent13.setVisibility(View.VISIBLE);
-                mTvTitle13.setText(R.string.tv_text_qsyl);
+                mTvTitle13.setText(R.string.tv_zxylzc);
                 mTvValue13.setText(initTextView(deviceBean.getDefind_1() + ""));
                 mLayoutContent14.setVisibility(View.INVISIBLE);
 
@@ -359,7 +359,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 }
                 //呼气舒适度
                 mTvTitle07.setText(R.string.tv_hqssd);
-                mTvValue07.setText(deviceBean.getBreath_fit() + "");
+                mTvValue07.setText(mComfortLv.get(deviceBean.getBreath_fit()));
                 //升压速度
                 mTvTitle08.setText(R.string.tv_text_sysd);
                 mTvValue08.setText(deviceBean.getBoostslope() + "");

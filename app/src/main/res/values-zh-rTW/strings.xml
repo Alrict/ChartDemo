@@ -301,5 +301,7 @@
     <string name="tv_tip_please">,请</string>
     <string name="tv_btn_exit">退出</string>
     <string name="tv_default_unknow">未知</string>
+    <string name="tv_toast_phone_error">请输入正确的手机号码!</string>
+    <string name="tv_zxylzc">最小压力支持</string>
 
 </resources>

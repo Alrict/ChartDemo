@@ -90,19 +90,10 @@
             android:layout_width="@dimen/w600"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/w60"
-            android:layout_toLeftOf="@+id/tv_name_arrow"
+            android:layout_alignParentRight="true"
             android:gravity="center_vertical|right"
             android:text="ihynus_app"
             android:textSize="@dimen/w38"/>
-        <ImageView
-            android:id="@+id/tv_name_arrow"
-            android:layout_width="@dimen/w60"
-            android:layout_height="@dimen/w60"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_horizontal"
-            android:src="@mipmap/icon_right_arrow"/>
 
     </RelativeLayout>
 
