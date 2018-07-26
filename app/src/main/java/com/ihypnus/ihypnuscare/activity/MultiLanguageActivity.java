@@ -1,6 +1,9 @@
 package com.ihypnus.ihypnuscare.activity;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -148,25 +151,26 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
                 switchLanguage(Locale.ENGLISH);
                 break;
         }
-
+//        MultiLanguageUtil.init(getApplicationContext());
 //        MultiLanguageUtil.getInstance().updateLanguage(selectedLanguage);
         CommSharedUtil.getInstance(this).putInt(MultiLanguageUtil.SAVE_LANGUAGE, selectedLanguage);
         EventBus.getDefault().post(new BaseFactory.UpdateLanguageEvent());
         finish();
-      /*  Intent intent = new Intent(MultiLanguageActivity.this, SettingActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        if (selectedLanguage == LanguageType.LANGUAGE_FOLLOW_SYSTEM) {
-//            System.exit(0);
-        }*/
     }
 
     public void switchLanguage(Locale locale) {
         Constants.LANGUAGE_TYPE = locale;
-//        Configuration config = getResources().getConfiguration();// 获得设置对象
-//        Resources resources = getResources();// 获得res资源对象
-//        DisplayMetrics dm = resources.getDisplayMetrics();// 获得屏幕参数：主要是分辨率，像素等。
-//        config.locale = locale; // 简体中文
-//        resources.updateConfiguration(config, dm);
+
+        Configuration config = getResources().getConfiguration();// 获得设置对象
+        Resources resources = getResources();// 获得res资源对象
+        DisplayMetrics dm = resources.getDisplayMetrics();// 获得屏幕参数：主要是分辨率，像素等。
+        config.locale = locale; // 简体中文
+        resources.updateConfiguration(config, dm);
     }
+
+//    private void onChangeAppLanguage(String newLanguage) {
+//        MultiLanguageUtil.getInstance().changeAppLanguage(getActivity(), newLanguage);
+//        AppLanguageUtils.changeAppLanguage(App.getContext(), newLanguage);
+//        getActivity().recreate();
+//    }
 }

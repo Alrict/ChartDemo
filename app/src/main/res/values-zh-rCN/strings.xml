@@ -272,7 +272,7 @@
     <string name="tv_zdhqyl">最大呼气压力</string>
     <string name="tv_cflmd">吸气灵敏度</string>
     <string name="tv_breath_rate">呼吸频率</string>
-    <string name="tv_breath_ration">呼吸比</string>
+    <string name="tv_breath_ration">吸呼比</string>
     <string name="tv_toast_scan_error">请扫描正确的二维码</string>
     <string name="tv_no_datas">无数据</string>
     <string name="tv_stutus_not_good">不太好</string>
