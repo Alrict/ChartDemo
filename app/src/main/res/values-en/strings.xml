@@ -100,7 +100,7 @@
         re-enter
     </string>
     <string name="tv_text_second">&#160;s</string>
-    <string name="tv_get_vertify_code">获取验证码</string>
+    <string name="tv_get_vertify_code">get verification code</string>
     <string name="tv_text_input_account">Please enter the phone number</string>
     <string name="tv_input_vertify_code">please enter verification code</string>
     <string name="tv_input_new_pass_word">Please enter a new password</string>
@@ -110,7 +110,7 @@
     <string name="rb_device">equipment</string>
     <string name="rb_report">report</string>
     <string name="rb_my_ihy">mine</string>
-    <string name="tv_loading_login">正在登入...</string>
+    <string name="tv_loading_login">loading...</string>
     <string name="tv_input_account">Please input Username</string>
     <string name="tv_input_pwd">Please enter your password</string>
     <string name="tv_login">log in</string>
@@ -223,7 +223,8 @@
     <string name="tv_tip_current_wifi">The currently connected hotspot is:</string>
     <string name="tv_tip_please">,please</string>
     <string name="tv_btn_exit">Exit</string>
-    <string name="tv_default_unknow">未知</string>
-    <string name="tv_toast_phone_error">请输入正确的手机号码!</string>
-    <string name="tv_zxylzc">最小压力支持</string>
+    <string name="tv_default_unknow">unknow</string>
+    <string name="tv_toast_phone_error">Please enter the correct phone number!</string>
+    <string name="tv_zxylzc">Min_pre_support</string>
+    <string name="tv_dialog_model_close">Please do not open the secondary function yet, so stay tuned!</string>
 </resources>

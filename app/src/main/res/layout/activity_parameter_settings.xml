@@ -31,7 +31,7 @@
                     android:layout_marginTop="@dimen/h10"
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
-                    android:text="CPAP"/>
+                    android:text=""/>
             </LinearLayout>
 
             <LinearLayout
@@ -43,7 +43,7 @@
                 <TextView
                     android:id="@+id/tv_title02"
                     style="@style/TextAppearanceMedium"
-                    android:text="治疗压力"/>
+                    android:text=""/>
                 <TextView
                     android:id="@+id/tv_value02"
                     style="@style/TextAppearanceMedium"
@@ -52,7 +52,7 @@
                     android:layout_marginTop="@dimen/h10"
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
-                    android:text="CPAP"/>
+                    android:text=""/>
             </LinearLayout>
         </LinearLayout>
 
@@ -72,7 +72,7 @@
                 <TextView
                     android:id="@+id/tv_title03"
                     style="@style/TextAppearanceMedium"
-                    android:text="当前模式"/>
+                    android:text=""/>
                 <TextView
                     android:id="@+id/tv_value03"
                     style="@style/TextAppearanceMedium"
@@ -81,7 +81,7 @@
                     android:layout_marginTop="@dimen/h10"
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
-                    android:text="CPAP"/>
+                    android:text=""/>
             </LinearLayout>
 
             <LinearLayout
@@ -94,7 +94,7 @@
                 <TextView
                     android:id="@+id/tv_title04"
                     style="@style/TextAppearanceMedium"
-                    android:text="治疗压力"/>
+                    android:text=""/>
                 <TextView
                     android:id="@+id/tv_value04"
                     style="@style/TextAppearanceMedium"
@@ -103,7 +103,7 @@
                     android:layout_marginTop="@dimen/h10"
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
-                    android:text="CPAP"/>
+                    android:text=""/>
             </LinearLayout>
         </LinearLayout>
 
@@ -124,7 +124,7 @@
                 <TextView
                     android:id="@+id/tv_title13"
                     style="@style/TextAppearanceMedium"
-                    android:text="当前模式"/>
+                    android:text=""/>
                 <TextView
                     android:id="@+id/tv_value13"
                     style="@style/TextAppearanceMedium"
@@ -133,7 +133,7 @@
                     android:layout_marginTop="@dimen/h10"
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
-                    android:text="CPAP"/>
+                    android:text=""/>
             </LinearLayout>
 
             <LinearLayout
@@ -146,7 +146,7 @@
                 <TextView
                     android:id="@+id/tv_title14"
                     style="@style/TextAppearanceMedium"
-                    android:text="治疗压力"/>
+                    android:text=""/>
                 <TextView
                     android:id="@+id/tv_value14"
                     style="@style/TextAppearanceMedium"
@@ -155,7 +155,7 @@
                     android:layout_marginTop="@dimen/h10"
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
-                    android:text="CPAP"/>
+                    android:text=""/>
             </LinearLayout>
         </LinearLayout>
 
@@ -165,7 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/h100"
             android:gravity="center"
-            android:text="参数设置"/>
+            android:text="@string/parameter_setting"/>
 
         <View
             style="@style/DividerLineHor"
@@ -188,7 +188,7 @@
                 <TextView
                     android:id="@+id/tv_title05"
                     style="@style/TextAppearanceMedium"
-                    android:text="起始压力"/>
+                    android:text=""/>
 
                 <TextView
                     android:id="@+id/tv_value05"
@@ -200,7 +200,7 @@
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
-                    android:text="CPAP"/>
+                    android:text=""/>
             </LinearLayout>
 
             <LinearLayout
@@ -212,7 +212,7 @@
                 <TextView
                     android:id="@+id/tv_title06"
                     style="@style/TextAppearanceMedium"
-                    android:text="延时时间"/>
+                    android:text=""/>
                 <TextView
                     android:id="@+id/tv_value06"
                     style="@style/TextAppearanceMedium"
@@ -223,7 +223,7 @@
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
-                    android:text="CPAP"/>
+                    android:text=""/>
             </LinearLayout>
         </LinearLayout>
 
@@ -242,7 +242,7 @@
                 <TextView
                     android:id="@+id/tv_title07"
                     style="@style/TextAppearanceMedium"
-                    android:text="呼气释压"/>
+                    android:text=""/>
 
                 <TextView
                     android:id="@+id/tv_value07"
@@ -254,7 +254,7 @@
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
-                    android:text="关闭"/>
+                    android:text=""/>
             </LinearLayout>
 
             <LinearLayout
@@ -266,7 +266,7 @@
                 <TextView
                     android:id="@+id/tv_title08"
                     style="@style/TextAppearanceMedium"
-                    android:text="释压水平"/>
+                    android:text=""/>
                 <TextView
                     android:id="@+id/tv_value08"
                     style="@style/TextAppearanceMedium"
@@ -277,7 +277,7 @@
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
-                    android:text="CPAP"/>
+                    android:text=""/>
             </LinearLayout>
         </LinearLayout>
 
@@ -297,7 +297,7 @@
                 <TextView
                     android:id="@+id/tv_title09"
                     style="@style/TextAppearanceMedium"
-                    android:text="触发灵敏度"/>
+                    android:text=""/>
 
                 <TextView
                     android:id="@+id/tv_value09"
@@ -309,7 +309,7 @@
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
-                    android:text="1"/>
+                    android:text=""/>
             </LinearLayout>
 
             <LinearLayout
@@ -322,7 +322,7 @@
                 <TextView
                     android:id="@+id/tv_title10"
                     style="@style/TextAppearanceMedium"
-                    android:text="降压速度"/>
+                    android:text=""/>
                 <TextView
                     android:id="@+id/tv_value10"
                     style="@style/TextAppearanceMedium"
@@ -333,7 +333,7 @@
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
-                    android:text="1"/>
+                    android:text=""/>
             </LinearLayout>
         </LinearLayout>
 
@@ -354,7 +354,7 @@
                 <TextView
                     android:id="@+id/tv_title11"
                     style="@style/TextAppearanceMedium"
-                    android:text="呼气灵敏度"/>
+                    android:text=""/>
 
                 <TextView
                     android:id="@+id/tv_value11"
@@ -366,7 +366,7 @@
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
-                    android:text="1"/>
+                    android:text=""/>
             </LinearLayout>
 
             <LinearLayout
@@ -379,7 +379,7 @@
                 android:visibility="invisible">
                 <TextView
                     style="@style/TextAppearanceMedium"
-                    android:text="降压速度"/>
+                    android:text=""/>
                 <TextView
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
@@ -389,7 +389,7 @@
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
-                    android:text="1"/>
+                    android:text=""/>
             </LinearLayout>
         </LinearLayout>
 
@@ -401,7 +401,7 @@
             android:layout_marginRight="@dimen/w90"
             android:layout_marginTop="@dimen/h100"
             android:gravity="center"
-            android:text="取消"
+            android:text="@string/cancel"
             android:textSize="@dimen/w54"/>
 
         <Button
@@ -413,7 +413,7 @@
             android:layout_marginRight="@dimen/w90"
             android:layout_marginTop="@dimen/h50"
             android:gravity="center"
-            android:text="确定"
+            android:text="@string/ok"
             android:textSize="@dimen/w54"/>
     </LinearLayout>
 </ScrollView>

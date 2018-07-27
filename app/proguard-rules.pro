@@ -233,5 +233,8 @@
 public static final int *;
 }
 
+-dontwarn com.github.mikephil.**
+-keep class com.github.mikephil.**{ *; }
+
 
 

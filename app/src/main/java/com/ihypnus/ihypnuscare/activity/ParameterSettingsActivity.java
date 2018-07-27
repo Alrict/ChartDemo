@@ -240,9 +240,10 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mTvTitle07.setText(R.string.tv_hqyl);
                 mTvValue07.setText(mPressureRelease.get(deviceBean.getDep_type()) + "");
 
+                //释压水平
                 mTvTitle08.setText(R.string.tv_text_sysp);
-                if (mDeviceBean.getDep_level() >= 1) {
-                    mTvValue08.setText(mReleaseKpaLv.get(mDeviceBean.getDep_level() - 1));
+                if (mDeviceBean.getDep_level() >= 0) {
+                    mTvValue08.setText(mReleaseKpaLv.get(mDeviceBean.getDep_level()));
                 }
 
                 mLayoutContent09.setVisibility(View.INVISIBLE);
@@ -278,10 +279,10 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
 
                 mTvTitle07.setText(R.string.tv_hqyl);
                 mTvValue07.setText(mPressureRelease.get(deviceBean.getDep_type()) + "");
-
+                //释压水平
                 mTvTitle08.setText(R.string.tv_text_sysp);
-                if (mDeviceBean.getDep_level() >= 1) {
-                    mTvValue08.setText(mReleaseKpaLv.get(mDeviceBean.getDep_level() - 1));
+                if (mDeviceBean.getDep_level() >= 0) {
+                    mTvValue08.setText(mReleaseKpaLv.get(mDeviceBean.getDep_level()));
                 }
 
                 mLayoutContent09.setVisibility(View.INVISIBLE);
@@ -341,11 +342,11 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 //最小呼气压力
                 mTvTitle04.setText(R.string.tv_zdhqyl);
                 mTvValue04.setText(initTextView(deviceBean.getAutos_min_p() + ""));
-                //最小压力支持 todo 换字段
-                mLayoutContent13.setVisibility(View.VISIBLE);
-                mTvTitle13.setText(R.string.tv_zxylzc);
-                mTvValue13.setText(initTextView(deviceBean.getDefind_1() + ""));
-                mLayoutContent14.setVisibility(View.INVISIBLE);
+                //最小压力支持 todo 重保要求不显示
+                mLayoutContent13.setVisibility(View.INVISIBLE);
+//                mTvTitle13.setText(R.string.tv_zxylzc);
+//                mTvValue13.setText(initTextView(deviceBean.getDefind_1() + ""));
+//                mLayoutContent14.setVisibility(View.INVISIBLE);
 
                 //起始压力
                 mTvTitle05.setText(R.string.tv_text_qsyl);
@@ -541,7 +542,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
     private void updateParameterInfos() {
         mParams.put("JSESSIONID", Constants.JSESSIONID);
         mParams.put("isCookie", true);
-        mParams.put("deviceId", mDeviceId);//当前设备的id
+        mParams.put("deviceId", mDeviceId);//当前选中设备的id
         mParams.put("deviceID", mDeviceBean.getDeviceID());//获取影子设备信息中返回的id
 
         BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.tv_isloading));
@@ -639,6 +640,8 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                         }
                         int startPressure = (int) (v * 10);
                         s = String.valueOf(startPressure);
+                    } else if (key.equals("dep_level")) {
+                        s = String.valueOf(postion);
                     }
                 }
 

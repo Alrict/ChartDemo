@@ -60,8 +60,6 @@ public class BarChartManager {
         //显示边界
         mBarChart.setDrawBorders(false);
 
-        //设置动画效果
-        mBarChart.animateY(3000, Easing.EasingOption.Linear);
 //        mBarChart.animateX(3000, Easing.EasingOption.Linear);
 
 
@@ -209,6 +207,9 @@ public class BarChartManager {
         xAxis.setLabelCount(xAxisValues.size() - 1, false);
 
         mBarChart.setData(data);
+        mBarChart.invalidate();
+        //设置动画效果
+        mBarChart.animateY(3000, Easing.EasingOption.Linear);
     }
 
     /**
@@ -219,13 +220,15 @@ public class BarChartManager {
      */
     public void showStackedBarChart(List<Float> xAxisValues, ArrayList<BarEntry> yAxisValues, String labels, int type, List<Double> averageInp, List<Double> averageExp) {
         initBarChart(false, type, averageInp, averageExp);
+        //设置X轴的刻度数
+        xAxis.setLabelCount(xAxisValues.size() - 1, false);
         BarDataSet set1;
         if (mBarChart.getData() != null &&
                 mBarChart.getData().getDataSetCount() > 0) {
             set1 = (BarDataSet) mBarChart.getData().getDataSetByIndex(0);
             set1.setValues(yAxisValues);
             //设置是否显示柱子上面的数值
-            set1.setDrawValues(false);
+            set1.setDrawValues(true);
             mBarChart.getData().notifyDataChanged();
             mBarChart.notifyDataSetChanged();
         } else {
@@ -234,7 +237,7 @@ public class BarChartManager {
             set1.setLabel(labels);
             set1.setColors(getColors());
             //设置是否显示柱子上面的数值
-            set1.setDrawValues(false);
+            set1.setDrawValues(true);
             set1.setStackLabels(new String[]{"吸气压力", "呼气压力"});
             set1.setValueTextColor(Color.WHITE);
 
@@ -249,14 +252,16 @@ public class BarChartManager {
 
         mBarChart.setFitBars(true);
         mBarChart.invalidate();
-        // Y轴更多属性
+    /*    // Y轴更多属性
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);  // 设置dataSet应绘制在Y轴的左轴还是右轴，默认LEFT
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
         BarData data = new BarData(dataSets);
-        //设置X轴的刻度数
-        xAxis.setLabelCount(xAxisValues.size() - 1, false);
+
         mBarChart.setData(data);
+        mBarChart.invalidate();*/
+        //设置动画效果
+        mBarChart.animateY(3000, Easing.EasingOption.Linear);
 
     }
 

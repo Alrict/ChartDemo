@@ -170,12 +170,12 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                 break;
 
             case R.id.layout_help:
-                BaseDialogHelper.showMsgTipDialog(mAct, "暂未开放次功能,敬请期待!");
+                BaseDialogHelper.showMsgTipDialog(mAct, getString(R.string.tv_dialog_model_close));
 //                jumpToActivity(102, HelpCenterActivity.class);
                 break;
 
             case R.id.layout_suggestions:
-                BaseDialogHelper.showMsgTipDialog(mAct, "暂未开放次功能,敬请期待!");
+                BaseDialogHelper.showMsgTipDialog(mAct, getString(R.string.tv_dialog_model_close));
 //                jumpToActivity(103, FeedbackActivity.class);
                 break;
 

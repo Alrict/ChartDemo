@@ -1,26 +1,18 @@
 package com.ihypnus.ihypnuscare.controller;
 
 import android.content.Context;
-import android.graphics.RectF;
-import android.util.Log;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.MPPointF;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 import com.ihypnus.ihypnuscare.utils.BarChartManager;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
-import com.ihypnus.ihypnuscare.utils.MyAxisValueFormatter;
-import com.ihypnus.ihypnuscare.widget.XYMarkerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +25,7 @@ import java.util.List;
  * @date: 2018/6/21 14:18
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class ChartsPage2Controller extends BaseController implements OnChartValueSelectedListener {
+public class ChartsPage2Controller extends BaseController {
     private BarChart mChart1;
     private BarChart mChart2;
     private LinearLayout mLayoutWeekData;
@@ -45,6 +37,8 @@ public class ChartsPage2Controller extends BaseController implements OnChartValu
     private ArrayList<BarEntry> mYValue1;
     private LinearLayout mLayoutChart1;
     private LinearLayout mLayoutChart2;
+    private List<Integer> mColours;
+    private ArrayList<String> mLables;
 
     public ChartsPage2Controller(Context context) {
         super(context);
@@ -59,9 +53,9 @@ public class ChartsPage2Controller extends BaseController implements OnChartValu
         mLayoutChart2 = (LinearLayout) rootView.findViewById(R.id.layout_chart2);
 
         mChart2 = (BarChart) rootView.findViewById(R.id.chart2);
-        XYMarkerView mv = new XYMarkerView(mContext, new MyAxisValueFormatter(0));
-        mv.setChartView(mChart1); // For bounds control
-        mChart1.setMarker(mv); // Set the marker to the chart
+//        XYMarkerView mv = new XYMarkerView(mContext, new MyAxisValueFormatter(0));
+//        mv.setChartView(mChart1); // For bounds control
+//        mChart1.setMarker(mv); // Set the marker to the chart
         //周统计数据
         mLayoutWeekData = (LinearLayout) rootView.findViewById(R.id.layout_week_data);
         //周统计数据时间范围
@@ -79,8 +73,16 @@ public class ChartsPage2Controller extends BaseController implements OnChartValu
         //设置y轴的数据()
         mYValue1 = new ArrayList<BarEntry>();
         mYValues2 = new ArrayList<>();
-        mChart1.setOnChartValueSelectedListener(this);
+        //颜色集合
+        mColours = new ArrayList<>();
+        //        mColours.add(ColorTemplate.MATERIAL_COLORS[0]);
+//        mColours.add(ColorTemplate.MATERIAL_COLORS[1]);
+        mColours.add(Color.GREEN);
+        mColours.add(Color.YELLOW);
 
+        mLables = new ArrayList<>();
+        mLables.add("90%呼气压力");
+        mLables.add("90%吸气压力");
     }
 
     @Override
@@ -177,32 +179,5 @@ public class ChartsPage2Controller extends BaseController implements OnChartValu
         }
 
         return colors;
-    }
-
-    protected RectF mOnValueSelectedRectF = new RectF();
-
-    @Override
-    public void onValueSelected(Entry e, Highlight h) {
-        if (e == null)
-            return;
-
-        RectF bounds = mOnValueSelectedRectF;
-        mChart1.getBarBounds((BarEntry) e, bounds);
-        MPPointF position = mChart1.getPosition(e, YAxis.AxisDependency.LEFT);
-
-        Log.i("bounds", bounds.toString());
-        Log.i("value", String.valueOf(((BarEntry) e).getYVals()));
-        Log.i("position", "X:" + position.getX() + ",Y:" + position.getY());
-
-        Log.i("x-index",
-                "low: " + mChart1.getLowestVisibleX() + ", high: "
-                        + mChart1.getHighestVisibleX());
-
-        MPPointF.recycleInstance(position);
-    }
-
-    @Override
-    public void onNothingSelected() {
-
     }
 }
