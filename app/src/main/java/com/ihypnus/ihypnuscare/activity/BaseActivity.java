@@ -328,7 +328,7 @@ public abstract class BaseActivity extends Activity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
         LogOut.d("llw", "baseActivity页面更新了语言");
-        recreate();
+//        recreate();
         ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
 //        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
     }

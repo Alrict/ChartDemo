@@ -61,6 +61,7 @@ import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
+import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.multilanguage.MultiLanguageUtil;
 import com.ihypnus.zxing.android.camera.CameraManager;
 import com.ihypnus.zxing.android.camera.CameraUtil;
@@ -842,7 +843,10 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
-        recreate();
+//        recreate();
+        LogOut.d("llw", "CaptureActivity页面更新了语言");
+//        recreate();
+        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
     }
 
     @Override

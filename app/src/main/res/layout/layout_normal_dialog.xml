@@ -26,7 +26,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/h70"
             android:singleLine="true"
-            android:text="温馨提示"
+            android:text="@string/tip_msg"
             android:textColor="@color/text_content"
             android:textSize="@dimen/w56"/>
 
@@ -74,7 +74,7 @@
                 android:id="@+id/button1"
                 style="@style/dialog_btn"
                 android:layout_height="@dimen/h140"
-                android:text="取消"
+                android:text="@string/cancel"
                 android:textColor="@color/black_pure"
                 android:visibility="visible"/>
 
@@ -87,7 +87,7 @@
                 android:id="@+id/button2"
                 style="@style/dialog_btn"
                 android:layout_height="@dimen/h140"
-                android:text="确定"
+                android:text="@string/ok"
                 android:textColor="@color/black_pure"
                 android:visibility="visible"/>
         </LinearLayout>

@@ -44,7 +44,7 @@ public class VerticalPagerAdapter extends android.support.v4.view.PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView(mPageFragmentList.get(position).getRootView());
+//        container.removeView(mPageFragmentList.get(position).getRootView());
     }
 
     @Override

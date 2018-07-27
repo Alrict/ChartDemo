@@ -107,7 +107,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void loadData() {
-        BaseDialogHelper.showLoadingDialog(mAct, true, "正在加载...");
+        BaseDialogHelper.showLoadingDialog(mAct, true, getString(R.string.tv_isloading));
         getDataList();
     }
 
@@ -164,7 +164,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
 
             case R.id.btn_add:
                 if (mInfoList.size() == 0) {
-                    ToastUtils.showToastDefault("请绑定您的设备");
+                    ToastUtils.showToastDefault(getString(R.string.tv_toast_bind_device));
                     return;
                 }
                 if (mNeedRefresh) {
@@ -179,12 +179,12 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
      * 设置默认设备
      */
     private void setDefaultDeviceId() {
-        BaseDialogHelper.showLoadingDialog(mAct, true, "正在设置...");
+        BaseDialogHelper.showLoadingDialog(mAct, true, getString(R.string.tv_dialog_setting));
         IhyRequest.setDefaultDeviceId(Constants.JSESSIONID, true, mDeviceId, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                BaseDialogHelper.showMsgTipDialog(mAct, "设置成功");
+                BaseDialogHelper.showMsgTipDialog(mAct, getString(R.string.tv_dialog_setting_success));
                 Constants.DEVICEID = mDeviceId;
                 EventBus.getDefault().post(new BaseFactory.RefreshReportInfoEvent(mDeviceId));
             }
@@ -208,7 +208,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
         SwipeMenuItem deleteItem = new SwipeMenuItem(mAct)
                 .setBackground(R.drawable.selector_red)
                 .setImage(R.mipmap.ic_action_delete)
-                .setText("删除")
+                .setText(R.string.tv_text_delete)
                 .setTextColor(Color.WHITE)
                 .setWidth(width)
                 .setHeight(height);
@@ -241,7 +241,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
                 //删除
                 String device_id = mInfoList.get(adapterPosition).getDevice_id();
                 if (device_id.equals(Constants.DEVICEID)) {
-                    BaseDialogHelper.showMsgTipDialog(mAct, "此为当前使用设备,更改后方能删除");
+                    BaseDialogHelper.showMsgTipDialog(mAct, getString(R.string.tv_dialog_bind_error));
                     return;
                 }
                 removeDeviceId(adapterPosition, device_id);
@@ -262,7 +262,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
      * @param device_id
      */
     private void removeDeviceId(int position, String device_id) {
-        BaseDialogHelper.showLoadingDialog(mAct, true, "正在解绑...");
+        BaseDialogHelper.showLoadingDialog(mAct, true, getString(R.string.tv_dialog_unbind));
         IhyRequest.unbindDevice(Constants.JSESSIONID, true, device_id, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {

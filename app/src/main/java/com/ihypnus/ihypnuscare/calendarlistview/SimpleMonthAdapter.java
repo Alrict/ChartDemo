@@ -32,7 +32,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
 
 import com.ihypnus.ihypnuscare.R;
-import com.ihypnus.ihypnuscare.utils.ToastUtils;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -178,15 +177,7 @@ public class SimpleMonthAdapter extends RecyclerView.Adapter<SimpleMonthAdapter.
     }
 
     public void onDayClick(SimpleMonthView simpleMonthView, CalendarDay calendarDay) {
-        if (MODE == 1) {
-            // TODO: 2017/7/3 0003 如果模式等于1情况下，判断是否大于当前时间
-            long currentTimeMillis = System.currentTimeMillis();
-            long selectTime = calendarDay.getDate().getTime();
-            if (selectTime > currentTimeMillis) {
-                ToastUtils.showToastDefault(mContext, "选择日期不能大于当前日期");
-                return;
-            }
-        }
+
         if (calendarDay != null) {
             onDayTapped(calendarDay);
         }

@@ -221,7 +221,7 @@ public class BaseDialogHelper {
         kyeBaseDialog.setCanceledOnTouchOutside(false);
     }
 
-    public static void showInputNameDialog(Context context, final String mTitle, final NumberInputListener listener) {
+    public static void showInputNameDialog(final Context context, final String mTitle, final NumberInputListener listener) {
         IhyBaseDialog kyeBaseDialog = IhyBaseDialog.createKyeBaseDialog(context, R.layout.layout_input_dialog, new IhyBaseDialog.DialogListener() {
             @Override
             public void bindView(View view, final IhyBaseDialog kyeBaseDialog) {
@@ -249,7 +249,7 @@ public class BaseDialogHelper {
                                 listener.onNumberInputListener(number);
                             }
                         } else {
-                            ToastUtils.showToastDefault("请输入您的昵称");
+                            ToastUtils.showToastDefault(context.getString(R.string.tv_toast_nickname));
                         }
 
 

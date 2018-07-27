@@ -14,14 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @version V1.0
- * @createAuthor yzw
- * @createDate 2016/8/20 16:40
- * @updateAuthor
- * @updateDate
- * @company 跨越速运
  * @description 文件读写
- * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
 public class FileUtils {
 

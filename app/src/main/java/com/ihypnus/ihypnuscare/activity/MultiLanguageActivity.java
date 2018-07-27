@@ -159,7 +159,10 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
 //        MultiLanguageUtil.init(getApplicationContext());
 //        MultiLanguageUtil.getInstance().updateLanguage(selectedLanguage);
         CommSharedUtil.getInstance(this).putInt(MultiLanguageUtil.SAVE_LANGUAGE, selectedLanguage);
+        //更新语言
         EventBus.getDefault().post(new BaseFactory.UpdateLanguageEvent());
+        //更新报告页面日期
+        EventBus.getDefault().post(new BaseFactory.UpdateDataLanguage());
         BaseDialogHelper.dismissLoadingDialog();
         finish();
     }

@@ -156,7 +156,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     protected void loadData() {
-        BaseDialogHelper.showLoadingDialog(mAct, true, "正在加载");
+        BaseDialogHelper.showLoadingDialog(mAct, true, mAct.getString(R.string.onloading));
 //        mTvUserName.setText(IhyApplication.mInstance.getUserInfo().getUserInfo().getAccount());
         getInfos(true);
     }

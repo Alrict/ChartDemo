@@ -60,7 +60,7 @@
                 android:layout_marginRight="@dimen/w50"
                 android:layout_weight="1"
                 android:background="@drawable/selector_dialog_bg_btn_bottom"
-                android:text="取消"
+                android:text="@string/cancel"
                 android:textColor="@color/white"
                 android:textSize="@dimen/w50"
                 android:visibility="visible"/>
@@ -73,7 +73,7 @@
                 android:layout_marginRight="@dimen/w50"
                 android:layout_weight="1"
                 android:background="@drawable/selector_dialog_bg_btn_bottom"
-                android:text="确定"
+                android:text="@string/ok"
                 android:textColor="@color/white"
                 android:textSize="@dimen/w50"
                 android:visibility="visible"/>

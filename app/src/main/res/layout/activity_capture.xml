@@ -51,7 +51,7 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <TextView
+            <com.ihypnus.widget.AppTextView
                 android:id="@+id/capture_txt_cancle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <TextView
+            <com.ihypnus.widget.AppTextView
                 android:id="@+id/capture_txt_light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

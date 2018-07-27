@@ -72,8 +72,6 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         mIvData = (ImageView) findViewById(R.id.iv_data);
         //viewPager
         mViewPager = (VerticalViewPager) findViewById(R.id.view_pager);
-
-
     }
 
 
@@ -94,6 +92,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         //设置最小偏移量
         mViewPager.setMinPageOffset(0.15f);
         mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.setOffscreenPageLimit(3);
 
         //头部刷新旋转动画
         mReLoadingAnim = AnimationUtils.loadAnimation(mAct, R.anim.login_code_loading);
@@ -130,7 +129,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
                 break;
             case R.id.iv_data:
                 String currentDate = DateTimeUtils.getCurrentDate();
-                jumpSelecteDateActivity("日期选择", currentDate, REQUEST_START_TIME);
+                jumpSelecteDateActivity(getString(R.string.tv_title_data_select), currentDate, REQUEST_START_TIME);
                 break;
         }
     }
@@ -266,6 +265,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(BaseFactory.UpdateDataLanguage event) {
+        LogOut.d("llw", "报告页面更新了语言");
         ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
         if (mHomePageController != null) {
             mHomePageController.setData();

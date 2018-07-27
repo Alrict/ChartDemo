@@ -217,7 +217,7 @@
     <string name="tv_text_down_speed">降压速度</string>
     <string name="tv_hqlmd">呼气灵敏度</string>
     <string name="tv_tittle_setparmeter">参数设置成功</string>
-    <string name="tv_tip_use_new_setting">下次治疗将使用新的设置</string>
+    <string name="tv_tip_use_new_setting">设置数据可能有延时,请勿频繁操作</string>
     <string name="tv_btn_back">返回</string>
     <string name="tv_text_close">关闭</string>
     <string name="tv_text_birthday">出生日期</string>
@@ -304,4 +304,15 @@
     <string name="tv_toast_phone_error">请输入正确的手机号码!</string>
     <string name="tv_zxylzc">最小压力支持</string>
     <string name="tv_dialog_model_close">暂未开放次功能,敬请期待!</string>
+    <string name="tv_toast_bind_device">请绑定您的设备</string>
+    <string name="tv_dialog_setting">正在设置...</string>
+    <string name="tv_dialog_setting_success">设置成功</string>
+    <string name="tv_text_delete">删除</string>
+    <string name="tv_dialog_bind_error">此为当前使用设备,更改后方能删除</string>
+    <string name="tv_dialog_unbind">正在解绑...</string>
+    <string name="tv_load_binding">正在绑定...</string>
+    <string name="tv_toast_nickname">请输入您的昵称</string>
+    <string name="tv_title_data_select">日期选择</string>
+    <string name="btn_take_photo">相机拍照</string>
+    <string name="btn_select_photo">相册选择</string>
 </resources>

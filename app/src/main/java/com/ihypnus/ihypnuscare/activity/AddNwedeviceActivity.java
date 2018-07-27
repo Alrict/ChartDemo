@@ -154,7 +154,7 @@ public class AddNwedeviceActivity extends BaseActivity implements View.OnClickLi
      * 绑定设备
      */
     private void bindDevice(final String deviceId, final String model) {
-        BaseDialogHelper.showLoadingDialog(this, true, "正在提交...");
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.tv_load_binding));
         IhyRequest.bindDevice(Constants.JSESSIONID, true, deviceId, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {

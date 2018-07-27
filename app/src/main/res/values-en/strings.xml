@@ -78,7 +78,7 @@
     <string name="bt_next">Next step</string>
     <string name="tv_modify_text">change Password</string>
     <string name="pwd_error_tip">Please enter a 6-14 digit password to support numbers and uppercase and lowercase letters</string>
-    <string name="onloading">submitting ...</string>
+    <string name="onloading">loading ...</string>
     <string name="pwd_different_error">The passwords entered twice do not match, please re-enter</string>
     <string name="et_new_password">Please enter a new password</string>
     <string name="hint_pwd_input_again">Please enter your new password again</string>
@@ -137,7 +137,7 @@
     <string name="tv_text_down_speed">Buck speed</string>
     <string name="tv_hqlmd">Breath sensitivity</string>
     <string name="tv_tittle_setparmeter">Parameter setting succeeded</string>
-    <string name="tv_tip_use_new_setting">The next treatment will use the new settings</string>
+    <string name="tv_tip_use_new_setting">Setting data may be delayed, please do not operate frequently</string>
     <string name="tv_btn_back">Back</string>
     <string name="tv_text_close">shut down</string>
     <string name="tv_text_birthday">date of birth</string>
@@ -217,14 +217,25 @@
     <string name="tv_90ex_pre">90% ex-pressure</string>
     <string name="tv_account">Account</string>
     <string name="tv_toast_old_new_pwd">Do not use the same new password as the original password</string>
-    <string name="tv_has_no_data">暂无数据</string>
+    <string name="tv_has_no_data">No data</string>
     <string name="tv_load_default_device_error">Failed to get the default device, please re-do</string>
     <string name="tv_tip_to_connect_wifi">Go ahead and connect to the hotspot named Hypnus_AP</string>
     <string name="tv_tip_current_wifi">The currently connected hotspot is:</string>
-    <string name="tv_tip_please">,please</string>
+    <string name="tv_tip_please">,please </string>
     <string name="tv_btn_exit">Exit</string>
     <string name="tv_default_unknow">unknow</string>
     <string name="tv_toast_phone_error">Please enter the correct phone number!</string>
     <string name="tv_zxylzc">Min_pre_support</string>
     <string name="tv_dialog_model_close">Please do not open the secondary function yet, so stay tuned!</string>
+    <string name="tv_toast_bind_device">Please bind your device</string>
+    <string name="tv_dialog_setting">Setting up...</string>
+    <string name="tv_dialog_setting_success">Set successfully</string>
+    <string name="tv_text_delete">Delete</string>
+    <string name="tv_dialog_bind_error">This is the current device, and can be deleted after the change</string>
+    <string name="tv_dialog_unbind">Unbinding...</string>
+    <string name="tv_load_binding">Binding...</string>
+    <string name="tv_toast_nickname">Please enter your nickname</string>
+    <string name="tv_title_data_select">Date selection</string>
+    <string name="btn_take_photo">Camera photo</string>
+    <string name="btn_select_photo">Album selection</string>
 </resources>
