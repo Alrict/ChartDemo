@@ -66,6 +66,7 @@ public class IhyApplication extends Application {
         initLogReport();
         //设置当前语言类型
         Constants.LANGUAGE_TYPE = MultiLanguageUtil.getInstance().getLanguageLocale();
+        MultiLanguageUtil.getInstance().setApplicationLanguage(this);
     }
 
     public void switchLanguage(Locale locale) {

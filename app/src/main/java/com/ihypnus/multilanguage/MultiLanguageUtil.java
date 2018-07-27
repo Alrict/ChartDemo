@@ -80,9 +80,40 @@ public class MultiLanguageUtil {
         }
     }
 
+    /**
+     * 设置语言类型
+     */
+    public void setApplicationLanguage(Context context) {
+        Resources resources = context.getApplicationContext().getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        Locale locale = getLanguageLocale();
+        config.locale = locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            LocaleList localeList = new LocaleList(locale);
+            LocaleList.setDefault(localeList);
+            config.setLocales(localeList);
+            context.getApplicationContext().createConfigurationContext(config);
+            Locale.setDefault(locale);
+        }
+        resources.updateConfiguration(config, dm);
+    }
+
     @TargetApi(Build.VERSION_CODES.N)
     private static Context updateResources(Context context, Locale language) {
-        LogOut.d("llw", "updateResources中的语言类型:" + language.toString());
+        Locale.setDefault(language);
+
+        Resources res = context.getResources();
+        Configuration config = new Configuration(res.getConfiguration());
+        if (Build.VERSION.SDK_INT >= 17) {
+            config.setLocale(language);
+            context = context.createConfigurationContext(config);
+        } else {
+            config.locale = language;
+            res.updateConfiguration(config, res.getDisplayMetrics());
+        }
+        return context;
+     /*   LogOut.d("llw", "updateResources中的语言类型:" + language.toString());
         Resources resources = context.getResources();
         Locale locale = getLocaleByLanguage(language);
         LogOut.d("llw", "updateResources中的locale:" + locale.toString());
@@ -96,11 +127,11 @@ public class MultiLanguageUtil {
         Configuration configuration = resources.getConfiguration();
         configuration.setLocale(locale);
         configuration.setLocales(new LocaleList(locale));
-        return context.createConfigurationContext(configuration);
+        return context.createConfigurationContext(configuration);*/
     }
 
     public static Locale getLocaleByLanguage(Locale language) {
-        LogOut.d("llw", "application中的语言类型:" + language.toString());
+        LogOut.d("llw", "getLocaleByLanguage中的语言类型:" + language.toString());
         if (language == Locale.ENGLISH || language == Locale.TRADITIONAL_CHINESE || language == Locale.SIMPLIFIED_CHINESE) {
             return language;
         } else {
@@ -126,7 +157,7 @@ public class MultiLanguageUtil {
         Locale targetLocale = getLanguageLocale();
         LogOut.d("llw", "設置系統語言類型：" + targetLocale.toString());
         Configuration configuration = mContext.getResources().getConfiguration();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             configuration.setLocale(targetLocale);
             configuration.setLocales(new LocaleList(targetLocale));
         } else {
