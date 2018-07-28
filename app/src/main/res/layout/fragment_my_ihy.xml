@@ -70,10 +70,8 @@
             android:layout_height="@dimen/w66"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical|right"
             android:layout_marginLeft="@dimen/w550"
             android:layout_marginRight="@dimen/w80"
-            android:layout_toRightOf="@id/tv_person_info"
             android:src="@mipmap/icon_right_arrow"/>
     </RelativeLayout>
 

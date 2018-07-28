@@ -22,14 +22,11 @@ import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StatusBarUtil;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
-import com.ihypnus.multilanguage.MultiLanguageUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.Locale;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -328,8 +325,14 @@ public abstract class BaseActivity extends Activity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(BaseFactory.UpdateLanguageEvent event) {
         LogOut.d("llw", "baseActivity页面更新了语言");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            recreate();
+            ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
+        } else {
+            ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
+        }
 //        recreate();
-        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
+
 //        ViewUtils.updateViewLanguage(findViewById(android.R.id.content));
     }
 
@@ -338,14 +341,14 @@ public abstract class BaseActivity extends Activity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(MultiLanguageUtil.attachBaseContext(newBase, getAppLanguage(newBase)));
-    }
-
-    private Locale getAppLanguage(Context context) {
-        MultiLanguageUtil.init(context);
-        return MultiLanguageUtil.getInstance().getLanguageLocale();
-    }
+//
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        super.attachBaseContext(MultiLanguageUtil.attachBaseContext(newBase, getAppLanguage(newBase)));
+//    }
+//
+//    private Locale getAppLanguage(Context context) {
+//        MultiLanguageUtil.init(context);
+//        return MultiLanguageUtil.getInstance().getLanguageLocale();
+//    }
 }
