@@ -56,8 +56,8 @@
                 style="@style/TextAppearanceMedium"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/h30"
-                android:textSize="@dimen/w38"
-                android:text="@string/tv_sleep_score"/>
+                android:text="@string/tv_sleep_score"
+                android:textSize="@dimen/w38"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -135,10 +135,42 @@
             <com.ihypnus.widget.AppTextView
                 style="@style/TextAppearanceMedium"
                 android:layout_gravity="center"
-                android:textSize="@dimen/w38"
                 android:layout_marginBottom="@dimen/h30"
                 android:layout_marginTop="@dimen/h30"
-                android:text="@string/tv_text_use_time"/>
+                android:text="@string/tv_chart_use_long"
+                android:textSize="@dimen/w38"/>
+            <LinearLayout
+                android:id="@+id/layout_chart2_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/h20"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="@dimen/w30"
+                    android:layout_height="@dimen/w30"
+                    android:background="@drawable/circle_orange"
+                />
+                <com.ihypnus.widget.AppTextView
+                    style="@style/TextAppearanceMedium"
+                    android:layout_marginLeft="@dimen/w10"
+                    android:text="@string/tv_less_than_4h"
+                    android:textColor="@color/gray_white"
+                    android:textSize="@dimen/w38"/>
+                <com.ihypnus.widget.AppTextView
+                    android:layout_width="@dimen/w30"
+                    android:layout_height="@dimen/w30"
+                    android:layout_marginLeft="@dimen/w20"
+                    android:background="@drawable/circle_light_blue_chart"/>
+                <com.ihypnus.widget.AppTextView
+                    style="@style/TextAppearanceMedium"
+                    android:layout_marginLeft="@dimen/w10"
+                    android:text="@string/tv_more_than_4h"
+                    android:textColor="@color/gray_white"
+                    android:textSize="@dimen/w38"/>
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

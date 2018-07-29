@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.VelocityTracker;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.FrameLayout;
 import android.widget.Scroller;
 
 /**
@@ -19,7 +18,7 @@ import android.widget.Scroller;
  * @description 顶层可滑动的View
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class RootViewGroup extends FrameLayout {
+public class RootViewGroup extends com.zhy.autolayout.AutoFrameLayout {
 
     private Context mContext;
 

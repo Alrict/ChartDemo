@@ -1,61 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@mipmap/img_background">
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="match_parent"
+                                       android:background="@mipmap/img_background">
     <!--登入标题栏-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/layout_input"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h182"
+        android:layout_height="182px"
         android:clipToPadding="true"
-        android:fitsSystemWindows="true"
-    >
+        android:fitsSystemWindows="true">
 
         <TextView
             android:id="@+id/tv_title"
             style="@style/TextAppearanceMedium"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="@string/tv_login"/>
+            android:text="@string/tv_login"
+            android:textSize="54px"/>
         <View
             android:id="@+id/line"
-            style="@style/DividerLineHor"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
             android:layout_below="@id/tv_title"
-            android:layout_marginTop="@dimen/h40"
-            android:background="@color/main_color_blue"/>
+            android:layout_marginTop="39px"
+            android:background="@color/def_line_color"/>
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
     <!--logo区域-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/layout_logo"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h458"
+        android:layout_height="459px"
         android:layout_below="@id/layout_input">
         <ImageView
-            android:layout_width="@dimen/w418"
-            android:layout_height="@dimen/w418"
+            android:layout_width="418px"
+            android:layout_height="357px"
             android:layout_centerInParent="true"
             android:src="@mipmap/ic_logo"/>
 
         <View
             style="@style/CommentDividingLineNoPadding"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="@dimen/w86"
-            android:layout_marginRight="@dimen/w86"
+            android:layout_marginLeft="87px"
+            android:layout_marginRight="87px"
         />
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
     <!--帐号-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/layout_user"
         style="@style/CommentRelativeLayout"
         android:layout_below="@id/layout_logo">
 
 
-        <LinearLayout
+        <com.zhy.autolayout.AutoLinearLayout
             android:id="@+id/liner_account_edit2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,24 +73,24 @@
                 android:id="@+id/tv_local_code"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/w38"
+                android:layout_marginLeft="54px"
                 android:gravity="center"
                 android:text="+86"
                 android:textColor="@color/main_color_blue"
-                android:textSize="@dimen/w44"/>
+                android:textSize="44px"/>
 
             <ImageView
                 android:id="@+id/iv_down_arrow"
                 android:layout_width="@dimen/w26"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/w20"
+                android:layout_marginLeft="20px"
                 android:src="@mipmap/ic_down_arrow"/>
 
             <View
                 android:layout_width="@dimen/h2"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/h20"
+                android:layout_margin="28px"
                 android:background="@color/text_hint"/>
 
             <EditText
@@ -98,7 +99,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="4"
+                android:layout_weight="1"
                 android:background="@null"
                 android:hint="@string/tv_input_account"
                 android:inputType="number"
@@ -108,24 +109,24 @@
 
             <ImageView
                 android:id="@+id/img_login_account_clear2"
-                android:layout_width="@dimen/h56"
-                android:layout_height="@dimen/h56"
+                android:layout_width="56px"
+                android:layout_height="56px"
                 android:layout_gravity="center_vertical"
-                android:padding="@dimen/w8"
+                android:padding="8px"
                 android:src="@mipmap/icon_delete"
                 android:visibility="invisible"/>
 
-        </LinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
 
         <View
             style="@style/CommentDividingLineNoPadding"
             android:layout_alignParentBottom="true"/>
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
 
     <!--密码-->
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         android:id="@+id/code_layout"
         style="@style/CommentLinearLayout"
         android:layout_below="@id/layout_user"
@@ -134,9 +135,9 @@
 
         <ImageView
             android:id="@+id/iv_pass_word"
-            android:layout_width="@dimen/w56"
+            android:layout_width="56px"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_pass_word"/>
+            android:src="@mipmap/icon_lock"/>
 
 
         <EditText
@@ -144,7 +145,7 @@
             style="@style/TextAppearanceMedium"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/w56"
+            android:layout_marginLeft="57px"
             android:layout_weight="1"
             android:background="@null"
             android:hint="@string/tv_input_pwd"
@@ -155,8 +156,8 @@
 
         <CheckBox
             android:id="@+id/cb_visible"
-            android:layout_width="@dimen/h76"
-            android:layout_height="@dimen/h76"
+            android:layout_width="76px"
+            android:layout_height="76px"
             android:background="@drawable/password_visible"
             android:button="@null"/>
 
@@ -165,35 +166,35 @@
              android:layout_height="wrap_content"
              android:src="@mipmap/icon_un_see"/>-->
 
-    </LinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
 
 
     <View
         android:id="@+id/line3"
         style="@style/CommentDividingLineWihtPadding"
         android:layout_below="@id/code_layout"
-        android:layout_marginLeft="@dimen/w86"
-        android:layout_marginRight="@dimen/w86"/>
+        android:layout_marginLeft="86px"
+        android:layout_marginRight="86px"/>
 
     <Button
         android:id="@+id/id_login"
         style="@style/CommentButtonStyle"
         android:layout_width="match_parent"
         android:layout_below="@+id/line3"
-        android:layout_marginLeft="@dimen/w86"
-        android:layout_marginRight="@dimen/w86"
-        android:layout_marginTop="@dimen/h194"
+        android:layout_marginLeft="86px"
+        android:layout_marginRight="86px"
+        android:layout_marginTop="197px"
         android:gravity="center"
         android:text="@string/tv_login"
-        android:textSize="@dimen/w54"/>
+        android:textSize="45px"/>
 
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/id_login"
-        android:layout_marginLeft="@dimen/w86"
-        android:layout_marginRight="@dimen/w86"
-        android:layout_marginTop="@dimen/h126"
+        android:layout_marginLeft="86px"
+        android:layout_marginRight="86px"
+        android:layout_marginTop="127px"
         android:gravity="center_vertical">
 
         <TextView
@@ -215,9 +216,9 @@
             android:autoLink="all"
             android:text="@string/tv_forget__pwd"
             android:textColor="@color/white"/>
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/h254"
         android:layout_alignParentBottom="true"
@@ -225,7 +226,7 @@
         android:paddingLeft="@dimen/w86"
         android:paddingRight="@dimen/w86"
         android:visibility="invisible">
-        <LinearLayout
+        <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -247,10 +248,10 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/w40"
                 android:background="#3082D6"/>
-        </LinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
 
         <!--其他登入方式-->
-        <LinearLayout
+        <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/h214"
             android:layout_marginLeft="@dimen/w86"
@@ -258,7 +259,7 @@
             android:visibility="invisible">
 
 
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -269,9 +270,9 @@
                     android:layout_width="@dimen/w96"
                     android:layout_height="@dimen/w96"
                     android:src="@mipmap/icon_wechart"/>
-            </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
 
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -284,9 +285,9 @@
                     android:layout_height="@dimen/w96"
                     android:layout_gravity="right"
                     android:src="@mipmap/icon_qq"/>
-            </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
 
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
@@ -298,11 +299,11 @@
                     android:layout_width="@dimen/w96"
                     android:layout_height="@dimen/w96"
                     android:src="@mipmap/icon_ellipsis"/>
-            </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
 
-        </LinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
 
 
-    </LinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
 
-</RelativeLayout>
+</com.zhy.autolayout.AutoRelativeLayout>

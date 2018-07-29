@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.widget.FrameLayout;
 
 /**
  * @version V1.0
@@ -16,7 +15,7 @@ import android.widget.FrameLayout;
  * @description
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class ContentView extends FrameLayout {
+public class ContentView extends com.zhy.autolayout.AutoFrameLayout {
 
     /**
      * 是否向下面分发事件 true 分发

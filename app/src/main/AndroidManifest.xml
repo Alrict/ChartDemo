@@ -82,8 +82,8 @@
         </provider>
 
         <!--适配标准-->
-        <!--<meta-data android:name="design_width" android:value="1080"/>-->
-        <!--<meta-data android:name="design_height" android:value="1920"/>-->
+        <meta-data android:name="design_width" android:value="1080"/>
+        <meta-data android:name="design_height" android:value="1920"/>
 
         <!--友盟统计的通道-->
         <!--<meta-data android:name="UMENG_APPKEY" android:value="5b4d5fa08f4a9d42be000156"/>-->

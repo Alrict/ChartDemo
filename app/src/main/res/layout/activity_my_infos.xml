@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@mipmap/img_background"
                 android:orientation="vertical">
     <!--头部标题-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/layout_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h1"
@@ -17,10 +17,10 @@
             android:layout_height="@dimen/h1"
             android:layout_alignParentBottom="true"
             android:background="@color/main_color_blue"/>
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
     <!--头像-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_photo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h200"
@@ -50,7 +50,7 @@
             android:layout_gravity="center_horizontal"
             android:src="@mipmap/icon_right_arrow"/>
 
-        <FrameLayout
+        <com.zhy.autolayout.AutoFrameLayout
             android:id="@+id/layout_photo"
             android:layout_width="@dimen/w180"
             android:layout_height="@dimen/w180"
@@ -77,13 +77,13 @@
                 android:scaleType="center"
                 android:src="@mipmap/icon_v"/>
 
-        </FrameLayout>
+        </com.zhy.autolayout.AutoFrameLayout>
 
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
     <!--昵称-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h180"
@@ -122,10 +122,10 @@
             android:layout_gravity="center_horizontal"
             android:src="@mipmap/icon_right_arrow"/>
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
     <!--性别-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_gender"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h180"
@@ -164,10 +164,10 @@
             android:layout_gravity="center_horizontal"
             android:src="@mipmap/icon_right_arrow"/>
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
     <!--身高-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_height"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h180"
@@ -206,11 +206,11 @@
             android:layout_gravity="center_horizontal"
             android:src="@mipmap/icon_right_arrow"/>
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
 
     <!--体重-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_body_weight"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h180"
@@ -249,6 +249,6 @@
             android:layout_gravity="center_horizontal"
             android:src="@mipmap/icon_right_arrow"/>
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
-</RelativeLayout>
+</com.zhy.autolayout.AutoRelativeLayout>

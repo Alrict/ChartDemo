@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@mipmap/img_background"
                 android:orientation="vertical">
     <!--头部标题-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/layout_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h1"
@@ -17,7 +17,7 @@
             android:layout_height="@dimen/h1"
             android:layout_alignParentBottom="true"
             android:background="@color/main_color_blue"/>
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
 
     <TextView
@@ -52,4 +52,4 @@
         android:textSize="@dimen/w54"/>
 
 
-</RelativeLayout>
+</com.zhy.autolayout.AutoRelativeLayout>

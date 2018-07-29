@@ -173,8 +173,8 @@ public class ChartsPage1Controller extends BaseController {
         }
 
         //创建图表
-        mBarChartManager1.showBarChart(mXValues, mYValues1, "睡眠分数", false, type1);
-        mBarChartManager2.showBarChart(mXValues, mYValues2, "使用时长", false, type2);
+        mBarChartManager1.showBarChart(mXValues, mYValues1, "睡眠分数", false, type1,0);
+        mBarChartManager2.showBarChart(mXValues, mYValues2, "使用时长", false, type2,1);
 
     }
 

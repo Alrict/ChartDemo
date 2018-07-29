@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.zhy.autolayout.AutoLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +9,7 @@
     tools:context="com.ihypnus.ihypnuscare.activity.HomeActivity">
 
     <!--头部标题-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/h160"
     >
@@ -46,7 +46,7 @@
             android:layout_height="@dimen/h1"
             android:layout_alignParentBottom="true"
             android:background="@color/main_color_blue"/>
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
     <!--进度条-->
     <com.ihypnus.ihypnuscare.widget.VerticalViewPager
@@ -94,4 +94,4 @@
     </RadioGroup>
 
 
-</LinearLayout>
+</com.zhy.autolayout.AutoLinearLayout>

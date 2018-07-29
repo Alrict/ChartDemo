@@ -107,8 +107,8 @@ public class ChartsPage3Controller extends BaseController {
             mYValues2.add(aDouble);
         }
         //创建多条折线的图表
-        mBarChartManager1.showBarChart(mXValues, mYValues1, "90%吸气压力(厘米水柱)", false, 0);
-        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI(次/小时)", false, 0);
+        mBarChartManager1.showBarChart(mXValues, mYValues1, "90%吸气压力(厘米水柱)", false, 0, 4);
+        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI(次/小时)", false, 0, 5);
     }
 
 

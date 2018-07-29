@@ -159,7 +159,7 @@ public class ChartsPage2Controller extends BaseController {
         }
         //创建图表
         mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "90%压力", type1, averageInp, averageExp);
-        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", false, type2);
+        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", false, type2,3);
     }
 
     public void showErrorView() {

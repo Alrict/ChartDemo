@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.zhy.autolayout.AutoLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -34,7 +34,7 @@
             android:button="@drawable/circle_female_selector"/>
     </RadioGroup>
 
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/h10"
@@ -59,10 +59,10 @@
             android:gravity="left"
             android:paddingLeft="@dimen/w80"
             android:text="@string/tv_female"/>
-    </LinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
 
     <!--昵称-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h160"
@@ -95,10 +95,10 @@
             android:text="ihynus_app"
             android:textSize="@dimen/w38"/>
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
     <!--性别-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_gender"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h160"
@@ -131,10 +131,10 @@
             android:textSize="@dimen/w38"/>
 
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
     <!--身高-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_height"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h160"
@@ -175,11 +175,11 @@
             android:layout_gravity="center_horizontal"
             android:src="@mipmap/icon_right_arrow"/>
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
 
     <!--体重-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_body_weight"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h160"
@@ -220,10 +220,10 @@
             android:layout_gravity="center_horizontal"
             android:src="@mipmap/icon_right_arrow"/>
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
     <!--出生日期-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_date_birth"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h160"
@@ -264,7 +264,7 @@
             android:layout_gravity="center_horizontal"
             android:src="@mipmap/icon_right_arrow"/>
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
     <Button
         android:id="@+id/btn_ok"
@@ -292,4 +292,4 @@
         android:gravity="center"
         android:text="@string/tv_infos_tip2"
         android:textSize="@dimen/w34"/>
-</LinearLayout>
+</com.zhy.autolayout.AutoLinearLayout>

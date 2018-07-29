@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@mipmap/img_background"
@@ -22,7 +22,7 @@
         android:background="@color/main_color_blue"/>
 
 
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         android:id="@+id/layout_input"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h180"
@@ -47,7 +47,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/w96"
             android:src="@mipmap/icon_scan"/>
-    </LinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -72,4 +72,4 @@
         android:textSize="@dimen/w54"/>
 
 
-</RelativeLayout>
+</com.zhy.autolayout.AutoRelativeLayout>

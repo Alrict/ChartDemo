@@ -4,17 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/img_background">
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <LinearLayout
+        <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/h50"
             android:orientation="horizontal">
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -32,9 +32,9 @@
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
                     android:text=""/>
-            </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
 
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/w80"
@@ -53,16 +53,16 @@
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
                     android:text=""/>
-            </LinearLayout>
-        </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
 
-        <LinearLayout
+        <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/w50"
             android:layout_marginRight="@dimen/w50"
             android:orientation="horizontal">
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/layout_content03"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -82,9 +82,9 @@
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
                     android:text=""/>
-            </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
 
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/layout_content04"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -104,17 +104,17 @@
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
                     android:text=""/>
-            </LinearLayout>
-        </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
 
-        <LinearLayout
+        <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/w50"
             android:layout_marginRight="@dimen/w50"
             android:layout_marginTop="@dimen/h50"
             android:orientation="horizontal">
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/layout_content13"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -134,9 +134,9 @@
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
                     android:text=""/>
-            </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
 
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/layout_content14"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -156,8 +156,8 @@
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
                     android:text=""/>
-            </LinearLayout>
-        </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
 
         <TextView
             style="@style/TextAppearanceMedium"
@@ -173,14 +173,14 @@
             android:layout_marginRight="@dimen/w50"
             android:layout_marginTop="@dimen/h20"/>
 
-        <LinearLayout
+        <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/w50"
             android:layout_marginRight="@dimen/w50"
             android:layout_marginTop="@dimen/h20"
             android:orientation="horizontal">
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -201,9 +201,9 @@
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
                     android:text=""/>
-            </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
 
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/w80"
@@ -224,17 +224,17 @@
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
                     android:text=""/>
-            </LinearLayout>
-        </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
 
-        <LinearLayout
+        <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/w50"
             android:layout_marginRight="@dimen/w50"
             android:layout_marginTop="@dimen/h20"
             android:orientation="horizontal">
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -255,9 +255,9 @@
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
                     android:text=""/>
-            </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
 
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/w80"
@@ -278,17 +278,17 @@
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
                     android:text=""/>
-            </LinearLayout>
-        </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
 
-        <LinearLayout
+        <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/w50"
             android:layout_marginRight="@dimen/w50"
             android:layout_marginTop="@dimen/h20"
             android:orientation="horizontal">
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/layout_content09"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -310,9 +310,9 @@
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
                     android:text=""/>
-            </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
 
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/layout_content10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -334,18 +334,18 @@
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
                     android:text=""/>
-            </LinearLayout>
-        </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
 
 
-        <LinearLayout
+        <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/w50"
             android:layout_marginRight="@dimen/w50"
             android:layout_marginTop="@dimen/h20"
             android:orientation="horizontal">
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/layout_content11"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -367,9 +367,9 @@
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
                     android:text=""/>
-            </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
 
-            <LinearLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/layout_content12"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -390,8 +390,8 @@
                     android:gravity="center"
                     android:paddingRight="@dimen/w50"
                     android:text=""/>
-            </LinearLayout>
-        </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
 
         <Button
             android:id="@+id/btn_cancel"
@@ -415,5 +415,5 @@
             android:gravity="center"
             android:text="@string/ok"
             android:textSize="@dimen/w54"/>
-    </LinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
 </ScrollView>

@@ -43,7 +43,7 @@
     <!-- 日历控件 -->
     <string name="sans_serif" translatable="false">sans-serif</string>
     <!--同意条款-->
-    <string name="use_protocol">同意iHypnusCare使用条款</string>
+    <string name="use_protocol">iHypnusCare使用条款</string>
     <string name="tv_infos_tip1">为了睡眠报告更准确,请确保所填信息真实有效</string>
     <string name="tv_infos_tip2">我们会保障您的信息安全,请放心填写</string>
     <string name="tv_man">男</string>
@@ -191,7 +191,7 @@
     <string name="rb_report">报告</string>
     <string name="rb_my_ihy">我的</string>
     <string name="tv_loading_login">正在登入...</string>
-    <string name="tv_input_account">请输入账号</string>
+    <string name="tv_input_account">请输入手机号码</string>
     <string name="tv_input_pwd">请输入密码</string>
     <string name="tv_login">登录</string>
     <string name="tv_regist">立即注册？</string>
@@ -315,5 +315,10 @@
     <string name="tv_title_data_select">日期选择</string>
     <string name="btn_take_photo">相机拍照</string>
     <string name="btn_select_photo">相册选择</string>
+    <string name="tv_agree">同意</string>
+    <string name="tv_had_account">有账号?去登录</string>
+    <string name="tv_less_than_4h">少于4小时</string>
+    <string name="tv_more_than_4h">不少于4小时</string>
+    <string name="tv_chart_use_long">使用时长(小时)</string>
 
 </resources>

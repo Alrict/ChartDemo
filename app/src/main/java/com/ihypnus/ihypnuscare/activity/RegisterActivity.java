@@ -2,6 +2,7 @@ package com.ihypnus.ihypnuscare.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -135,7 +136,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         LinearInterpolator lin = new LinearInterpolator();
         mCodeLoadingAnim.setInterpolator(lin);
         mProtocol = getResources().getString(R.string.use_protocol);
-        mSpannableString = SpannableStringUtil.addForeColorSpan(mProtocol, 2, mProtocol.length(), R.color.main_color_blue);
+        mSpannableString = SpannableStringUtil.addForeColorSpan(mProtocol, 0, mProtocol.length(), Color.parseColor("#0F84C0"));
 
     }
 

@@ -37,7 +37,7 @@
     </style>
 
     <style name="TextAppearanceMedium" parent="TextTheme">
-        <item name="android:textSize">@dimen/w46</item>
+        <item name="android:textSize">45px</item>
     </style>
 
 
@@ -48,7 +48,7 @@
     <!--分割线-->
     <style name="DividerLineHor">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/h1</item>
+        <item name="android:layout_height">1px</item>
         <item name="android:background">@color/def_line_color</item>
     </style>
 
@@ -137,38 +137,38 @@
 
     <style name="CommentLinearLayout">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/h140</item>
-        <item name="android:paddingLeft">@dimen/w86</item>
-        <item name="android:paddingRight">@dimen/w86</item>
+        <item name="android:layout_height">139px</item>
+        <item name="android:paddingLeft">87px</item>
+        <item name="android:paddingRight">87px</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:orientation">horizontal</item>
     </style>
 
     <style name="CommentRelativeLayout">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/h140</item>
-        <item name="android:paddingLeft">@dimen/w86</item>
-        <item name="android:paddingRight">@dimen/w86</item>
+        <item name="android:layout_height">139px</item>
+        <item name="android:paddingLeft">87px</item>
+        <item name="android:paddingRight">87px</item>
     </style>
 
     <style name="CommentDividingLineWihtPadding">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/h1</item>
-        <item name="android:paddingLeft">@dimen/w86</item>
-        <item name="android:background">#2c76b3</item>
-        <item name="android:paddingRight">@dimen/w86</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:paddingLeft">86px</item>
+        <item name="android:background">@color/def_line_color</item>
+        <item name="android:paddingRight">86px</item>
     </style>
 
     <style name="CommentDividingLineNoPadding">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:background">#2c76b3</item>
-        <item name="android:layout_height">@dimen/h1</item>
+        <item name="android:background">@color/def_line_color</item>
+        <item name="android:layout_height">1px</item>
     </style>
 
 
     <style name="CommentLinearLayoutDialogStyle">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/h140</item>
+        <item name="android:layout_height">140px</item>
         <item name="android:background">@color/white</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:orientation">horizontal</item>
@@ -187,21 +187,21 @@
 
 
     <style name="ActionBarContentText" parent="TextTheme">
-        <item name="android:textSize">@dimen/w44</item>
+        <item name="android:textSize">44px</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:singleLine">true</item>
         <item name="android:gravity">center</item>
     </style>
     <!--页面标题文本样式-->
     <style name="ActionBarTitleText" parent="TextTheme">
-        <item name="android:textSize">@dimen/w54</item>
+        <item name="android:textSize">54px</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:gravity">center</item>
     </style>
     <!--页面小号标题样式-->
     <style name="ActionBarTitleText2" parent="TextTheme">
-        <item name="android:textSize">@dimen/w48</item>
+        <item name="android:textSize">48px</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:gravity">center</item>
     </style>

@@ -41,7 +41,6 @@ import android.view.MotionEvent;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.utils.LogOut;
@@ -55,7 +54,7 @@ import com.kye.smart.multi_image_selector_library.callback.OnRippleCompleteListe
  * @author Chutaux Robin
  * @version 2015.0512
  */
-public class LinearRippleView extends LinearLayout {
+public class LinearRippleView extends com.zhy.autolayout.AutoLinearLayout {
 
     private static final String TAG = "LinearRippleView";
     private static final int TOUCH = 1;

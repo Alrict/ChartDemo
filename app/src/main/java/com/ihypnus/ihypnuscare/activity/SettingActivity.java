@@ -81,9 +81,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.layout_about:
                 jumpToActivity(AboutCompanyInfosActivity.class, 0);
                 break;
+
             case R.id.layout_change_pwd:
                 jumpToActivity(ChanedPassWordActivity.class, 0);
                 break;
+
             case R.id.btn_login_out:
                 BaseDialogHelper.showNormalDialog(SettingActivity.this, getResources().getString(R.string.tip_msg), getString(R.string.tv_exit_current_account), getString(R.string.ok), getString(R.string.cancel), new DialogListener() {
                     @Override

@@ -5,7 +5,7 @@
     android:focusable="true"
     android:orientation="horizontal">
 
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -20,7 +20,7 @@
             android:id="@+id/base_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </LinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
     <View
         android:id="@+id/shadow_view"
         android:layout_width="match_parent"

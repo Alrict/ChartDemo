@@ -175,7 +175,7 @@ public class BarChartManager {
      * @param yAxisValues
      * @param label
      */
-    public void showBarChart(List<Float> xAxisValues, List<Float> yAxisValues, String label, boolean showLegend, int type) {
+    public void showBarChart(List<Float> xAxisValues, List<Float> yAxisValues, String label, boolean showLegend, int type, int modelType) {
         initBarChart(showLegend, type);
         ArrayList<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < xAxisValues.size(); i++) {
@@ -189,13 +189,35 @@ public class BarChartManager {
         ArrayList<Integer> colors = new ArrayList();
         for (int i = 0; i < yAxisValues.size(); i++) {
             Float aFloat = yAxisValues.get(i);
-            if (aFloat >= 80) {
-                colors.add(Color.parseColor("#85c226"));
-            } else if (aFloat >= 60) {
-                colors.add(Color.parseColor("#e67817"));
-            } else {
-                colors.add(Color.parseColor("#e67817"));
+            switch (modelType) {
+                case 0:
+                    //睡眠分数
+                    if (aFloat >= 80) {
+                        colors.add(Color.parseColor("#85c226"));
+                    } else if (aFloat >= 60) {
+                        colors.add(Color.parseColor("#e67817"));
+                    } else {
+                        colors.add(Color.parseColor("#e67817"));
+                    }
+                    break;
+
+                case 1:
+                    //使用时长
+                    if (aFloat >= 4) {
+                        colors.add(Color.parseColor("#3bb3c3"));
+                    } else {
+                        colors.add(Color.parseColor("#e67817"));
+                    }
+                    break;
+                case 3:
+                    //AHI
+                    colors.add(Color.parseColor("#85c226"));
+                    break;
+                default:
+                    colors.add(Color.parseColor("#85c226"));
+                    break;
             }
+
         }
         barDataSet.setColors(colors);
         // Y轴更多属性

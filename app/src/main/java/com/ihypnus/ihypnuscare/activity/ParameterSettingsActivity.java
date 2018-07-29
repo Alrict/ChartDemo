@@ -346,7 +346,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mLayoutContent13.setVisibility(View.INVISIBLE);
 //                mTvTitle13.setText(R.string.tv_zxylzc);
 //                mTvValue13.setText(initTextView(deviceBean.getDefind_1() + ""));
-//                mLayoutContent14.setVisibility(View.INVISIBLE);
+                mLayoutContent14.setVisibility(View.INVISIBLE);
 
                 //起始压力
                 mTvTitle05.setText(R.string.tv_text_qsyl);

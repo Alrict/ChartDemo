@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.zhy.autolayout.AutoRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +10,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/h280"
         android:src="@mipmap/ic_logo"/>
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="V1.1.0"/>
-    </LinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
 
     <TextView
         style="@style/TextAppearanceMedium"
@@ -36,4 +36,4 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/h50"
         android:text="@string/tv_company_name"/>
-</RelativeLayout>
+</com.zhy.autolayout.AutoRelativeLayout>

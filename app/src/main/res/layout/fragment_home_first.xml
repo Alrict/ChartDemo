@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/room_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@mipmap/img_background">
-    <RelativeLayout
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                       xmlns:app="http://schemas.android.com/apk/res-auto"
+                                       android:id="@+id/room_view"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="match_parent"
+                                       android:background="@mipmap/img_background">
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/layout_data"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h150"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="45px"
+        android:layout_marginTop="45px"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/w54"
-        android:paddingRight="@dimen/w54">
+        android:paddingLeft="53px"
+        android:paddingRight="53px">
         <ImageView
             android:id="@+id/iv_last_week"
-            android:layout_width="@dimen/w54"
-            android:layout_height="@dimen/w54"
+            android:layout_width="66px"
+            android:layout_height="66px"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_page_last"/>
@@ -26,15 +28,15 @@
             android:layout_centerInParent="true"
             android:text="五月二十八"
             android:textColor="@color/white"
-            android:textSize="@dimen/w54"/>
+            android:textSize="50px"/>
         <ImageView
             android:id="@+id/iv_next_week"
-            android:layout_width="@dimen/w54"
-            android:layout_height="@dimen/w54"
+            android:layout_width="66px"
+            android:layout_height="66px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_page_next"/>
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
 
     <com.ihypnus.ihypnuscare.widget.CircleProgressBarView
@@ -44,19 +46,19 @@
         android:layout_below="@id/layout_data"
         app:bottomTextColor="#00ff00"
         app:circularRingBgColor="#383c55"
-        app:innerRadius="@dimen/w200"
-        app:middleRightTextSize="@dimen/w40"
+        app:innerRadius="250px"
+        app:middleRightTextSize="50px"
         app:middleTextColor="@color/tangerine"
-        app:middleTextSize="@dimen/w100"
-        app:outterRadius="@dimen/w270"
-        app:progressDefaultWidth="@dimen/w30"
-        app:progressWidth="@dimen/w34"
+        app:middleTextSize="150px"
+        app:outterRadius="320px"
+        app:progressDefaultWidth="30px"
+        app:progressWidth="34px"
         app:topText="睡眠分数"
         app:topTextColor="@color/white"
-        app:topTextSize="@dimen/w50"
+        app:topTextSize="50px"
         app:trackBarColor="#236fa1"
-        app:trackBarLength="@dimen/h32"
-        app:trackBarWidth="@dimen/h4"/>
+        app:trackBarLength="32px"
+        app:trackBarWidth="4px"/>
 
     <com.ihypnus.widget.AppTextView
         android:id="@+id/tv_usage_long"
@@ -64,17 +66,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/pb"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="63px"
         android:text="@string/tv_text_use_time"
         android:textColor="#c1bcb9"
-        android:textSize="@dimen/w38"/>
+        android:textSize="38px"/>
 
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         android:id="@+id/layout_useage_long"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="74px"
         android:layout_below="@id/tv_usage_long"
-        android:layout_marginTop="@dimen/h30"
+        android:layout_marginTop="37px"
         android:gravity="center"
         android:orientation="horizontal">
         <TextView
@@ -83,38 +85,38 @@
             android:layout_height="wrap_content"
             android:text="-"
             android:textColor="@color/white"
-            android:textSize="@dimen/h74"/>
+            android:textSize="74px"/>
         <com.ihypnus.widget.AppTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/w10"
-            android:paddingRight="@dimen/w10"
+            android:paddingLeft="10px"
+            android:paddingRight="10px"
             android:text="@string/tv_time_hours"
-            android:textColor="@color/white"
-            android:textSize="@dimen/w36"/>
+            android:textColor="#c1bcb9"
+            android:textSize="36px"/>
         <TextView
             android:id="@+id/tv_minues"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="-"
             android:textColor="@color/white"
-            android:textSize="@dimen/h74"/>
+            android:textSize="74px"/>
         <com.ihypnus.widget.AppTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/w10"
             android:paddingRight="@dimen/w10"
             android:text="@string/tv_time_minute"
-            android:textColor="@color/white"
-            android:textSize="@dimen/w36"/>
-    </LinearLayout>
+            android:textColor="#c1bcb9"
+            android:textSize="36px"/>
+    </com.zhy.autolayout.AutoLinearLayout>
 
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/layout_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_useage_long"
-        android:layout_marginTop="@dimen/h30">
+        android:layout_marginTop="10px">
         <TextView
             android:id="@+id/tv_usage_long_data"
             android:layout_width="wrap_content"
@@ -122,23 +124,24 @@
             android:layout_centerInParent="true"
             android:text="--~--"
             android:textColor="@color/white"
-            android:textSize="@dimen/w54"/>
+            android:textSize="50px"/>
 
         <ImageView
-            android:layout_width="@dimen/w56"
-            android:layout_height="@dimen/w56"
+            android:layout_width="66px"
+            android:layout_height="66px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/w292"
+            android:layout_marginRight="292px"
             android:src="@mipmap/icon_right_arrow"/>
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/layout_useage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_time"
-        android:layout_marginTop="@dimen/h30">
+        android:layout_marginTop="30px"
+        android:gravity="center_vertical">
 
         <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_useage_detail"
@@ -147,131 +150,186 @@
             android:layout_centerHorizontal="true"
             android:text="@string/tv_usage_detail"
             android:textColor="#c1bcb9"
-            android:textSize="@dimen/w38"/>
+            android:textSize="38px"/>
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/h1"
+            android:layout_height="1px"
             android:layout_below="@+id/tv_useage_detail"
-            android:layout_marginTop="@dimen/h15"
+            android:layout_marginTop="10px"
             android:background="@color/main_color_blue"/>
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layout_useage"
-        android:layout_marginTop="@dimen/h30"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
-        <!--设备模式-->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_useage"
+        android:layout_marginTop="20px"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="horizontal">
             <com.ihypnus.widget.AppTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/tv_title_device_model"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/tv_device_model"
                 android:textColor="@color/gray_white"
-                android:textSize="@dimen/w38"/>
-            <TextView
-                android:id="@+id/tv_device_model"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h24"
-                android:gravity="center"
-                android:text="--"
-                android:textColor="@color/gray_white"
-                android:textSize="@dimen/w38"/>
+                android:textSize="38px"/>
 
             <com.ihypnus.widget.AppTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h40"
-                android:gravity="center"
-                android:text="@string/tv_average_leak"
-                android:textColor="@color/gray_white"
-                android:textSize="@dimen/w38"/>
-            <TextView
-                android:id="@+id/tv_average_air_leak"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="--"
-                android:textColor="@color/gray_white"
-                android:textSize="@dimen/w38"/>
-        </LinearLayout>
-
-        <!--吸气压力-->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <com.ihypnus.widget.AppTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/tv_title_nhale_kpa"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/tv_90per_in_breath"
                 android:textColor="@color/gray_white"
-                android:textSize="@dimen/w38"/>
-            <TextView
-                android:id="@+id/tv_nhale_kpa"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h24"
-                android:gravity="center"
-                android:text="--"
-                android:textColor="@color/gray_white"
-                android:textSize="@dimen/w38"/>
+                android:textSize="38px"/>
 
             <com.ihypnus.widget.AppTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h40"
-                android:gravity="center"
-                android:text="@string/tv_text_ahi"
-                android:textColor="@color/gray_white"
-                android:textSize="@dimen/w38"/>
-            <TextView
-                android:id="@+id/tv_ahi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="--"
-                android:textColor="@color/gray_white"
-                android:textSize="@dimen/w38"/>
-        </LinearLayout>
-
-        <!--呼气压力-->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <com.ihypnus.widget.AppTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/tv_title_expiration_kpa"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/tv_text_hqyl"
                 android:textColor="@color/gray_white"
-                android:textSize="@dimen/w38"/>
+                android:textSize="38px"/>
+
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
             <TextView
-                android:id="@+id/tv_expiration_kpa"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_device_model"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/h24"
+                android:layout_marginTop="23px"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:text="--"
                 android:textColor="@color/gray_white"
-                android:textSize="@dimen/w38"/>
+                android:textSize="38px"/>
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/tv_nhale_kpa"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23px"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="--"
+                android:textColor="@color/gray_white"
+                android:textSize="38px"/>
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_expiration_kpa"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23px"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="--"
+                android:textColor="@color/gray_white"
+                android:textSize="38px"/>
 
 
-</RelativeLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="23px"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <com.ihypnus.widget.AppTextView
+                android:id="@+id/tv_title_average_leak"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|bottom"
+                android:text="@string/tv_average_leak"
+                android:textColor="@color/gray_white"
+                android:textSize="38px"/>
+
+            <com.ihypnus.widget.AppTextView
+                android:id="@+id/tv_title_ahi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|bottom"
+                android:text="@string/tv_text_ahi"
+                android:textColor="@color/gray_white"
+                android:textSize="38px"/>
+
+            <com.ihypnus.widget.AppTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|bottom"
+                android:textColor="@color/gray_white"
+                android:textSize="38px"
+                android:visibility="invisible"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="20px"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_average_air_leak"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23px"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|bottom"
+                android:text="--"
+                android:textColor="@color/gray_white"
+                android:textSize="38px"/>
+            <TextView
+                android:id="@+id/tv_ahi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23px"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|bottom"
+                android:text="--"
+                android:textColor="@color/gray_white"
+                android:textSize="38px"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|bottom"
+                android:text="--"
+                android:textColor="@color/gray_white"
+                android:textSize="38px"
+                android:visibility="invisible"/>
+
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.zhy.autolayout.AutoRelativeLayout>

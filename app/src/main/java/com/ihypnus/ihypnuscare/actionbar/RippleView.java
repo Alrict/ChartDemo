@@ -40,14 +40,13 @@ import android.view.MotionEvent;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
-import android.widget.RelativeLayout;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.kye.smart.multi_image_selector_library.callback.OnRippleCompleteListener;
 
 
-public class RippleView extends RelativeLayout {
+public class RippleView extends com.zhy.autolayout.AutoRelativeLayout {
 
     private static final String TAG = "RippleView";
     private int WIDTH;

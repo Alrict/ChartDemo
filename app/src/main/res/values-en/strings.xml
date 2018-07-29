@@ -49,7 +49,7 @@
     </string>
     <string name="socket_err">Connection failed, please try again</string>
     <string name="tv_person_msg">Personal Information</string>
-    <string name="use_protocol">同意&#160;iHypnusCare使用条款</string>
+    <string name="use_protocol">iHypnusCare Terms of Use</string>
     <string name="tv_infos_tip1">For a more accurate sleep report, make sure that the information
         provided is true and valid
     </string>
@@ -70,9 +70,9 @@
     <string name="et_old_password">Please enter the original password</string>
     <string name="parameter_setting">parameter settings</string>
     <string name="tv_iknow">I Know It</string>
-    <string name="tv_protocol_title">iHypnusCare用户服务协议</string>
+    <string name="tv_protocol_title">iHypnusCareUser Services Agreement</string>
     <string name="tv_verson">current version:</string>
-    <string name="tv_company_name">广州和普乐健康科技有限公司版权所有</string>
+    <string name="tv_company_name">Guangzhou and Pule Health Technology Co., Ltd. All rights reserved.</string>
     <string name="add_new_device">Add device</string>
     <string name="hint_input_device_sn">Please sweep the device SN</string>
     <string name="bt_next">Next step</string>
@@ -238,4 +238,9 @@
     <string name="tv_title_data_select">Date selection</string>
     <string name="btn_take_photo">Camera photo</string>
     <string name="btn_select_photo">Album selection</string>
+    <string name="tv_agree">Agree</string>
+    <string name="tv_had_account">Have an account? Go to login</string>
+    <string name="tv_less_than_4h">Less than 4 hours</string>
+    <string name="tv_more_than_4h">Not less than 4 hours</string>
+    <string name="tv_chart_use_long">Length of use (hours)</string>
 </resources>
