@@ -157,10 +157,13 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     protected void loadData() {
         Intent intent = getIntent();
         mType = intent.getIntExtra("TYEP", 0);
+        String account = intent.getStringExtra("ACCOUNT");
         PersonMesVO personMsgBean = intent.getParcelableExtra("PERSON_MSG");
-        if (personMsgBean == null && mType == 0) {
-            getInfos();
-        } else {
+        if (personMsgBean == null && mType == 1 && !StringUtils.isNullOrEmpty(account)) {
+            //注册界面 跳转过来的
+            mTvName.setText(account);
+//            getInfos();
+        } else if (personMsgBean != null) {
             bindView(personMsgBean);
         }
     }
@@ -257,12 +260,12 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-//                if (mType == 1) {
-//                    jumpToAddNewDevice();
-//                } else {
-                setResult(RESULT_OK);
-                finish();
-//                }
+                if (mType == 1) {
+                    jumpToHomeActivity();
+                } else {
+                    setResult(RESULT_OK);
+                    finish();
+                }
             }
 
             @Override
@@ -274,10 +277,10 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     }
 
     /**
-     * 跳转至添加新设备页面
+     * 跳转至报告页面
      */
-    private void jumpToAddNewDevice() {
-        Intent intent = new Intent(this, AddNwedeviceActivity.class);
+    private void jumpToHomeActivity() {
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 

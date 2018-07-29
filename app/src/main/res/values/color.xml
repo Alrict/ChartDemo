@@ -107,7 +107,7 @@
     <color name="viewfinder_mask">#60000000</color>
 
     //分割线颜色
-    <color name="main_color_blue">#2c76b3</color>
+    <color name="main_color_blue">#253A5B</color>
     <color name="text_blue">#037EBF</color>
 
     <color name="red_normal">#FF0000</color>

@@ -155,8 +155,8 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_below="@+id/tv_useage_detail"
-            android:layout_marginTop="10px"
-            android:background="@color/main_color_blue"/>
+            android:layout_marginTop="20px"
+            android:background="@color/def_line_color"/>
 
     </com.zhy.autolayout.AutoRelativeLayout>
 
@@ -255,7 +255,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="23px"
+            android:layout_marginTop="10px"
             android:layout_weight="1"
             android:orientation="horizontal">
             <com.ihypnus.widget.AppTextView

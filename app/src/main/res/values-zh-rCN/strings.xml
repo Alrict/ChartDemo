@@ -320,4 +320,5 @@
     <string name="tv_less_than_4h">少于4小时</string>
     <string name="tv_more_than_4h">不少于4小时</string>
     <string name="tv_chart_use_long">使用时长(小时)</string>
+    <string name="tv_90_zlyl">90%治疗压力</string>
 </resources>

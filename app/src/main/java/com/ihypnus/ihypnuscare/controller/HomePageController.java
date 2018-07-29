@@ -64,6 +64,9 @@ public class HomePageController extends BaseController implements View.OnClickLi
     private TextView mTvAhi;
     private List<UsageInfos.UsetimesBean> mUsetimes;
     private ChangeDateListener mChangeDateListener;
+    private AppTextView mTvTitleExpirationKpa;
+    private AppTextView mTvTitleNhaleKpa;
+    private int mMode;
 
     public HomePageController(Context context) {
         super(context);
@@ -100,8 +103,11 @@ public class HomePageController extends BaseController implements View.OnClickLi
         mTvDeviceModel = (TextView) rootView.findViewById(R.id.tv_device_model);
 
         //90%吸气压力
+        mTvTitleNhaleKpa = (AppTextView) rootView.findViewById(R.id.tv_title_nhale_kpa);
         mTvNhaleKpa = (TextView) rootView.findViewById(R.id.tv_nhale_kpa);
+
         //呼气压力
+        mTvTitleExpirationKpa = (AppTextView) rootView.findViewById(R.id.tv_title_expiration_kpa);
         mTvExpirationKpa = (TextView) rootView.findViewById(R.id.tv_expiration_kpa);
         //平均漏气
         mTvAverageAirLeak = (TextView) rootView.findViewById(R.id.tv_average_air_leak);
@@ -189,7 +195,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
                         if (BaseType.OK == baseType) {
                             //重新获取默认设备
                             getDefaultDeviceInfos();
-                        } else if (BaseType.NO == baseType){
+                        } else if (BaseType.NO == baseType) {
                             EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(HomeActivity.class));
                         }
 
@@ -322,11 +328,12 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
             UsageInfos.UseParamsBean useParams = usageInfos.getUseParams();
             if (useParams != null) {
-                int mode = useParams.getMode();
-                String modeName = getModelName(mode);
+                mMode = useParams.getMode();
+                String modeName = getModelName(mMode);
                 //设备模式
                 mTvDeviceModel.setText(modeName);
             }
+
 
             String nHaleKpa;
             String expirationKpa;
@@ -343,7 +350,23 @@ public class HomePageController extends BaseController implements View.OnClickLi
             }
             mTvNhaleKpa.setText(nHaleKpa);
             mTvExpirationKpa.setText(expirationKpa);
-
+            if (mMode <= 1) {
+                // TODO: 2018/7/29  治疗压力 取哪个字段?
+                //CAPA/APAP模式 将90%吸气压力改为治疗压力  呼气压力隐藏
+                //90%吸气压力 改为治疗压力
+                mTvTitleNhaleKpa.setText(mContext.getString(R.string.tv_90_zlyl));
+                mTvNhaleKpa.setText(nHaleKpa);
+                //呼气压力
+                mTvTitleExpirationKpa.setVisibility(View.INVISIBLE);
+                mTvExpirationKpa.setVisibility(View.INVISIBLE);
+            } else {
+                //90%吸气压力
+                mTvTitleNhaleKpa.setText(R.string.tv_90per_in_breath);
+                mTvNhaleKpa.setText(nHaleKpa);
+                //呼气压力
+                mTvTitleExpirationKpa.setVisibility(View.VISIBLE);
+                mTvExpirationKpa.setVisibility(View.VISIBLE);
+            }
             UsageInfos.LeakBean leak = usageInfos.getLeak();
             if (leak != null) {
                 averageLeakVolume = leak.getAverageLeakVolume() + "L/min";

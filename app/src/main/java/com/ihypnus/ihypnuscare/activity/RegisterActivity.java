@@ -26,9 +26,11 @@ import android.widget.TextView;
 
 import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.bean.UserInfo;
+import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.dialog.IhyBaseDialog;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
@@ -38,6 +40,9 @@ import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.ihypnus.ihypnuscare.widget.SpannableStringUtil;
 import com.ihypnus.zxing.android.CaptureActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
@@ -287,17 +292,33 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void registerAppByNet() {
         BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.onloading));
-        UserInfo userInfo = new UserInfo(mEtCount.getText().toString().trim(), mEtPassWord.getText().toString().trim());
+        final String account = mEtCount.getText().toString().trim();
+        String password = mEtPassWord.getText().toString().trim();
+        UserInfo userInfo = new UserInfo(account, password);
+        String vertifyCode = mEtVcerificationCode.getText().toString().trim();
         String deviceId = mEtDeviceCode.getText().toString().trim();
 
-        IhyRequest.registerApp(userInfo, deviceId, new ResponseCallback() {
+        IhyRequest.registerApp(userInfo, vertifyCode, deviceId, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
                 ToastUtils.showToastDefault(RegisterActivity.this, var3);
-                //注册成功之后跳转至登录页面
-                finish();
-//                jumpToPersonMsg();
+                String s2 = String.valueOf(var1);
+                try {
+                    JSONObject jsonObject = new JSONObject(s2);
+                    String jsessionid = jsonObject.getString("JSESSIONID");
+                    if (StringUtils.isNullOrEmpty(jsessionid)) {
+                        jsessionid = "";
+                    }
+                    Constants.JSESSIONID = jsessionid;
+                    Volley.me.addInitRequestHead("Cookie", "JSESSIONID=" + jsessionid);
+                    //注册成功之后跳转至登录页面
+                    jumpToPersonMsg(account);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
             }
 
             @Override
@@ -311,10 +332,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     /**
      * 跳转至个人信息页面
      */
-    private void jumpToPersonMsg() {
+    private void jumpToPersonMsg(String account) {
         Intent intent = new Intent(this, PersonalInformationActivity.class);
         intent.putExtra("TYPE", 1);
+        intent.putExtra("ACCOUNT", account);
         startActivity(intent);
+        finish();
     }
 
     /**
@@ -468,11 +491,25 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * @param phoneNo
      */
     private void getVerifyCodeByNet(String phoneNo) {
-
+        Volley.me.removeInitRequestHead("Cookie");
         IhyRequest.getVerifyCode(phoneNo, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 ToastUtils.showToastDefault(var3);
+                String s2 = String.valueOf(var1);
+                try {
+                    JSONObject jsonObject = new JSONObject(s2);
+                    String jsessionid = jsonObject.getString("JSESSIONID");
+                    if (StringUtils.isNullOrEmpty(jsessionid)) {
+                        jsessionid = "";
+                    }
+
+                    Volley.me.addInitRequestHead("Cookie", "JSESSIONID=" + jsessionid);
+                    LogOut.d("llw", "注册页面获取手机验证码jsessionid:" + jsessionid);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 mVertifySuccess = true;
                 mIvCodeLoading.clearAnimation();
                 mBtnVcerificationCode.setVisibility(View.VISIBLE);

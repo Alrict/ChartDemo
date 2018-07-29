@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/h1"
         android:layout_alignParentBottom="true"
-        android:background="@color/main_color_blue"/>
+        android:background="@color/def_line_color"/>
 
     <RadioGroup
         android:id="@+id/rg_gender"
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/h1"
             android:layout_alignParentBottom="true"
-            android:background="@color/main_color_blue"/>
+            android:background="@color/def_line_color"/>
         <TextView
             android:id="@+id/tv_name"
             style="@style/TextAppearanceLarge"
@@ -92,7 +92,6 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:gravity="center_vertical|right"
-            android:text="ihynus_app"
             android:textSize="@dimen/w38"/>
 
     </com.zhy.autolayout.AutoRelativeLayout>
@@ -109,7 +108,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/h1"
             android:layout_alignParentBottom="true"
-            android:background="@color/main_color_blue"/>
+            android:background="@color/def_line_color"/>
         <TextView
             android:id="@+id/tv_gender"
             style="@style/TextAppearanceLarge"
@@ -145,7 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/h1"
             android:layout_alignParentBottom="true"
-            android:background="@color/main_color_blue"/>
+            android:background="@color/def_line_color"/>
         <TextView
             android:id="@+id/tv_height"
             style="@style/TextAppearanceLarge"
@@ -164,7 +163,6 @@
             android:layout_marginRight="@dimen/w60"
             android:layout_toLeftOf="@+id/tv_height_arrow"
             android:gravity="center_vertical|right"
-            android:text="188 cm"
             android:textSize="@dimen/w38"/>
         <ImageView
             android:id="@+id/tv_height_arrow"
@@ -190,7 +188,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/h1"
             android:layout_alignParentBottom="true"
-            android:background="@color/main_color_blue"/>
+            android:background="@color/def_line_color"/>
         <TextView
             android:id="@+id/tv_body_weight"
             style="@style/TextAppearanceLarge"
@@ -209,7 +207,6 @@
             android:layout_marginRight="@dimen/w60"
             android:layout_toLeftOf="@+id/tv_body_weight_arrow"
             android:gravity="center_vertical|right"
-            android:text="56 kg"
             android:textSize="@dimen/w38"/>
         <ImageView
             android:id="@+id/tv_body_weight_arrow"
@@ -234,7 +231,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/h1"
             android:layout_alignParentBottom="true"
-            android:background="@color/main_color_blue"/>
+            android:background="@color/def_line_color"/>
         <TextView
             android:id="@+id/tv_date_birth"
             style="@style/TextAppearanceLarge"
@@ -253,7 +250,6 @@
             android:layout_marginRight="@dimen/w60"
             android:layout_toLeftOf="@+id/iv_date_birth"
             android:gravity="center_vertical|right"
-            android:text="1990-12-05"
             android:textSize="@dimen/w38"/>
         <ImageView
             android:id="@+id/iv_date_birth"

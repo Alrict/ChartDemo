@@ -54,6 +54,12 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
         mIvStatus = (ImageView) findViewById(R.id.iv_status);
         mBtnSetting = (Button) findViewById(R.id.btn_setting);
         mBtnModify = (Button) findViewById(R.id.btn_modify);
+
+        mTvModelType.setVisibility(View.INVISIBLE);
+        mTvVersion.setVisibility(View.INVISIBLE);
+        mTvStatus.setVisibility(View.INVISIBLE);
+        mBtnSetting.setVisibility(View.INVISIBLE);
+        mBtnModify.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -103,6 +109,11 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
+                mTvModelType.setVisibility(View.VISIBLE);
+                mTvVersion.setVisibility(View.VISIBLE);
+                mTvStatus.setVisibility(View.VISIBLE);
+                mBtnSetting.setVisibility(View.VISIBLE);
+
                 DeviceModelVO deviceModelVO = (DeviceModelVO) var1;
                 if (deviceModelVO != null && !StringUtils.isNullOrEmpty(deviceModelVO.getModel())) {
                     String model = deviceModelVO.getModel();

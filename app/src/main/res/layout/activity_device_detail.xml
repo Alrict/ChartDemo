@@ -22,11 +22,12 @@
         <View android:layout_width="@dimen/w2"
               android:layout_height="match_parent"
               android:layout_margin="@dimen/h20"
-              android:background="@color/main_color_blue"/>
+              android:background="@color/def_line_color"/>
         <TextView
             android:id="@+id/tv_model_type"
             style="@style/TextAppearanceMedium"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:visibility="invisible"/>
     </com.zhy.autolayout.AutoLinearLayout>
 
     <View
@@ -45,11 +46,12 @@
         <View android:layout_width="@dimen/w2"
               android:layout_height="match_parent"
               android:layout_margin="@dimen/h20"
-              android:background="@color/main_color_blue"/>
+              android:background="@color/def_line_color"/>
         <TextView
             android:id="@+id/tv_version"
             style="@style/TextAppearanceMedium"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:visibility="invisible"/>
     </com.zhy.autolayout.AutoLinearLayout>
 
     <View
@@ -68,17 +70,19 @@
         <View android:layout_width="@dimen/w2"
               android:layout_height="match_parent"
               android:layout_margin="@dimen/h20"
-              android:background="@color/main_color_blue"/>
+              android:background="@color/def_line_color"/>
         <TextView
             android:id="@+id/tv_status"
             style="@style/TextAppearanceMedium"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:visibility="invisible"/>
         <ImageView
             android:id="@+id/iv_status"
             android:layout_width="@dimen/w56"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/w20"
-            android:src="@mipmap/icon_online"/>
+            android:src="@mipmap/icon_online"
+            android:visibility="invisible"/>
     </com.zhy.autolayout.AutoLinearLayout>
     <View
         style="@style/DividerLineHor"
@@ -94,7 +98,8 @@
         android:layout_marginTop="@dimen/h300"
         android:gravity="center"
         android:text="@string/tv_text_parameter_setting"
-        android:textSize="@dimen/w54"/>
+        android:textSize="@dimen/w54"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/btn_modify"
@@ -105,5 +110,6 @@
         android:layout_marginTop="@dimen/h80"
         android:gravity="center"
         android:text="@string/tv_text_change_wifi"
-        android:textSize="@dimen/w54"/>
+        android:textSize="@dimen/w54"
+        android:visibility="invisible"/>
 </com.zhy.autolayout.AutoLinearLayout>

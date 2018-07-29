@@ -95,6 +95,25 @@ public class IhyRequest {
     }
 
     /**
+     * 注册（新接口）
+     * @param userInfo
+     * @param authCode
+     * @param deviceId
+     * @param callback
+     */
+    public static void registerApp(UserInfo userInfo, String authCode,String deviceId, ResponseCallback callback) {
+        String url = IhyAction.appregister;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("userInfo", userInfo);
+        params.put("authCode", authCode);
+        params.put("deviceId", deviceId);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+//        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
+        NetRequestHelper.getInstance().add(httpRequest, url);
+    }
+
+    /**
      * 注册获取手机验证码
      *
      * @param phone    手机号

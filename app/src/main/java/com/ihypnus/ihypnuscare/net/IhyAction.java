@@ -28,6 +28,10 @@ public class IhyAction {
      */
     public static final String Register = HOST + "hypnusMgr/dmz/user/register";
     /**
+     * 新注册接口
+     */
+    public static final String appregister = HOST + "hypnusMgr/dmz/user/appregister";
+    /**
      * 验证手机号码是否被注册
      */
     public static final String Validationet = HOST + "hypnusMgr/dmz/authCode/appcheck";
