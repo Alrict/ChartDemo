@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.adapter.NumericWheelAdapter;
+import com.contrarywind.view.WheelView;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.CommentAdapter;
 import com.ihypnus.ihypnuscare.adapter.NormalStringAdapter;
@@ -37,7 +40,7 @@ public class BaseDialogHelper {
                                                 String left,
                                                 String right, final DialogListener listener) {
 
-         NormalDialog normalDialog = new NormalDialog(context).setmCannelText(left).setmConfirmText(right).setmTileText(title).setmContent(message);
+        NormalDialog normalDialog = new NormalDialog(context).setmCannelText(left).setmConfirmText(right).setmTileText(title).setmContent(message);
         normalDialog.setNormalDialogListenner(new DialogListener() {
             @Override
             public void onClick(BaseType baseType) {
@@ -221,6 +224,44 @@ public class BaseDialogHelper {
         kyeBaseDialog.setCanceledOnTouchOutside(false);
     }
 
+    public static void showNumberWheelDialog(final Context context, final int min, final int max, final int currentIndex, final String title, final NumberInputListener listener) {
+        IhyBaseDialog kyeBaseDialog = IhyBaseDialog.createKyeBaseDialog(context, R.layout.layout_height_wheel_dialog, new IhyBaseDialog.DialogListener() {
+            @Override
+            public void bindView(View view, final IhyBaseDialog kyeBaseDialog) {
+                TextView tvTitle = (TextView) view.findViewById(R.id.title);
+                final WheelView wv = (WheelView) view.findViewById(R.id.wv);
+                TextView tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
+                TextView tvOk = (TextView) view.findViewById(R.id.tv_ok);
+                tvTitle.setText(title);
+                wv.setTextColorCenter(Color.BLACK);
+                NumericWheelAdapter adapter = new NumericWheelAdapter(min, max);
+                wv.setAdapter(adapter);
+                wv.setCyclic(true);// 可循环滚动
+                wv.setCurrentItem(currentIndex);
+                tvCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        kyeBaseDialog.dismiss();
+                    }
+                });
+
+                tvOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        kyeBaseDialog.dismiss();
+                        if (listener != null) {
+                            listener.onNumberSelectListener(min + wv.getCurrentItem());
+                        }
+                    }
+                });
+
+
+            }
+        });
+        kyeBaseDialog.setCancelable(false);
+        kyeBaseDialog.setCanceledOnTouchOutside(false);
+    }
+
     public static void showInputNameDialog(final Context context, final String mTitle, final NumberInputListener listener) {
         IhyBaseDialog kyeBaseDialog = IhyBaseDialog.createKyeBaseDialog(context, R.layout.layout_input_dialog, new IhyBaseDialog.DialogListener() {
             @Override
@@ -263,6 +304,7 @@ public class BaseDialogHelper {
 
     public interface NumberInputListener {
         void onNumberInputListener(String l);
+        void onNumberSelectListener(int value);
     }
 
     private void setOnNumberInputListener(NumberInputListener listener) {

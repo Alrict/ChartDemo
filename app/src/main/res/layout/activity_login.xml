@@ -76,7 +76,7 @@
                 android:layout_marginLeft="54px"
                 android:gravity="center"
                 android:text="+86"
-                android:textColor="@color/main_color_blue"
+                android:textColor="@color/text_blue"
                 android:textSize="44px"/>
 
             <ImageView

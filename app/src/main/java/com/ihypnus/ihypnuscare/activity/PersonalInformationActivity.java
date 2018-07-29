@@ -57,6 +57,8 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     private String mKg;
     private String mHeight;
     private String mGender = "2";
+    private int mHeigthIndex = 100;
+    private int mWeightIndex = 50;
 
     @Override
     protected int setView() {
@@ -187,24 +189,21 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     public void onClick(View view) {
         if (ViewUtils.isFastDoubleClick()) return;
         switch (view.getId()) {
-//            case R.id.tv_person_name:
-            case R.id.tv_name_arrow:
-                //修改姓名
-                BaseDialogHelper.showInputNameDialog(PersonalInformationActivity.this, getString(R.string.tv_tip_your_name), new BaseDialogHelper.NumberInputListener() {
-                    @Override
-                    public void onNumberInputListener(String l) {
-                        mTvName.setText(l);
-                    }
-                });
-                break;
 
 
             case R.id.tv_person_height:
             case R.id.tv_height_arrow:
                 //修改身高
-                BaseDialogHelper.showInputNumberDialog(PersonalInformationActivity.this, getString(R.string.tv_tip_yout_heigth), getString(R.string.tv_input_your_heigth), new BaseDialogHelper.NumberInputListener() {
+
+                BaseDialogHelper.showNumberWheelDialog(PersonalInformationActivity.this, 50, 250, mHeigthIndex, getString(R.string.tv_tip_yout_heigth), new BaseDialogHelper.NumberInputListener() {
                     @Override
                     public void onNumberInputListener(String l) {
+
+                    }
+
+                    @Override
+                    public void onNumberSelectListener(int l) {
+                        mHeigthIndex = l - 50;
                         mTvPersonHeight.setText(String.format("%s cm", l));
                     }
                 });
@@ -214,9 +213,22 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
             case R.id.tv_person_body_weight:
             case R.id.tv_body_weight_arrow:
                 //修改体重
-                BaseDialogHelper.showInputNumberDialog(PersonalInformationActivity.this, getString(R.string.tv_tip_your_weigth), getString(R.string.tv_input_your_weigth), new BaseDialogHelper.NumberInputListener() {
+//                BaseDialogHelper.showInputNumberDialog(PersonalInformationActivity.this, getString(R.string.tv_tip_your_weigth), getString(R.string.tv_input_your_weigth), new BaseDialogHelper.NumberInputListener() {
+//                    @Override
+//                    public void onNumberInputListener(String l) {
+//                        mTvPersonBodyWeight.setText(String.format("%s kg", l));
+//                    }
+//                });
+
+                BaseDialogHelper.showNumberWheelDialog(PersonalInformationActivity.this, 10, 200, mWeightIndex, getString(R.string.tv_tip_your_weigth), new BaseDialogHelper.NumberInputListener() {
                     @Override
                     public void onNumberInputListener(String l) {
+
+                    }
+
+                    @Override
+                    public void onNumberSelectListener(int l) {
+                        mWeightIndex = l - 10;
                         mTvPersonBodyWeight.setText(String.format("%s kg", l));
                     }
                 });
@@ -309,6 +321,10 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
         if (StringUtils.isNullOrEmpty(weight)) {
             mTvPersonBodyWeight.setText("");
         } else {
+            int i = Integer.parseInt(weight);
+            if (i >= 10) {
+                mWeightIndex = i - 10;
+            }
             mTvPersonBodyWeight.setText(String.format("%s kg", personMesVO.getWeight()));
         }
         String gender = personMesVO.getGender();
@@ -321,6 +337,10 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
         if (StringUtils.isNullOrEmpty(height)) {
             mTvPersonHeight.setText("");
         } else {
+            int i = Integer.parseInt(height);
+            if (i >= 50) {
+                mHeigthIndex = i - 50;
+            }
             mTvPersonHeight.setText(String.format("%s cm", personMesVO.getHeight()));
         }
         mTvPersonDateBirth.setText(personMesVO.getBirthday());
