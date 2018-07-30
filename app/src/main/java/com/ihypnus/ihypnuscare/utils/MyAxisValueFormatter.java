@@ -27,7 +27,7 @@ public class MyAxisValueFormatter implements IAxisValueFormatter {
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
         if (mAverageExp != null && mAverageInp != null) {
-//            LogOut.d("llw", "90%压力柱状图:" + value);
+            if (value == 0) return "";
         }
         if (mType == 7 || mType == 8) {
             //ahi范围

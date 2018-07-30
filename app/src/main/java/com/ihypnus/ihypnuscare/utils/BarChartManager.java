@@ -6,7 +6,6 @@ import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -55,32 +54,31 @@ public class BarChartManager {
         //背景阴影
         mBarChart.setDrawBarShadow(false);
         mBarChart.setHighlightFullBarEnabled(false);
-        //最多显示的柱状图数量
-        mBarChart.setMaxVisibleValueCount(7);
-        //显示边界
-        mBarChart.setDrawBorders(false);
-
-//        mBarChart.animateX(3000, Easing.EasingOption.Linear);
-
-
-        xAxis.setEnabled(true); // 轴线是否可编辑,默认true
-        xAxis.setDrawLabels(true);  // 是否绘制标签,默认true
-        xAxis.setDrawAxisLine(true);    // 是否绘制坐标轴,默认true
-        xAxis.setDrawGridLines(false);   // 是否绘制网格线，默认true
-        xAxis.setTextColor(Color.WHITE);
         //右下角的描述文本
         Description description = new Description();
         description.setText("");
         mBarChart.setDescription(description);
+        //显示边界
+        mBarChart.setDrawBorders(false);
+        //设置动画效果
+        mBarChart.animateY(3000, Easing.EasingOption.Linear);
 
-//        yAxis.setSpaceTop(34);   // 设置最大值到图标顶部的距离占所有数据范围的比例。默认10，y轴独有
-        yAxis.setLabelCount(8, false);
-//        yAxis.setSpaceTop(15f);
-        yAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-        yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);  // 标签绘制位置。默认再坐标轴外面
+        //折线图例 标签 设置
+        Legend legend = mBarChart.getLegend();
+        legend.setEnabled(false);
 
-        rightAxis.setEnabled(false);
 
+        //XY轴的设置
+        //X轴设置显示位置在底部
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);   // 是否绘制网格线，默认true
+        xAxis.setTextColor(Color.WHITE);
+        yAxis.setDrawZeroLine(false);    // 绘制值为0的轴，默认false,其实比较有用的就是在柱形图，当有负数时，显示在0轴以下，其他的图这个可能会看到一些奇葩的效果
+        yAxis.setZeroLineWidth(10);  // 0轴宽度
+        yAxis.setZeroLineColor(Color.WHITE);   // Y坐标轴颜色
+        yAxis.setGridColor(Color.TRANSPARENT);    // 网格线颜色，默认GRAY
+        yAxis.setAxisMinimum(0);
+        yAxis.resetAxisMaximum();
         // 轴颜色
         yAxis.setTextColor(Color.WHITE);  // Y轴标签字体颜色
         yAxis.setTextSize(10);    // 标签字体大小，dp，6-24之间，默认为10dp
@@ -91,22 +89,6 @@ public class BarChartManager {
         // 那么如果x轴有线且有网格线，当刻度拉的正好位置时会覆盖到y轴的轴线，变为X轴网格线颜色，
         // 解决办法是，要么不画轴线，要么就是坐标轴稍微宽点
         xAxis.setAxisLineColor(Color.WHITE);
-        if (averageInp != null && averageExp != null) {
-            yAxis.setValueFormatter(new MyAxisValueFormatter(type, averageInp, averageExp));
-        } else {
-            yAxis.setValueFormatter(new MyAxisValueFormatter(type));
-        }
-
-
-        // X轴更多属性
-//        xAxis.setLabelRotationAngle(90);   // 标签倾斜
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);  // X轴绘制位置，默认是顶部
-
-        yAxis.setDrawZeroLine(false);    // 绘制值为0的轴，默认false,其实比较有用的就是在柱形图，当有负数时，显示在0轴以下，其他的图这个可能会看到一些奇葩的效果
-        yAxis.setZeroLineWidth(10);  // 0轴宽度
-        yAxis.setZeroLineColor(Color.WHITE);   // Y坐标轴颜色
-        yAxis.setAxisMinimum(0);
-        yAxis.resetAxisMaximum();
         if (type == 1) {
             //睡眠分数范围
             yAxis.setAxisMaximum(100);
@@ -120,52 +102,80 @@ public class BarChartManager {
             //ahi范围
             yAxis.setAxisMaximum(40);
         }
+        xAxis.setGranularity(1f);
+        //保证Y轴从0开始，不然会上移一点
+        yAxis.setAxisMinimum(0f);
+        rightAxis.setEnabled(false);
+        if (averageInp != null && averageExp != null) {
+            yAxis.setValueFormatter(new MyAxisValueFormatter(type, averageInp, averageExp));
+        } else {
+            yAxis.setValueFormatter(new MyAxisValueFormatter(type));
+        }
+    }
 
-        //图例 标签 设置
+    /**
+     * 初始化LineChart
+     */
+    private void initLineChart(int type) {
+        //背景颜色
+        mBarChart.setBackgroundColor(Color.TRANSPARENT);
+        //网格
+        mBarChart.setDrawGridBackground(false);
+        //背景阴影
+        mBarChart.setDrawBarShadow(false);
+        mBarChart.setHighlightFullBarEnabled(false);
+        //右下角的描述文本
+        Description description = new Description();
+        description.setText("");
+        mBarChart.setDescription(description);
+        //显示边界
+        mBarChart.setDrawBorders(false);
+        //设置动画效果
+        mBarChart.animateY(3000, Easing.EasingOption.Linear);
+
+        //折线图例 标签 设置
         Legend legend = mBarChart.getLegend();
-        legend.setEnabled(showLegend);    // 是否绘制图例
-        legend.setTextColor(Color.WHITE);    // 图例标签字体颜色，默认BLACK
-        legend.setTextSize(12); // 图例标签字体大小[6,24]dp,默认10dp
-        legend.setTypeface(null);   // 图例标签字体
-        legend.setWordWrapEnabled(false);    // 当图例超出时是否换行适配，这个配置会降低性能，且只有图例在底部时才可以适配。默认false
-        legend.setMaxSizePercent(1f); // 设置，默认0.95f,图例最大尺寸区域占图表区域之外的比例
-//        legend.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);    // 图例显示位置，已弃用
-        legend.setForm(Legend.LegendForm.CIRCLE);   // 设置图例的形状，SQUARE, CIRCLE 或者 LINE
-        legend.setFormSize(8); // 图例图形尺寸，dp，默认8dp
-        legend.setXEntrySpace(6);  // 设置水平图例间间距，默认6dp
-        legend.setYEntrySpace(0);  // 设置垂直图例间间距，默认0
-        legend.setFormToTextSpace(5);    // 设置图例的标签与图形之间的距离，默认5dp
-        legend.setWordWrapEnabled(true);   // 图标单词是否适配。只有在底部才会有效，
-        legend.setCustom(new LegendEntry[]{
-                new LegendEntry("不太好", Legend.LegendForm.CIRCLE, 10, 5, null, Color.parseColor("#0093dd")),
-                new LegendEntry("还不错", Legend.LegendForm.CIRCLE, 10, 5, null, Color.parseColor("#e67817")),
-                new LegendEntry("非常好", Legend.LegendForm.CIRCLE, 10, 5, null, Color.parseColor("#85c226"))}); // 这个应该是之前的setCustom(int[] colors, String[] labels)方法
-        // 这个方法会把前面设置的图例都去掉，重置为指定的图例。
-//        legend.resetCustom();   // 去掉上面方法设置的图例，然后之前dataSet中设置的会重新显示。
-        //显示位置
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        legend.setDrawInside(false);
+        legend.setEnabled(false);
 
 
         //XY轴的设置
         //X轴设置显示位置在底部
+        rightAxis.setEnabled(false);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-//        xAxis.setLabelRotationAngle(90);   // 标签倾斜
+        xAxis.setDrawGridLines(false);   // 是否绘制网格线，默认true
+        xAxis.setTextColor(Color.WHITE);
+        yAxis.setDrawZeroLine(false);    // 绘制值为0的轴，默认false,其实比较有用的就是在柱形图，当有负数时，显示在0轴以下，其他的图这个可能会看到一些奇葩的效果
+        yAxis.setZeroLineWidth(10);  // 0轴宽度
+        yAxis.setZeroLineColor(Color.WHITE);   // Y坐标轴颜色
+        yAxis.setGridColor(Color.TRANSPARENT);    // 网格线颜色，默认GRAY
+        yAxis.setAxisMinimum(0);
+        yAxis.resetAxisMaximum();
+        // 轴颜色
+        yAxis.setTextColor(Color.WHITE);  // Y轴标签字体颜色
+        yAxis.setTextSize(10);    // 标签字体大小，dp，6-24之间，默认为10dp
+        yAxis.setTypeface(null);    // 标签字体
+        yAxis.setGridColor(Color.TRANSPARENT);    // 网格线颜色，默认GRAY
+//        yAxis.setGridLineWidth(1);    // 网格线宽度，dp，默认1dp
+        yAxis.setAxisLineColor(Color.WHITE);  // 坐标轴颜色，默认GRAY.测试到一个bug，假如左侧线只有1dp，
+        // 那么如果x轴有线且有网格线，当刻度拉的正好位置时会覆盖到y轴的轴线，变为X轴网格线颜色，
+        // 解决办法是，要么不画轴线，要么就是坐标轴稍微宽点
+        xAxis.setAxisLineColor(Color.WHITE);
+        if (type == 1) {
+            //睡眠分数范围
+            yAxis.setAxisMaximum(100);
+        } else if (type == 3) {
+            //使用时长范围
+            yAxis.setAxisMaximum(24);
+        } else if (type == 5) {
+            //90%吸气压范围
+            yAxis.setAxisMaximum(120);
+        } else if (type == 7) {
+            //ahi范围
+            yAxis.setAxisMaximum(40);
+        }
         xAxis.setGranularity(1f);
-
-        // 轴值转换显示
-    /*    xAxis.setValueFormatter(new IAxisValueFormatter() { // 与上面值转换一样，这里就是转换出轴上label的显示。也有几个默认的，不多说了。
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                return value + "℃";
-            }
-        });*/
-
         //保证Y轴从0开始，不然会上移一点
         yAxis.setAxisMinimum(0f);
-        rightAxis.setAxisMinimum(0f);
     }
 
     /**
@@ -287,6 +297,54 @@ public class BarChartManager {
 
     }
 
+    /**
+     * 并列显示多条柱状图
+     *
+     * @param xAxisValues
+     * @param yAxisValues
+     * @param type
+     * @param averageInp
+     * @param averageExp
+     * @param labels
+     * @param colours
+     */
+    public void showBarChart(List<Float> xAxisValues, List<List<Float>> yAxisValues, int type, List<Double> averageInp, List<Double> averageExp, List<String> labels, List<Integer> colours) {
+        initBarChart(false, type, averageInp, averageExp);
+//        initLineChart(type);
+        BarData data = new BarData();
+        for (int i = 0; i < yAxisValues.size(); i++) {
+            ArrayList<BarEntry> entries = new ArrayList<>();
+            for (int j = 0; j < yAxisValues.get(i).size(); j++) {
+
+                entries.add(new BarEntry(xAxisValues.get(j), yAxisValues.get(i).get(j)));
+            }
+            BarDataSet barDataSet = new BarDataSet(entries, labels.get(i));
+
+            barDataSet.setColor(colours.get(i));
+            barDataSet.setValueTextColor(Color.WHITE);
+            barDataSet.setValueTextSize(8f);
+            barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+            data.addDataSet(barDataSet);
+        }
+
+        int amount = yAxisValues.size(); //需要显示柱状图的类别 数量
+        float groupSpace = 0.12f; //柱状图组之间的间距
+        float barSpace = (float) ((1 - 0.12) / amount / 10); // x4 DataSet
+        float barWidth = (float) ((1 - 0.12) / amount / 10 * 9); // x4 DataSet
+
+//        float groupSpace = 0.12f; //柱状图组之间的间距
+//        float barSpace =  0.02f; // x4 DataSet
+//        float barWidth = 0.2f; // x4 DataSet
+        // (0.2 + 0.02) * 4 + 0.12 = 1.00 即100% 按照百分百布局
+        xAxis.setLabelCount(amount - 1, false);
+//        柱状图宽度
+        data.setBarWidth(barWidth);
+        //(起始点、柱状图组间距、柱状图之间间距)
+        data.groupBars(0, groupSpace, barSpace);
+        mBarChart.setData(data);
+    }
+
+
     private int[] getColors() {
 
         int stacksize = 2;
@@ -332,7 +390,6 @@ public class BarChartManager {
         xAxis.setAxisMaximum(max);
         xAxis.setAxisMinimum(min);
         xAxis.setLabelCount(labelCount, false);
-
         mBarChart.invalidate();
     }
 

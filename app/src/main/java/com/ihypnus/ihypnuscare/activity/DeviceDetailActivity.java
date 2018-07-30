@@ -58,6 +58,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
         mTvModelType.setVisibility(View.INVISIBLE);
         mTvVersion.setVisibility(View.INVISIBLE);
         mTvStatus.setVisibility(View.INVISIBLE);
+        mIvStatus.setVisibility(View.VISIBLE);
         mBtnSetting.setVisibility(View.INVISIBLE);
         mBtnModify.setVisibility(View.INVISIBLE);
     }
@@ -113,7 +114,7 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
                 mTvVersion.setVisibility(View.VISIBLE);
                 mTvStatus.setVisibility(View.VISIBLE);
                 mBtnSetting.setVisibility(View.VISIBLE);
-
+                mIvStatus.setVisibility(View.VISIBLE);
                 DeviceModelVO deviceModelVO = (DeviceModelVO) var1;
                 if (deviceModelVO != null && !StringUtils.isNullOrEmpty(deviceModelVO.getModel())) {
                     String model = deviceModelVO.getModel();

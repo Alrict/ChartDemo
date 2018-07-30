@@ -108,6 +108,17 @@ public class ChartsPage2Controller extends BaseController {
     public void updateUI(List<Double> averageInp, List<Double> averageExp, List<Double> ahi) {
         mLayoutChart1.setVisibility(View.VISIBLE);
         mLayoutChart2.setVisibility(View.VISIBLE);
+
+        //标签
+        List<String> labels = new ArrayList<>();
+        labels.add("90%吸气压力");
+        labels.add("90%呼气压力");
+
+        //颜色集合
+        List<Integer> colours = new ArrayList<>();
+        colours.add(ColorTemplate.MATERIAL_COLORS[1]);
+        colours.add(ColorTemplate.MATERIAL_COLORS[0]);
+
         mYValue1.clear();
         mYValues2.clear();
         float totalBreath = 0;
@@ -116,6 +127,23 @@ public class ChartsPage2Controller extends BaseController {
         int type2 = 0;
         //X坐标放日期,吸气压力大于呼气压力,AHI显示以为小数;3.新增/注册的时设备只能扫描,不可输入
         long currentTime = ReportFragment.sCurrentTime;
+
+
+        //设置y轴的数据()
+        List<List<Float>> yValues = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            List<Float> yValue = new ArrayList<>();
+
+            for (int j = 0; j <= 6; j++) {
+                float inp = averageInp.get(j).floatValue()/ 10;
+                float exp = averageExp.get(j).floatValue()/ 10;
+                totalBreath += (inp + exp);
+                float value = i == 0 ? exp : inp;
+                yValue.add(value);
+            }
+            yValues.add(yValue);
+        }
+
         mXValues.clear();
         for (int i = 7; i >= 1; i--) {
             long l = currentTime - (i * 24L * 60L * 60L * 1000L);
@@ -158,8 +186,11 @@ public class ChartsPage2Controller extends BaseController {
             type2 = 8;
         }
         //创建图表
-        mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "90%压力", type1, averageInp, averageExp);
-        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", false, type2,3);
+//        mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "90%压力", type1, averageInp, averageExp);
+        mBarChartManager1.showBarChart(mXValues, yValues, type1, averageInp, averageExp, labels, colours);
+//        mBarChartManager1.setXAxis(mXValues.get(6), 0, 7);
+        mBarChartManager1.setXAxis(7, 0, 7);
+        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", false, type2, 3);
     }
 
     public void showErrorView() {
