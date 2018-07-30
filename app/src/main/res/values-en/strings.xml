@@ -259,4 +259,10 @@
     <string name="tv_toast_error_1311">No binding device (or settings are not owned by the user)</string>
     <string name="tv_toast_error0013">Account does not exist
     </string>
+    <string name="tv_parameter_error">The initial pressure cannot be greater than the treatment pressure</string>
+    <string name="tv_parameter_error01">The initial pressure cannot be greater than the minimum pressure</string>
+    <string name="tv_parameter_error02">The initial pressure cannot be greater than the expiratory pressure</string>
+    <string name="tv_parameter_error03">The initial pressure cannot be greater than the minimum expiratory pressure</string>
+    <string name="tv_parameter_error04">The initial pressure cannot be greater than the expiratory pressure</string>
+    <string name="tv_parameter_error05">The initial pressure cannot be greater than the expiratory pressure</string>
 </resources>

@@ -335,5 +335,11 @@
     <string name="tv_toast_error1310">没有权限删除设备</string>
     <string name="tv_toast_error_1311">没有绑定设备（或设置不属于用户）</string>
     <string name="tv_toast_error0013">帐号不存在</string>
+    <string name="tv_parameter_error">起始压力不能大于于治疗压力</string>
+    <string name="tv_parameter_error01">起始压力不能大于最小压力</string>
+    <string name="tv_parameter_error02">起始压力不能大于呼气压力</string>
+    <string name="tv_parameter_error03">起始压力不能大于最小呼气压力</string>
+    <string name="tv_parameter_error04">起始压力不能大于呼气压力</string>
+    <string name="tv_parameter_error05">起始压力不能大于呼气压力</string>
 
 </resources>

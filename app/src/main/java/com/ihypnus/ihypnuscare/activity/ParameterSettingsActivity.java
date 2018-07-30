@@ -598,42 +598,42 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                             //cpap 模式，起始压力小于 治疗压力
                             int cpap_p = mDeviceBean.getCpap_p();
                             if (v * 10 > cpap_p) {
-                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, "起始压力不能大于于治疗压力");
+                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, getString(R.string.tv_parameter_error));
                                 textView.setText(initTextView(mDeviceBean.getCpap_p() + ""));
                                 return;
                             }
                         } else if (mCureMode == 1) {
                             int apap_min_p = mDeviceBean.getApap_min_p();
                             if (v * 10 > apap_min_p) {
-                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, "起始压力不能大于最小压力");
+                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, getString(R.string.tv_parameter_error01));
                                 textView.setText(initTextView(mDeviceBean.getApap_min_p() + ""));
                                 return;
                             }
                         } else if (mCureMode == 2) {
                             int bpap_ex_p = mDeviceBean.getBpap_ex_p();
                             if (v * 10 > bpap_ex_p) {
-                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, "起始压力不能大于呼气压力");
+                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, getString(R.string.tv_parameter_error02));
                                 textView.setText(initTextView(mDeviceBean.getBpap_ex_p() + ""));
                                 return;
                             }
                         } else if (mCureMode == 3) {
                             int autos_min_p = mDeviceBean.getAutos_min_p();
                             if (v * 10 > autos_min_p) {
-                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, "起始压力不能大于最小呼气压力");
+                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, getString(R.string.tv_parameter_error03));
                                 textView.setText(initTextView(mDeviceBean.getAutos_min_p() + ""));
                                 return;
                             }
                         } else if (mCureMode == 4) {
                             int t_ex_p = mDeviceBean.getT_ex_p();
                             if (v * 10 > t_ex_p) {
-                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, "起始压力不能大于呼气压力");
+                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, getString(R.string.tv_parameter_error04));
                                 textView.setText(initTextView(mDeviceBean.getT_ex_p() + ""));
                                 return;
                             }
                         } else if (mCureMode == 5) {
                             int st_ex_p = mDeviceBean.getSt_ex_p();
                             if (v * 10 > st_ex_p) {
-                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, "起始压力不能大于呼气压力");
+                                BaseDialogHelper.showMsgTipDialog(ParameterSettingsActivity.this, getString(R.string.tv_parameter_error05));
                                 textView.setText(initTextView(mDeviceBean.getSt_ex_p() + ""));
                                 return;
                             }

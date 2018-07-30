@@ -335,4 +335,10 @@
     <string name="tv_toast_error1310">沒有權限刪除設備</string>
     <string name="tv_toast_error_1311">沒有綁定設備（或設置不屬於用戶）</string>
     <string name="tv_toast_error0013">帳號不存在</string>
+    <string name="tv_parameter_error">起始壓力不能大於於治療壓力</string>
+    <string name="tv_parameter_error01">起始壓力不能大於最小壓力</string>
+    <string name="tv_parameter_error02">起始壓力不能大於呼氣壓力</string>
+    <string name="tv_parameter_error03">起始壓力不能大於最小呼氣壓力</string>
+    <string name="tv_parameter_error04">起始壓力不能大於呼氣壓力</string>
+    <string name="tv_parameter_error05">起始壓力不能大於呼氣壓力</string>
 </resources>

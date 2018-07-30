@@ -38,11 +38,15 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.config.Constants;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.multilanguage.MultiLanguageUtil;
 
 import java.security.InvalidParameterException;
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Locale;
@@ -124,7 +128,7 @@ public class SimpleMonthView extends View {
 
     private int mNumRows = DEFAULT_NUM_ROWS;
 
-    private DateFormatSymbols mDateFormatSymbols = new DateFormatSymbols();
+    private DateFormatSymbols mDateFormatSymbols = new DateFormatSymbols(Constants.LANGUAGE_TYPE);
 
     private OnDayClickListener mOnDayClickListener;
     private Locale mLanguageLocale;
@@ -133,8 +137,8 @@ public class SimpleMonthView extends View {
         super(context);
 
         Resources resources = context.getResources();
-        mDayLabelCalendar = Calendar.getInstance();
-        mCalendar = Calendar.getInstance();
+        mDayLabelCalendar = Calendar.getInstance(Constants.LANGUAGE_TYPE);
+        mCalendar = Calendar.getInstance(Constants.LANGUAGE_TYPE);
         today = new Time(Time.getCurrentTimezone());
         today.setToNow();
         mDayOfWeekTypeface = resources.getString(R.string.sans_serif);
@@ -192,9 +196,9 @@ public class SimpleMonthView extends View {
     private void drawMonthTitle(Canvas canvas) {
         int x = (mWidth + 2 * mPadding) / 2;
         int y = (MONTH_HEADER_SIZE - MONTH_DAY_LABEL_TEXT_SIZE) / 2 + (MONTH_LABEL_TEXT_SIZE / 3);
-        StringBuilder stringBuilder = new StringBuilder(getMonthAndYearString().toLowerCase(mLanguageLocale));
-        stringBuilder.setCharAt(0, Character.toUpperCase(stringBuilder.charAt(0)));
-        canvas.drawText(stringBuilder.toString(), x, y, mMonthTitlePaint);
+        StringBuilder stringBuilder = new StringBuilder(getMonthAndYearString());
+        String s = stringBuilder.toString();
+        canvas.drawText(s, x, y, mMonthTitlePaint);
     }
 
     private int findDayOffset() {
@@ -221,7 +225,19 @@ public class SimpleMonthView extends View {
     private String formatDateRange(Context context, long startMillis,
                                    long endMillis, int flags) {
         Formatter f = new Formatter(new StringBuilder(50), mLanguageLocale);
-        return DateUtils.formatDateRange(context, f, startMillis, endMillis, flags).toString();
+        Date date = new Date(startMillis);
+        SimpleDateFormat dateFormat;
+        if (mLanguageLocale == Locale.ENGLISH) {
+            dateFormat = new SimpleDateFormat(" yyyy MMM", mLanguageLocale);
+        } else {
+            dateFormat = new SimpleDateFormat(" yyyy-MM", mLanguageLocale);
+        }
+
+        String format = dateFormat.format(date);
+        LogOut.d("llw", "日期标题:" + format);
+//        String s = format.toUpperCase();
+        return format;
+//        return DateUtils.formatDateRange(context, f, startMillis, endMillis, flags).toString();
     }
 
     private void onDayClick(SimpleMonthAdapter.CalendarDay calendarDay) {
