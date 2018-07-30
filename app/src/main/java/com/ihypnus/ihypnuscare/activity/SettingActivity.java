@@ -14,11 +14,14 @@ import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -134,6 +137,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             IhyApplication.mInstance.setUser(null);
             Intent intent = new Intent(SettingActivity.this, cls);
             startActivity(intent);
+            EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(HomeActivity.class));
         }
 
 

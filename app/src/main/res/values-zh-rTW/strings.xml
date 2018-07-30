@@ -321,5 +321,18 @@
     <string name="tv_more_than_4h">不少於4小時</string>
     <string name="tv_chart_use_long">使用時長(小時)</string>
     <string name="tv_90_zlyl">90%治療壓力</string>
-
+    <string name="tv_delay">延遲時</string>
+    <string name="tv_full_time">全時</string>
+    <string name="tv_toast_success">成功</string>
+    <string name="tv_toast_error1000">無法獲取用戶信息或參數錯誤</string>
+    <string name="tv_toast_error1119">用戶名/密碼錯誤</string>
+    <string name="tv_toast_error1300">手機號碼不能為空</string>
+    <string name="tv_toast_error1301">該手機號碼已經被使用</string>
+    <string name="tv_net_connect_error">：服務器異常,請稍後重試</string>
+    <string name="tv_net_connet_error01">無法連接服務器，請檢查你的網絡設置</string>
+    <string name="tv_toast_error1302">驗證碼發送時間短</string>
+    <string name="tv_toast_error1304">請先發送驗證碼</string>
+    <string name="tv_toast_error1310">沒有權限刪除設備</string>
+    <string name="tv_toast_error_1311">沒有綁定設備（或設置不屬於用戶）</string>
+    <string name="tv_toast_error0013">帳號不存在</string>
 </resources>

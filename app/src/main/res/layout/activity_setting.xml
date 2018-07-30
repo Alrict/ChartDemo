@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.zhy.autolayout.AutoLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,7 +7,7 @@
     android:orientation="vertical">
     <View
         style="@style/CommentDividingLineNoPadding"/>
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/layout_multi_language"
         style="@style/CommentRelativeLayout">
         <com.ihypnus.widget.AppTextView
@@ -19,17 +19,17 @@
             android:text="@string/tv_multi_language"/>
         <ImageView
             android:id="@+id/iv_multi_language"
-            android:layout_width="@dimen/w56"
-            android:layout_height="@dimen/w56"
+            android:layout_width="56px"
+            android:layout_height="56px"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_right_arrow"/>
         <View
             style="@style/CommentDividingLineNoPadding"
             android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/layout_about"
         style="@style/CommentRelativeLayout">
         <com.ihypnus.widget.AppTextView
@@ -41,17 +41,17 @@
             android:text="@string/tv_about"/>
         <ImageView
             android:id="@+id/iv_about"
-            android:layout_width="@dimen/w56"
-            android:layout_height="@dimen/w56"
+            android:layout_width="56px"
+            android:layout_height="56px"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_right_arrow"/>
         <View
             style="@style/CommentDividingLineNoPadding"
             android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/layout_change_pwd"
         style="@style/CommentRelativeLayout">
         <com.ihypnus.widget.AppTextView
@@ -63,23 +63,23 @@
             android:text="@string/change_pwd"/>
         <ImageView
             android:id="@+id/iv_change_pwd"
-            android:layout_width="@dimen/w56"
-            android:layout_height="@dimen/w56"
+            android:layout_width="56px"
+            android:layout_height="56px"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_right_arrow"/>
         <View
             style="@style/CommentDividingLineNoPadding"
             android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
     <com.ihypnus.widget.AppButton
         android:id="@+id/btn_login_out"
         style="@style/CommentButtonStyle"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="@dimen/w90"
-        android:layout_marginRight="@dimen/w90"
-        android:layout_marginTop="@dimen/h700"
+        android:layout_marginLeft="90px"
+        android:layout_marginRight="90px"
+        android:layout_marginTop="700px"
         android:gravity="center"
         android:text="@string/login_out"
-        android:textSize="@dimen/w54"/>
-</LinearLayout>
+        android:textSize="54px"/>
+</com.zhy.autolayout.AutoLinearLayout>

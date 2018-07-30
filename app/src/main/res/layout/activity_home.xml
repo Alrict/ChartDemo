@@ -18,13 +18,13 @@
     <View
         android:id="@+id/div_tab_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h2"
+        android:layout_height="2px"
         android:background="@color/main_color_blue"/>
 
     <RadioGroup
         android:id="@+id/rgp_tab"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h165"
+        android:layout_height="165px"
         android:layout_gravity="bottom"
         android:background="#2A3354"
         android:orientation="horizontal">
@@ -39,10 +39,9 @@
             android:checked="true"
             android:drawableTop="@drawable/navigation_device"
             android:gravity="center"
-            android:paddingTop="@dimen/w30"
+            android:paddingTop="30px"
             android:text="@string/rb_device"
-            android:textColor="@color/white"
-            android:textSize="@dimen/w44"/>
+            android:textColor="@color/white"/>
 
         <com.ihypnus.widget.AppRadioButton
             android:id="@+id/rb_report"
@@ -52,7 +51,7 @@
             android:button="@null"
             android:drawableTop="@drawable/navigation_report"
             android:gravity="center"
-            android:paddingTop="@dimen/w30"
+            android:paddingTop="30px"
             android:text="@string/rb_report"
             android:textColor="@color/white"/>
 
@@ -65,7 +64,7 @@
             android:button="@null"
             android:drawableTop="@drawable/navigation_ihy"
             android:gravity="center"
-            android:paddingTop="@dimen/w30"
+            android:paddingTop="30px"
             android:text="@string/rb_my_ihy"
             android:textColor="@color/white"/>
     </RadioGroup>

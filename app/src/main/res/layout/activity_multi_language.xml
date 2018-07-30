@@ -20,8 +20,8 @@
             android:text="@string/setting_language_auto"/>
         <ImageView
             android:id="@+id/iv_followsystem"
-            android:layout_width="@dimen/w56"
-            android:layout_height="@dimen/w56"
+            android:layout_width="56px"
+            android:layout_height="56px"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_corrent"
@@ -43,8 +43,8 @@
             android:text="@string/setting_simplified_chinese"/>
         <ImageView
             android:id="@+id/iv_simplified_chinese"
-            android:layout_width="@dimen/w56"
-            android:layout_height="@dimen/w56"
+            android:layout_width="56px"
+            android:layout_height="56px"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_corrent"
@@ -66,8 +66,8 @@
             android:text="@string/setting_traditional_chinese"/>
         <ImageView
             android:id="@+id/iv_traditional_chinese"
-            android:layout_width="@dimen/w56"
-            android:layout_height="@dimen/w56"
+            android:layout_width="56px"
+            android:layout_height="56px"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_corrent"
@@ -90,8 +90,8 @@
             android:text="@string/setting_language_english"/>
         <ImageView
             android:id="@+id/iv_english"
-            android:layout_width="@dimen/w56"
-            android:layout_height="@dimen/w56"
+            android:layout_width="56px"
+            android:layout_height="56px"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_corrent"

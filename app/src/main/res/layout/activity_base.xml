@@ -13,7 +13,7 @@
         <ViewStub
             android:id="@+id/view_stub"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/h150"
+            android:layout_height="150px"
             android:layout="@layout/layout_base_actionbar" />
 
         <com.ihypnus.ihypnuscare.actionbar.ContentView

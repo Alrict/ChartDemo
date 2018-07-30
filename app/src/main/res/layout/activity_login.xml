@@ -11,7 +11,7 @@
         android:clipToPadding="true"
         android:fitsSystemWindows="true">
 
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_title"
             style="@style/TextAppearanceMedium"
             android:layout_centerInParent="true"
@@ -140,7 +140,7 @@
             android:src="@mipmap/icon_lock"/>
 
 
-        <EditText
+        <com.ihypnus.widget.AppEditText
             android:id="@+id/edit_login_code2"
             style="@style/TextAppearanceMedium"
             android:layout_width="0dp"
@@ -176,7 +176,7 @@
         android:layout_marginLeft="86px"
         android:layout_marginRight="86px"/>
 
-    <Button
+    <com.ihypnus.widget.AppButton
         android:id="@+id/id_login"
         style="@style/CommentButtonStyle"
         android:layout_width="match_parent"
@@ -197,7 +197,7 @@
         android:layout_marginTop="127px"
         android:gravity="center_vertical">
 
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_regist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -207,7 +207,7 @@
             android:text="@string/tv_regist"
             android:textColor="@color/white"/>
 
-        <TextView
+        <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_fogot_pass_word"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -236,7 +236,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="#3082D6"/>
 
-            <TextView
+            <com.ihypnus.widget.AppTextView
                 style="@style/TextAppearanceMedium"
                 android:layout_marginLeft="@dimen/w40"
                 android:text="@string/tv_other_login_method"

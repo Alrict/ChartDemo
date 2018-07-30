@@ -67,6 +67,8 @@ public class HomePageController extends BaseController implements View.OnClickLi
     private AppTextView mTvTitleExpirationKpa;
     private AppTextView mTvTitleNhaleKpa;
     private int mMode;
+    private AppTextView mTvTitleHiden;
+    private TextView mTvHiden;
 
     public HomePageController(Context context) {
         super(context);
@@ -109,6 +111,10 @@ public class HomePageController extends BaseController implements View.OnClickLi
         //呼气压力
         mTvTitleExpirationKpa = (AppTextView) rootView.findViewById(R.id.tv_title_expiration_kpa);
         mTvExpirationKpa = (TextView) rootView.findViewById(R.id.tv_expiration_kpa);
+
+        //隐藏位置
+        mTvTitleHiden = (AppTextView) rootView.findViewById(R.id.tv_title_hiden);
+        mTvHiden = (TextView) rootView.findViewById(R.id.tv_hiden);
         //平均漏气
         mTvAverageAirLeak = (TextView) rootView.findViewById(R.id.tv_average_air_leak);
         //AHI
@@ -357,8 +363,11 @@ public class HomePageController extends BaseController implements View.OnClickLi
                 mTvTitleNhaleKpa.setText(mContext.getString(R.string.tv_90_zlyl));
                 mTvNhaleKpa.setText(nHaleKpa);
                 //呼气压力
-                mTvTitleExpirationKpa.setVisibility(View.INVISIBLE);
-                mTvExpirationKpa.setVisibility(View.INVISIBLE);
+                mTvTitleExpirationKpa.setVisibility(View.GONE);
+                mTvExpirationKpa.setVisibility(View.GONE);
+                //隐藏布局
+                mTvTitleHiden.setVisibility(View.GONE);
+                mTvHiden.setVisibility(View.GONE);
             } else {
                 //90%吸气压力
                 mTvTitleNhaleKpa.setText(R.string.tv_90per_in_breath);
@@ -366,6 +375,9 @@ public class HomePageController extends BaseController implements View.OnClickLi
                 //呼气压力
                 mTvTitleExpirationKpa.setVisibility(View.VISIBLE);
                 mTvExpirationKpa.setVisibility(View.VISIBLE);
+                //隐藏布局
+                mTvTitleHiden.setVisibility(View.VISIBLE);
+                mTvHiden.setVisibility(View.VISIBLE);
             }
             UsageInfos.LeakBean leak = usageInfos.getLeak();
             if (leak != null) {

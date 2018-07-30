@@ -12,7 +12,7 @@
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/h50"
+            android:layout_margin="50px"
             android:orientation="horizontal">
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
@@ -27,8 +27,8 @@
                     android:id="@+id/tv_value01"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/h100"
-                    android:layout_marginTop="@dimen/h10"
+                    android:layout_height="100px"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
                     android:text=""/>
@@ -37,7 +37,7 @@
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/w80"
+                android:layout_marginLeft="80px"
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <TextView
@@ -48,8 +48,8 @@
                     android:id="@+id/tv_value02"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/h100"
-                    android:layout_marginTop="@dimen/h10"
+                    android:layout_height="100px"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
                     android:text=""/>
@@ -59,8 +59,8 @@
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/w50"
-            android:layout_marginRight="@dimen/w50"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
             android:orientation="horizontal">
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/layout_content03"
@@ -77,8 +77,8 @@
                     android:id="@+id/tv_value03"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/h100"
-                    android:layout_marginTop="@dimen/h10"
+                    android:layout_height="100px"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
                     android:text=""/>
@@ -88,7 +88,7 @@
                 android:id="@+id/layout_content04"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/w80"
+                android:layout_marginLeft="80px"
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <TextView
@@ -99,8 +99,8 @@
                     android:id="@+id/tv_value04"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/h100"
-                    android:layout_marginTop="@dimen/h10"
+                    android:layout_height="100px"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
                     android:text=""/>
@@ -110,9 +110,9 @@
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/w50"
-            android:layout_marginRight="@dimen/w50"
-            android:layout_marginTop="@dimen/h50"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
+            android:layout_marginTop="50px"
             android:orientation="horizontal">
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/layout_content13"
@@ -129,8 +129,8 @@
                     android:id="@+id/tv_value13"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/h100"
-                    android:layout_marginTop="@dimen/h10"
+                    android:layout_height="100px"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
                     android:text=""/>
@@ -140,7 +140,7 @@
                 android:id="@+id/layout_content14"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/w80"
+                android:layout_marginLeft="80px"
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <TextView
@@ -151,8 +151,8 @@
                     android:id="@+id/tv_value14"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/h100"
-                    android:layout_marginTop="@dimen/h10"
+                    android:layout_height="100px"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/bg_comment_btn_default"
                     android:gravity="center"
                     android:text=""/>
@@ -163,22 +163,22 @@
             style="@style/TextAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/h100"
+            android:layout_marginTop="100px"
             android:gravity="center"
             android:text="@string/parameter_setting"/>
 
         <View
             style="@style/DividerLineHor"
-            android:layout_marginLeft="@dimen/w50"
-            android:layout_marginRight="@dimen/w50"
-            android:layout_marginTop="@dimen/h20"/>
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
+            android:layout_marginTop="20px"/>
 
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/w50"
-            android:layout_marginRight="@dimen/w50"
-            android:layout_marginTop="@dimen/h20"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
+            android:layout_marginTop="20px"
             android:orientation="horizontal">
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
@@ -194,19 +194,19 @@
                     android:id="@+id/tv_value05"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/h100"
-                    android:layout_marginTop="@dimen/h10"
+                    android:layout_height="100px"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/bg_comment_btn_default"
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
-                    android:paddingRight="@dimen/w50"
+                    android:paddingRight="50px"
                     android:text=""/>
             </com.zhy.autolayout.AutoLinearLayout>
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/w80"
+                android:layout_marginLeft="80px"
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <TextView
@@ -217,12 +217,12 @@
                     android:id="@+id/tv_value06"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/h100"
-                    android:layout_marginTop="@dimen/h10"
+                    android:layout_height="100px"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/bg_comment_btn_default"
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
-                    android:paddingRight="@dimen/w50"
+                    android:paddingRight="50px"
                     android:text=""/>
             </com.zhy.autolayout.AutoLinearLayout>
         </com.zhy.autolayout.AutoLinearLayout>
@@ -230,9 +230,9 @@
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/w50"
-            android:layout_marginRight="@dimen/w50"
-            android:layout_marginTop="@dimen/h20"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
+            android:layout_marginTop="20px"
             android:orientation="horizontal">
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
@@ -248,19 +248,19 @@
                     android:id="@+id/tv_value07"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/h100"
-                    android:layout_marginTop="@dimen/h10"
+                    android:layout_height="100px"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/bg_comment_btn_default"
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
-                    android:paddingRight="@dimen/w50"
+                    android:paddingRight="50px"
                     android:text=""/>
             </com.zhy.autolayout.AutoLinearLayout>
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/w80"
+                android:layout_marginLeft="80px"
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <TextView
@@ -271,8 +271,8 @@
                     android:id="@+id/tv_value08"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/h100"
-                    android:layout_marginTop="@dimen/h10"
+                    android:layout_height="100px"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/bg_comment_btn_default"
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
@@ -284,9 +284,9 @@
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/w50"
-            android:layout_marginRight="@dimen/w50"
-            android:layout_marginTop="@dimen/h20"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
+            android:layout_marginTop="20px"
             android:orientation="horizontal">
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/layout_content09"
@@ -303,12 +303,12 @@
                     android:id="@+id/tv_value09"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/h100"
-                    android:layout_marginTop="@dimen/h10"
+                    android:layout_height="100px"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/bg_comment_btn_default"
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
-                    android:paddingRight="@dimen/w50"
+                    android:paddingRight="50px"
                     android:text=""/>
             </com.zhy.autolayout.AutoLinearLayout>
 
@@ -316,7 +316,7 @@
                 android:id="@+id/layout_content10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/w80"
+                android:layout_marginLeft="80px"
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <TextView
@@ -327,12 +327,12 @@
                     android:id="@+id/tv_value10"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/h100"
-                    android:layout_marginTop="@dimen/h10"
+                    android:layout_height="100px"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/bg_comment_btn_default"
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
-                    android:paddingRight="@dimen/w50"
+                    android:paddingRight="50px"
                     android:text=""/>
             </com.zhy.autolayout.AutoLinearLayout>
         </com.zhy.autolayout.AutoLinearLayout>
@@ -341,9 +341,9 @@
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/w50"
-            android:layout_marginRight="@dimen/w50"
-            android:layout_marginTop="@dimen/h20"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
+            android:layout_marginTop="20px"
             android:orientation="horizontal">
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/layout_content11"
@@ -360,12 +360,12 @@
                     android:id="@+id/tv_value11"
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/h100"
-                    android:layout_marginTop="@dimen/h10"
+                    android:layout_height="100px"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/bg_comment_btn_default"
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
-                    android:paddingRight="@dimen/w50"
+                    android:paddingRight="50px"
                     android:text=""/>
             </com.zhy.autolayout.AutoLinearLayout>
 
@@ -373,7 +373,7 @@
                 android:id="@+id/layout_content12"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/w80"
+                android:layout_marginLeft="80px"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:visibility="invisible">
@@ -383,12 +383,12 @@
                 <TextView
                     style="@style/TextAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/h100"
-                    android:layout_marginTop="@dimen/h10"
+                    android:layout_height="100px"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/bg_comment_btn_default"
                     android:drawableRight="@mipmap/icon_arrow_down_small"
                     android:gravity="center"
-                    android:paddingRight="@dimen/w50"
+                    android:paddingRight="50px"
                     android:text=""/>
             </com.zhy.autolayout.AutoLinearLayout>
         </com.zhy.autolayout.AutoLinearLayout>
@@ -397,23 +397,23 @@
             android:id="@+id/btn_cancel"
             style="@style/CommentButtonStyle"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/w90"
-            android:layout_marginRight="@dimen/w90"
-            android:layout_marginTop="@dimen/h100"
+            android:layout_marginLeft="90px"
+            android:layout_marginRight="90px"
+            android:layout_marginTop="100px"
             android:gravity="center"
             android:text="@string/cancel"
-            android:textSize="@dimen/w54"/>
+            android:textSize="54px"/>
 
         <Button
             android:id="@+id/btn_confirm"
             style="@style/CommentButtonStyle"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/h200"
-            android:layout_marginLeft="@dimen/w90"
-            android:layout_marginRight="@dimen/w90"
-            android:layout_marginTop="@dimen/h50"
+            android:layout_marginBottom="200px"
+            android:layout_marginLeft="90px"
+            android:layout_marginRight="90px"
+            android:layout_marginTop="50px"
             android:gravity="center"
             android:text="@string/ok"
-            android:textSize="@dimen/w54"/>
+            android:textSize="54px"/>
     </com.zhy.autolayout.AutoLinearLayout>
 </ScrollView>

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@mipmap/img_background"
                 android:orientation="vertical">
     <!--头部标题-->
-    <RelativeLayout
+    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/layout_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/h1"
     >
 
 
-    </RelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 
 
     <TextView
@@ -20,10 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_header"
-        android:layout_margin="@dimen/w60"
+        android:layout_margin="60px"
         android:text="@string/tv_connect_wifi_tip"
         android:textColor="@color/white"
-        android:textSize="@dimen/w44"/>
+        android:textSize="44px"/>
 
 
     <Button
@@ -31,29 +31,30 @@
         style="@style/CommentButtonStyle"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/h300"
-        android:layout_marginLeft="@dimen/w80"
-        android:layout_marginRight="@dimen/w80"
+        android:layout_marginBottom="300px"
+        android:layout_marginLeft="80px"
+        android:layout_marginRight="80px"
         android:gravity="center"
         android:text="@string/tv_setting_ok"
-        android:textSize="@dimen/w54"/>
+        android:textSize="54px"/>
 
     <Button
         android:id="@+id/bt_set_wifi"
         style="@style/CommentButtonStyle"
         android:layout_width="match_parent"
         android:layout_above="@+id/bt_next"
-        android:layout_marginBottom="@dimen/h60"
-        android:layout_marginLeft="@dimen/w80"
-        android:layout_marginRight="@dimen/w80"
+        android:layout_marginBottom="60px"
+        android:layout_marginLeft="80px"
+        android:layout_marginRight="80px"
         android:gravity="center"
         android:text="@string/bt_set_wifi"
-        android:textSize="@dimen/w54"/>
+        android:textSize="54px"/>
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h1"
-        android:layout_alignParentStart="true" android:layout_alignParentTop="true"
+        android:layout_height="1px"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:background="@color/main_color_blue"/>
 
-</RelativeLayout>
+</com.zhy.autolayout.AutoRelativeLayout>

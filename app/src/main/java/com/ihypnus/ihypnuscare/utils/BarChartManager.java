@@ -56,7 +56,7 @@ public class BarChartManager {
         mBarChart.setDrawBarShadow(false);
         mBarChart.setHighlightFullBarEnabled(false);
         //最多显示的柱状图数量
-        mBarChart.setMaxVisibleValueCount(31);
+        mBarChart.setMaxVisibleValueCount(7);
         //显示边界
         mBarChart.setDrawBorders(false);
 

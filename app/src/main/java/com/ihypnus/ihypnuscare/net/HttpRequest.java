@@ -20,6 +20,8 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.ihypnus.ihypnuscare.IhyApplication;
+import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.utils.HttpLog;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 
@@ -85,10 +87,10 @@ public class HttpRequest extends Request {
                     if (!(error instanceof NoConnectionError) && !(error instanceof TimeoutError)) {
                         if (((VolleyError) error).networkResponse != null) {
                             int statusCode = ((VolleyError) error).getHttpStatusCode();
-                            errorMsg = errorMsg + statusCode + "：服务器异常,请稍后重试";
+                            errorMsg = errorMsg + statusCode + IhyApplication.mInstance.getString(R.string.tv_net_connect_error);
                         }
                     } else {
-                        errorMsg = "无法连接服务器，请检查你的网络设置";
+                        errorMsg = IhyApplication.mInstance.getString(R.string.tv_net_connet_error01);
                     }
 
                     HttpRequest.this.doErrorCallback(HttpRequest.this, (VolleyError) error, "", errorMsg, HttpRequest.this.mResponseCallback);
@@ -135,10 +137,10 @@ public class HttpRequest extends Request {
                     if (!(error instanceof NoConnectionError) && !(error instanceof TimeoutError)) {
                         if (((VolleyError) error).networkResponse != null) {
                             int statusCode = ((VolleyError) error).getHttpStatusCode();
-                            errorMsg = errorMsg + statusCode + "：服务器异常,请稍后重试";
+                            errorMsg = errorMsg + statusCode +  IhyApplication.mInstance.getString(R.string.tv_net_connect_error);
                         }
                     } else {
-                        errorMsg = "无法连接服务器，请检查你的网络设置";
+                        errorMsg = IhyApplication.mInstance.getString(R.string.tv_net_connet_error01);
                     }
 
                     HttpRequest.this.doErrorCallback(HttpRequest.this, (VolleyError) error, "", errorMsg, HttpRequest.this.mResponseCallback);
@@ -181,6 +183,7 @@ public class HttpRequest extends Request {
                     String errCode = responseResult.getErrorCode();
                     Object object = responseResult.getResultObject();
                     String type = responseResult.getType();
+                    errMsg = handlerErrorMsg(errCode, errMsg);
                     if (!StringUtils.isNullOrEmpty(type) && type.equals("success")) {
                         HttpRequest.this.doSuccessCallback(HttpRequest.this, object, errCode, errMsg, HttpRequest.this.mResponseCallback);
                     } else {
@@ -193,6 +196,41 @@ public class HttpRequest extends Request {
             }
 
         }
+    }
+
+    private String handlerErrorMsg(String errorCode,String errorMsg){
+        if (errorCode.equals("0000")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_success);
+        }
+        if (errorCode.equals("0013")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error0013);
+        }
+        if (errorCode.equals("1000")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1000);
+        }
+        if (errorCode.equals("1119")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1119);
+        }
+        if (errorCode.equals("1300")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1300);
+        }
+        if (errorCode.equals("1301")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1301);
+        }
+        if (errorCode.equals("1302")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1302);
+        }
+        if (errorCode.equals("1304")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1304);
+        }
+        if (errorCode.equals("1310")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1310);
+        }
+        if (errorCode.equals("1311")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error_1311);
+        }
+
+        return errorMsg;
     }
 
     @Override

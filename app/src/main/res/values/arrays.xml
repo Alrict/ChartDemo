@@ -18,7 +18,7 @@
 
     <!--舒适度-->
     <string-array name="comfort_lv">
-        <item>关闭</item>
+        <item>@string/tv_text_close</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -27,7 +27,7 @@
 
     <!--延迟时间-->
     <string-array name="delaytimelist">
-        <item>关闭</item>
+        <item>@string/tv_text_close</item>
         <item>5 min</item>
         <item>10 min</item>
         <item>15 min</item>
@@ -41,9 +41,9 @@
 
     <!--呼气释压-->
     <string-array name="expiratory_pressure_release">
-        <item>关闭</item>
-        <item>延迟时</item>
-        <item>全时</item>
+        <item>@string/tv_text_close</item>
+        <item>@string/tv_delay</item>
+        <item>@string/tv_full_time</item>
     </string-array>
 
 </resources>

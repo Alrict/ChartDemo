@@ -244,4 +244,19 @@
     <string name="tv_more_than_4h">Not less than 4 hours</string>
     <string name="tv_chart_use_long">Length of use (hours)</string>
     <string name="tv_90_zlyl">90% treatment pressure</string>
+    <string name="tv_delay">Delayed</string>
+    <string name="tv_full_time">Full time</string>
+    <string name="tv_toast_success">success</string>
+    <string name="tv_toast_error1000">Unable to get user information or parameter error</string>
+    <string name="tv_toast_error1119">username or password is incorrect</string>
+    <string name="tv_toast_error1300">Phone number can not be blank</string>
+    <string name="tv_toast_error1301">The mobile number is already in use</string>
+    <string name="tv_net_connect_error">：Server exception, please try again later</string>
+    <string name="tv_net_connet_error01">Unable to connect to the server, please check your network settings</string>
+    <string name="tv_toast_error1302">Verification code sending time is short</string>
+    <string name="tv_toast_error1304">Please send a verification code first</string>
+    <string name="tv_toast_error1310">No permission to delete device</string>
+    <string name="tv_toast_error_1311">No binding device (or settings are not owned by the user)</string>
+    <string name="tv_toast_error0013">Account does not exist
+    </string>
 </resources>

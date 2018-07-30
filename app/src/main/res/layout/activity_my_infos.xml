@@ -14,7 +14,7 @@
         <View
             android:id="@+id/line"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/h1"
+            android:layout_height="1px"
             android:layout_alignParentBottom="true"
             android:background="@color/main_color_blue"/>
     </com.zhy.autolayout.AutoRelativeLayout>
@@ -23,13 +23,13 @@
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_photo"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h200"
+        android:layout_height="200px"
         android:layout_below="@+id/layout_header"
-        android:paddingLeft="@dimen/w60"
-        android:paddingRight="@dimen/w60">
+        android:paddingLeft="60px"
+        android:paddingRight="60px">
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/h1"
+            android:layout_height="1px"
             android:layout_alignParentBottom="true"
             android:background="@color/main_color_blue"/>
         <TextView
@@ -43,8 +43,8 @@
 
         <ImageView
             android:id="@+id/tv_photo_arrow"
-            android:layout_width="@dimen/w60"
-            android:layout_height="@dimen/w60"
+            android:layout_width="60px"
+            android:layout_height="60px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"
@@ -52,28 +52,28 @@
 
         <com.zhy.autolayout.AutoFrameLayout
             android:id="@+id/layout_photo"
-            android:layout_width="@dimen/w180"
-            android:layout_height="@dimen/w180"
+            android:layout_width="180px"
+            android:layout_height="180px"
             android:layout_centerVertical="true"
-            android:layout_margin="@dimen/w10"
-            android:layout_marginTop="@dimen/h45"
+            android:layout_margin="10px"
+            android:layout_marginTop="45px"
             android:layout_toLeftOf="@+id/tv_photo_arrow"
             android:layout_toRightOf="@+id/tv_photo">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/avatar"
-                android:layout_width="@dimen/w160"
-                android:layout_height="@dimen/w160"
+                android:layout_width="160px"
+                android:layout_height="160px"
                 android:layout_gravity="bottom|right"
                 app:civ_border_color="@color/main_color_blue"
-                app:civ_border_width="@dimen/w2"/>
+                app:civ_border_width="2px"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
-                android:layout_marginBottom="@dimen/h10"
-                android:layout_marginRight="@dimen/h10"
+                android:layout_marginBottom="10px"
+                android:layout_marginRight="10px"
                 android:scaleType="center"
                 android:src="@mipmap/icon_v"/>
 
@@ -86,13 +86,13 @@
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_name"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h180"
+        android:layout_height="180px"
         android:layout_below="@+id/ll_photo"
-        android:paddingLeft="@dimen/w60"
-        android:paddingRight="@dimen/w60">
+        android:paddingLeft="60px"
+        android:paddingRight="60px">
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/h1"
+            android:layout_height="1px"
             android:layout_alignParentBottom="true"
             android:background="@color/main_color_blue"/>
         <TextView
@@ -109,14 +109,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/w60"
+            android:layout_marginRight="60px"
             android:layout_toLeftOf="@+id/tv_name_arrow"
             android:gravity="center_vertical"
             android:text="ihynus_app"/>
         <ImageView
             android:id="@+id/tv_name_arrow"
-            android:layout_width="@dimen/w60"
-            android:layout_height="@dimen/w60"
+            android:layout_width="60px"
+            android:layout_height="60px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"
@@ -128,13 +128,13 @@
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_gender"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h180"
+        android:layout_height="180px"
         android:layout_below="@+id/ll_name"
-        android:paddingLeft="@dimen/w60"
-        android:paddingRight="@dimen/w60">
+        android:paddingLeft="60px"
+        android:paddingRight="60px">
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/h1"
+            android:layout_height="1px"
             android:layout_alignParentBottom="true"
             android:background="@color/main_color_blue"/>
         <TextView
@@ -151,14 +151,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/w60"
+            android:layout_marginRight="60px"
             android:layout_toLeftOf="@+id/tv_gender_arrow"
             android:gravity="center_vertical"
             android:text="男"/>
         <ImageView
             android:id="@+id/tv_gender_arrow"
-            android:layout_width="@dimen/w60"
-            android:layout_height="@dimen/w60"
+            android:layout_width="60px"
+            android:layout_height="60px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"
@@ -170,13 +170,13 @@
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_height"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h180"
+        android:layout_height="180px"
         android:layout_below="@+id/ll_gender"
-        android:paddingLeft="@dimen/w60"
-        android:paddingRight="@dimen/w60">
+        android:paddingLeft="60px"
+        android:paddingRight="60px">
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/h1"
+            android:layout_height="1px"
             android:layout_alignParentBottom="true"
             android:background="@color/main_color_blue"/>
         <TextView
@@ -193,14 +193,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/w60"
+            android:layout_marginRight="60px"
             android:layout_toLeftOf="@+id/tv_height_arrow"
             android:gravity="center_vertical"
             android:text="1.88 m"/>
         <ImageView
             android:id="@+id/tv_height_arrow"
-            android:layout_width="@dimen/w60"
-            android:layout_height="@dimen/w60"
+            android:layout_width="60px"
+            android:layout_height="60px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"
@@ -213,13 +213,13 @@
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/ll_body_weight"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/h180"
+        android:layout_height="180px"
         android:layout_below="@+id/ll_height"
-        android:paddingLeft="@dimen/w60"
-        android:paddingRight="@dimen/w60">
+        android:paddingLeft="60px"
+        android:paddingRight="60px">
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/h1"
+            android:layout_height="1px"
             android:layout_alignParentBottom="true"
             android:background="@color/main_color_blue"/>
         <TextView
@@ -236,14 +236,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/w60"
+            android:layout_marginRight="60px"
             android:layout_toLeftOf="@+id/tv_body_weight_arrow"
             android:gravity="center_vertical"
             android:text="56 kg"/>
         <ImageView
             android:id="@+id/tv_body_weight_arrow"
-            android:layout_width="@dimen/w60"
-            android:layout_height="@dimen/w60"
+            android:layout_width="60px"
+            android:layout_height="60px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"

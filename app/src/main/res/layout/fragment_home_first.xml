@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                       xmlns:app="http://schemas.android.com/apk/res-auto"
-                                       android:id="@+id/room_view"
-                                       android:layout_width="match_parent"
-                                       android:layout_height="match_parent"
-                                       android:background="@mipmap/img_background">
+<com.zhy.autolayout.AutoRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/room_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/img_background">
+
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/layout_data"
         android:layout_width="match_parent"
@@ -14,6 +16,7 @@
         android:orientation="horizontal"
         android:paddingLeft="53px"
         android:paddingRight="53px">
+
         <ImageView
             android:id="@+id/iv_last_week"
             android:layout_width="66px"
@@ -21,6 +24,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_page_last"/>
+
         <com.ihypnus.widget.AppTextView
             android:id="@+id/tv_data"
             android:layout_width="wrap_content"
@@ -29,6 +33,7 @@
             android:text="五月二十八"
             android:textColor="@color/white"
             android:textSize="50px"/>
+
         <ImageView
             android:id="@+id/iv_next_week"
             android:layout_width="66px"
@@ -36,6 +41,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_page_next"/>
+
     </com.zhy.autolayout.AutoRelativeLayout>
 
 
@@ -46,11 +52,11 @@
         android:layout_below="@id/layout_data"
         app:bottomTextColor="#00ff00"
         app:circularRingBgColor="#383c55"
-        app:innerRadius="250px"
+        app:innerRadius="260px"
         app:middleRightTextSize="50px"
         app:middleTextColor="@color/tangerine"
         app:middleTextSize="150px"
-        app:outterRadius="320px"
+        app:outterRadius="330px"
         app:progressDefaultWidth="30px"
         app:progressWidth="34px"
         app:topText="睡眠分数"
@@ -279,6 +285,7 @@
                 android:textSize="38px"/>
 
             <com.ihypnus.widget.AppTextView
+                android:id="@+id/tv_title_hiden"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -318,6 +325,7 @@
                 android:textSize="38px"/>
 
             <TextView
+                android:id="@+id/tv_hiden"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

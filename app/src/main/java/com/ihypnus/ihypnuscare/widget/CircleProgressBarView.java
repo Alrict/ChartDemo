@@ -9,10 +9,12 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Looper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.widget.LanguageChangableView;
+import com.zhy.autolayout.utils.AutoUtils;
 
 /**
  * 自定义环形进度条
@@ -104,19 +106,20 @@ public class CircleProgressBarView extends View implements LanguageChangableView
         //外层刻度条颜色
         mTrackBarColor = a.getColor(R.styleable.CircleProgressBarView_trackBarColor, Color.parseColor("#88236fa1"));
         //外层刻度条width
-        mTrackBarWidth = a.getDimensionPixelSize(R.styleable.CircleProgressBarView_trackBarWidth, (int) getResources().getDimension(R.dimen.w4));
+        mTrackBarWidth = AutoUtils.getPercentWidthSize(a.getDimensionPixelSize(R.styleable.CircleProgressBarView_trackBarWidth, (int) getResources().getDimension(R.dimen.w4)));
         //外层刻度条length
-        mTrackBarLength = a.getDimensionPixelSize(R.styleable.CircleProgressBarView_trackBarLength, (int) getResources().getDimension(R.dimen.h20));
+        mTrackBarLength = AutoUtils.getPercentWidthSize(a.getDimensionPixelSize(R.styleable.CircleProgressBarView_trackBarLength, (int) getResources().getDimension(R.dimen.h20)));
         //外层刻度条 刻度总数量
         mTrackBarCounts = a.getInteger(R.styleable.CircleProgressBarView_trackBarCounts, 100);
         //外圆半径
-        mOutterCircleRadius = a.getDimensionPixelSize(R.styleable.CircleProgressBarView_outterRadius, (int) getResources().getDimension(R.dimen.w300));
+        mOutterCircleRadius = AutoUtils.getPercentWidthSize(a.getDimensionPixelSize(R.styleable.CircleProgressBarView_outterRadius, (int) getResources().getDimension(R.dimen.w300)));
+
         //进度条宽度
-        mProgressWidth = a.getDimensionPixelSize(R.styleable.CircleProgressBarView_progressWidth, (int) getResources().getDimension(R.dimen.w30));
+        mProgressWidth = AutoUtils.getPercentWidthSize(a.getDimensionPixelSize(R.styleable.CircleProgressBarView_progressWidth, (int) getResources().getDimension(R.dimen.w30)));
         //背景圆环宽度
-        mProgressDefaultWidth = a.getDimensionPixelSize(R.styleable.CircleProgressBarView_progressDefaultWidth, (int) getResources().getDimension(R.dimen.w30));
+        mProgressDefaultWidth = AutoUtils.getPercentWidthSize(a.getDimensionPixelSize(R.styleable.CircleProgressBarView_progressDefaultWidth, (int) getResources().getDimension(R.dimen.w30)));
         //内圆半径
-        mInnerCircleRadius = a.getDimensionPixelSize(R.styleable.CircleProgressBarView_innerRadius, (int) getResources().getDimension(R.dimen.w300));
+        mInnerCircleRadius = AutoUtils.getPercentWidthSize(a.getDimensionPixelSize(R.styleable.CircleProgressBarView_innerRadius, (int) getResources().getDimension(R.dimen.w300)));
         //圆环进度条默认颜色
         mCircularRingBgColor = a.getColor(R.styleable.CircleProgressBarView_circularRingBgColor, Color.GRAY);
         //圆环进度条默认颜色
@@ -126,21 +129,21 @@ public class CircleProgressBarView extends View implements LanguageChangableView
         //圆环进度顶部文字颜色
         mTopTextColor = a.getColor(R.styleable.CircleProgressBarView_topTextColor, Color.RED);
         //圆环进度顶部文字大小
-        mTopTextSize = a.getDimensionPixelSize(R.styleable.CircleProgressBarView_topTextSize, (int) getResources().getDimension(R.dimen.h50));
+        mTopTextSize = AutoUtils.getPercentWidthSize(a.getDimensionPixelSize(R.styleable.CircleProgressBarView_topTextSize, (int) getResources().getDimension(R.dimen.h50)));
         //圆环进度顶部文字内容
         mTopText = a.getString(R.styleable.CircleProgressBarView_topText);
         //圆环进度中间文字颜色
         mMiddleTextColor = a.getColor(R.styleable.CircleProgressBarView_middleTextColor, Color.BLUE);
         //圆环进度中间文字大小
-        mMiddleTextSize = a.getDimensionPixelSize(R.styleable.CircleProgressBarView_middleTextSize, (int) getResources().getDimension(R.dimen.w68));
+        mMiddleTextSize = AutoUtils.getPercentWidthSize(a.getDimensionPixelSize(R.styleable.CircleProgressBarView_middleTextSize, (int) getResources().getDimension(R.dimen.w68)));
         //圆环进度中间偏右文字大小
-        mMiddleRightTextSize = a.getDimensionPixelSize(R.styleable.CircleProgressBarView_middleRightTextSize, (int) getResources().getDimension(R.dimen.w68));
+        mMiddleRightTextSize = AutoUtils.getPercentWidthSize(a.getDimensionPixelSize(R.styleable.CircleProgressBarView_middleRightTextSize, (int) getResources().getDimension(R.dimen.w68)));
         //圆环进度中间文字内容
         mMiddleText = a.getString(R.styleable.CircleProgressBarView_topText);
         //圆环进度底部文字颜色
         mBottomTextColor = a.getColor(R.styleable.CircleProgressBarView_bottomTextColor, Color.BLUE);
         //圆环进度底部文字大小
-        mBottomTextSize = a.getDimensionPixelSize(R.styleable.CircleProgressBarView_bottomTextSize, (int) getResources().getDimension(R.dimen.w44));
+        mBottomTextSize = AutoUtils.getPercentWidthSize(a.getDimensionPixelSize(R.styleable.CircleProgressBarView_bottomTextSize, (int) getResources().getDimension(R.dimen.w44)));
         //圆环进度底部文字内容
         mBottomText = a.getString(R.styleable.CircleProgressBarView_bottomText);
         //每个进度条所占用角度
@@ -230,6 +233,7 @@ public class CircleProgressBarView extends View implements LanguageChangableView
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        AutoUtils.autoSize(this);
         centerX = canvas.getWidth() / 2;
         centerY = canvas.getHeight() / 2;
         // 圆环位置
@@ -237,7 +241,7 @@ public class CircleProgressBarView extends View implements LanguageChangableView
         mRectF.top = centerY - mInnerCircleRadius; // 左上角y
         mRectF.right = centerX + mInnerCircleRadius; // 右下角x
         mRectF.bottom = centerY + mInnerCircleRadius; // 右下角y
-//        Log.d("llw", "centerX:" + centerX + ",centerY:" + centerY + ",内圆半径:" + mInnerCircleRadius + ",外圆半径:" + mOutterCircleRadius);
+        Log.d("llw", "centerX:" + centerX + ",centerY:" + centerY + ",内圆半径:" + mInnerCircleRadius + ",外圆半径:" + mOutterCircleRadius);
         if (mProgress >= 80) {
 //            progressPaint.setColor(Color.parseColor( "#ff85c229"));
             progressPaint.setColor(Color.parseColor(calColor(progress / max, "#ff0093dd", "#ff85C226")));
@@ -278,6 +282,7 @@ public class CircleProgressBarView extends View implements LanguageChangableView
 
     /**
      * 绘制无数据
+     *
      * @param canvas
      */
     private void drawErrorText(Canvas canvas) {
@@ -336,7 +341,7 @@ public class CircleProgressBarView extends View implements LanguageChangableView
         }
         mBottomTextPaint.setTextSize(mBottomTextSize);
 
-        String bottomText="";
+        String bottomText = "";
         if (progress == -1) {
             //网络异常/无数据
             //, , , getContext().getString(R.string.tv_status_very_good)
@@ -393,6 +398,7 @@ public class CircleProgressBarView extends View implements LanguageChangableView
 
     //动画切换进度值(异步)
     public void setProgress(final float progress) {
+        AutoUtils.autoSize(this);
         mProgress = progress;
         if (progress == -1) {
             //网络异常/无数据

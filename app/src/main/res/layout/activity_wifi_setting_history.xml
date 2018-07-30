@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.zhy.autolayout.AutoLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/img_background"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         style="@style/CommentLinearLayout"
-        android:layout_marginTop="@dimen/h300"
+        android:layout_marginTop="300px"
         android:gravity="center_vertical"
         android:orientation="horizontal">
         <TextView
             style="@style/TextAppearanceMedium"
             android:text="SSID"
             android:textColor="@color/white"/>
-        <View android:layout_width="@dimen/w2"
+        <View android:layout_width="2px"
               android:layout_height="match_parent"
-              android:layout_marginBottom="@dimen/h20"
-              android:layout_marginLeft="@dimen/w20"
-              android:layout_marginTop="@dimen/h20"
+              android:layout_marginBottom="20px"
+              android:layout_marginLeft="20px"
+              android:layout_marginTop="20px"
               android:background="@color/main_color_blue"/>
-        <LinearLayout
+        <com.zhy.autolayout.AutoLinearLayout
             android:id="@+id/layout_ssid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/w30"
+            android:layout_marginLeft="30px"
             android:background="@color/submit_btn_bg_default_color"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -34,43 +34,43 @@
                 style="@style/TextAppearanceMedium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/h20"
-                android:layout_marginRight="@dimen/w30"
+                android:layout_marginLeft="20px"
+                android:layout_marginRight="30px"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textColor="@color/white"/>
             <ImageView
-                android:layout_width="@dimen/h76"
-                android:layout_height="@dimen/h56"
-                android:layout_marginRight="@dimen/w30"
+                android:layout_width="76px"
+                android:layout_height="56px"
+                android:layout_marginRight="30px"
                 android:src="@mipmap/icon_white_down"/>
 
-        </LinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
 
 
-    </LinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
 
 
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         style="@style/CommentLinearLayout"
-        android:layout_marginTop="@dimen/h74"
+        android:layout_marginTop="74px"
         android:gravity="center_vertical"
         android:orientation="horizontal">
         <TextView
             style="@style/TextAppearanceMedium"
             android:text="PWD"
             android:textColor="@color/white"/>
-        <View android:layout_width="@dimen/w2"
+        <View android:layout_width="2px"
               android:layout_height="match_parent"
-              android:layout_marginBottom="@dimen/h20"
-              android:layout_marginLeft="@dimen/w20"
-              android:layout_marginTop="@dimen/h20"
+              android:layout_marginBottom="20px"
+              android:layout_marginLeft="20px"
+              android:layout_marginTop="20px"
               android:background="@color/main_color_blue"/>
-        <LinearLayout
+        <com.zhy.autolayout.AutoLinearLayout
             android:id="@+id/layout_pwd"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/w30"
+            android:layout_marginLeft="30px"
             android:background="@color/submit_btn_bg_default_color"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -78,8 +78,8 @@
                 android:id="@+id/tv_pwd"
                 style="@style/TextAppearanceMedium"
                 android:layout_width="0dp"
-                android:layout_marginLeft="@dimen/h20"
-                android:layout_marginRight="@dimen/w30"
+                android:layout_marginLeft="20px"
+                android:layout_marginRight="30px"
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center"
@@ -87,24 +87,24 @@
                 android:textColor="@color/white"/>
             <CheckBox
                 android:id="@+id/cb_visible"
-                android:layout_width="@dimen/h76"
-                android:layout_height="@dimen/h56"
-                android:layout_marginRight="@dimen/w30"
+                android:layout_width="76px"
+                android:layout_height="56px"
+                android:layout_marginRight="30px"
                 android:background="@drawable/password_white_visible"
                 android:button="@null"
                 android:checked="true"/>
 
-        </LinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
 
-    </LinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
     <Button
         android:id="@+id/btn_confirm"
         style="@style/CommentButtonStyle"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="@dimen/w90"
-        android:layout_marginRight="@dimen/w90"
-        android:layout_marginTop="@dimen/h300"
+        android:layout_marginLeft="90px"
+        android:layout_marginRight="90px"
+        android:layout_marginTop="300px"
         android:gravity="center"
         android:text="@string/ok"
-        android:textSize="@dimen/w54"/>
-</LinearLayout>
+        android:textSize="54px"/>
+</com.zhy.autolayout.AutoLinearLayout>
