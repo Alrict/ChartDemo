@@ -341,4 +341,5 @@
     <string name="tv_parameter_error03">起始压力不能大于最小呼气压力</string>
     <string name="tv_parameter_error04">起始压力不能大于呼气压力</string>
     <string name="tv_parameter_error05">起始压力不能大于呼气压力</string>
+    <string name="tv_title_wifi_set">设置WiFi</string>
 </resources>

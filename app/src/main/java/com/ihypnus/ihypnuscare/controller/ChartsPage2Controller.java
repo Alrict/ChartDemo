@@ -13,6 +13,7 @@ import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 import com.ihypnus.ihypnuscare.utils.BarChartManager;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,6 +40,8 @@ public class ChartsPage2Controller extends BaseController {
     private LinearLayout mLayoutChart2;
     private List<Integer> mColours;
     private ArrayList<String> mLables;
+    private int mEndDay;
+    private int mMonthMaxDay;
 
     public ChartsPage2Controller(Context context) {
         super(context);
@@ -69,6 +72,9 @@ public class ChartsPage2Controller extends BaseController {
         mBarChartManager2 = new BarChartManager(mChart2);
         //设置x轴的数据
         mXValues = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            mXValues.add((float) i);
+        }
 
         //设置y轴的数据()
         mYValue1 = new ArrayList<BarEntry>();
@@ -135,8 +141,8 @@ public class ChartsPage2Controller extends BaseController {
             List<Float> yValue = new ArrayList<>();
 
             for (int j = 0; j <= 6; j++) {
-                float inp = averageInp.get(j).floatValue()/ 10;
-                float exp = averageExp.get(j).floatValue()/ 10;
+                float inp = averageInp.get(j).floatValue() / 10;
+                float exp = averageExp.get(j).floatValue() / 10;
                 totalBreath += (inp + exp);
                 float value = i == 0 ? exp : inp;
                 yValue.add(value);
@@ -144,17 +150,26 @@ public class ChartsPage2Controller extends BaseController {
             yValues.add(yValue);
         }
 
-        mXValues.clear();
-        for (int i = 7; i >= 1; i--) {
-            long l = currentTime - (i * 24L * 60L * 60L * 1000L);
-            String monthDayDateTime = DateTimeUtils.getMonthDayDateTime(l);
-            String[] split = monthDayDateTime.split("-");
-            if (split.length == 2) {
-                String s = split[1];
-                int i1 = Integer.parseInt(s);
-                mXValues.add((float) i1);
-            }
+        long l = currentTime - (1 * 24L * 60L * 60L * 1000L);
+        String monthDayDateTime = DateTimeUtils.getMonthDayDateTime(l);
+        String[] split = monthDayDateTime.split("-");
+        if (split.length == 2) {
+            String s = split[1];
+            mEndDay = Integer.parseInt(s);
         }
+        long beforeDay = currentTime - (7 * 24L * 60L * 60L * 1000L);
+        mMonthMaxDay = DateTimeUtils.getLastDayOfMonth(beforeDay);
+        LogOut.d("llw", "结束日期:" + mEndDay + ",上个月最大天数:" + mMonthMaxDay);
+//        for (int i = 7; i >= 1; i--) {
+//            long l = currentTime - (i * 24L * 60L * 60L * 1000L);
+//            String monthDayDateTime = DateTimeUtils.getMonthDayDateTime(l);
+//            String[] split = monthDayDateTime.split("-");
+//            if (split.length == 2) {
+//                String s = split[1];
+//                int i1 = Integer.parseInt(s);
+//                mXValues.add((float) i1);
+//            }
+//        }
         for (int i = 0; i <= 6; i++) {
             float inp = averageInp.get(i).floatValue();
             float exp = averageExp.get(i).floatValue();
@@ -185,12 +200,14 @@ public class ChartsPage2Controller extends BaseController {
         } else {
             type2 = 8;
         }
+        Float aFloat = mXValues.get(6);
+
         //创建图表
-//        mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "90%压力", type1, averageInp, averageExp);
-        mBarChartManager1.showBarChart(mXValues, yValues, type1, averageInp, averageExp, labels, colours);
+        mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "90%压力", type1, mEndDay, mMonthMaxDay, averageInp, averageExp);
+//        mBarChartManager1.showBarChart(mXValues, yValues, type1, averageInp, averageExp, labels, colours);
 //        mBarChartManager1.setXAxis(mXValues.get(6), 0, 7);
-        mBarChartManager1.setXAxis(7, 0, 7);
-        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", false, type2, 3);
+//        mBarChartManager1.setXAxis(7, 0, 7);
+        mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", false, type2, mEndDay, mMonthMaxDay, 3);
     }
 
     public void showErrorView() {

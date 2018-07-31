@@ -42,11 +42,11 @@ public class BarChartManager {
      * 初始化BarChart
      */
 
-    private void initBarChart(boolean showLegend, int type) {
-        initBarChart(showLegend, type, null, null);
+    private void initBarChart(boolean showLegend, int type, int endDay, int maxDay) {
+        initBarChart(showLegend, type, endDay, maxDay, null, null);
     }
 
-    private void initBarChart(boolean showLegend, int type, List<Double> averageInp, List<Double> averageExp) {
+    private void initBarChart(boolean showLegend, int type, int endDay, int maxDay, List<Double> averageInp, List<Double> averageExp) {
         //背景颜色
         mBarChart.setBackgroundColor(Color.TRANSPARENT);
         //网格
@@ -61,7 +61,7 @@ public class BarChartManager {
         //显示边界
         mBarChart.setDrawBorders(false);
         //设置动画效果
-        mBarChart.animateY(3000, Easing.EasingOption.Linear);
+        mBarChart.animateY(3000, Easing.Linear);
 
         //折线图例 标签 设置
         Legend legend = mBarChart.getLegend();
@@ -70,15 +70,18 @@ public class BarChartManager {
 
         //XY轴的设置
         //X轴设置显示位置在底部
+        rightAxis.setEnabled(false);
+        rightAxis.setMinWidth(0);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);   // 是否绘制网格线，默认true
         xAxis.setTextColor(Color.WHITE);
-        yAxis.setDrawZeroLine(false);    // 绘制值为0的轴，默认false,其实比较有用的就是在柱形图，当有负数时，显示在0轴以下，其他的图这个可能会看到一些奇葩的效果
-        yAxis.setZeroLineWidth(10);  // 0轴宽度
+        yAxis.setDrawAxisLine(true);//有Y轴线
+        yAxis.setDrawZeroLine(false);    // false 不绘制值为0的轴，默认false,其实比较有用的就是在柱形图，当有负数时，显示在0轴以下，其他的图这个可能会看到一些奇葩的效果
+//        yAxis.setZeroLineWidth(1);  // 0轴宽度
         yAxis.setZeroLineColor(Color.WHITE);   // Y坐标轴颜色
         yAxis.setGridColor(Color.TRANSPARENT);    // 网格线颜色，默认GRAY
-        yAxis.setAxisMinimum(0);
-        yAxis.resetAxisMaximum();
+//        yAxis.setAxisMinimum(0);
+//        yAxis.resetAxisMaximum();
         // 轴颜色
         yAxis.setTextColor(Color.WHITE);  // Y轴标签字体颜色
         yAxis.setTextSize(10);    // 标签字体大小，dp，6-24之间，默认为10dp
@@ -102,14 +105,16 @@ public class BarChartManager {
             //ahi范围
             yAxis.setAxisMaximum(40);
         }
-        xAxis.setGranularity(1f);
-        //保证Y轴从0开始，不然会上移一点
         yAxis.setAxisMinimum(0f);
-        rightAxis.setEnabled(false);
+        xAxis.setGranularity(1f);//设置间隔刻度
+
+        //处理X轴坐标显示刻度
+        xAxis.setValueFormatter(new XAxisValueFormatter(endDay, maxDay));
+
         if (averageInp != null && averageExp != null) {
             yAxis.setValueFormatter(new MyAxisValueFormatter(type, averageInp, averageExp));
         } else {
-            yAxis.setValueFormatter(new MyAxisValueFormatter(type));
+            yAxis.setValueFormatter(new MyAxisValueFormatter(type, maxDay));
         }
     }
 
@@ -185,8 +190,8 @@ public class BarChartManager {
      * @param yAxisValues
      * @param label
      */
-    public void showBarChart(List<Float> xAxisValues, List<Float> yAxisValues, String label, boolean showLegend, int type, int modelType) {
-        initBarChart(showLegend, type);
+    public void showBarChart(List<Float> xAxisValues, List<Float> yAxisValues, String label, boolean showLegend, int type, int endDay, int maxDay, int modelType) {
+        initBarChart(showLegend, type, endDay, maxDay);
         ArrayList<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < xAxisValues.size(); i++) {
             entries.add(new BarEntry(xAxisValues.get(i), yAxisValues.get(i)));
@@ -237,11 +242,15 @@ public class BarChartManager {
         BarData data = new BarData(dataSets);
         //设置X轴的刻度数
         xAxis.setLabelCount(xAxisValues.size() - 1, false);
-
+        yAxis.setAxisMinimum(0f);
+        mBarChart.setFitBars(true);
         mBarChart.setData(data);
         mBarChart.invalidate();
         //设置动画效果
-        mBarChart.animateY(3000, Easing.EasingOption.Linear);
+        mBarChart.animateY(3000, Easing.Linear);
+        float axisMinimum = yAxis.getAxisMinimum();
+        boolean axisMinCustom = yAxis.isAxisMinCustom();
+        LogOut.d("llw", "barchart最小Y值:" + axisMinimum + ",最小值是否生效:" + axisMinCustom);
     }
 
     /**
@@ -250,8 +259,8 @@ public class BarChartManager {
      * @param xAxisValues
      * @param yAxisValues
      */
-    public void showStackedBarChart(List<Float> xAxisValues, ArrayList<BarEntry> yAxisValues, String labels, int type, List<Double> averageInp, List<Double> averageExp) {
-        initBarChart(false, type, averageInp, averageExp);
+    public void showStackedBarChart(List<Float> xAxisValues, ArrayList<BarEntry> yAxisValues, String labels, int type, int endDay, int maxDay, List<Double> averageInp, List<Double> averageExp) {
+        initBarChart(false, type, endDay, maxDay, averageInp, averageExp);
         //设置X轴的刻度数
         xAxis.setLabelCount(xAxisValues.size() - 1, false);
         BarDataSet set1;
@@ -282,18 +291,11 @@ public class BarChartManager {
             mBarChart.setData(data);
         }
 
-        mBarChart.setFitBars(true);
-        mBarChart.invalidate();
-    /*    // Y轴更多属性
-        set1.setAxisDependency(YAxis.AxisDependency.LEFT);  // 设置dataSet应绘制在Y轴的左轴还是右轴，默认LEFT
-        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set1);
-        BarData data = new BarData(dataSets);
+//        mBarChart.setFitBars(true);
+//        mBarChart.invalidate();
 
-        mBarChart.setData(data);
-        mBarChart.invalidate();*/
         //设置动画效果
-        mBarChart.animateY(3000, Easing.EasingOption.Linear);
+//        mBarChart.animateY(3000, Easing.Linear);
 
     }
 
@@ -308,8 +310,8 @@ public class BarChartManager {
      * @param labels
      * @param colours
      */
-    public void showBarChart(List<Float> xAxisValues, List<List<Float>> yAxisValues, int type, List<Double> averageInp, List<Double> averageExp, List<String> labels, List<Integer> colours) {
-        initBarChart(false, type, averageInp, averageExp);
+    public void showBarChart(List<Float> xAxisValues, List<List<Float>> yAxisValues, int type, int endDay, int maxDay, List<Double> averageInp, List<Double> averageExp, List<String> labels, List<Integer> colours) {
+        initBarChart(false, type, endDay, maxDay, averageInp, averageExp);
 //        initLineChart(type);
         BarData data = new BarData();
         for (int i = 0; i < yAxisValues.size(); i++) {
@@ -341,6 +343,7 @@ public class BarChartManager {
         data.setBarWidth(barWidth);
         //(起始点、柱状图组间距、柱状图之间间距)
         data.groupBars(0, groupSpace, barSpace);
+        mBarChart.setFitBars(true);
         mBarChart.setData(data);
     }
 

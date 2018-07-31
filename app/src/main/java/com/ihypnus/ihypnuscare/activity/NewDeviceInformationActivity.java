@@ -38,7 +38,7 @@ public class NewDeviceInformationActivity extends BaseActivity implements View.O
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setTitle(getResources().getString(R.string.tv_add_new_device));
+        setTitle(R.string.tv_title_wifi_set);
         mBtNext.setOnClickListener(this);
         Intent intent = getIntent();
         mNewDeviceId = intent.getStringExtra("NEW_DEVICE_ID");

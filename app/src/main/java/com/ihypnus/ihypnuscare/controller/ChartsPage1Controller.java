@@ -42,6 +42,8 @@ public class ChartsPage1Controller extends BaseController {
     private LinearLayout mLayoutChart1;
     private LinearLayout mLayoutChart2;
     private LinearLayout mLayoutChart1Status;
+    private int mEndDay;
+    private int mMonthMaxDay;
 
     public ChartsPage1Controller(Context context) {
         super(context);
@@ -69,7 +71,9 @@ public class ChartsPage1Controller extends BaseController {
 
         //设置x轴的数据
         mXValues = new ArrayList<>();
-
+        for (int i = 0; i < 7; i++) {
+            mXValues.add((float) i);
+        }
 
         //设置y轴的数据()
         mYValues1 = new ArrayList<>();
@@ -124,18 +128,19 @@ public class ChartsPage1Controller extends BaseController {
         List<Double> usedTimeSecond = data.getUsedTimeSecond();
         mYValues1.clear();
         mYValues2.clear();
-        mXValues.clear();
         long currentTime = ReportFragment.sCurrentTime;
-        for (int i = 7; i >= 1; i--) {
-            long l = currentTime - (i * 24L * 60L * 60L * 1000L);
-            String monthDayDateTime = DateTimeUtils.getMonthDayDateTime(l);
-            String[] split = monthDayDateTime.split("-");
-            if (split.length == 2) {
-                String s = split[1];
-                int i1 = Integer.parseInt(s);
-                mXValues.add((float) i1);
-            }
+
+
+        long l = currentTime - (1 * 24L * 60L * 60L * 1000L);
+        String monthDayDateTime = DateTimeUtils.getMonthDayDateTime(l);
+        String[] split = monthDayDateTime.split("-");
+        if (split.length == 2) {
+            String s = split[1];
+            mEndDay = Integer.parseInt(s);
         }
+        long beforeDay = currentTime - (7 * 24L * 60L * 60L * 1000L);
+        mMonthMaxDay = DateTimeUtils.getLastDayOfMonth(beforeDay);
+
         mLayoutChart1.setVisibility(View.VISIBLE);
         mLayoutChart1Status.setVisibility(View.VISIBLE);
         mLayoutChart1.setVisibility(View.VISIBLE);
@@ -173,8 +178,8 @@ public class ChartsPage1Controller extends BaseController {
         }
 
         //创建图表
-        mBarChartManager1.showBarChart(mXValues, mYValues1, "睡眠分数", false, type1,0);
-        mBarChartManager2.showBarChart(mXValues, mYValues2, "使用时长", false, type2,1);
+        mBarChartManager1.showBarChart(mXValues, mYValues1, "睡眠分数", false, type1, mEndDay, mMonthMaxDay, 0);
+        mBarChartManager2.showBarChart(mXValues, mYValues2, "使用时长", false, type2, mEndDay, mMonthMaxDay, 1);
 
     }
 

@@ -41,6 +41,22 @@ public class DateTimeUtils {
     }
 
     /**
+     * 获得该月最后一天
+     * @return
+     */
+    public static int getLastDayOfMonth(long currentTimeMillis){
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(currentTimeMillis);
+//        //设置年份
+//        cal.set(Calendar.YEAR,year);
+//        //设置月份
+//        cal.set(Calendar.MONTH, month-1);
+        //获取某月最大天数
+        return cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+    }
+
+    /**
      * 获取当前日期一周的时间范围
      *
      * @return

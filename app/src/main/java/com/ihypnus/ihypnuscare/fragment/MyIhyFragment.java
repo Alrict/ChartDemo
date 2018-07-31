@@ -513,8 +513,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
             @Override
             public void onSuccess(GetObjectRequest request, GetObjectResult result) {
                 // 请求成功
-                Log.d("llw", "oss图片加载成功,size:" + (result.getContentLength() / 1024) + "KB");
-                InputStream inputStream = result.getObjectContent();
+                Log.d("llw", "oss图片加载成功,size:" + (result.getContentLength() / 1024) + "KB");InputStream inputStream = result.getObjectContent();
                 byte[] buffer = new byte[2048];
                 ByteArrayOutputStream outStream = new ByteArrayOutputStream();
                 int len;

@@ -265,4 +265,5 @@
     <string name="tv_parameter_error03">The initial pressure cannot be greater than the minimum expiratory pressure</string>
     <string name="tv_parameter_error04">The initial pressure cannot be greater than the expiratory pressure</string>
     <string name="tv_parameter_error05">The initial pressure cannot be greater than the expiratory pressure</string>
+    <string name="tv_title_wifi_set">Setting up WiFi</string>
 </resources>

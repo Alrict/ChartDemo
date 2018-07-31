@@ -44,7 +44,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setTitle(getResources().getString(R.string.tv_add_new_device));
+        setTitle(R.string.tv_title_wifi_set);
     }
 
     @Override
