@@ -27,7 +27,7 @@
             android:layout_weight="1"
             android:gravity="left|center_vertical"
             android:textColor="@color/white"
-            android:textSize="@dimen/w46"/>
+            android:textSize="@dimen/w44"/>
         <TextView
             android:id="@+id/tv_device_no"
             android:layout_width="0dp"

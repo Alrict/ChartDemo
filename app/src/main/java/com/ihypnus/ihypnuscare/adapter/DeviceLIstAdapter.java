@@ -72,6 +72,7 @@ public class DeviceLIstAdapter extends BaseAdapter<DeviceLIstAdapter.ViewHolder>
         if (isChecked == 1) {
             mOldPosition = position;
             contentBean.setIsChecked(1);
+            holder.ivIcon.setImageDrawable(mAct.getResources().getDrawable(R.mipmap.ic_circle_checked));
             holder.ivSelected.setImageDrawable(mAct.getResources().getDrawable(R.mipmap.ic_circle_checked));
         } else {
             holder.ivSelected.setImageDrawable(mAct.getResources().getDrawable(R.mipmap.ic_circle_unchecked));
@@ -95,6 +96,7 @@ public class DeviceLIstAdapter extends BaseAdapter<DeviceLIstAdapter.ViewHolder>
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private OnItemClickListener mListener;// 声明自定义的接口
+        ImageView ivIcon;
         TextView tvDeviceModel;
         TextView tvDeviceNo;
         ImageView ivSelected;
@@ -106,6 +108,7 @@ public class DeviceLIstAdapter extends BaseAdapter<DeviceLIstAdapter.ViewHolder>
 
 
             layoutContainer = (LinearLayout) itemView.findViewById(R.id.layout_container);
+            ivIcon = (ImageView) itemView.findViewById(R.id.iv_icon);
             tvDeviceModel = (TextView) itemView.findViewById(R.id.tv_device_model);
             tvDeviceNo = (TextView) itemView.findViewById(R.id.tv_device_no);
             ivSelected = (ImageView) itemView.findViewById(R.id.iv_selected);

@@ -216,7 +216,7 @@ public class ChartsPage2Controller extends BaseController {
 //        mBarChartManager1.setXAxis(7, 0, 7);
         mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", false, type2, mEndDay, mMonthMaxDay, 3);
         float max2 = Collections.max(mYValues2);
-        if (max2 > 0) {
+        if (max2 > 40) {
             mBarChartManager2.setYAxis(max2, 0, 6);
         }
     }

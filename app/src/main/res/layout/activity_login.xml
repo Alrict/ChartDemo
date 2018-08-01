@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_below="@id/tv_title"
-            android:layout_marginTop="39px"
+            android:layout_marginTop="19px"
             android:background="@color/def_line_color"/>
 
     </com.zhy.autolayout.AutoRelativeLayout>
@@ -65,7 +65,7 @@
 
             <ImageView
                 android:id="@+id/iv_user"
-                android:layout_width="@dimen/w56"
+                android:layout_width="66px"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/icon_user"/>
 
@@ -81,13 +81,13 @@
 
             <ImageView
                 android:id="@+id/iv_down_arrow"
-                android:layout_width="@dimen/w26"
+                android:layout_width="36px"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20px"
+                android:layout_marginLeft="30px"
                 android:src="@mipmap/ic_down_arrow"/>
 
             <View
-                android:layout_width="@dimen/h2"
+                android:layout_width="1px"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="28px"
@@ -109,8 +109,8 @@
 
             <ImageView
                 android:id="@+id/img_login_account_clear2"
-                android:layout_width="56px"
-                android:layout_height="56px"
+                android:layout_width="66px"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:padding="8px"
                 android:src="@mipmap/icon_delete"
@@ -135,7 +135,7 @@
 
         <ImageView
             android:id="@+id/iv_pass_word"
-            android:layout_width="56px"
+            android:layout_width="66px"
             android:layout_height="wrap_content"
             android:src="@mipmap/icon_lock"/>
 
@@ -194,7 +194,7 @@
         android:layout_below="@+id/id_login"
         android:layout_marginLeft="86px"
         android:layout_marginRight="86px"
-        android:layout_marginTop="127px"
+        android:layout_marginTop="100px"
         android:gravity="center_vertical">
 
         <com.ihypnus.widget.AppTextView
