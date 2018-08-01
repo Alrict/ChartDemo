@@ -51,7 +51,7 @@ public class YAxis extends AxisBase {
     /**
      * axis space from the largest value to the top in percent of the total axis range
      */
-    protected float mSpacePercentTop = 10f;
+    protected float mSpacePercentTop = 5f;
 
     /**
      * axis space from the smallest value to the bottom in percent of the total axis range
@@ -369,7 +369,7 @@ public class YAxis extends AxisBase {
 
         // in case all values are equal
         if (range == 0f) {
-            max = max + 1f;
+            max = max ;
 //            min = min - 1f;
             min = min ;
         }

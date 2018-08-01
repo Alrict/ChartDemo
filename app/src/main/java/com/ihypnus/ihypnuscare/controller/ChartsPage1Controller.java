@@ -19,6 +19,7 @@ import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -149,11 +150,12 @@ public class ChartsPage1Controller extends BaseController {
         int type1 = 0;
         int type2 = 0;
         for (int i = 0; i < scoreValues.size(); i++) {
-            float aDouble = scoreValues.get(i).floatValue();
+            int aDouble = (int) scoreValues.get(i).floatValue();
+
             if (aDouble == 0) {
                 score++;
             }
-            mYValues1.add(aDouble);
+            mYValues1.add((float) aDouble);
         }
         if (score == scoreValues.size()) {
 //            返回的睡眠分数都是0
@@ -179,7 +181,32 @@ public class ChartsPage1Controller extends BaseController {
 
         //创建图表
         mBarChartManager1.showBarChart(mXValues, mYValues1, "睡眠分数", false, type1, mEndDay, mMonthMaxDay, 0);
+        float max1 = Collections.max(mYValues1);
+
+        if (max1 > 0) {
+            int count1 = 0;
+            if (max1 > 10) {
+                if (max1 + 10 < 100) {
+                    count1 = (int) (max1 / 10 + 1);
+                    max1 = max1 + 10;
+                }
+            } else {
+                count1 = (int) max1;
+            }
+            mBarChartManager1.setYAxis(max1, 0, count1);
+        }
+
         mBarChartManager2.showBarChart(mXValues, mYValues2, "使用时长", false, type2, mEndDay, mMonthMaxDay, 1);
+        float max2 = Collections.max(mYValues2);
+        if (max2 > 0) {
+            int count2 = 0;
+            if (max2 <= 23) {
+                count2 = (int) (max2 + 1);
+            } else {
+                count2 = (int) max2;
+            }
+            mBarChartManager2.setYAxis(max2, 0, count2 / 3);
+        }
 
     }
 

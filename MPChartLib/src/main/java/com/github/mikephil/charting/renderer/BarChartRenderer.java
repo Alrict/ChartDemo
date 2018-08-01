@@ -391,7 +391,7 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
                                     // Take care of the situation of a 0.0 value, which overlaps a non-zero bar
                                     y = value;
                                 } else if (value >= 0.0f) {
-                                    posY += value;
+                                    posY = value;
                                     y = posY;
                                 } else {
                                     y = negY;
@@ -422,6 +422,7 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
                                     continue;
                                 Log.d("llw111", "堆积图的value:" + vals[k / 2]);
                                 if (dataSet.isDrawValuesEnabled()) {
+
                                     drawValue(c,
                                             dataSet.getValueFormatter(),
                                             vals[k / 2],

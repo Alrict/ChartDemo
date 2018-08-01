@@ -34,7 +34,7 @@
     <string name="semaphore_standard">信号一般</string>
     <string name="semaphore_good">信号很好</string>
     <string name="semaphore_week">信号较差</string>
-    <string name="connect_success">信号较差</string>
+    <string name="connect_success">连接成功</string>
     <string name="refresh">刷新WiFi列表</string>
     <string name="wifi_permission">请打开wifi及定位权限</string>
     <string name="wifi_permission_connect_target">请先连接目标热点</string>
@@ -269,7 +269,7 @@
     <string name="tv_reset_pwd_succee">修改密码成功,请重新登录</string>
     <string name="tv_zdxqyl">最大吸气压力</string>
     <string name="tv_zdylzc">最大压力支持</string>
-    <string name="tv_zdhqyl">最大呼气压力</string>
+    <string name="tv_zdhqyl">最小呼气压力</string>
     <string name="tv_cflmd">吸气灵敏度</string>
     <string name="tv_breath_rate">呼吸频率</string>
     <string name="tv_breath_ration">吸呼比</string>

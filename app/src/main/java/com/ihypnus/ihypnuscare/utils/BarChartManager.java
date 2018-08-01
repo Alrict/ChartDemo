@@ -99,8 +99,8 @@ public class BarChartManager {
             //使用时长范围
             yAxis.setAxisMaximum(24);
         } else if (type == 5) {
-            //90%吸气压范围
-            yAxis.setAxisMaximum(120);
+            //90%压力范围
+            yAxis.setAxisMaximum(30);
         } else if (type == 7) {
             //ahi范围
             yAxis.setAxisMaximum(40);
@@ -290,7 +290,7 @@ public class BarChartManager {
             data.setValueTextSize(9f);
             mBarChart.setData(data);
         }
-
+        LogOut.d("XYvalue", "Y轴MAX:" + yAxis.getAxisMaximum());
 //        mBarChart.setFitBars(true);
 //        mBarChart.invalidate();
 
@@ -374,11 +374,11 @@ public class BarChartManager {
         }
         yAxis.setAxisMaximum(max);
         yAxis.setAxisMinimum(min);
-        yAxis.setLabelCount(labelCount, false);
+//        yAxis.setLabelCount(labelCount, false);
 
-        rightAxis.setAxisMaximum(max);
-        rightAxis.setAxisMinimum(min);
-        rightAxis.setLabelCount(labelCount, false);
+//        rightAxis.setAxisMaximum(max);
+//        rightAxis.setAxisMinimum(min);
+//        rightAxis.setLabelCount(labelCount, false);
         mBarChart.invalidate();
     }
 

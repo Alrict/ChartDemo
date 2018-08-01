@@ -114,6 +114,9 @@ public class ChartsPage2Controller extends BaseController {
     public void updateUI(List<Double> averageInp, List<Double> averageExp, List<Double> ahi) {
         mLayoutChart1.setVisibility(View.VISIBLE);
         mLayoutChart2.setVisibility(View.VISIBLE);
+        Double inpMax = Collections.max(averageExp);
+        Double expMax = Collections.max(averageExp);
+        double preMax = Math.max(inpMax, expMax);
 
         //标签
         List<String> labels = new ArrayList<>();
@@ -176,7 +179,7 @@ public class ChartsPage2Controller extends BaseController {
             totalBreath += (inp + exp);
             mYValue1.add(new BarEntry(
                     mXValues.get(i),
-                    new float[]{exp / 10, inp / 10},
+                    new float[]{exp / 10, (inp - exp) / 10},
                     mContext.getResources().getDrawable(R.mipmap.star)));
         }
         if (totalBreath == 0) {
@@ -204,10 +207,18 @@ public class ChartsPage2Controller extends BaseController {
 
         //创建图表
         mBarChartManager1.showStackedBarChart(mXValues, mYValue1, "90%压力", type1, mEndDay, mMonthMaxDay, averageInp, averageExp);
+
+//        if (preMax > 0) {
+//            mBarChartManager1.setYAxis((float) preMax/10, 0, 6);
+//        }
 //        mBarChartManager1.showBarChart(mXValues, yValues, type1, averageInp, averageExp, labels, colours);
 //        mBarChartManager1.setXAxis(mXValues.get(6), 0, 7);
 //        mBarChartManager1.setXAxis(7, 0, 7);
         mBarChartManager2.showBarChart(mXValues, mYValues2, "AHI", false, type2, mEndDay, mMonthMaxDay, 3);
+        float max2 = Collections.max(mYValues2);
+        if (max2 > 0) {
+            mBarChartManager2.setYAxis(max2, 0, 6);
+        }
     }
 
     public void showErrorView() {
