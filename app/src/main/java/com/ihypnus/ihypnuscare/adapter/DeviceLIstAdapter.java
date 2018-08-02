@@ -16,6 +16,7 @@
 package com.ihypnus.ihypnuscare.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,10 +73,15 @@ public class DeviceLIstAdapter extends BaseAdapter<DeviceLIstAdapter.ViewHolder>
         if (isChecked == 1) {
             mOldPosition = position;
             contentBean.setIsChecked(1);
-            holder.ivIcon.setImageDrawable(mAct.getResources().getDrawable(R.mipmap.ic_circle_checked));
+            holder.ivIcon.setImageDrawable(mAct.getResources().getDrawable(R.mipmap.icon_device_checked));
             holder.ivSelected.setImageDrawable(mAct.getResources().getDrawable(R.mipmap.ic_circle_checked));
+            holder.tvDeviceModel.setTextColor(Color.WHITE);
+            holder.tvDeviceNo.setTextColor(Color.WHITE);
         } else {
+            holder.ivIcon.setImageDrawable(mAct.getResources().getDrawable(R.mipmap.icon_device_normal));
             holder.ivSelected.setImageDrawable(mAct.getResources().getDrawable(R.mipmap.ic_circle_unchecked));
+            holder.tvDeviceModel.setTextColor(Color.GRAY);
+            holder.tvDeviceNo.setTextColor(Color.GRAY);
         }
 
         holder.ivSelected.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +119,10 @@ public class DeviceLIstAdapter extends BaseAdapter<DeviceLIstAdapter.ViewHolder>
             tvDeviceNo = (TextView) itemView.findViewById(R.id.tv_device_no);
             ivSelected = (ImageView) itemView.findViewById(R.id.iv_selected);
             // 为ItemView添加点击事件
-            layoutContainer.setOnClickListener(this);
+//            layoutContainer.setOnClickListener(this);
+            ivIcon.setOnClickListener(this);
+            tvDeviceModel.setOnClickListener(this);
+            tvDeviceNo.setOnClickListener(this);
         }
 
         public void setData(DeviceListVO.ContentBean deviceInfoVO, Context context) {

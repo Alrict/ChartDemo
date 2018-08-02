@@ -2,10 +2,13 @@ package com.ihypnus.ihypnuscare.activity;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.ihypnus.ihypnuscare.IhyApplication;
@@ -27,6 +30,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private MyIhyFragment mMyIhyFragment;
     private RadioGroup mRgpTab;
     private long exitTime;
+    private RadioButton[] mRbs;
 
 
     @Override
@@ -44,6 +48,32 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     protected void init(Bundle savedInstanceState) {
         mRgpTab.check(R.id.rb_report);
         getSupportedActionBar().setVisibility(View.GONE);
+        initRadioButtom();
+    }
+
+    private void initRadioButtom() {
+        mRbs = new RadioButton[3];
+//初始化控件，中间大个的，周围小弟
+        mRbs[0] = (RadioButton) findViewById(R.id.rb_device);
+        mRbs[1] = (RadioButton) findViewById(R.id.rb_report);
+        mRbs[2] = (RadioButton) findViewById(R.id.rb_my_ihy);
+
+        for (RadioButton rb : mRbs) {
+            //挨着给每个RadioButton加入drawable限制边距以控制显示大小
+            Drawable[] drs = rb.getCompoundDrawables();
+            //获取drawables
+            Rect r = new Rect(0, 0, drs[1].getMinimumWidth()*3/3, drs[1].getMinimumHeight()*3/3);
+            //定义一个Rect边界
+            drs[1].setBounds(r);
+            //给drawable设置边界
+            if (rb.getId() == R.id.rb_report) {
+                r = new Rect(0, 0, drs[1].getMinimumWidth(), drs[1].getMinimumHeight());
+                drs[1].setBounds(r);
+            }
+
+            rb.setCompoundDrawables(null,drs[1],null,null);
+            //添加限制给控件
+        }
     }
 
     @Override

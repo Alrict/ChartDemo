@@ -22,33 +22,35 @@
             android:id="@+id/tv_device_model"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/w44"
             android:layout_toRightOf="@id/iv_icon"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
             android:textColor="@color/white"
-            android:textSize="@dimen/w44"/>
+            android:textSize="@dimen/w50"/>
         <TextView
             android:id="@+id/tv_device_no"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="bottom"
             android:layout_marginLeft="@dimen/w32"
-            android:layout_marginRight="@dimen/w150"
+            android:layout_marginRight="@dimen/w50"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
             android:textColor="@color/white"
-            android:textSize="@dimen/w28"/>
+            android:textSize="@dimen/w38"/>
         <ImageView
             android:id="@+id/iv_selected"
-            android:layout_width="@dimen/w38"
-            android:layout_height="@dimen/w38"
+            android:layout_width="@dimen/w60"
+            android:layout_height="@dimen/w60"
             android:layout_marginRight="@dimen/h80"
             android:src="@mipmap/ic_circle_unchecked"/>
     </LinearLayout>
 
     <View style="@style/CommentDividingLineNoPadding"
           android:layout_marginLeft="@dimen/w20"
-          android:layout_marginRight="@dimen/h80"
+          android:layout_marginRight="@dimen/w80"
           android:layout_marginTop="@dimen/h30"
     />
 </LinearLayout>

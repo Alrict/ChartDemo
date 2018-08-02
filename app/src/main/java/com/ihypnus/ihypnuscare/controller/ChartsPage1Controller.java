@@ -189,6 +189,8 @@ public class ChartsPage1Controller extends BaseController {
                 if (max1 + 10 < 100) {
                     count1 = (int) (max1 / 10 + 1);
                     max1 = max1 + 10;
+                } else {
+                    max1 = 100;
                 }
             } else {
                 count1 = (int) max1;

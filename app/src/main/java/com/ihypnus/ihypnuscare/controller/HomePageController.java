@@ -303,21 +303,19 @@ public class HomePageController extends BaseController implements View.OnClickLi
         UsageInfos.UseInfoBean useInfo = usageInfos.getUseInfo();
         //平均使用时长
         int useseconds = useInfo.getUseseconds();
-        if (useseconds <= 0) {
-            mTvHours.setText("--");
-            mTvMinues.setText("--");
-            mTvUsageLongData.setText("--~--");
-            mTvDeviceModel.setText("--");
-            mTvNhaleKpa.setText("--");
-            mTvExpirationKpa.setText("--");
-            mTvAverageAirLeak.setText("--");
-            mTvAhi.setText("--");
+        handleUseLeng(useseconds,usageInfos);
 
-        } else {
+
+    }
+
+    private String handleUseLeng(int useseconds,UsageInfos usageInfos) {
+        UsageInfos.EventsBean events = usageInfos.getEvents();
+        if (useseconds > 0) {
             //使用时间段
             mUsetimes = usageInfos.getUsetimes();
             int hours = useseconds / 3600;
             int minues = (useseconds - hours * 3600) / 60;
+
             mTvHours.setText(String.valueOf(hours));
             mTvMinues.setText(String.valueOf(minues));
             if (mUsetimes.size() > 0) {
@@ -377,7 +375,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
                 mTvExpirationKpa.setVisibility(View.VISIBLE);
                 //隐藏布局
                 mTvTitleHiden.setVisibility(View.VISIBLE);
-                mTvHiden.setVisibility(View.VISIBLE);
+                mTvHiden.setVisibility(View.INVISIBLE);
             }
             UsageInfos.LeakBean leak = usageInfos.getLeak();
             if (leak != null) {
@@ -391,8 +389,19 @@ public class HomePageController extends BaseController implements View.OnClickLi
                 ahi = events.getAhi();
             }
             mTvAhi.setText(StringUtils.isNullOrEmpty(ahi) ? "--" : String.valueOf(ahi));
+        }else {
+            mTvHours.setText("--");
+            mTvMinues.setText("--");
+            mTvUsageLongData.setText("--~--");
+            mTvDeviceModel.setText("--");
+            mTvNhaleKpa.setText("--");
+            mTvExpirationKpa.setText("--");
+            mTvAverageAirLeak.setText("--");
+            mTvAhi.setText("--");
+
         }
 
+        return "";
     }
 
     private String getModelName(int mode) {

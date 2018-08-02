@@ -41,7 +41,8 @@
             android:gravity="center"
             android:paddingTop="30px"
             android:text="@string/rb_device"
-            android:textColor="@color/white"/>
+            android:textColor="@color/color_radiobutton"
+            android:textSize="@dimen/w50"/>
 
         <com.ihypnus.widget.AppRadioButton
             android:id="@+id/rb_report"
@@ -53,7 +54,8 @@
             android:gravity="center"
             android:paddingTop="30px"
             android:text="@string/rb_report"
-            android:textColor="@color/white"/>
+            android:textColor="@color/color_radiobutton"
+            android:textSize="@dimen/w50"/>
 
 
         <com.ihypnus.widget.AppRadioButton
@@ -66,7 +68,8 @@
             android:gravity="center"
             android:paddingTop="30px"
             android:text="@string/rb_my_ihy"
-            android:textColor="@color/white"/>
+            android:textColor="@color/color_radiobutton"
+            android:textSize="@dimen/w50"/>
     </RadioGroup>
 
 

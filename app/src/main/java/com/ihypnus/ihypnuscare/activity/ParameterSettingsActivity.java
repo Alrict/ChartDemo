@@ -315,7 +315,8 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 }
                 //呼气舒适度
                 mTvTitle07.setText(R.string.tv_hqssd);
-                mTvValue07.setText(deviceBean.getBreath_fit() + "");
+                int breath_fit = deviceBean.getBreath_fit();
+                mTvValue07.setText(mComfortLv.get(breath_fit));
                 //升压速度
                 mTvTitle08.setText(R.string.tv_text_sysd);
                 mTvValue08.setText(deviceBean.getBoostslope() + "");
