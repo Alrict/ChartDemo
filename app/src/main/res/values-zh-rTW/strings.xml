@@ -342,4 +342,9 @@
     <string name="tv_parameter_error04">起始壓力不能大於呼氣壓力</string>
     <string name="tv_parameter_error05">起始壓力不能大於呼氣壓力</string>
     <string name="tv_title_wifi_set">設置WiFi</string>
+    <string name="tv_title_select_gender">請選擇性別</string>
+    <string name="tv_toast_send_success">已發送</string>
+    <string name="tv_toast_pwd_error">密碼錯誤</string>
+    <string name="tv_toast_account_locked">帳號已鎖定</string>
+    <string name="tv_toast_value_ilegal">設置值不合法</string>
 </resources>

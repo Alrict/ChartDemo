@@ -46,4 +46,10 @@
         <item>@string/tv_full_time</item>
     </string-array>
 
+    <!--性别-->
+    <string-array name="gender">
+        <item>@string/tv_man</item>
+        <item>@string/tv_female</item>
+    </string-array>
+
 </resources>

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -27,6 +26,8 @@ import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -39,9 +40,9 @@ import java.util.Date;
  */
 public class PersonalInformationActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
-    private RadioGroup mRg_gender;
-    private RadioButton mRbMan;
-    private RadioButton mRbFemale;
+    //    private RadioGroup mRg_gender;
+//        private RadioButton mRbMan;
+//    private RadioButton mRbFemale;
     private TextView mTvName;
     private ImageView mTvNameArrow;
     private TextView mTvPersonGender;
@@ -59,6 +60,10 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     private String mGender = "2";
     private int mHeigthIndex = 100;
     private int mWeightIndex = 50;
+    private ImageView mTvGenderArrow;
+    private ArrayList<String> mList;
+    private int mGenderIndex = 1;
+    private ImageView mIvGender;
 
     @Override
     protected int setView() {
@@ -68,11 +73,12 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     @Override
     protected void findViews() {
         //选择性别
-        mRg_gender = (RadioGroup) findViewById(R.id.rg_gender);
+        mIvGender = (ImageView) findViewById(R.id.iv_gender);
+//        mRg_gender = (RadioGroup) findViewById(R.id.rg_gender);
         //选中 男性
-        mRbMan = (RadioButton) findViewById(R.id.rb_man);
+//        mRbMan = (RadioButton) findViewById(R.id.rb_man);
         //女性
-        mRbFemale = (RadioButton) findViewById(R.id.rb_female);
+//        mRbFemale = (RadioButton) findViewById(R.id.rb_female);
         //帐号
         mTvName = (TextView) findViewById(R.id.tv_person_name);
         mTvNameArrow = (ImageView) findViewById(R.id.tv_name_arrow);
@@ -80,6 +86,8 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
 
         //性别
         mTvPersonGender = (TextView) findViewById(R.id.tv_person_gender);
+        mTvGenderArrow = (ImageView) findViewById(R.id.tv_gender_arrow);
+//        mTvPersonGender = (TextView) findViewById(R.id.tv_person_gender);
 
 
         //身高
@@ -133,11 +141,18 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .isDialog(true)//是否显示为对话框样式
                 .build();
+
+        //性别
+        mList = new ArrayList<>();
+        String[] gender = getResources().getStringArray(R.array.gender);
+        mList.addAll(Arrays.asList(gender));
     }
 
     @Override
     protected void initEvent() {
-        mRg_gender.setOnCheckedChangeListener(this);
+        mTvPersonGender.setOnClickListener(this);
+        mTvGenderArrow.setOnClickListener(this);
+//        mRg_gender.setOnCheckedChangeListener(this);
 
 //        mTvName.setOnClickListener(this);
 //        mTvNameArrow.setOnClickListener(this);
@@ -173,15 +188,15 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (i) {
-            case R.id.rb_man:
-                mTvPersonGender.setText(getResources().getString(R.string.tv_man));
-                mGender = "1";
-                break;
-
-            case R.id.rb_female:
-                mTvPersonGender.setText(getResources().getString(R.string.tv_female));
-                mGender = "2";
-                break;
+//            case R.id.rb_man:
+//                mTvPersonGender.setText(getResources().getString(R.string.tv_man));
+//                mGender = "1";
+//                break;
+//
+//            case R.id.rb_female:
+//                mTvPersonGender.setText(getResources().getString(R.string.tv_female));
+//                mGender = "2";
+//                break;
         }
     }
 
@@ -190,6 +205,32 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
         if (ViewUtils.isFastDoubleClick()) return;
         switch (view.getId()) {
 
+
+            //性别
+            case R.id.tv_person_gender:
+            case R.id.tv_gender_arrow:
+                BaseDialogHelper.showArrayWheelDialog(PersonalInformationActivity.this, mGenderIndex, getString(R.string.tv_title_select_gender), mList, new BaseDialogHelper.NumberInputListener() {
+                    @Override
+                    public void onNumberInputListener(String l) {
+
+                    }
+
+                    @Override
+                    public void onNumberSelectListener(final int l) {
+                        mGenderIndex = l;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mGender = (l == 0 ? "1" : "2");
+                                mIvGender.setImageDrawable(l == 0 ? getResources().getDrawable(R.mipmap.icon_man_unchecked) : getResources().getDrawable(R.mipmap.icon_female_unchecked));
+                                mTvPersonGender.setText(mList.get(l));
+                            }
+                        });
+
+                    }
+                });
+
+                break;
 
             case R.id.tv_person_height:
             case R.id.tv_height_arrow:
@@ -328,11 +369,17 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
             mTvPersonBodyWeight.setText(String.format("%s kg", personMesVO.getWeight()));
         }
         String gender = personMesVO.getGender();
+//        mRbFemale.setChecked(gender.equals("1"));
         if (gender.equals("1")) {
-            mRg_gender.check(R.id.rb_man);
+            mGenderIndex = 0;
+            mIvGender.setImageDrawable(getResources().getDrawable(R.mipmap.icon_man_unchecked));
+            mTvPersonGender.setText(getString(R.string.tv_man));
         } else {
-            mRg_gender.check(R.id.rb_female);
+            mGenderIndex = 1;
+            mIvGender.setImageDrawable(getResources().getDrawable(R.mipmap.icon_female_unchecked));
+            mTvPersonGender.setText(getString(R.string.tv_female));
         }
+
         String height = personMesVO.getHeight();
         if (StringUtils.isNullOrEmpty(height)) {
             mTvPersonHeight.setText("");

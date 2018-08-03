@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
 import com.bigkoo.pickerview.adapter.NumericWheelAdapter;
 import com.contrarywind.view.WheelView;
 import com.ihypnus.ihypnuscare.R;
@@ -262,6 +263,44 @@ public class BaseDialogHelper {
         kyeBaseDialog.setCanceledOnTouchOutside(false);
     }
 
+    public static void showArrayWheelDialog(final Context context, final int currentIndex, final String title, final List<String> list, final NumberInputListener listener) {
+        IhyBaseDialog kyeBaseDialog = IhyBaseDialog.createKyeBaseDialog(context, R.layout.layout_height_wheel_dialog, new IhyBaseDialog.DialogListener() {
+            @Override
+            public void bindView(View view, final IhyBaseDialog kyeBaseDialog) {
+                TextView tvTitle = (TextView) view.findViewById(R.id.title);
+                final WheelView wv = (WheelView) view.findViewById(R.id.wv);
+                TextView tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
+                TextView tvOk = (TextView) view.findViewById(R.id.tv_ok);
+                tvTitle.setText(title);
+                wv.setTextColorCenter(Color.BLACK);
+                ArrayWheelAdapter adapter = new ArrayWheelAdapter(list);
+                wv.setAdapter(adapter);
+                wv.setCyclic(false);// 可循环滚动
+                wv.setCurrentItem(currentIndex);
+                tvCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        kyeBaseDialog.dismiss();
+                    }
+                });
+
+                tvOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        kyeBaseDialog.dismiss();
+                        if (listener != null) {
+                            listener.onNumberSelectListener(wv.getCurrentItem());
+                        }
+                    }
+                });
+
+
+            }
+        });
+        kyeBaseDialog.setCancelable(false);
+        kyeBaseDialog.setCanceledOnTouchOutside(false);
+    }
+
     public static void showInputNameDialog(final Context context, final String mTitle, final NumberInputListener listener) {
         IhyBaseDialog kyeBaseDialog = IhyBaseDialog.createKyeBaseDialog(context, R.layout.layout_input_dialog, new IhyBaseDialog.DialogListener() {
             @Override
@@ -304,6 +343,7 @@ public class BaseDialogHelper {
 
     public interface NumberInputListener {
         void onNumberInputListener(String l);
+
         void onNumberSelectListener(int value);
     }
 

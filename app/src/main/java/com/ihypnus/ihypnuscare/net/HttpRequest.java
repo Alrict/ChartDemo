@@ -201,6 +201,8 @@ public class HttpRequest extends Request {
     private String handlerErrorMsg(String errorCode,String errorMsg){
         if (errorCode.equals("0000")){
             return IhyApplication.mInstance.getString(R.string.tv_toast_success);
+        }if (errorCode.equals("0001")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_send_success);
         }
         if (errorCode.equals("0013")){
             return IhyApplication.mInstance.getString(R.string.tv_toast_error0013);
@@ -210,6 +212,10 @@ public class HttpRequest extends Request {
         }
         if (errorCode.equals("1119")){
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1119);
+        } if (errorCode.equals("1120")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_pwd_error);
+        } if (errorCode.equals("1121")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_account_locked);
         }
         if (errorCode.equals("1300")){
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1300);
@@ -228,6 +234,8 @@ public class HttpRequest extends Request {
         }
         if (errorCode.equals("1311")){
             return IhyApplication.mInstance.getString(R.string.tv_toast_error_1311);
+        }if (errorCode.equals("1400")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_value_ilegal);
         }
 
         return errorMsg;

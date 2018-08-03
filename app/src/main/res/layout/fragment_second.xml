@@ -104,6 +104,12 @@
             android:textSize="@dimen/w44"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginBottom="10px"
+        android:layout_marginTop="10px"
+        android:background="@color/def_line_color"/>
     <LinearLayout
         android:id="@+id/layout_chart2"
         android:layout_width="match_parent"

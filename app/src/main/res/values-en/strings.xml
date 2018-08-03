@@ -266,4 +266,9 @@
     <string name="tv_parameter_error04">The initial pressure cannot be greater than the expiratory pressure</string>
     <string name="tv_parameter_error05">The initial pressure cannot be greater than the expiratory pressure</string>
 <string name="tv_title_wifi_set">Setting up WiFi</string>
+    <string name="tv_title_select_gender">Please select gender</string>
+    <string name="tv_toast_send_success">Has been sent</string>
+    <string name="tv_toast_pwd_error">Wrong password</string>
+    <string name="tv_toast_account_locked">Account locked</string>
+    <string name="tv_toast_value_ilegal">Setting value is illegal</string>
 </resources>
