@@ -36,6 +36,7 @@ import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
+import com.ihypnus.ihypnuscare.utils.WifiMgr;
 import com.ihypnus.ihypnuscare.utils.WifiSettingManager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -43,12 +44,16 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.ihypnus.ihypnuscare.utils.KyeSys.getContext;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -88,7 +93,6 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     private CreateSocketThread mThread;
     private Button mBtSetWifi;
     private static final int GET_LOCATION_INFO = 122;
-    private OutputStream mOutputStream;
     private String mNewDeviceId;
     private ArrayList<ScanResult> mScanResults;
     private String mSSID;
@@ -98,15 +102,31 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case 1:
-                    ToastUtils.showToastDefault(getString(R.string.tv_toast_wifi_set_success));
-                    EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(NewDeviceInformationActivity.class));
-                    EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(AddNwedeviceActivity.class));
-                    finish();
+                case 0x11:
+                    BaseDialogHelper.dismissLoadingDialog();
+                    Bundle bundle = msg.getData();
+                    String response = bundle.getString("msg");
+
+                    if (!StringUtils.isNullOrEmpty(response)) {
+                        String s = response.toUpperCase();
+                        if (s.equals("SETOK")){
+                            ToastUtils.showToastDefault(getString(R.string.tv_toast_wifi_set_success));
+                            EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(NewDeviceInformationActivity.class));
+                            EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(AddNwedeviceActivity.class));
+                            finish();
+                        }else {
+                            ToastUtils.showToastDefault(response);
+                        }
+
+                    } else {
+                        ToastUtils.showToastDefault(response);
+
+                    }
                     break;
             }
         }
     };
+    private WifiMgr mWifiMgr;
 
     @Override
     protected int setView() {
@@ -136,7 +156,13 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
         mWifiSettingManager = WifiSettingManager.getInstance().initWifiManager(this);
         BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.tv_wifi_loading));
         //扫描wifi
-        mWifiSettingManager.startScan();
+//        mWifiSettingManager.startScan();
+        mWifiMgr = new WifiMgr(getContext());
+        if (mWifiMgr.isWifiEnabled()) {
+            mWifiMgr.startScan();
+        } else {
+            mWifiMgr.openWifi();
+        }
         //wifiManager
         mWifiManager = mWifiSettingManager.getWifiManager();
     }
@@ -244,52 +270,51 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
         @Override
         public void run() {
             super.run();
+            //定义消息
+            Message message = new Message();
+            message.what = 0x11;
+            Bundle bundle = new Bundle();
+            bundle.clear();
             try {
-                if (mSocket == null) {
-                    mSocket = new Socket(IP, PORT);
-                }
-                mOutputStream = mSocket.getOutputStream();
-
                 if (mSocket == null || mSocket.isClosed()) {
-                    initSocket();
+                    mSocket = new Socket();
+                    mSocket.connect(new InetSocketAddress(IP, PORT), 1000 * 10); //端口号为30000
                 }
+                //输入流
+                OutputStream ou = mSocket.getOutputStream();
+                //输出流
+//                mInputStream = mSocket.getInputStream();
+                BufferedReader bff = new BufferedReader(new InputStreamReader(
+                        mSocket.getInputStream()));
+                //读取服务器信息
+                String line = null;
+                String buffer = "";
+                while ((line = bff.readLine()) != null) {
+                    buffer = line + buffer;
+                }
+
                 if (msg != null) {
-
-                    mOutputStream.write(msg.getBytes());
-
+                    ou.write(msg.getBytes());
                     //发送完一条数据后，需要再写入“\r\n”，否则可能服务端不能实时收到数据。
-                    mOutputStream.write("\r\n".getBytes());
-
-                    mOutputStream.flush();
-                    closeScoket();
-                    //设置成功
-                    mHandler.obtainMessage(1, "设置成功").sendToTarget();
+                    ou.write("\r\n".getBytes());
+                    ou.flush();
                 }
-                BaseDialogHelper.dismissLoadingDialog();
+                bundle.putString("msg", buffer.toString());
+                message.setData(bundle);
 
-            } catch (UnknownHostException e) {
-                BaseDialogHelper.dismissLoadingDialog();
-                e.printStackTrace();
-                closeScoket();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        BaseDialogHelper.dismissLoadingDialog();
-                        showIndeterminateProgressDialog(true, getResources().getString(R.string.socket_err));
-                    }
-                });
-                Log.e("llw", "网络异常,scoket连接失败");
-
+                if (StringUtils.isNullOrEmpty(msg) && StringUtils.isNullOrEmpty(buffer)) {
+                    mHandler.sendMessage(message);
+                }
+                //关闭各种输入输出流
+                bff.close();
+                ou.close();
+                mSocket.close();
+            } catch (SocketTimeoutException aa) {
+                //连接超时 在UI界面显示消息
+                bundle.putString("msg", getString(R.string.tv_net_connect_error));
+                message.setData(bundle);
+                mHandler.sendMessage(message);
             } catch (IOException e) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        BaseDialogHelper.dismissLoadingDialog();
-                        showIndeterminateProgressDialog(true, getResources().getString(R.string.socket_err));
-                    }
-                });
-                Log.d("llw", "scoket连接失败" + e.toString());
-                closeScoket();
                 e.printStackTrace();
             }
         }
@@ -479,8 +504,8 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     private void initSocket() {
 
         try {
-            mSocket = new Socket(IP, PORT);
-            mOutputStream = mSocket.getOutputStream();
+            mSocket = new Socket();
+            mSocket.connect(new InetSocketAddress(IP, PORT), 1000 * 10);
         } catch (IOException e) {
             e.printStackTrace();
             Log.e("llw", "网络异常");
@@ -492,17 +517,6 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     //④关闭Socket连接
 
     private void closeScoket() {
-        try {
-            if (mOutputStream != null) {
-                mOutputStream.close();
-            }
-
-        } catch (IOException e1) {
-            e1.printStackTrace();
-            BaseDialogHelper.dismissLoadingDialog();
-        } finally {
-            mOutputStream = null;
-        }
 
         try {
             if (mSocket != null) {
@@ -565,6 +579,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        closeScoket();
         unregisterReceiver(receiver);
     }
 }
