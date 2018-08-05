@@ -152,6 +152,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initEvent() {
+        mTvLocalCode.setOnClickListener(this);
+        mIvDownArrow.setOnClickListener(this);
         mEtCount.addTextChangedListener(this);
         mEtPassWord.addTextChangedListener(new TextWatcher() {
             @Override
