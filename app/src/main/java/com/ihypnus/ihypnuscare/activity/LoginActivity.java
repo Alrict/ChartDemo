@@ -26,9 +26,12 @@ import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.bean.CountryCodeVO;
 import com.ihypnus.ihypnuscare.bean.LoginBean;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.iface.BaseType;
+import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.AndroidSystemHelper;
 import com.ihypnus.ihypnuscare.utils.LogOut;
@@ -37,6 +40,8 @@ import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.List;
 
 import kr.co.namee.permissiongen.PermissionGen;
 
@@ -247,18 +252,42 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
      * 获取国家区号
      */
     private void getCountryCodeByNet() {
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.onloading));
         IhyRequest.getCountryCode(new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
-
+                BaseDialogHelper.dismissLoadingDialog();
+                CountryCodeVO codeVO = (CountryCodeVO) var1;
+                if (codeVO != null) {
+                    List<String> result = codeVO.getResult();
+                    if (result != null && result.size() > 0)
+                        showCountryCodeDialog(result);
+                }
             }
 
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
-
+                BaseDialogHelper.dismissLoadingDialog();
             }
         });
 
+    }
+
+    /**
+     * @param arrayList
+     */
+    private void showCountryCodeDialog(List<String> arrayList) {
+        BaseDialogHelper.showListDialog(this, "", getString(R.string.tv_btn_back), arrayList, new DialogListener() {
+            @Override
+            public void onClick(BaseType baseType) {
+
+            }
+
+            @Override
+            public void onItemClick(long postion, String s) {
+                mTvLocalCode.setText(s);
+            }
+        });
     }
 
     /**

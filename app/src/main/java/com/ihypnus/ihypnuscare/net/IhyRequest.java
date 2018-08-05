@@ -4,6 +4,7 @@ import com.android.volley.Request;
 import com.android.volley.ResponseCallback;
 import com.android.volley.toolbox.Volley;
 import com.ihypnus.ihypnuscare.BuildConfig;
+import com.ihypnus.ihypnuscare.bean.CountryCodeVO;
 import com.ihypnus.ihypnuscare.bean.DefaultDeviceIdVO;
 import com.ihypnus.ihypnuscare.bean.DeviceListVO;
 import com.ihypnus.ihypnuscare.bean.DeviceModelVO;
@@ -46,10 +47,11 @@ public class IhyRequest {
      * @param phoneNumber 手机号码
      * @param callback
      */
-    public static void VerifyPhoneNumber(String phoneNumber, ResponseCallback callback) {
+    public static void VerifyPhoneNumber(String phoneNumber,String region, ResponseCallback callback) {
         String url = IhyAction.Validationet;
         Map<String, String> params = new HashMap<String, String>();
         params.put("phone", phoneNumber);
+        params.put("region", region);
         HttpRequest httpRequest = new HttpRequest(Request.Method.POST, url, params, callback);
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
 //        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
@@ -103,12 +105,13 @@ public class IhyRequest {
      * @param deviceId
      * @param callback
      */
-    public static void registerApp(UserInfo userInfo, String authCode, String deviceId, ResponseCallback callback) {
+    public static void registerApp(UserInfo userInfo, String authCode, String deviceId,String region, ResponseCallback callback) {
         String url = IhyAction.appregister;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("userInfo", userInfo);
         params.put("authCode", authCode);
         params.put("deviceId", deviceId);
+        params.put("region", region);
         SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
 //        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
@@ -121,11 +124,12 @@ public class IhyRequest {
      * @param phone    手机号
      * @param callback
      */
-    public static void getVerifyCode(String phone, ResponseCallback callback) {
+    public static void getVerifyCode(String phone, String region, ResponseCallback callback) {
 //        String url = "http://care.ihypnus.com/hypnusMgr/dmz/authCode/get";
         String url = IhyAction.GetVerfityCode;
         Map<String, String> params = new HashMap<String, String>();
         params.put("phone", phone);
+        params.put("region", region);
         HttpRequest httpRequest = new HttpRequest(Request.Method.POST, url, params, callback);
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
 //        httpRequest.setRetryPolicy(new DefaultRetryPolicy(15000, 1, 0.0f));
@@ -406,7 +410,7 @@ public class IhyRequest {
      * @param newPassword
      * @param callback
      */
-    public static void getBackPassword(String JSESSIONID, boolean isCookie, String phone, String authCode, String newPassword, ResponseCallback callback) {
+    public static void getBackPassword(String JSESSIONID, boolean isCookie, String phone, String authCode, String newPassword,String region, ResponseCallback callback) {
         String url = IhyAction.getPwd;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("JSESSIONID", JSESSIONID);
@@ -414,6 +418,7 @@ public class IhyRequest {
         params.put("phone", phone);
         params.put("authCode", authCode);
         params.put("newPwd", newPassword);
+        params.put("region", region);
         SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
         Volley.me.addInitRequestHead("Cookie", "JSESSIONID=" + JSESSIONID);
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
@@ -460,11 +465,12 @@ public class IhyRequest {
      */
     public static void getCountryCode(ResponseCallback callback) {
         boolean debug = BuildConfig.DEBUG;
-        String url = "http://care.ihypnus.com/hypnusMgr/dmz/authCode/region";
+//        String url = "http://care.ihypnus.com/hypnusMgr/dmz/authCode/region";
+        String url = "http://dev.ihypnus.com/hypnusMgr/dmz/authCode/region";
         Map<String, Object> params = new HashMap<String, Object>();
         SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
-        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
-//        httpRequest.setResponseJavaBean(DeviceModelVO.class);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.NORMAL_JAVABEAN);
+        httpRequest.setResponseJavaBean(CountryCodeVO.class);
         NetRequestHelper.getInstance().add(httpRequest, url);
 
     }

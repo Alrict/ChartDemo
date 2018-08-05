@@ -29,10 +29,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.bean.CountryCodeVO;
 import com.ihypnus.ihypnuscare.bean.UserInfo;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.dialog.IhyBaseDialog;
+import com.ihypnus.ihypnuscare.iface.BaseType;
+import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
@@ -43,6 +46,8 @@ import com.ihypnus.zxing.android.CaptureActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
@@ -226,7 +231,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 mIvCodeLoading.setVisibility(View.VISIBLE);
                 mBtnVcerificationCode.setVisibility(View.GONE);
                 mIvCodeLoading.startAnimation(mCodeLoadingAnim);
-                getVerifyCodeByNet(countNo);
+                String code = mTvLocalCode.getText().toString().trim();
+                getVerifyCodeByNet(countNo, code);
                 break;
 
             case R.id.iv_scan:
@@ -301,8 +307,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         UserInfo userInfo = new UserInfo(account, password);
         String vertifyCode = mEtVcerificationCode.getText().toString().trim();
         String deviceId = mEtDeviceCode.getText().toString().trim();
+        String region = mTvLocalCode.getText().toString().trim();
 
-        IhyRequest.registerApp(userInfo, vertifyCode, deviceId, new ResponseCallback() {
+        IhyRequest.registerApp(userInfo, vertifyCode, deviceId, region, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
@@ -494,9 +501,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      *
      * @param phoneNo
      */
-    private void getVerifyCodeByNet(String phoneNo) {
+    private void getVerifyCodeByNet(String phoneNo, String region) {
         Volley.me.removeInitRequestHead("Cookie");
-        IhyRequest.getVerifyCode(phoneNo, new ResponseCallback() {
+        IhyRequest.getVerifyCode(phoneNo, region, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 ToastUtils.showToastDefault(var3);
@@ -551,13 +558,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String account = mEtCount.getText().toString().trim();
         mImgLoginAccountClear.setVisibility(account.length() > 0 ? View.VISIBLE : View.INVISIBLE);
         if (account.length() == 11) {
-            vertifyPhoneNum(account);
+            String region = mTvLocalCode.getText().toString().trim();
+            vertifyPhoneNum(account, region);
         }
     }
 
-    private void vertifyPhoneNum(final String account) {
+    private void vertifyPhoneNum(final String account, String region) {
         BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.tv_verifying));
-        IhyRequest.VerifyPhoneNumber(account, new ResponseCallback() {
+        IhyRequest.VerifyPhoneNumber(account, region, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
@@ -588,18 +596,41 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * 获取国家区号
      */
     private void getCountryCodeByNet() {
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.onloading));
         IhyRequest.getCountryCode(new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
-
+                BaseDialogHelper.dismissLoadingDialog();
+                CountryCodeVO codeVO = (CountryCodeVO) var1;
+                if (codeVO != null) {
+                    List<String> result = codeVO.getResult();
+                    if (result != null && result.size() > 0)
+                        showCountryCodeDialog(result);
+                }
             }
 
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
-
+                BaseDialogHelper.dismissLoadingDialog();
             }
         });
+    }
 
+    /**
+     * @param arrayList
+     */
+    private void showCountryCodeDialog(List<String> arrayList) {
+        BaseDialogHelper.showListDialog(this, "", getString(R.string.tv_btn_back), arrayList, new DialogListener() {
+            @Override
+            public void onClick(BaseType baseType) {
+
+            }
+
+            @Override
+            public void onItemClick(long postion, String s) {
+                mTvLocalCode.setText(s);
+            }
+        });
     }
 
 }

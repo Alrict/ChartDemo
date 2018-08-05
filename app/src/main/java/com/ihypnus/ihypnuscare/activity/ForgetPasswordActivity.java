@@ -22,6 +22,7 @@ import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
 import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.bean.CountryCodeVO;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.iface.BaseType;
@@ -35,6 +36,8 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * @Package com.ihypnus.ihypnuscare.activity
@@ -139,7 +142,8 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                     mBtnVerificationCode.setVisibility(View.GONE);
                     mIvCodeLoading.setVisibility(View.VISIBLE);
                     mIvCodeLoading.startAnimation(mCodeLoadingAnim);
-                    getVerificationCodeByNet(phone);
+                    String code = mTvLocalCode.getText().toString().trim();
+                    getVerificationCodeByNet(phone, code);
                 } else {
                     mEtCount.setText("");
                     ToastUtils.showToastDefault(mEtCount.getHint().toString());
@@ -199,7 +203,8 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             return;
         }
         BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.onloading));
-        IhyRequest.getBackPassword(Constants.JSESSIONID, true, phone, code, pw2, new ResponseCallback() {
+        String region = mTvLocalCode.getText().toString().trim();
+        IhyRequest.getBackPassword(Constants.JSESSIONID, true, phone, code, pw2, region, new ResponseCallback() {
 
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
@@ -238,8 +243,8 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
      *
      * @param phone 手机号码
      */
-    private void getVerificationCodeByNet(String phone) {
-        IhyRequest.getVerifyCode(phone, new ResponseCallback() {
+    private void getVerificationCodeByNet(String phone, String region) {
+        IhyRequest.getVerifyCode(phone, region, new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 ToastUtils.showToastDefault(var3);
@@ -329,7 +334,6 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
     }
 
 
-
     private void setPasswordVisible(boolean isChecked, EditText editText) {
         String passWord = editText.getText().toString();
         if (isChecked) {
@@ -346,18 +350,41 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
      * 获取国家区号
      */
     private void getCountryCodeByNet() {
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.onloading));
         IhyRequest.getCountryCode(new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
-
+                BaseDialogHelper.dismissLoadingDialog();
+                CountryCodeVO codeVO = (CountryCodeVO) var1;
+                if (codeVO != null) {
+                    List<String> result = codeVO.getResult();
+                    if (result != null && result.size() > 0)
+                        showCountryCodeDialog(result);
+                }
             }
 
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
-
+                BaseDialogHelper.dismissLoadingDialog();
             }
         });
+    }
 
+    /**
+     * @param arrayList
+     */
+    private void showCountryCodeDialog(List<String> arrayList) {
+        BaseDialogHelper.showListDialog(this, "", getString(R.string.tv_btn_back), arrayList, new DialogListener() {
+            @Override
+            public void onClick(BaseType baseType) {
+
+            }
+
+            @Override
+            public void onItemClick(long postion, String s) {
+                mTvLocalCode.setText(s);
+            }
+        });
     }
 
     @Override
