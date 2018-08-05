@@ -47,7 +47,7 @@
 
             <ImageView
                 android:id="@+id/iv_user"
-                android:layout_width="56px"
+                android:layout_width="66px"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/icon_user"/>
 
@@ -63,7 +63,7 @@
 
             <ImageView
                 android:id="@+id/iv_down_arrow"
-                android:layout_width="26px"
+                android:layout_width="36px"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20px"
                 android:src="@mipmap/ic_down_arrow"/>
@@ -120,7 +120,7 @@
 
         <ImageView
             android:id="@+id/iv_pass_word"
-            android:layout_width="56px"
+            android:layout_width="66px"
             android:layout_height="wrap_content"
             android:src="@mipmap/icon_lock"/>
 
@@ -141,8 +141,8 @@
 
         <CheckBox
             android:id="@+id/cb_visible"
-            android:layout_width="76px"
-            android:layout_height="76px"
+            android:layout_width="66px"
+            android:layout_height="66px"
             android:background="@drawable/password_visible"
             android:button="@null"/>
 

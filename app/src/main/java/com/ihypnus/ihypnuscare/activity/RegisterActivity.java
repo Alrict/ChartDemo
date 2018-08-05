@@ -202,7 +202,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         if (ViewUtils.isFastDoubleClick()) return;
         switch (v.getId()) {
-
+            case R.id.tv_local_code:
+            case R.id.iv_down_arrow:
+                //国家区号选择
+                getCountryCodeByNet();
+                break;
             case R.id.img_login_account_clear2:
                 //清除手机号
                 mEtCount.setText("");
@@ -578,6 +582,24 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         if (mTimerCountDown != null) {
             mTimerCountDown.cancel();
         }
+    }
+
+    /**
+     * 获取国家区号
+     */
+    private void getCountryCodeByNet() {
+        IhyRequest.getCountryCode(new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+
+            }
+        });
+
     }
 
 }

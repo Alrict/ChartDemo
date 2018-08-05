@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.ihypnus.ihypnuscare.R;
+import com.zhy.autolayout.utils.AutoUtils;
 
 
 /**
@@ -32,6 +33,7 @@ public class WifiListAdapter extends ArrayAdapter<ScanResult> {
 
         if (convertView == null) {
             convertView = mInflater.inflate(mResource, parent, false);
+            AutoUtils.autoSize(convertView);
         }
 
         TextView name = (TextView) convertView.findViewById(R.id.wifi_name);

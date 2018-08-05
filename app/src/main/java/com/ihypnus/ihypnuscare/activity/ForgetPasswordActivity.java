@@ -129,7 +129,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             case R.id.tv_local_code:
             case R.id.iv_down_arrow:
                 //国家区号选择
-
+                getCountryCodeByNet();
                 break;
 
             case R.id.btn_vcerification_code:
@@ -328,6 +328,8 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
 
     }
 
+
+
     private void setPasswordVisible(boolean isChecked, EditText editText) {
         String passWord = editText.getText().toString();
         if (isChecked) {
@@ -338,6 +340,24 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
         }
         editText.setSelection(passWord.length());
+    }
+
+    /**
+     * 获取国家区号
+     */
+    private void getCountryCodeByNet() {
+        IhyRequest.getCountryCode(new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+
+            }
+        });
+
     }
 
     @Override

@@ -206,6 +206,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.tv_local_code:
             case R.id.iv_down_arrow:
                 //选择区号
+                getCountryCodeByNet();
 
                 break;
             //清除帐号
@@ -240,6 +241,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
 
         }
+    }
+
+    /**
+     * 获取国家区号
+     */
+    private void getCountryCodeByNet() {
+        IhyRequest.getCountryCode(new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+
+            }
+        });
+
     }
 
     /**

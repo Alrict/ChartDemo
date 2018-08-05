@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:minHeight="@dimen/h120"
-              android:orientation="horizontal"
-              android:padding="@dimen/w20">
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                     android:layout_width="match_parent"
+                                     android:layout_height="wrap_content"
+                                     android:minHeight="@dimen/h120"
+                                     android:orientation="horizontal"
+                                     android:padding="@dimen/w20">
 
     <TextView
         android:id="@+id/wifi_name"
         style="@style/TextAppearanceMedium"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/w50"
+        android:layout_marginLeft="50px"
         android:gravity="center_vertical"
         android:textColor="@color/black_pure"/>
 
     <TextView
         android:id="@+id/wifi_signal"
         style="@style/TextAppearanceMedium"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginRight="@dimen/w50"
+        android:layout_marginRight="50px"
+        android:layout_weight="1"
         android:gravity="center_vertical|right"
         android:textColor="@color/black_pure"/>
 
-</LinearLayout>
+</com.zhy.autolayout.AutoLinearLayout>

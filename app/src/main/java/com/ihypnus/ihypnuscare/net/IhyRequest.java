@@ -3,6 +3,7 @@ package com.ihypnus.ihypnuscare.net;
 import com.android.volley.Request;
 import com.android.volley.ResponseCallback;
 import com.android.volley.toolbox.Volley;
+import com.ihypnus.ihypnuscare.BuildConfig;
 import com.ihypnus.ihypnuscare.bean.DefaultDeviceIdVO;
 import com.ihypnus.ihypnuscare.bean.DeviceListVO;
 import com.ihypnus.ihypnuscare.bean.DeviceModelVO;
@@ -96,12 +97,13 @@ public class IhyRequest {
 
     /**
      * 注册（新接口）
+     *
      * @param userInfo
      * @param authCode
      * @param deviceId
      * @param callback
      */
-    public static void registerApp(UserInfo userInfo, String authCode,String deviceId, ResponseCallback callback) {
+    public static void registerApp(UserInfo userInfo, String authCode, String deviceId, ResponseCallback callback) {
         String url = IhyAction.appregister;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("userInfo", userInfo);
@@ -450,5 +452,20 @@ public class IhyRequest {
         httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_JAVA_BEAN);
         httpRequest.setResponseJavaBean(DeviceModelVO.class);
         NetRequestHelper.getInstance().add(httpRequest, url);
+    }
+
+    /**
+     * 国际地区号
+     * @param callback
+     */
+    public static void getCountryCode(ResponseCallback callback) {
+        boolean debug = BuildConfig.DEBUG;
+        String url = "http://care.ihypnus.com/hypnusMgr/dmz/authCode/region";
+        Map<String, Object> params = new HashMap<String, Object>();
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+//        httpRequest.setResponseJavaBean(DeviceModelVO.class);
+        NetRequestHelper.getInstance().add(httpRequest, url);
+
     }
 }

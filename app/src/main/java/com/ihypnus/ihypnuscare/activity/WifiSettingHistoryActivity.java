@@ -90,7 +90,6 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     private WifiSettingManager mWifiSettingManager;
     private Socket mSocket = null;
     private Gson mGson = new Gson();
-    private CreateSocketThread mThread;
     private Button mBtSetWifi;
     private static final int GET_LOCATION_INFO = 122;
     private String mNewDeviceId;
@@ -106,21 +105,15 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
                     BaseDialogHelper.dismissLoadingDialog();
                     Bundle bundle = msg.getData();
                     String response = bundle.getString("msg");
-
+                    ToastUtils.showToastDefault(response);
                     if (!StringUtils.isNullOrEmpty(response)) {
                         String s = response.toUpperCase();
-                        if (s.equals("SETOK")){
+                        if (s.equals("SETOK")) {
                             ToastUtils.showToastDefault(getString(R.string.tv_toast_wifi_set_success));
                             EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(NewDeviceInformationActivity.class));
                             EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(AddNwedeviceActivity.class));
                             finish();
-                        }else {
-                            ToastUtils.showToastDefault(response);
                         }
-
-                    } else {
-                        ToastUtils.showToastDefault(response);
-
                     }
                     break;
             }
@@ -278,10 +271,16 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
             try {
                 if (mSocket == null || mSocket.isClosed()) {
                     mSocket = new Socket();
-                    mSocket.connect(new InetSocketAddress(IP, PORT), 1000 * 10); //端口号为30000
+                    mSocket.connect(new InetSocketAddress(IP, PORT), 1000 * 30);
                 }
                 //输入流
                 OutputStream ou = mSocket.getOutputStream();
+                if (msg != null) {
+                    ou.write(msg.getBytes());
+                    //发送完一条数据后，需要再写入“\r\n”，否则可能服务端不能实时收到数据。
+                    ou.write("\r\n".getBytes());
+                    ou.flush();
+                }
                 //输出流
 //                mInputStream = mSocket.getInputStream();
                 BufferedReader bff = new BufferedReader(new InputStreamReader(
@@ -292,23 +291,20 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
                 while ((line = bff.readLine()) != null) {
                     buffer = line + buffer;
                 }
-
-                if (msg != null) {
-                    ou.write(msg.getBytes());
-                    //发送完一条数据后，需要再写入“\r\n”，否则可能服务端不能实时收到数据。
-                    ou.write("\r\n".getBytes());
-                    ou.flush();
-                }
                 bundle.putString("msg", buffer.toString());
                 message.setData(bundle);
-
-                if (StringUtils.isNullOrEmpty(msg) && StringUtils.isNullOrEmpty(buffer)) {
-                    mHandler.sendMessage(message);
+                if (mSocket != null) {
+                    boolean connected = mSocket.isConnected();
+                    LogOut.d("llw", "scoket是否已连接:" + connected);
                 }
-                //关闭各种输入输出流
-                bff.close();
-                ou.close();
-                mSocket.close();
+                if (!StringUtils.isNullOrEmpty(msg) && !StringUtils.isNullOrEmpty(buffer)) {
+                    mHandler.sendMessage(message);
+                    //关闭各种输入输出流
+                    bff.close();
+                    ou.close();
+                    mSocket.close();
+                }
+
             } catch (SocketTimeoutException aa) {
                 //连接超时 在UI界面显示消息
                 bundle.putString("msg", getString(R.string.tv_net_connect_error));
@@ -464,8 +460,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
      * 创建socket
      */
     private void connectSocket(String msg) {
-        mThread = new CreateSocketThread(msg);
-        mThread.start();
+        new CreateSocketThread(msg).start();
     }
 
     /**
@@ -501,19 +496,6 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     }
 
     //连接socket时，不能直接在UI主线程中，不然会包：android.os.NetworkOnMainThreadException错误
-    private void initSocket() {
-
-        try {
-            mSocket = new Socket();
-            mSocket.connect(new InetSocketAddress(IP, PORT), 1000 * 10);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("llw", "网络异常");
-
-        }
-
-    }
-
     //④关闭Socket连接
 
     private void closeScoket() {
