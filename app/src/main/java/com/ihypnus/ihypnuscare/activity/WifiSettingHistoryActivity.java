@@ -32,6 +32,7 @@ import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
+import com.ihypnus.ihypnuscare.thread.ThreadTask;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
@@ -120,6 +121,10 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
         }
     };
     private WifiMgr mWifiMgr;
+    private int mErrorCounts = 0;
+    private TextView mTvLog;
+    private StringBuffer mBuffer;
+    private boolean mSuccess;
 
     @Override
     protected int setView() {
@@ -131,6 +136,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
         mLayoutSsid = (LinearLayout) findViewById(R.id.layout_ssid);
         mLayoutPwd = (LinearLayout) findViewById(R.id.layout_pwd);
         mTvSsid = (TextView) findViewById(R.id.tv_ssid);
+        mTvLog = (TextView) findViewById(R.id.tv_log);
         mTvPwd = (EditText) findViewById(R.id.tv_pwd);
         mCbVisible = (CheckBox) findViewById(R.id.cb_visible);
         mBtnConfirm = (Button) findViewById(R.id.btn_confirm);
@@ -158,6 +164,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
         }
         //wifiManager
         mWifiManager = mWifiSettingManager.getWifiManager();
+        mBuffer = new StringBuffer();
     }
 
     @Override
@@ -199,8 +206,10 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
                 break;
             case R.id.btn_confirm:
                 boolean b = checkInfos();
+                mSuccess = false;
+                closeScoket();
                 if (b) {
-                    setWifiMsg(mSSID, mTvPwd.getText().toString().trim());
+                    setWifiMsg(mTvSsid.getText().toString().trim(), mTvPwd.getText().toString().trim());
                 }
                 break;
 
@@ -252,69 +261,85 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
         registerReceiver(receiver, intentFilter);
     }
 
-    class CreateSocketThread extends Thread {
-
-        String msg;
-
-        public CreateSocketThread(String msg) {
-            this.msg = msg;
-        }
-
-        @Override
-        public void run() {
-            super.run();
-            //定义消息
-            Message message = new Message();
-            message.what = 0x11;
-            Bundle bundle = new Bundle();
-            bundle.clear();
-            try {
-                if (mSocket == null || mSocket.isClosed()) {
-                    mSocket = new Socket();
-                    mSocket.connect(new InetSocketAddress(IP, PORT), 1000 * 30);
-                }
-                //输入流
-                OutputStream ou = mSocket.getOutputStream();
-                if (msg != null) {
-                    ou.write(msg.getBytes());
-                    //发送完一条数据后，需要再写入“\r\n”，否则可能服务端不能实时收到数据。
-                    ou.write("\r\n".getBytes());
-                    ou.flush();
-                }
-                //输出流
-//                mInputStream = mSocket.getInputStream();
-                BufferedReader bff = new BufferedReader(new InputStreamReader(
-                        mSocket.getInputStream()));
-                //读取服务器信息
-                String line = null;
-                String buffer = "";
-                while ((line = bff.readLine()) != null) {
-                    buffer = line + buffer;
-                }
-                bundle.putString("msg", buffer.toString());
-                message.setData(bundle);
-                if (mSocket != null) {
-                    boolean connected = mSocket.isConnected();
-                    LogOut.d("llw", "scoket是否已连接:" + connected);
-                }
-                if (!StringUtils.isNullOrEmpty(msg) && !StringUtils.isNullOrEmpty(buffer)) {
-                    mHandler.sendMessage(message);
-                    //关闭各种输入输出流
-                    bff.close();
-                    ou.close();
-                    mSocket.close();
-                }
-
-            } catch (SocketTimeoutException aa) {
-                //连接超时 在UI界面显示消息
-                bundle.putString("msg", getString(R.string.tv_net_connect_error));
-                message.setData(bundle);
-                mHandler.sendMessage(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    class CreateSocketThread extends Thread {
+//
+//        String msg;
+//
+//        public CreateSocketThread(String msg) {
+//            this.msg = msg;
+//        }
+//
+//        @Override
+//        public void run() {
+//            super.run();
+//            //定义消息
+//            Message message = new Message();
+//            message.what = 0x11;
+//            Bundle bundle = new Bundle();
+//            bundle.clear();
+//            try {
+//                if (mSocket == null || mSocket.isClosed()) {
+//                    mSocket = new Socket();
+//                    mSocket.connect(new InetSocketAddress(IP, PORT), 1000 * 30);
+//                }
+//                //输入流
+//                OutputStream ou = mSocket.getOutputStream();
+//                if (msg != null) {
+//                    ou.write(msg.getBytes());
+//                    //发送完一条数据后，需要再写入“\r\n”，否则可能服务端不能实时收到数据。
+//                    ou.write("\r\n".getBytes());
+//                    ou.flush();
+//                }
+//                //输出流
+////                mInputStream = mSocket.getInputStream();
+//                BufferedReader bff = new BufferedReader(new InputStreamReader(
+//                        mSocket.getInputStream()));
+//                //读取服务器信息
+//                String line = null;
+//                String buffer = "";
+//                while ((line = bff.readLine()) != null) {
+//                    buffer = line + buffer;
+//                }
+//                bundle.putString("msg", buffer.toString());
+//                message.setData(bundle);
+//                if (mSocket != null) {
+//                    boolean connected = mSocket.isConnected();
+//                    LogOut.d("llw", "scoket是否已连接:" + connected);
+//                }
+//                if (!StringUtils.isNullOrEmpty(msg) && !StringUtils.isNullOrEmpty(buffer)) {
+//                    mErrorCounts = 0;
+//                    mHandler.sendMessage(message);
+//                    //关闭各种输入输出流
+//                    bff.close();
+//                    ou.close();
+//                    mSocket.close();
+//                }
+//
+//            } catch (SocketTimeoutException aa) {
+//                //连接超时 在UI界面显示消息
+//                bundle.putString("msg", getString(R.string.tv_net_connect_error));
+//                message.setData(bundle);
+//                mHandler.sendMessage(message);
+//            } catch (IOException e) {
+////                bundle.putString("msg", "IOException:" + e.getMessage());
+////                message.setData(bundle);
+////                mHandler.sendMessage(message);
+//                mErrorCounts++;
+//                e.printStackTrace();
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        ToastUtils.showToastDefault("第" + mErrorCounts + "次尝试连接服务端");
+//                    }
+//                });
+//
+//                if (mSocket != null && mSocket.isConnected()) {
+//                    closeScoket();
+//                    connectSocket(msg);
+//                }
+//            }
+//        }
+//    }
 
     /**
      * wifi状态改变广播
@@ -447,20 +472,99 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
         map.put("ssid", ssid);
         map.put("pwd", pwd);
         String msg = mGson.toJson(map);
+        mBuffer.append(msg).append(",");
+        mTvLog.setText("连接次数:" + mErrorCounts + "," + mBuffer.toString());
         Log.d("llw", msg);
         if (isWifiEnable(this)) {
             connectSocket(msg);
         } else {
-            BaseDialogHelper.dismissLoadingDialog();
             showIndeterminateProgressDialog(true, getResources().getString(R.string.wifi_permission_connect_target));
+            BaseDialogHelper.dismissLoadingDialog();
         }
     }
 
     /**
      * 创建socket
      */
-    private void connectSocket(String msg) {
-        new CreateSocketThread(msg).start();
+    private void connectSocket(final String msg) {
+        ThreadTask.getInstance().executorNetThread(new Runnable() {
+            @Override
+            public void run() {
+                //定义消息
+                Message message = new Message();
+                message.what = 0x11;
+                Bundle bundle = new Bundle();
+                bundle.clear();
+                try {
+                    if (mSocket == null || mSocket.isClosed()) {
+                        mSocket = new Socket();
+                        mSocket.connect(new InetSocketAddress(IP, PORT), 1000 * 30);
+                    }
+                    while (!mSuccess) {
+                        //输入流
+                        OutputStream ou = mSocket.getOutputStream();
+                        if (msg != null) {
+                            ou.write(msg.getBytes());
+                            //发送完一条数据后，需要再写入“\r\n”，否则可能服务端不能实时收到数据。
+                            ou.write("\r\n".getBytes());
+                            ou.flush();
+                        }
+                        //输出流
+//                mInputStream = mSocket.getInputStream();
+                        BufferedReader bff = new BufferedReader(new InputStreamReader(
+                                mSocket.getInputStream()));
+                        //读取服务器信息
+                        String line = null;
+                        String buffer = "";
+                        while ((line = bff.readLine()) != null) {
+                            buffer = line + buffer;
+                        }
+                        bundle.putString("msg", buffer.toString());
+                        message.setData(bundle);
+                        if (mSocket != null) {
+                            boolean connected = mSocket.isConnected();
+                            LogOut.d("llw", "scoket是否已连接:" + connected);
+                        }
+                        if (!StringUtils.isNullOrEmpty(msg) && !StringUtils.isNullOrEmpty(buffer)) {
+                            mErrorCounts = 0;
+                            mHandler.sendMessage(message);
+                            mSuccess = true;
+                            //关闭各种输入输出流
+                            bff.close();
+                            ou.close();
+                            mSocket.close();
+                        }
+                    }
+
+
+                } catch (SocketTimeoutException aa) {
+                    //连接超时 在UI界面显示消息
+                    bundle.putString("msg", getString(R.string.tv_net_connect_error));
+                    message.setData(bundle);
+                    mHandler.sendMessage(message);
+                } catch (IOException e) {
+//                bundle.putString("msg", "IOException:" + e.getMessage());
+//                message.setData(bundle);
+//                mHandler.sendMessage(message);
+                    mErrorCounts++;
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtils.showToastDefault("第" + mErrorCounts + "次尝试连接服务端");
+                        }
+                    });
+
+                    if (mSocket != null && mSocket.isConnected()) {
+                        closeScoket();
+                        if (mErrorCounts <= 5) {
+                            connectSocket(msg);
+                        }
+                    }
+                }
+
+            }
+        }, ThreadTask.ThreadPeriod.PERIOD_HIGHT);
     }
 
     /**
@@ -507,6 +611,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
 
         } catch (IOException e1) {
             e1.printStackTrace();
+            ToastUtils.showToastDefault("IOException:" + e1.getMessage());
             BaseDialogHelper.dismissLoadingDialog();
 
         } finally {

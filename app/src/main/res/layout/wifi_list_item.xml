@@ -9,10 +9,12 @@
     <TextView
         android:id="@+id/wifi_name"
         style="@style/TextAppearanceMedium"
-        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="50px"
+        android:ellipsize="end"
         android:gravity="center_vertical"
+        android:maxWidth="500px"
+        android:singleLine="true"
         android:textColor="@color/black_pure"/>
 
     <TextView
