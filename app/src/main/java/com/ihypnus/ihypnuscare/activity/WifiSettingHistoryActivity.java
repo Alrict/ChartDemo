@@ -137,7 +137,6 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
     };
     private WifiMgr mWifiMgr;
     private int mErrorCounts = 0;
-    private TextView mTvLog;
     private StringBuffer mBuffer;
     private boolean mSuccess;
 
@@ -151,7 +150,6 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
         mLayoutSsid = (LinearLayout) findViewById(R.id.layout_ssid);
         mLayoutPwd = (LinearLayout) findViewById(R.id.layout_pwd);
         mTvSsid = (TextView) findViewById(R.id.tv_ssid);
-        mTvLog = (TextView) findViewById(R.id.tv_log);
         mTvPwd = (EditText) findViewById(R.id.tv_pwd);
         mCbVisible = (CheckBox) findViewById(R.id.cb_visible);
         mBtnConfirm = (Button) findViewById(R.id.btn_confirm);
@@ -488,7 +486,7 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
         map.put("pwd", pwd);
         String msg = mGson.toJson(map);
         mBuffer.append(msg).append(",");
-        mTvLog.setText("连接次数:" + mErrorCounts + "," + mBuffer.toString());
+//        mTvLog.setText("连接次数:" + mErrorCounts + "," + mBuffer.toString());
         Log.d("llw", msg);
         if (isWifiEnable(this)) {
             connectSocket(msg);

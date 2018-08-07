@@ -229,6 +229,19 @@ public class HttpRequest extends Request {
         if (errorCode.equals("1304")){
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1304);
         }
+        if (errorCode.equals("1305")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1305);
+        }
+
+        if (errorCode.equals("1306")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1036);
+        }
+        if (errorCode.equals("1307")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1037);
+        }
+        if (errorCode.equals("1308")){
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1038);
+        }
         if (errorCode.equals("1310")){
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1310);
         }

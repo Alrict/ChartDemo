@@ -266,4 +266,8 @@
     <string name="tv_toast_account_locked">Account locked</string>
     <string name="tv_toast_value_ilegal">Setting value is illegal</string>
     <string name="tv_wifi_connect_success">The configuration is successful and the ventilator will try to connect to the network.</string>
+    <string name="tv_toast_error1305">The phone number does not match the verification code</string>
+    <string name="tv_toast_error1036">Please send a verification code first</string>
+    <string name="tv_toast_error1037">Verification code is invalid or incorrect</string>
+    <string name="tv_toast_error1038">Failed to get verification code</string>
 </resources>

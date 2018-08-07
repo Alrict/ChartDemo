@@ -348,5 +348,9 @@
     <string name="tv_toast_account_locked">帐号已锁定</string>
     <string name="tv_toast_value_ilegal">设置值不合法</string>
     <string name="tv_wifi_connect_success">配置成功，呼吸机将尝试连接网络</string>
+    <string name="tv_toast_error1305">手机号码跟验证码不匹配</string>
+    <string name="tv_toast_error1036">请先发送验证码</string>
+    <string name="tv_toast_error1037">验证码失效或错误</string>
+    <string name="tv_toast_error1038">获取验证码失败</string>
 
 </resources>
