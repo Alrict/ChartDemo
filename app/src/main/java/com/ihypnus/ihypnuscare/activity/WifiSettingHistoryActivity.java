@@ -32,6 +32,8 @@ import com.google.gson.Gson;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
+import com.ihypnus.ihypnuscare.iface.BaseType;
+import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.thread.ThreadTask;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
@@ -106,14 +108,27 @@ public class WifiSettingHistoryActivity extends BaseActivity implements Compound
                     BaseDialogHelper.dismissLoadingDialog();
                     Bundle bundle = msg.getData();
                     String response = bundle.getString("msg");
-                    ToastUtils.showToastDefault(response);
+
                     if (!StringUtils.isNullOrEmpty(response)) {
                         String s = response.toUpperCase();
                         if (s.equals("SETOK")) {
-                            ToastUtils.showToastDefault(getString(R.string.tv_toast_wifi_set_success));
-                            EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(NewDeviceInformationActivity.class));
-                            EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(AddNwedeviceActivity.class));
-                            finish();
+                            BaseDialogHelper.showSimpleDialog(WifiSettingHistoryActivity.this, getString(R.string.tip_msg), getString(R.string.tv_wifi_connect_success), getString(R.string.ok), new DialogListener() {
+                                @Override
+                                public void onClick(BaseType baseType) {
+//                                    ToastUtils.showToastDefault(getString(R.string.tv_toast_wifi_set_success));
+                                    EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(NewDeviceInformationActivity.class));
+                                    EventBus.getDefault().post(new BaseFactory.CloseActivityEvent(AddNwedeviceActivity.class));
+                                    finish();
+                                }
+
+                                @Override
+                                public void onItemClick(long postion, String s) {
+
+                                }
+                            });
+
+                        } else {
+                            ToastUtils.showToastDefault(response);
                         }
                     }
                     break;

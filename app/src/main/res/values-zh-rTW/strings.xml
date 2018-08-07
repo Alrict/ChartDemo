@@ -347,4 +347,5 @@
     <string name="tv_toast_pwd_error">密碼錯誤</string>
     <string name="tv_toast_account_locked">帳號已鎖定</string>
     <string name="tv_toast_value_ilegal">設置值不合法</string>
+    <string name="tv_wifi_connect_success">配置成功，呼吸機將嘗試連接網絡</string>
 </resources>

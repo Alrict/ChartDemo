@@ -452,7 +452,7 @@ public class ParameterSettingsActivity extends BaseActivity implements View.OnCl
                 mTvValue08.setText(deviceBean.getBoostslope() + "");
                 //吸气灵敏度
                 mTvTitle09.setText(R.string.tv_cflmd);
-                mTvValue09.setText(deviceBean.getBoostslope() + "");
+                mTvValue09.setText(deviceBean.getInhale_sensitive() + "");
                 //降压速度
                 mTvTitle10.setText(R.string.tv_text_down_speed);
                 mTvValue10.setText(deviceBean.getBuckslope() + "");

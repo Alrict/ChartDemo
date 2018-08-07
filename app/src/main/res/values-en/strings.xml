@@ -4,35 +4,34 @@
     <!-- Zxing-->
     <string name="zxing_tip">Align the barcode / QR code into the box to scan</string>
     <string name="activity_scan_title">QR code/bar code</string>
-    <string name="activity_scan_photo">Photo album</string>
-    <string name="activity_scan_cancle">cancel</string>
+    <string name="activity_scan_photo">Album</string>
+    <string name="activity_scan_cancle">Cancel</string>
     <string name="activity_scan_open">Light on</string>
     <string name="activity_scan_close">Light off</string>
-    <string name="toasts_scan_failed">Picture decoding failed</string>
+    <string name="toasts_scan_failed">Failed to decode picture!</string>
     <string name="intent_data">file_data</string>
     <string name="intent_data_2">file_data_2</string>
     <string name="intent_value">value</string>
     <string name="intent_type">type</string>
-    <string name="activity_scan_battery_low_msg">The battery power is too low and the flash function
-        is temporarily off!
+    <string name="activity_scan_battery_low_msg">The battery is too low and the flash function
+        is turned off temporarily!
     </string>
-    <string name="tv_title">Sleep report</string>
-    <string name="tv_new_device_tip_1">1. Make sure your ventilator is plugged in and that the
+    <string name="tv_title">Sleep Report</string>
+    <string name="tv_new_device_tip_1">1. Make sure your device is power-on and the
         distance between the ventilator, cell phone, and router is within 10 meters.
     </string>
-    <string name="tv_new_device_tip_2">2. Enter the ventilator setup menu and select "One Shot
-        configuration" to enter the manual configuration mode. Click Next.
+    <string name="tv_new_device_tip_2">2. Enter the device setup menu and select "One Shot" to enter the manual configuration mode. Click Next.
     </string>
     <string name="btn_next">Next step</string>
     <string name="tv_add_new_device">Add device</string>
-    <string name="tv_connect_wifi_tip">Go to the mobile WI-FI page to connect to "Hypnus-AP" and
-        return to iHypnusCare App for operation
+    <string name="tv_connect_wifi_tip">Go to the WiFi setup page and connect to "Hypnus-AP" network and
+        return iHypnusCare App to continue
     </string>
-    <string name="bt_set_wifi">Go to set up WI-FI</string>
+    <string name="bt_set_wifi">Go to set up WiFi</string>
     <string name="tv_setting_ok">Set up ok</string>
 
     <!--wifi setting-->
-    <string name="toast_err_tip">Password length can be null or greater than 8</string>
+    <string name="toast_err_tip">Password can be null or its length is greater than 8</string>
     <string name="tip_msg">TIPS</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
@@ -43,18 +42,15 @@
     <string name="semaphore_good">signal good</string>
     <string name="semaphore_week">signal week</string>
     <string name="connect_success">Connection successful</string>
-    <string name="refresh">refresh wifi list</string>
-    <string name="wifi_permission">Please turn on wifi and location permissions</string>
-    <string name="wifi_permission_connect_target">Please connect to the target hotspot first
+    <string name="refresh">refresh WiFi list</string>
+    <string name="wifi_permission">Please turn on WiFi and location permissions</string>
+    <string name="wifi_permission_connect_target">Please connect to the target network firstly
     </string>
-    <string name="socket_err">Connection failed, please try again</string>
+    <string name="socket_err">Failed to connect, please try again</string>
     <string name="tv_person_msg">Personal Information</string>
     <string name="use_protocol">iHypnusCare Terms of Use</string>
-    <string name="tv_infos_tip1">For a more accurate sleep report, make sure that the information
-        provided is true and valid
-    </string>
-    <string name="tv_infos_tip2">We will protect your information security, please fill it out
-    </string>
+    <string name="tv_infos_tip1">For a more accurate sleep report, make sure the provided information is true and valid!</string>
+    <string name="tv_infos_tip2">We will keep your information secure, please feel free to fill!</string>
 
     <string name="tv_man">Male</string>
     <string name="tv_female">Female</string>
@@ -69,22 +65,22 @@
     <!--请输入原密码-->
     <string name="et_old_password">Please enter the original password</string>
     <string name="parameter_setting">Parameter Settings</string>
-    <string name="tv_iknow">I Know It</string>
-    <string name="tv_protocol_title">iHypnusCareUser Services Agreement</string>
-    <string name="tv_verson">current version : </string>
+    <string name="tv_iknow">Know it</string>
+    <string name="tv_protocol_title">iHypnusCare User Services Agreement</string>
+    <string name="tv_verson">Current version : </string>
     <string name="tv_company_name">Guangzhou Hypnus Healthcare Co., Ltd. All rights reserved.</string>
     <string name="add_new_device">Add device</string>
-    <string name="hint_input_device_sn">Please sweep the device SN</string>
+    <string name="hint_input_device_sn">Please scan the device SN</string>
     <string name="bt_next">Next Step</string>
     <string name="tv_modify_text">Change Password</string>
-    <string name="pwd_error_tip">Please enter a 6-14 digit password to support numbers and uppercase and lowercase letters</string>
-    <string name="onloading">loading ...</string>
-    <string name="pwd_different_error">The passwords entered twice do not match, please re-enter</string>
+    <string name="pwd_error_tip">Please enter a 6-14 bit password, support numbers and case letters!</string>
+    <string name="onloading">Loading ...</string>
+    <string name="pwd_different_error">The two passwords you typed do not match, please enter again!</string>
     <string name="et_new_password">Please enter a new password</string>
-    <string name="hint_pwd_input_again">Please enter your new password again</string>
-    <string name="btn_confirm">CONFIRM</string>
+    <string name="hint_pwd_input_again">Please enter the new password again</string>
+    <string name="btn_confirm">OK</string>
     <string name="tv_change_photo">Change avatar</string>
-    <string name="tv_compressing">Compressed...</string>
+    <string name="tv_compressing">Compressing...</string>
     <string name="tv_unknow">Unknown</string>
     <string name="tv_online">Online</string>
     <string name="tv_offline">Offline</string>
@@ -92,38 +88,36 @@
     <string name="tv_text_version">Version</string>
     <string name="tv_text_status">Status</string>
     <string name="tv_text_parameter_setting">Parameter Settings</string>
-    <string name="tv_text_change_wifi">Change wifi</string>
+    <string name="tv_text_change_wifi">Change WiFi Connection</string>
     <string name="tv_text_feed_back">Feedback</string>
-    <string name="tv_title_pwd_back">recover password</string>
-    <string name="tv_pwd_error_length">Password must be longer than 6 digits</string>
-    <string name="tv_pwd_error_different">The passwords entered twice do not match, please
-        re-enter
-    </string>
+    <string name="tv_title_pwd_back">Recover Password</string>
+    <string name="tv_pwd_error_length">The length of password must be greater than 6!</string>
+    <string name="tv_pwd_error_different">The two passwords you typed do not match, please enter again!    </string>
     <string name="tv_text_second">&#160;s</string>
     <string name="tv_get_vertify_code">Get verification code</string>
     <string name="tv_text_input_account">Please enter the phone number</string>
     <string name="tv_input_vertify_code">please enter verification code</string>
     <string name="tv_input_new_pass_word">Please enter a new password</string>
-    <string name="tv_input_new_pass_word_again">Please enter your new password again</string>
+    <string name="tv_input_new_pass_word_again">Please enter the new password again</string>
     <string name="tv_help_center">Help Center</string>
     <string name="tv_toast_exit_if_double">Press again to exit the program</string>
-    <string name="rb_device">Equipment</string>
+    <string name="rb_device">Device</string>
     <string name="rb_report">Report</string>
-    <string name="rb_my_ihy">Mine</string>
-    <string name="tv_loading_login">loading...</string>
-    <string name="tv_input_account">Please input username</string>
+    <string name="rb_my_ihy">Me</string>
+    <string name="tv_loading_login">Loading...</string>
+    <string name="tv_input_account">Please enter your account</string>
     <string name="tv_input_pwd">Please enter your password</string>
-    <string name="tv_login">Log In</string>
+    <string name="tv_login">Log in</string>
     <string name="tv_regist">Sign up？</string>
     <string name="tv_forget__pwd">Forget password？</string>
     <string name="tv_other_login_method">Other login methods</string>
     <string name="tv_title_person_info">Personal Information</string>
     <string name="tv_photo_img">Avatar</string>
-    <string name="tv_isloading">loading...</string>
+    <string name="tv_isloading">Loading...</string>
     <string name="tv_text_current_model">Current Mode</string>
     <string name="tv_text_zlyl">Treatment Pressure</string>
     <string name="tv_text_qsyl">Start Pressure</string>
-    <string name="tv_text_ycsj">Delay</string>
+    <string name="tv_text_ycsj">Ramp</string>
     <string name="tv_hqyl">DEP</string>
     <string name="tv_text_sysp">DEP Level</string>
     <string name="tv_text_min_pressure">Min Pressure</string>
@@ -136,7 +130,7 @@
     <string name="tv_text_xqlmd">Inhale Sensitivity</string>
     <string name="tv_text_down_speed">Pressure Drop Rate</string>
     <string name="tv_hqlmd">Exhale Sensitivity</string>
-    <string name="tv_tittle_setparmeter">Parameter setting succeeded</string>
+    <string name="tv_tittle_setparmeter">Succeed to set parameter!</string>
     <string name="tv_tip_use_new_setting">Setting data may be delayed, please do not operate frequently</string>
     <string name="tv_btn_back">Back</string>
     <string name="tv_text_close">Close</string>
@@ -151,50 +145,50 @@
     <string name="tv_gender">Gender</string>
     <string name="tv_heigth">Height</string>
     <string name="tv_weigth">Weight</string>
-    <string name="tv_toast_illegal_string">The characters entered are not valid!</string>
+    <string name="tv_toast_illegal_string">The entered characters are not valid!</string>
     <string name="tv_toast_agree">Agree to the terms of service to register</string>
     <string name="tv_verifying">Verifying...</string>
-    <string name="tv_title_regist">Registered</string>
+    <string name="tv_title_regist">Register</string>
     <string name="tv_select_date">Select Date</string>
-    <string name="tv_toast_format_error">Incoming date format error!</string>
+    <string name="tv_toast_format_error">The format of entered date was invalid!</string>
     <string name="tv_setting">Settings</string>
-    <string name="tv_exit_current_account">Whether to quit the current account？</string>
+    <string name="tv_exit_current_account">Sure to log out?</string>
     <string name="tv_logout_loading">Logging out...</string>
-    <string name="tv_toast_show_corect_wiifi">Please select a valid target wifi</string>
-    <string name="tv_toast_wifi_set_success">WiFi configuration succeeded</string>
+    <string name="tv_toast_show_corect_wiifi">Please select a correct WiFi</string>
+    <string name="tv_toast_wifi_set_success">Successded to configurate WiFi!</string>
     <string name="tv_title_wifi_setting">Configuring WiFi</string>
-    <string name="tv_wifi_loading">Scanning WiFi...</string>
-    <string name="tv_toast_target_wifi">Please select the WiFi hotspot you want to connect to</string>
-    <string name="tv_toast_get_wifi">Getting near WiFi information</string>
-    <string name="tv_wifi_disconnect">The line is disconnected</string>
-    <string name="tv_connecting">connecting...</string>
+    <string name="tv_wifi_loading">Searching WiFi...</string>
+    <string name="tv_toast_target_wifi">Please select a WiFi</string>
+    <string name="tv_toast_get_wifi">Searching WiFi...</string>
+    <string name="tv_wifi_disconnect">The network is disconnected!</string>
+    <string name="tv_connecting">Connecting...</string>
     <string name="tv_toast_wifi_vertifying">Verifying identity information...</string>
-    <string name="tv_wifi_ip_get">Obtaining an IP address..</string>
-    <string name="tv_connect_wifi_faile">Please check if your phone is successfully connected to the Hypnus_AP hotspot</string>
-    <string name="tv_set_wifi_going">Configuring wifi information for your device</string>
-    <string name="tv_tip_no_default_device">You are not currently setting a default device</string>
+    <string name="tv_wifi_ip_get">Getting an IP address..</string>
+    <string name="tv_connect_wifi_faile">Please check if your phone is successfully connected to the "Hypnus_AP" network</string>
+    <string name="tv_set_wifi_going">Configuring WiFi information for your device</string>
+    <string name="tv_tip_no_default_device">Please set your using device!</string>
     <string name="tv_seach_device_list">View Device</string>
     <string name="tv_tip_add_new_device">Add Device</string>
-    <string name="tv_set_as_default">set as default device</string>
+    <string name="tv_set_as_default">Set a your using device</string>
     <string name="tv_text_week_title">Weekly Statistics</string>
     <string name="tv_sleep_score">Sleep Score</string>
     <string name="tv_status_bad">Bad</string>
     <string name="tv_status_normal">Normal</string>
     <string name="tv_status_good">Good</string>
-    <string name="tv_text_use_time">Use Length</string>
+    <string name="tv_text_use_time">Usage Time</string>
     <string name="tv_text_ahi">AHI</string>
     <string name="tv_90per_in_breath">90%IPAP</string>
     <string name="tv_text_suggestion">Feedback</string>
     <string name="tv_text_device_manager">Equipment Management</string>
-    <string name="setting_language_title">Language Settings</string>
+    <string name="setting_language_title">Language</string>
     <string name="tv_reset_pwd_succee">The password is changed successfully. Please log in again</string>
     <string name="tv_zdxqyl">Max IPAP</string>
     <string name="tv_zdylzc">Max PS</string>
     <string name="tv_zdhqyl">Min EPAP</string>
-    <string name="tv_cflmd">Exhale Sensitivity</string>
+    <string name="tv_cflmd">Inhale Sensitivity</string>
     <string name="tv_breath_rate">Respiratory Rate</string>
     <string name="tv_breath_ration">I:E Ratio</string>
-    <string name="tv_toast_scan_error">Please scan the correct QR code</string>
+    <string name="tv_toast_scan_error">Please scan the correct QR code!</string>
     <string name="tv_no_datas">No Data</string>
     <string name="tv_stutus_not_good">Bad</string>
     <string name="tv_status_is_good">Normal</string>
@@ -205,52 +199,52 @@
     <string name="tv_toast_data_error">Query date is out of range</string>
     <string name="tv_time_hours">H</string>
     <string name="tv_time_minute">M</string>
-    <string name="tv_usage_detail">Use Details</string>
-    <string name="tv_device_model">Device Mode</string>
+    <string name="tv_usage_detail">Usage Details</string>
+    <string name="tv_device_model">Mode</string>
     <string name="tv_average_leak">Average Leak</string>
     <string name="tv_toast_curent_device_offline">The device is offline, please check the device
-        network status
+        network status!
     </string>
-    <string name="tv_text_load_errot">Failed to get data, regained?</string>
+    <string name="tv_text_load_errot">Failed to get data, please try again!</string>
     <string name="tv_90per_preassure">90% pressure</string>
     <string name="tv_90in_pre">90% IPAP</string>
     <string name="tv_90ex_pre">90% EPAP</string>
     <string name="tv_account">Account</string>
-    <string name="tv_toast_old_new_pwd">Do not use the same new password as the original password</string>
+    <string name="tv_toast_old_new_pwd">New password can\'t be same with the original password!</string>
     <string name="tv_has_no_data">No Data</string>
-    <string name="tv_load_default_device_error">Failed to get the default device, please re-do</string>
-    <string name="tv_tip_to_connect_wifi">Go ahead and connect to the hotspot named Hypnus_AP</string>
-    <string name="tv_tip_current_wifi">The currently connected hotspot is:</string>
+    <string name="tv_load_default_device_error">Failed to get the default device, please try again!</string>
+    <string name="tv_tip_to_connect_wifi">Go ahead and connect to the "Hypnus_AP" WiFi.</string>
+    <string name="tv_tip_current_wifi">The currently connected WiFi is:</string>
     <string name="tv_tip_please">,please </string>
     <string name="tv_btn_exit">Exit</string>
     <string name="tv_default_unknow">Unknow</string>
     <string name="tv_toast_phone_error">Please enter the correct phone number!</string>
-    <string name="tv_zxylzc">Min_pre_support</string>
-    <string name="tv_dialog_model_close">Please do not open the secondary function yet, so stay tuned!</string>
+    <string name="tv_zxylzc">Min PS</string>
+    <string name="tv_dialog_model_close">The function will be published soon!</string>
     <string name="tv_toast_bind_device">Please bind your device</string>
     <string name="tv_dialog_setting">Setting up...</string>
     <string name="tv_dialog_setting_success">Set successfully</string>
     <string name="tv_text_delete">Delete</string>
-    <string name="tv_dialog_bind_error">This is the current device, and can be deleted after the change</string>
+    <string name="tv_dialog_bind_error">This is your using device, and can be deleted!</string>
     <string name="tv_dialog_unbind">Unbinding...</string>
     <string name="tv_load_binding">Binding...</string>
     <string name="tv_toast_nickname">Please enter your nickname</string>
     <string name="tv_title_data_select">Date selection</string>
-    <string name="btn_take_photo">Camera photo</string>
-    <string name="btn_select_photo">Album selection</string>
+    <string name="btn_take_photo">Take Photo</string>
+    <string name="btn_select_photo">Choose from Album</string>
     <string name="tv_agree">Agree</string>
     <string name="tv_had_account">Have an account? Go to login</string>
     <string name="tv_less_than_4h">Less than 4 hours</string>
     <string name="tv_more_than_4h">Not less than 4 hours</string>
-    <string name="tv_chart_use_long">Length of use (hours)</string>
+    <string name="tv_chart_use_long">Usage Time(hours)</string>
     <string name="tv_90_zlyl">90% Treatment Pressure</string>
-    <string name="tv_delay">Delayed</string>
+    <string name="tv_delay">Ramp Only</string>
     <string name="tv_full_time">Full Time</string>
     <string name="tv_toast_success">Success</string>
-    <string name="tv_toast_error1000">Unable to get user information or parameter error</string>
+    <string name="tv_toast_error1000">Unable to get user information or parameters are error!</string>
     <string name="tv_toast_error1119">Username or password is incorrect</string>
     <string name="tv_toast_error1300">Phone number can not be blank</string>
-    <string name="tv_toast_error1301">The mobile number is already in use</string>
+    <string name="tv_toast_error1301">The phone number has been registered!</string>
     <string name="tv_net_connect_error">：Server exception, please try again later</string>
     <string name="tv_net_connet_error01">Unable to connect to the server, please check your network settings</string>
     <string name="tv_toast_error1302">Verification code sending time is short</string>
@@ -271,4 +265,5 @@
     <string name="tv_toast_pwd_error">Wrong password</string>
     <string name="tv_toast_account_locked">Account locked</string>
     <string name="tv_toast_value_ilegal">Setting value is illegal</string>
+    <string name="tv_wifi_connect_success">The configuration is successful and the ventilator will try to connect to the network.</string>
 </resources>
