@@ -173,8 +173,9 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
     @Override
     protected void loadData() {
         Intent intent = getIntent();
-        mType = intent.getIntExtra("TYEP", 0);
+        mType = intent.getIntExtra("TYPE", 0);
         String account = intent.getStringExtra("ACCOUNT");
+        LogOut.d("llw001", "个人信息页面接受到type:" + mType + ",account:" + account);
         PersonMesVO personMsgBean = intent.getParcelableExtra("PERSON_MSG");
         if (personMsgBean == null && mType == 1 && !StringUtils.isNullOrEmpty(account)) {
             //注册界面 跳转过来的
@@ -333,6 +334,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
      * 跳转至报告页面
      */
     private void jumpToHomeActivity() {
+        LogOut.d("llw001", "跳转到报告页面");
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }

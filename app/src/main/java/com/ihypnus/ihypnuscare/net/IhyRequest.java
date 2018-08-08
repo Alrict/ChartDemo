@@ -47,7 +47,7 @@ public class IhyRequest {
      * @param phoneNumber 手机号码
      * @param callback
      */
-    public static void VerifyPhoneNumber(String phoneNumber,String region, ResponseCallback callback) {
+    public static void VerifyPhoneNumber(String phoneNumber, String region, ResponseCallback callback) {
         String url = IhyAction.Validationet;
         Map<String, String> params = new HashMap<String, String>();
         params.put("phone", phoneNumber);
@@ -105,7 +105,7 @@ public class IhyRequest {
      * @param deviceId
      * @param callback
      */
-    public static void registerApp(UserInfo userInfo, String authCode, String deviceId,String region, ResponseCallback callback) {
+    public static void registerApp(UserInfo userInfo, String authCode, String deviceId, String region, ResponseCallback callback) {
         String url = IhyAction.appregister;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("userInfo", userInfo);
@@ -410,7 +410,7 @@ public class IhyRequest {
      * @param newPassword
      * @param callback
      */
-    public static void getBackPassword(String JSESSIONID, boolean isCookie, String phone, String authCode, String newPassword,String region, ResponseCallback callback) {
+    public static void getBackPassword(String JSESSIONID, boolean isCookie, String phone, String authCode, String newPassword, String region, ResponseCallback callback) {
         String url = IhyAction.getPwd;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("JSESSIONID", JSESSIONID);
@@ -461,6 +461,7 @@ public class IhyRequest {
 
     /**
      * 国际地区号
+     *
      * @param callback
      */
     public static void getCountryCode(ResponseCallback callback) {
@@ -473,5 +474,24 @@ public class IhyRequest {
         httpRequest.setResponseJavaBean(CountryCodeVO.class);
         NetRequestHelper.getInstance().add(httpRequest, url);
 
+    }
+
+    /**
+     * 上传用户的头像
+     *
+     * @param JSESSIONID
+     * @param isCookie
+     * @param headPath
+     * @param callback
+     */
+    public static void updatePhotoinfo(String JSESSIONID, boolean isCookie, String headPath, ResponseCallback callback) {
+        String url = IhyAction.updateinfo;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("JSESSIONID", JSESSIONID);
+        params.put("isCookie", isCookie);
+        params.put("headPath", headPath);
+        SpecialHttpRequest httpRequest = new SpecialHttpRequest(Request.Method.POST, url, params, callback);
+        httpRequest.setResponseDataType(HttpRequest.ResponseDataType.RESULT_STRING);
+        NetRequestHelper.getInstance().add(httpRequest, url);
     }
 }

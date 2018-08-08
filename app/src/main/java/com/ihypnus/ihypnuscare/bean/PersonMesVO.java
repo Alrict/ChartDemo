@@ -10,7 +10,7 @@ import android.os.Parcelable;
  * @date: 2018/7/1 22:29
  * @copyright copyright(c)2016 Shenzhen Kye Technology Co., Ltd. Inc. All rights reserved.
  */
-public class PersonMesVO extends BaseModel implements Parcelable{
+public class PersonMesVO extends BaseModel implements Parcelable {
     /**
      * birthday :
      * address :
@@ -27,11 +27,12 @@ public class PersonMesVO extends BaseModel implements Parcelable{
     private String address;
     private String gender;//性别： 0或者null——未知  1-男  2-女
     private String phone;
-    private String headPath;
+    private String headPath;//用户头像的key
     private String weight;
     private String account;
     private String email;
     private String height;
+    private String userid;
 
     protected PersonMesVO(Parcel in) {
         birthday = in.readString();
@@ -43,6 +44,7 @@ public class PersonMesVO extends BaseModel implements Parcelable{
         account = in.readString();
         email = in.readString();
         height = in.readString();
+        userid = in.readString();
     }
 
     public static final Creator<PersonMesVO> CREATOR = new Creator<PersonMesVO>() {
@@ -145,5 +147,14 @@ public class PersonMesVO extends BaseModel implements Parcelable{
         dest.writeString(account);
         dest.writeString(email);
         dest.writeString(height);
+        dest.writeString(userid);
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 }

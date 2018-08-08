@@ -349,6 +349,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         Intent intent = new Intent(this, PersonalInformationActivity.class);
         intent.putExtra("TYPE", 1);
         intent.putExtra("ACCOUNT", account);
+        LogOut.d("llw001", "account:" + account + ",type:1");
         startActivity(intent);
         finish();
     }

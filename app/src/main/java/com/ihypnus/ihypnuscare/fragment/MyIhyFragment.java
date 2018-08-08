@@ -51,10 +51,15 @@ import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.ImageUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.SP;
+import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.TakePhotosUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
+import com.ihypnus.ihypnuscare.widget.ImageLoaderUrlGenerator;
 import com.kye.smart.multi_image_selector_library.MultiImageSelector;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -91,7 +96,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
     private Bitmap mAvatarBitmap;
     private ImageView mIvDefaultPhoto;
     private static final String bucketName = "hypnus-app-resource";
-    private static final String sObjectKeyPath = "app_header_image/photo_";
+    private static final String sObjectKeyPath = "app_header_image/";
     private OSSClient mOssClient;
     private boolean mIsFirst = true;
     private byte[] imageByteArray;
@@ -108,20 +113,66 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                     }
                     break;
                 case 2:
+                    //从oss成功下载图片
                     if (imageByteArray != null) {
                         mDownLoadPic = getPicFromBytes(imageByteArray, null);
                         if (mDownLoadPic != null) {
                             mCircleImageView.setImageBitmap(mDownLoadPic);
                             mIvDefaultPhoto.setVisibility(View.GONE);
+                            String userid = mPersonMesVO.getUserid();
+                            String headIconPath = ImageUtils.saveCacheImage(mAct, userid + "head.jpg", mDownLoadPic);
+                            LogOut.d("llw", "将oss下载的图片缓存在本地,路径为:" + headIconPath);
+                            String key = "ihy" + userid;
+                            mSp.putString(key, headIconPath);
+
                         }
                     }
+                    break;
+
+                case 3:
+                    //将key上传到后台
+                    upLoadUserPhoto(mUserPhotoKey);
+                    break;
+
+                case 4:
+                    if (mDownLoadPic != null) {
+                        mCircleImageView.setImageBitmap(mDownLoadPic);
+                        mIvDefaultPhoto.setVisibility(View.GONE);
+                    }
+                    LogOut.d("llw", "成功加载本地图片");
                     break;
             }
         }
     };
+
+    /**
+     * 上传用户头像对应的headpath
+     *
+     * @param userPhotoKey
+     */
+    private void upLoadUserPhoto(final String userPhotoKey) {
+        BaseDialogHelper.showLoadingDialog(mAct, true, getString(R.string.loading_default_messsage));
+        IhyRequest.updatePhotoinfo(Constants.JSESSIONID, true, userPhotoKey, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                LogOut.d("llw", "成功上传用户key:" + userPhotoKey);
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                ToastUtils.showToastDefault(var3);
+            }
+        });
+
+    }
+
     private Bitmap mDownLoadPic;
     private TextView mTvUserName;
     private PersonMesVO mPersonMesVO;
+    private SP mSp;
+    private String mUserPhotoKey = "";//用户头像保存在后台的key
 
     @Override
     protected int setView() {
@@ -141,7 +192,7 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     protected void init() {
-
+        mSp = SP.getSP("ihy_photoCache");
     }
 
     @Override
@@ -339,8 +390,12 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
                         mCircleImageView.setImageBitmap(mAvatarBitmap);
                         mIvDefaultPhoto.setVisibility(View.GONE);
                         if (mPersonMesVO != null) {
-                            String account = mPersonMesVO.getAccount();
-                            objectKeyPath = sObjectKeyPath + account;
+//                            if (!StringUtils.isNullOrEmpty(mPersonMesVO.getHeadPath())) {
+//                                objectKeyPath = mPersonMesVO.getHeadPath();
+//                            }
+                            String userid = mPersonMesVO.getUserid();
+                            long l = System.currentTimeMillis();
+                            objectKeyPath = sObjectKeyPath + "photo_" + userid + "_" + l;
                         }
                         compressImage(imagePath, objectKeyPath);
                     }
@@ -465,9 +520,9 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
      *
      * @param bucketName     oss储存区域的名字
      * @param objectKey      保存在oss的文件名
-     * @param uploadFilePath 被上传文件的路径
+     * @param uploadFilePath 被上传文件的oss路径
      */
-    private void uploadUserPhoto(String bucketName, String objectKey, String uploadFilePath) {
+    private void uploadUserPhoto(String bucketName, final String objectKey, final String uploadFilePath) {
         if (mOssClient == null) return;
         // 构造上传请求
         PutObjectRequest put = new PutObjectRequest(bucketName, objectKey, uploadFilePath);
@@ -481,7 +536,12 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
         OSSAsyncTask task = mOssClient.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
             @Override
             public void onSuccess(PutObjectRequest request, PutObjectResult result) {
-                Log.d("llw", "UploadSuccess");
+
+                Log.d("llw", "UploadSuccess,头像保存路径为:" + uploadFilePath);
+                String key = "ihy" + mPersonMesVO.getUserid();
+                mSp.putString(key, uploadFilePath);
+                mUserPhotoKey = objectKey;
+                mHandler.obtainMessage(3, "成功上传到oss,将key上传至后台").sendToTarget();
             }
 
             @Override
@@ -513,7 +573,8 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
             @Override
             public void onSuccess(GetObjectRequest request, GetObjectResult result) {
                 // 请求成功
-                Log.d("llw", "oss图片加载成功,size:" + (result.getContentLength() / 1024) + "KB");InputStream inputStream = result.getObjectContent();
+                Log.d("llw", "oss图片加载成功,size:" + (result.getContentLength() / 1024) + "KB");
+                InputStream inputStream = result.getObjectContent();
                 byte[] buffer = new byte[2048];
                 ByteArrayOutputStream outStream = new ByteArrayOutputStream();
                 int len;
@@ -626,16 +687,65 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
             @Override
             public void run() {
                 String objectKeyPath = "";
-                if (mPersonMesVO != null) {
-                    objectKeyPath = sObjectKeyPath + mPersonMesVO.getAccount();
+                if (mPersonMesVO != null && !StringUtils.isNullOrEmpty(mPersonMesVO.getHeadPath())) {
+                    String headPath = mPersonMesVO.getHeadPath();
+                    objectKeyPath = headPath;
+                    //查找本地是否有缓存照片
+                    String key = "ihy" + mPersonMesVO.getUserid();
+                    String photoPath = mSp.getString(key);
+                    if (!StringUtils.isNullOrEmpty(photoPath)) {
+                        //从本地加载图片
+                        loadCacheImage(photoPath, mCircleImageView, bucketName, objectKeyPath);
+                    } else {
+                        //本地没缓存照片则下载
+                        downLoadUserPhoto(bucketName, objectKeyPath);
+                    }
+
                 } else {
                     objectKeyPath = sObjectKeyPath;
                 }
                 LogOut.d("llw", "objectKeyPath:" + objectKeyPath);
-                downLoadUserPhoto(bucketName, objectKeyPath);
+
             }
         }).start();
 
+    }
+
+    /**
+     * 加载本地图片
+     *
+     * @param photoPath
+     * @param imageView
+     * @param bucketName
+     * @param objectKey
+     */
+    private void loadCacheImage(String photoPath, CircleImageView imageView, final String bucketName, final String objectKey) {
+        ImageLoaderUrlGenerator imageLoaderUrlGenerator = new ImageLoaderUrlGenerator();
+        String url = imageLoaderUrlGenerator.getImageLoaderWrapUrl(photoPath);
+        LogOut.d("llw", "photoPath:" + photoPath + "===url:" + url);
+        com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(url, imageView, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String s, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                downLoadUserPhoto(bucketName, objectKey);
+            }
+
+            @Override
+            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                mDownLoadPic = bitmap;
+                mHandler.obtainMessage(4, "加载本地图片成功").sendToTarget();
+            }
+
+            @Override
+            public void onLoadingCancelled(String s, View view) {
+
+            }
+        });
     }
 
 
