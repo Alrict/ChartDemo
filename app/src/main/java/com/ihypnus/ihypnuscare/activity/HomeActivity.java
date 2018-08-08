@@ -161,9 +161,9 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             exitTime = System.currentTimeMillis();
         } else {
             //登出
-            if (mReportFragment != null) {
-                ReportFragment.sCurrentTime = System.currentTimeMillis();
-            }
+//            if (mReportFragment != null) {
+//                ReportFragment.sCurrentTime = System.currentTimeMillis();
+//            }
             IhyApplication.mInstance.setUser(null);
             MobclickAgent.onProfileSignOff();
             finish();

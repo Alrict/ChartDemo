@@ -129,7 +129,9 @@ public class HomePageController extends BaseController implements View.OnClickLi
         mIvNextWeek.setOnClickListener(this);
         String time = null;
         try {
-            String currentDate = DateTimeUtils.getCurrentDate();
+            long l = System.currentTimeMillis();
+            String currentDate = getStartTime(l - (24L * 60L * 60L * 1000));
+//            String currentDate = DateTimeUtils.getCurrentDate();
             if (Constants.LANGUAGE_TYPE == Locale.ENGLISH) {
                 time = DateTimeUtils.date2English(currentDate);
             } else {
@@ -538,7 +540,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
     private void updateData(int type) {
         long date = ReportFragment.sCurrentTime;
         long lastDay = date + (24L * 60L * 60L * 1000L * type);
-        if (lastDay > System.currentTimeMillis()) {
+        if (lastDay > (System.currentTimeMillis()-(24L * 60L * 60L * 1000L))) {
             ToastUtils.showToastDefault(mContext.getString(R.string.tv_toast_data_error));
             return;
         }

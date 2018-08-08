@@ -56,7 +56,8 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     private TextView mTvDate;
     private float mOldPositionOffset;
     private ArrayList<BaseController> mFragmentList;
-    public static long sCurrentTime = System.currentTimeMillis();
+//    public static long sCurrentTime = System.currentTimeMillis();
+    public static long sCurrentTime = (System.currentTimeMillis() - (24L * 60L * 60L * 1000));
 
     @Override
     protected int setView() {
@@ -77,7 +78,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void init() {
-
+        sCurrentTime = (System.currentTimeMillis() - (24L * 60L * 60L * 1000));
         mFragmentList = new ArrayList<>();
         mHomePageController = new HomePageController(mAct);
         mChartsPage1Controller = new ChartsPage1Controller(mAct);
@@ -128,10 +129,16 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
 
                 break;
             case R.id.iv_data:
-                String currentDate = DateTimeUtils.getCurrentDate();
-                jumpSelecteDateActivity(getString(R.string.tv_title_data_select), currentDate, REQUEST_START_TIME);
+//                String currentDate = DateTimeUtils.getCurrentDate();
+                long l = System.currentTimeMillis();
+                String startTime = getStartTime(l);
+                jumpSelecteDateActivity(getString(R.string.tv_title_data_select), startTime, REQUEST_START_TIME);
                 break;
         }
+    }
+
+    private String getStartTime(long currentTime) {
+        return DateTimeUtils.getStringDateByMounthDay(currentTime - ((24L * 60L * 60L * 1000L)));
     }
 
     /**
@@ -175,7 +182,7 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
             if (null != data) {
                 String time = initTime(data);
                 long longTime = DateTimeUtils.getSimpleLongTime(time);
-                if (longTime > System.currentTimeMillis()) {
+                if (longTime > (System.currentTimeMillis() - (24L * 60L * 60L * 1000L))) {
                     ToastUtils.showToastDefault(mAct.getString(R.string.tv_toast_data_error));
                     return;
                 }

@@ -22,7 +22,7 @@
             style="@style/TextAppearanceMedium"
             android:layout_marginTop="@dimen/w24"
             android:text=""
-            android:textSize="@dimen/w34"/>
+            android:textSize="@dimen/w44"/>
     </LinearLayout>
 
     <LinearLayout

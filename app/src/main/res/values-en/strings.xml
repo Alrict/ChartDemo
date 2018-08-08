@@ -169,7 +169,7 @@
     <string name="tv_tip_no_default_device">Please set your using device!</string>
     <string name="tv_seach_device_list">View Device</string>
     <string name="tv_tip_add_new_device">Add Device</string>
-    <string name="tv_set_as_default">Set a your using device</string>
+    <string name="tv_set_as_default">Set as your using device</string>
     <string name="tv_text_week_title">Weekly Statistics</string>
     <string name="tv_sleep_score">Sleep Score</string>
     <string name="tv_status_bad">Bad</string>
