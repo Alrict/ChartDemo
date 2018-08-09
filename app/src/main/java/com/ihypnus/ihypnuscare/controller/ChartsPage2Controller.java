@@ -224,7 +224,7 @@ public class ChartsPage2Controller extends BaseController {
 
     public void showErrorView() {
         mLayoutChart1.setVisibility(View.INVISIBLE);
-        mLayoutChart1.setVisibility(View.INVISIBLE);
+        mLayoutChart2.setVisibility(View.INVISIBLE);
     }
 
     private int[] getColors() {

@@ -219,6 +219,13 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         }
     }
 
+    @Subscribe
+    public void eventMainThread(BaseFactory.UpdateLanguageEvent event) {
+       if (mDeviceFragment!=null){
+           mDeviceFragment.reLoadView();
+       }
+    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
 //        super.onSaveInstanceState(outState);

@@ -30,6 +30,7 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+import com.zhy.autolayout.AutoLinearLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -48,8 +49,6 @@ import static android.app.Activity.RESULT_OK;
 public class DeviceFragment extends BaseFragment implements View.OnClickListener, SwipeMenuCreator, SwipeMenuItemClickListener, DeviceLIstAdapter.DeviceCheckListener, DeviceLIstAdapter.OnItemClickListener {
     private static final String TAG = "DeviceFragment";
     private ImageView mIvAdd;
-    private SwipeMenuRecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.ItemDecoration mItemDecoration;
     private DeviceLIstAdapter mAdapter;
     private ArrayList<DeviceListVO.ContentBean> mInfoList;
@@ -57,6 +56,7 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
     private Button mBtnAdd;
     private boolean mNeedRefresh = false;
     private String mDeviceId;
+    private AutoLinearLayout mRootView;
 
     @Override
     protected int setView() {
@@ -66,8 +66,9 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void findViews() {
+        mRootView = (AutoLinearLayout) findViewById(R.id.root_view);
         mIvAdd = (ImageView) findViewById(R.id.iv_add);
-        mRecyclerView = (SwipeMenuRecyclerView) findViewById(R.id.recycler_view);
+//        mRecyclerView = (SwipeMenuRecyclerView) findViewById(R.id.recycler_view);
         mBtnAdd = (Button) findViewById(R.id.btn_add);
     }
 
@@ -75,18 +76,42 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
     @Override
     protected void init() {
         mInfoList = new ArrayList<>();
-        mLayoutManager = createLayoutManager();
-//        mItemDecoration = createItemDecoration();
-        //设置侧滑
-        mRecyclerView.setSwipeMenuCreator(this);
-        //设置滑动点击事件
-        mRecyclerView.setSwipeMenuItemClickListener(this);
         mAdapter = new DeviceLIstAdapter(mAct, mInfoList);
-        mRecyclerView.setAdapter(mAdapter);
+        addViewItem();
+//        mItemDecoration = createItemDecoration();
 
-        mRecyclerView.setLayoutManager(mLayoutManager);
+
+    }
+
+    private void addViewItem() {
+        if (mRootView.getChildCount() == 0) {//如果一个都没有，就添加一个
+            View hotelEvaluateView = View.inflate(mAct, R.layout.item_swipe_view, null);
+            SwipeMenuRecyclerView recycler_view = (SwipeMenuRecyclerView) hotelEvaluateView.findViewById(R.id.recycler_view);
+            initRecycleView(recycler_view);
+            mRootView.addView(hotelEvaluateView);
+            //sortHotelViewItem();
+        } else {
+            mRootView.removeAllViews();
+            View hotelEvaluateView = View.inflate(mAct, R.layout.item_swipe_view, null);
+            SwipeMenuRecyclerView recycler_view = (SwipeMenuRecyclerView) hotelEvaluateView.findViewById(R.id.recycler_view);
+            initRecycleView(recycler_view);
+            mRootView.addView(hotelEvaluateView);
+        }
+        //else {
+        //  sortHotelViewItem();
+        //}
+    }
+
+    private void initRecycleView(SwipeMenuRecyclerView recyclerView) {
+        //设置侧滑
+        recyclerView.setSwipeMenuCreator(this);
+        //设置滑动点击事件
+        recyclerView.setSwipeMenuItemClickListener(this);
+
+        recyclerView.setAdapter(mAdapter);
+        RecyclerView.LayoutManager layoutManager = createLayoutManager();
+        recyclerView.setLayoutManager(layoutManager);
 //        mRecyclerView.addItemDecoration(null);
-
     }
 
     protected RecyclerView.LayoutManager createLayoutManager() {
@@ -244,6 +269,10 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
                     BaseDialogHelper.showMsgTipDialog(mAct, getString(R.string.tv_dialog_bind_error));
                     return;
                 }
+                if (mInfoList.size()==1){
+                    BaseDialogHelper.showMsgTipDialog(mAct, getString(R.string.tv_dialog_bind_error));
+                    return;
+                }
                 removeDeviceId(adapterPosition, device_id);
 
             } /*else if (menuPosition == 1) {
@@ -324,6 +353,12 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
         if (contentBean != null && !StringUtils.isNullOrEmpty(contentBean.getDevice_id())) {
             jumpToDeviceDetail(contentBean);
         }
+    }
+
+    public void reLoadView() {
+        addViewItem();
+//        BaseDialogHelper.showLoadingDialog(mAct, true, getString(R.string.tv_isloading));
+        getDataList();
     }
 
 //    @Subscribe(threadMode = ThreadMode.MAIN)

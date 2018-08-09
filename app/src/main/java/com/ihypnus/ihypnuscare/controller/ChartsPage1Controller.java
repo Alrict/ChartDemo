@@ -145,7 +145,7 @@ public class ChartsPage1Controller extends BaseController {
 
         mLayoutChart1.setVisibility(View.VISIBLE);
         mLayoutChart1Status.setVisibility(View.VISIBLE);
-        mLayoutChart1.setVisibility(View.VISIBLE);
+        mLayoutChart2.setVisibility(View.VISIBLE);
         int score = 0;
         int sleepHour = 0;
         int type1 = 0;
@@ -216,7 +216,7 @@ public class ChartsPage1Controller extends BaseController {
     public void showErrorView() {
         mLayoutChart1.setVisibility(View.INVISIBLE);
         mLayoutChart1Status.setVisibility(View.INVISIBLE);
-        mLayoutChart1.setVisibility(View.INVISIBLE);
+        mLayoutChart2.setVisibility(View.INVISIBLE);
     }
 
 
