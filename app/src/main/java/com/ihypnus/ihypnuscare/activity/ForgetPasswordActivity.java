@@ -316,7 +316,38 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
     public void afterTextChanged(Editable editable) {
         String phone = mEtCount.getText().toString().trim();
         mIvCleanAccount.setVisibility(phone.length() > 0 ? View.VISIBLE : View.INVISIBLE);
+        if (phone.length() == 11) {
+            String region = mTvLocalCode.getText().toString().trim();
+            vertifyPhoneNum(phone, region);
+        }
 
+    }
+
+    /**
+     *
+     * @param account
+     * @param region
+     */
+    private void vertifyPhoneNum(final String account, String region) {
+        BaseDialogHelper.showLoadingDialog(this, true, getString(R.string.tv_verifying));
+        IhyRequest.VerifyPhoneNumber(account, region, new ResponseCallback() {
+            @Override
+            public void onSuccess(Object var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                BaseDialogHelper.showSimpleDialog(ForgetPasswordActivity.this, getString(R.string.tip_msg), account + getString(R.string.tv_msg_unregister) );
+                mEtCount.setText("");
+            }
+
+            @Override
+            public void onError(VolleyError var1, String var2, String var3) {
+                BaseDialogHelper.dismissLoadingDialog();
+                if (!StringUtils.isNullOrEmpty(var3)) {
+//                    BaseDialogHelper.showMsgTipDialog(RegisterActivity.this, var3);
+                    BaseDialogHelper.showSimpleDialog(ForgetPasswordActivity.this, getString(R.string.tip_msg), account + " " + var3);
+                    mEtCount.setText("");
+                }
+            }
+        });
     }
 
     @Override

@@ -352,4 +352,6 @@
     <string name="tv_toast_error1036">請先發送驗證碼</string>
     <string name="tv_toast_error1037">驗證碼失效或錯誤</string>
     <string name="tv_toast_error1038">獲取驗證碼失敗</string>
+    <string name="tv_msg_unregister">未註冊!</string>
+    <string name="tv_tip_personinfo_error">您的信息尚未填寫完整，請完善</string>
 </resources>

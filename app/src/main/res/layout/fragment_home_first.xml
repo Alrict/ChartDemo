@@ -207,7 +207,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/tv_text_hqyl"
+                android:text="@string/tv_90ex_pre"
                 android:textColor="@color/gray_white"
                 android:textSize="38px"/>
 

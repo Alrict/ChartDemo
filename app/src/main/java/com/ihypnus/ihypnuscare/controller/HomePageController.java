@@ -130,7 +130,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
         String time = null;
         try {
             long l = System.currentTimeMillis();
-            String currentDate = getStartTime(l - (24L * 60L * 60L * 1000));
+            String currentDate = getStartTime(l);
 //            String currentDate = DateTimeUtils.getCurrentDate();
             if (Constants.LANGUAGE_TYPE == Locale.ENGLISH) {
                 time = DateTimeUtils.date2English(currentDate);

@@ -35,5 +35,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/h50"
+        android:gravity="center"
         android:text="@string/tv_company_name"/>
 </com.zhy.autolayout.AutoRelativeLayout>

@@ -62,7 +62,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             //挨着给每个RadioButton加入drawable限制边距以控制显示大小
             Drawable[] drs = rb.getCompoundDrawables();
             //获取drawables
-            Rect r = new Rect(0, 0, drs[1].getMinimumWidth()*3/3, drs[1].getMinimumHeight()*3/3);
+            Rect r = new Rect(0, 0, drs[1].getMinimumWidth() * 3 / 3, drs[1].getMinimumHeight() * 3 / 3);
             //定义一个Rect边界
             drs[1].setBounds(r);
             //给drawable设置边界
@@ -71,7 +71,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 drs[1].setBounds(r);
             }
 
-            rb.setCompoundDrawables(null,drs[1],null,null);
+            rb.setCompoundDrawables(null, drs[1], null, null);
             //添加限制给控件
         }
     }
@@ -217,5 +217,10 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         if (event.getCls() == HomeActivity.class) {
             finish();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
     }
 }

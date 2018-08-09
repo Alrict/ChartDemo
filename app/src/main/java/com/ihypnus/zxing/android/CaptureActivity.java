@@ -545,7 +545,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
         String num = rawResult.getText().trim();
         String model = "";
 
-        if (num.contains("Ver") && num.contains("ID") && num.contains("SN") && num.contains("Model")) {
+        if (num.startsWith("{") && num.endsWith("}") && num.contains("Ver") && num.contains("ID") && num.contains("SN") && num.contains("Model")) {
             //V2版本二维码
             ScanDeviceBean bean = mGson.fromJson(num, ScanDeviceBean.class);
             if (bean != null && !StringUtils.isNullOrEmpty(bean.getSN())) {

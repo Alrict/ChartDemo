@@ -172,6 +172,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
 
     @Override
     protected void loadData() {
+        View leftView = getSupportedActionBar().getLeftView();
         Intent intent = getIntent();
         mType = intent.getIntExtra("TYPE", 0);
         String account = intent.getStringExtra("ACCOUNT");
@@ -179,9 +180,11 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
         PersonMesVO personMsgBean = intent.getParcelableExtra("PERSON_MSG");
         if (personMsgBean == null && mType == 1 && !StringUtils.isNullOrEmpty(account)) {
             //注册界面 跳转过来的
+            leftView.setVisibility(View.GONE);
             mTvName.setText(account);
 //            getInfos();
         } else if (personMsgBean != null) {
+            leftView.setVisibility(View.VISIBLE);
             bindView(personMsgBean);
         }
     }
@@ -337,6 +340,7 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
         LogOut.d("llw001", "跳转到报告页面");
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void getInfos() {
@@ -446,4 +450,16 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
         return bmi;
 
     }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        if (mType == 1) {
+            BaseDialogHelper.showMsgTipDialog(this, getString(R.string.tv_tip_personinfo_error));
+        } else {
+            super.onBackPressed();
+        }
+
+    }
+
 }

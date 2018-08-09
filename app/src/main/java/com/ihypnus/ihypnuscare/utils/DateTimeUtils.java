@@ -42,9 +42,10 @@ public class DateTimeUtils {
 
     /**
      * 获得该月最后一天
+     *
      * @return
      */
-    public static int getLastDayOfMonth(long currentTimeMillis){
+    public static int getLastDayOfMonth(long currentTimeMillis) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(currentTimeMillis);
 //        //设置年份
@@ -75,9 +76,15 @@ public class DateTimeUtils {
             String startDay = startTimesplit[1];
             String endMonth = endTimesplit[0];
             endMonth = EN_MONTH[Integer.parseInt(endMonth) - 1];
-            String endDay = endTimesplit[1] ;
+            String endDay = endTimesplit[1];
             LogOut.d("llw", startMonth + startDay + "~" + endMonth + endDay);
-            return  startDay +startMonth + "~" + endDay+ endMonth ;
+            if (startDay.substring(0, 1).equals("0")) {
+                startDay = startDay.replace("0", "");
+            }
+            if (endDay.substring(0, 1).equals("0")) {
+                endDay = endDay.replace("0", "");
+            }
+            return startDay + startMonth + "~" + endDay + endMonth;
         } else {
             return "";
         }

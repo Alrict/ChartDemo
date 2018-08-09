@@ -132,7 +132,8 @@ public class ChartsPage1Controller extends BaseController {
         long currentTime = ReportFragment.sCurrentTime;
 
 
-        long l = currentTime - (1 * 24L * 60L * 60L * 1000L);
+//        long l = currentTime - (1 * 24L * 60L * 60L * 1000L);
+        long l = currentTime ;
         String monthDayDateTime = DateTimeUtils.getMonthDayDateTime(l);
         String[] split = monthDayDateTime.split("-");
         if (split.length == 2) {
