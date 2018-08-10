@@ -326,6 +326,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     MobclickAgent.onProfileSignIn(countNum);
                     String jsessionid = loginBean.getJSESSIONID();
                     LogOut.d("llw", jsessionid);
+                    finish();
                 }
             }
 
