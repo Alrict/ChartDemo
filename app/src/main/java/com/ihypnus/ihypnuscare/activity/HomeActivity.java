@@ -1,5 +1,6 @@
 package com.ihypnus.ihypnuscare.activity;
 
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -13,14 +14,19 @@ import android.widget.RadioGroup;
 
 import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
+import com.ihypnus.ihypnuscare.adapter.IhyFragmentPagerAdapter;
 import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.fragment.DeviceFragment;
 import com.ihypnus.ihypnuscare.fragment.MyIhyFragment;
 import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
+import com.ihypnus.widget.NoScrollViewPager;
 import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
@@ -31,6 +37,10 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private RadioGroup mRgpTab;
     private long exitTime;
     private RadioButton[] mRbs;
+    private NoScrollViewPager mViewPager;
+    private List<Fragment> mTabs = new ArrayList<Fragment>();
+    private IhyFragmentPagerAdapter mAdapter;
+    private int mCurrentItem;
 
 
     @Override
@@ -41,7 +51,10 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     protected void findViews() {
+        mViewPager = (NoScrollViewPager) findViewById(R.id.id_viewpager);
         mRgpTab = (RadioGroup) findViewById(R.id.rgp_tab);
+        //禁止滑动
+        mViewPager.setNoScroll(true);
     }
 
     @Override
@@ -49,11 +62,35 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mRgpTab.check(R.id.rb_report);
         getSupportedActionBar().setVisibility(View.GONE);
         initRadioButtom();
+
+        mReportFragment = new ReportFragment();
+        mMyIhyFragment = new MyIhyFragment();
+        mDeviceFragment = new DeviceFragment();
+
+        mTabs.add(mDeviceFragment);
+        mTabs.add(mReportFragment);
+        mTabs.add(mMyIhyFragment);
+
+        mAdapter = new IhyFragmentPagerAdapter(getFragmentManager()) {
+
+            @Override
+            public int getCount() {
+                return mTabs.size();
+            }
+
+            @Override
+            public Fragment getItem(int arg0) {
+                return mTabs.get(arg0);
+            }
+        };
+        mViewPager.setAdapter(mAdapter);
+        mViewPager.setCurrentItem(1);
+        mViewPager.setOffscreenPageLimit(3);
     }
 
     private void initRadioButtom() {
         mRbs = new RadioButton[3];
-//初始化控件，中间大个的，周围小弟
+        //初始化控件，中间大个的，周围小弟
         mRbs[0] = (RadioButton) findViewById(R.id.rb_device);
         mRbs[1] = (RadioButton) findViewById(R.id.rb_report);
         mRbs[2] = (RadioButton) findViewById(R.id.rb_my_ihy);
@@ -83,7 +120,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     protected void loadData() {
-        checkReportFragment();
+//        checkReportFragment();
     }
 
 
@@ -103,7 +140,20 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        switch (checkedId) {
+            case R.id.rb_device:
+                mCurrentItem = 0;
+                break;
+            case R.id.rb_report:
+                mCurrentItem = 1;
+                break;
+
+            case R.id.rb_my_ihy:
+                mCurrentItem = 2;
+                break;
+        }
+            mViewPager.setCurrentItem(mCurrentItem, false);
+       /* FragmentTransaction transaction = getFragmentManager().beginTransaction();
         switch (checkedId) {
             case R.id.rb_device:
                 //设备
@@ -140,21 +190,22 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 if (null != mReportFragment) transaction.hide(mReportFragment);
                 break;
         }
-        transaction.commit();
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            reTryExit();
-            return true;
+        transaction.commit();*/
         }
-        return super.onKeyDown(keyCode, event);
-    }
 
-    /**
-     * 在主界面按两次back键退出App
-     */
+        @Override
+        public boolean onKeyDown ( int keyCode, KeyEvent event){
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+                reTryExit();
+                return true;
+            }
+            return super.onKeyDown(keyCode, event);
+        }
+
+        /**
+         * 在主界面按两次back键退出App
+         */
+
     private void reTryExit() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
             ToastUtils.showToastInCenter(getApplicationContext(), getString(R.string.tv_toast_exit_if_double));
@@ -221,9 +272,9 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Subscribe
     public void eventMainThread(BaseFactory.UpdateLanguageEvent event) {
-       if (mDeviceFragment!=null){
-           mDeviceFragment.reLoadView();
-       }
+        if (mDeviceFragment != null) {
+            mDeviceFragment.reLoadView();
+        }
     }
 
     @Override
