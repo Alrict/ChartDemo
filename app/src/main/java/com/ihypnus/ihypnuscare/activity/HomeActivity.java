@@ -12,13 +12,16 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.android.volley.toolbox.Volley;
 import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.adapter.IhyFragmentPagerAdapter;
+import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.fragment.DeviceFragment;
 import com.ihypnus.ihypnuscare.fragment.MyIhyFragment;
 import com.ihypnus.ihypnuscare.fragment.ReportFragment;
+import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.widget.NoScrollViewPager;
 import com.umeng.analytics.MobclickAgent;
@@ -152,7 +155,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 mCurrentItem = 2;
                 break;
         }
-            mViewPager.setCurrentItem(mCurrentItem, false);
+        mViewPager.setCurrentItem(mCurrentItem, false);
        /* FragmentTransaction transaction = getFragmentManager().beginTransaction();
         switch (checkedId) {
             case R.id.rb_device:
@@ -191,20 +194,20 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 break;
         }
         transaction.commit();*/
-        }
+    }
 
-        @Override
-        public boolean onKeyDown ( int keyCode, KeyEvent event){
-            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-                reTryExit();
-                return true;
-            }
-            return super.onKeyDown(keyCode, event);
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            reTryExit();
+            return true;
         }
+        return super.onKeyDown(keyCode, event);
+    }
 
-        /**
-         * 在主界面按两次back键退出App
-         */
+    /**
+     * 在主界面按两次back键退出App
+     */
 
     private void reTryExit() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
@@ -246,18 +249,22 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         switch (type) {
             case 0:
                 //设备
-                if (mDeviceFragment == null) {
-                    mDeviceFragment = new DeviceFragment();
-                    transaction.add(R.id.fragment_container, mDeviceFragment);
-                    transaction.show(mDeviceFragment);
-                    if (null != mReportFragment) transaction.hide(mReportFragment);
-                    if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
-                    transaction.commit();
-                } else {
-                    if (null != mReportFragment) transaction.hide(mReportFragment);
-                    if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
-                    mDeviceFragment.getDataList();
-                }
+                mCurrentItem = 0;
+                mRgpTab.check(R.id.rb_device);
+//                mViewPager.setCurrentItem(mCurrentItem, false);
+                mDeviceFragment.getDataList();
+//                if (mDeviceFragment == null) {
+//                    mDeviceFragment = new DeviceFragment();
+//                    transaction.add(R.id.fragment_container, mDeviceFragment);
+//                    transaction.show(mDeviceFragment);
+//                    if (null != mReportFragment) transaction.hide(mReportFragment);
+//                    if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
+//                    transaction.commit();
+//                } else {
+//                    if (null != mReportFragment) transaction.hide(mReportFragment);
+//                    if (null != mMyIhyFragment) transaction.hide(mMyIhyFragment);
+//                    mDeviceFragment.getDataList();
+//                }
                 break;
         }
 
@@ -279,6 +286,18 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+        outState.putString("JSESSIONID", Constants.JSESSIONID);
+        outState.putString("DEVICEID", Constants.DEVICEID);
+        LogOut.d("llw", "homeactivity被回收了");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Constants.JSESSIONID = savedInstanceState.getString("JSESSIONID");
+        Constants.DEVICEID = savedInstanceState.getString("DEVICEID");
+        Volley.me.addInitRequestHead("Cookie", "JSESSIONID=" + Constants.JSESSIONID);
+        LogOut.d("llw001", "从onRestoreInstanceState恢复数据,JSESSIONID:" + Constants.JSESSIONID + ",deviceid:" + Constants.DEVICEID);
     }
 }

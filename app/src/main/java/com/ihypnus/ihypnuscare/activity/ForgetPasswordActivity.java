@@ -229,6 +229,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                 IhyApplication.mInstance.setUser(null);
                 Intent intent = new Intent(ForgetPasswordActivity.this, cls);
                 startActivity(intent);
+                finish();
             }
 
             @Override
@@ -324,7 +325,6 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
     }
 
     /**
-     *
      * @param account
      * @param region
      */
@@ -334,7 +334,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                BaseDialogHelper.showSimpleDialog(ForgetPasswordActivity.this, getString(R.string.tip_msg), account + getString(R.string.tv_msg_unregister) );
+                BaseDialogHelper.showSimpleDialog(ForgetPasswordActivity.this, getString(R.string.tip_msg), account + getString(R.string.tv_msg_unregister));
                 mEtCount.setText("");
             }
 
@@ -343,8 +343,8 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                 BaseDialogHelper.dismissLoadingDialog();
                 if (!StringUtils.isNullOrEmpty(var3)) {
 //                    BaseDialogHelper.showMsgTipDialog(RegisterActivity.this, var3);
-                    BaseDialogHelper.showSimpleDialog(ForgetPasswordActivity.this, getString(R.string.tip_msg), account + " " + var3);
-                    mEtCount.setText("");
+//                    BaseDialogHelper.showSimpleDialog(ForgetPasswordActivity.this, getString(R.string.tip_msg), account + " " + var3);
+//                    mEtCount.setText("");
                 }
             }
         });
