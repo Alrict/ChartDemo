@@ -67,6 +67,8 @@ public class ChartsPage1Controller extends BaseController {
 
     @Override
     public void initData() {
+        mChart1.setNoDataText(mContext.getString(R.string.tv_has_no_datas));
+        mChart2.setNoDataText(mContext.getString(R.string.tv_has_no_datas));
         mBarChartManager1 = new BarChartManager(mChart1);
         mBarChartManager2 = new BarChartManager(mChart2);
 

@@ -354,4 +354,5 @@
     <string name="tv_toast_error1038">獲取驗證碼失敗</string>
     <string name="tv_msg_unregister">未註冊!</string>
     <string name="tv_tip_personinfo_error">您的信息尚未填寫完整，請完善</string>
+    <string name="tv_has_no_datas">No data</string>
 </resources>

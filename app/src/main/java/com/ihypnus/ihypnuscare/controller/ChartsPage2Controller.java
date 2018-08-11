@@ -14,6 +14,7 @@ import com.ihypnus.ihypnuscare.fragment.ReportFragment;
 import com.ihypnus.ihypnuscare.utils.BarChartManager;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.widget.VerticalTextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,6 +43,7 @@ public class ChartsPage2Controller extends BaseController {
     private ArrayList<String> mLables;
     private int mEndDay;
     private int mMonthMaxDay;
+    private VerticalTextView mTvVertical;
 
     public ChartsPage2Controller(Context context) {
         super(context);
@@ -51,6 +53,7 @@ public class ChartsPage2Controller extends BaseController {
     public View initView() {
         View rootView = View.inflate(mContext, R.layout.fragment_third, null);
         mChart1 = (BarChart) rootView.findViewById(R.id.chart1);
+        mTvVertical = (VerticalTextView) rootView.findViewById(R.id.tv_vertical);
 
         mLayoutChart1 = (LinearLayout) rootView.findViewById(R.id.layout_chart1);
         mLayoutChart2 = (LinearLayout) rootView.findViewById(R.id.layout_chart2);
@@ -68,6 +71,8 @@ public class ChartsPage2Controller extends BaseController {
 
     @Override
     public void initData() {
+        mChart1.setNoDataText(mContext.getString(R.string.tv_has_no_datas));
+        mChart2.setNoDataText(mContext.getString(R.string.tv_has_no_datas));
         mBarChartManager1 = new BarChartManager(mChart1);
         mBarChartManager2 = new BarChartManager(mChart2);
         //设置x轴的数据
@@ -113,6 +118,7 @@ public class ChartsPage2Controller extends BaseController {
 
     public void updateUI(List<Double> averageInp, List<Double> averageExp, List<Double> ahi) {
         mLayoutChart1.setVisibility(View.VISIBLE);
+        mTvVertical.setVisibility(View.VISIBLE);
         mLayoutChart2.setVisibility(View.VISIBLE);
         Double inpMax = Collections.max(averageExp);
         Double expMax = Collections.max(averageExp);
@@ -224,6 +230,7 @@ public class ChartsPage2Controller extends BaseController {
 
     public void showErrorView() {
         mLayoutChart1.setVisibility(View.INVISIBLE);
+        mTvVertical.setVisibility(View.INVISIBLE);
         mLayoutChart2.setVisibility(View.INVISIBLE);
     }
 
