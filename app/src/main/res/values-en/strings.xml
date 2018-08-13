@@ -1,4 +1,4 @@
-<resources>
+﻿<resources>
     <string name="app_name">iHypnusCare</string>
     <string name="login_account_hint">Please enter phone number</string>
     <!-- Zxing-->
@@ -225,7 +225,7 @@
     <string name="tv_dialog_setting">Setting up...</string>
     <string name="tv_dialog_setting_success">Set successfully</string>
     <string name="tv_text_delete">Delete</string>
-    <string name="tv_dialog_bind_error">This is your using device, and can be deleted!</string>
+    <string name="tv_dialog_bind_error">This is your using device, it can not be deleted!</string>
     <string name="tv_dialog_unbind">Unbinding...</string>
     <string name="tv_load_binding">Binding...</string>
     <string name="tv_toast_nickname">Please enter your nickname</string>
@@ -253,12 +253,12 @@
     <string name="tv_toast_error_1311">No binding device (or settings are not owned by the user)</string>
     <string name="tv_toast_error0013">Account does not exist
     </string>
-    <string name="tv_parameter_error">The initial pressure cannot be greater than the treatment pressure</string>
-    <string name="tv_parameter_error01">The initial pressure cannot be greater than the minimum pressure</string>
-    <string name="tv_parameter_error02">The initial pressure cannot be greater than the expiratory pressure</string>
-    <string name="tv_parameter_error03">The initial pressure cannot be greater than the minimum expiratory pressure</string>
-    <string name="tv_parameter_error04">The initial pressure cannot be greater than the expiratory pressure</string>
-    <string name="tv_parameter_error05">The initial pressure cannot be greater than the expiratory pressure</string>
+    <string name="tv_parameter_error">The start pressure cannot be greater than the treatment pressure</string>
+    <string name="tv_parameter_error01">The start pressure cannot be greater than the minimum pressure</string>
+    <string name="tv_parameter_error02">The start pressure cannot be greater than the EPAP</string>
+    <string name="tv_parameter_error03">The start pressure cannot be greater than the Min EPAP</string>
+    <string name="tv_parameter_error04">The start pressure cannot be greater than the EPAP</string>
+    <string name="tv_parameter_error05">The start pressure cannot be greater than the EPAP</string>
 <string name="tv_title_wifi_set">Setting up WiFi</string>
     <string name="tv_title_select_gender">Please select gender</string>
     <string name="tv_toast_send_success">Has been sent</string>
@@ -270,7 +270,7 @@
     <string name="tv_toast_error1036">Please send a verification code first</string>
     <string name="tv_toast_error1037">Verification code is invalid or incorrect</string>
     <string name="tv_toast_error1038">Failed to get verification code</string>
-    <string name="tv_msg_unregister"> unregistered!</string>
-    <string name="tv_tip_personinfo_error">Your information has not been completed yet, please improve</string>
+    <string name="tv_msg_unregister"> Unregistered!</string>
+    <string name="tv_tip_personinfo_error">Please make sure your information is complete!</string>
     <string name="tv_has_no_datas">No data</string>
 </resources>

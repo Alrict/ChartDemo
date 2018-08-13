@@ -48,6 +48,7 @@ public class BarChartManager {
 
     private void initBarChart(boolean showLegend, int type, int endDay, int maxDay, List<Double> averageInp, List<Double> averageExp) {
         //背景颜色
+        mBarChart.setScaleEnabled(false);//禁止手势缩放
         mBarChart.setBackgroundColor(Color.TRANSPARENT);
         //网格
         mBarChart.setDrawGridBackground(false);

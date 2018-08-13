@@ -270,7 +270,7 @@
     <string name="tv_zdxqyl">最大吸氣壓力</string>
     <string name="tv_zdylzc">最大壓力支持</string>
     <string name="tv_zdhqyl">最大呼氣壓力</string>
-    <string name="tv_cflmd">吸氣靈敏度</string>
+    <string name="tv_cflmd">觸發靈敏度</string>
     <string name="tv_breath_rate">呼吸頻率</string>
     <string name="tv_breath_ration">吸呼比</string>
     <string name="tv_toast_scan_error">請掃描正確的二維碼</string>

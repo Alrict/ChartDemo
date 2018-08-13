@@ -378,9 +378,11 @@ public class PersonalInformationActivity extends BaseActivity implements RadioGr
 //        mRbFemale.setChecked(gender.equals("1"));
         if (gender.equals("1")) {
             mGenderIndex = 0;
+            mGender = "1";
             mIvGender.setImageDrawable(getResources().getDrawable(R.mipmap.icon_man_unchecked));
             mTvPersonGender.setText(getString(R.string.tv_man));
         } else {
+            mGender = "2";
             mGenderIndex = 1;
             mIvGender.setImageDrawable(getResources().getDrawable(R.mipmap.icon_female_unchecked));
             mTvPersonGender.setText(getString(R.string.tv_female));
