@@ -1,8 +1,11 @@
 package com.ihypnus.ihypnuscare.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -29,7 +32,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     private Button mBtNext;
     private Button mBtSetWifi;
     private String mNewDeviceId;
-
+    private static final int GET_LOCATION_INFO = 122;
 
     @Override
     protected int setView() {
@@ -45,6 +48,7 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
     @Override
     protected void init(Bundle savedInstanceState) {
         setTitle(R.string.tv_title_wifi_set);
+        checkWifiPermission();
     }
 
     @Override
@@ -88,6 +92,38 @@ public class WifiSettingTipActivity extends BaseActivity implements View.OnClick
                     }
                 }
                 showTipDialog(tips);
+                break;
+        }
+    }
+
+    /**
+     * 检查wifi权限
+     */
+    private void checkWifiPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GET_LOCATION_INFO);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            // requestCode即所声明的权限获取码，在checkSelfPermission时传入
+            case GET_LOCATION_INFO:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    WifiSettingManager.getInstance().initWifiManager(WifiSettingTipActivity.this).startScan();
+                    // 获取到权限，作相应处理（调用定位SDK应当确保相关权限均被授权，否则可能引起定位失败）
+//                    showToast("get");
+                } else {
+                    // 没有获取到权限，做特殊处理
+                    checkWifiPermission();
+                }
+                break;
+            default:
                 break;
         }
     }
