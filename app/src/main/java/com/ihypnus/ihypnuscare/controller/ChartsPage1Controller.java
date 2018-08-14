@@ -98,7 +98,8 @@ public class ChartsPage1Controller extends BaseController {
     }
 
     private void loadFromNet() {
-        IhyRequest.getHistogramData(Constants.JSESSIONID, true, Constants.DEVICEID, getWeekStartTime(ReportFragment.sCurrentTime), getEndTime(ReportFragment.sCurrentTime), new ResponseCallback() {
+        long l = ReportFragment.sCurrentTime + (24L * 60L * 60L * 1000L);
+        IhyRequest.getHistogramData(Constants.JSESSIONID, true, Constants.DEVICEID, getWeekStartTime(l), getEndTime(l), new ResponseCallback() {
             @Override
             public void onSuccess(Object var1, String var2, String var3) {
                 HistogramData data = (HistogramData) var1;

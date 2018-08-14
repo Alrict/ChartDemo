@@ -137,7 +137,7 @@ public class HttpRequest extends Request {
                     if (!(error instanceof NoConnectionError) && !(error instanceof TimeoutError)) {
                         if (((VolleyError) error).networkResponse != null) {
                             int statusCode = ((VolleyError) error).getHttpStatusCode();
-                            errorMsg = errorMsg + statusCode +  IhyApplication.mInstance.getString(R.string.tv_net_connect_error);
+                            errorMsg = errorMsg + statusCode + IhyApplication.mInstance.getString(R.string.tv_net_connect_error);
                         }
                     } else {
                         errorMsg = IhyApplication.mInstance.getString(R.string.tv_net_connet_error01);
@@ -175,7 +175,7 @@ public class HttpRequest extends Request {
             try {
                 if (HttpRequest.this.mResponseDataType == 3) {
                     HttpRequest.this.doSuccessCallback(HttpRequest.this, response.toString(), "", "", HttpRequest.this.mResponseCallback);
-                } else if(HttpRequest.this.mResponseDataType == 4) {
+                } else if (HttpRequest.this.mResponseDataType == 4) {
                     HttpRequest.this.doSuccessCallback(HttpRequest.this, response, "", "", HttpRequest.this.mResponseCallback);
                 } else {
                     ResponseResult responseResult = (ResponseResult) response;
@@ -198,56 +198,63 @@ public class HttpRequest extends Request {
         }
     }
 
-    private String handlerErrorMsg(String errorCode,String errorMsg){
-        if (errorCode.equals("0000")){
+    private String handlerErrorMsg(String errorCode, String errorMsg) {
+        if (errorCode.equals("0000")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_success);
-        }if (errorCode.equals("0001")){
+        }
+        if (errorCode.equals("0001")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_send_success);
         }
-        if (errorCode.equals("0013")){
+        if (errorCode.equals("0013")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_error0013);
         }
-        if (errorCode.equals("1000")){
+        if (errorCode.equals("1000")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1000);
         }
-        if (errorCode.equals("1119")){
+        if (errorCode.equals("1119")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1119);
-        } if (errorCode.equals("1120")){
+        }
+        if (errorCode.equals("1120")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_pwd_error);
-        } if (errorCode.equals("1121")){
+        }
+        if (errorCode.equals("1121")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_account_locked);
         }
-        if (errorCode.equals("1300")){
+        if (errorCode.equals("1300")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1300);
         }
-        if (errorCode.equals("1301")){
+        if (errorCode.equals("1301")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1301);
         }
-        if (errorCode.equals("1302")){
+        if (errorCode.equals("1302")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1302);
         }
-        if (errorCode.equals("1304")){
+        if (errorCode.equals("1304")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1304);
         }
-        if (errorCode.equals("1305")){
+        if (errorCode.equals("1305")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1305);
         }
 
-        if (errorCode.equals("1306")){
+        if (errorCode.equals("1306")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1036);
         }
-        if (errorCode.equals("1307")){
+        if (errorCode.equals("1307")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1037);
         }
-        if (errorCode.equals("1308")){
+        if (errorCode.equals("1308")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1038);
         }
-        if (errorCode.equals("1310")){
+        if (errorCode.equals("1310")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_error1310);
         }
-        if (errorCode.equals("1311")){
+        if (errorCode.equals("1311")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_error_1311);
-        }if (errorCode.equals("1400")){
+        }
+        if (errorCode.equals("1312")) {
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error_1312);
+        }
+        if (errorCode.equals("1400")) {
             return IhyApplication.mInstance.getString(R.string.tv_toast_value_ilegal);
         }
 
@@ -527,29 +534,29 @@ public class HttpRequest extends Request {
         } else if (this.mResponseDataType == 4) {
             //解析成普通的javaBean
             obj = gson.fromJson(parsedData, this.mResponseJavaBean);
-        }else{
+        } else {
             JSONObject jObject = new JSONObject(parsedData);
             ResponseResult responseResult = ResponseResult.parseResponseResult(jObject);
             String type = responseResult.getType();
             String result = responseResult.getResult();
             Object resultObj = null;
-            if(this.mResponseDataType == 2) {
+            if (this.mResponseDataType == 2) {
 
-                if(type.equals("success") && !TextUtils.isEmpty(result) && this.mResponseJavaBean != null) {
+                if (type.equals("success") && !TextUtils.isEmpty(result) && this.mResponseJavaBean != null) {
                     resultObj = gson.fromJson(result, this.mResponseJavaBean);
                     responseResult.setResultObject(resultObj);
                     responseResult.setType("success");
                 } else {
                     responseResult.setResultObject("");
                     responseResult.setType("error");
-                    HttpLog.e("volley_request", "type: " + type + "\nresult: " + result + "\nResponseJavaBean: " + (this.mResponseJavaBean == null?null:this.mResponseJavaBean.getClass().getSimpleName()));
+                    HttpLog.e("volley_request", "type: " + type + "\nresult: " + result + "\nResponseJavaBean: " + (this.mResponseJavaBean == null ? null : this.mResponseJavaBean.getClass().getSimpleName()));
                 }
             } else {
-                if(this.mResponseDataType != 1) {
+                if (this.mResponseDataType != 1) {
                     throw new RuntimeException("invalid ResponseDataType");
                 }
 
-                if(type.equals("success")) {
+                if (type.equals("success")) {
                     responseResult.setResultObject(result);
                     responseResult.setType("success");
                 }

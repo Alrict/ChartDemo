@@ -355,4 +355,5 @@
     <string name="tv_msg_unregister">未註冊!</string>
     <string name="tv_tip_personinfo_error">您的信息尚未填寫完整，請完善</string>
     <string name="tv_has_no_datas">No data</string>
+    <string name="tv_toast_error_1312">該設備已綁定用戶,請先解綁</string>
 </resources>

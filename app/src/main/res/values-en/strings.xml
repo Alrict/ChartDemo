@@ -273,4 +273,5 @@
     <string name="tv_msg_unregister"> Unregistered!</string>
     <string name="tv_tip_personinfo_error">Please make sure your information is complete!</string>
     <string name="tv_has_no_datas">No data</string>
+    <string name="tv_toast_error_1312">The device is bound to the user. Please untie it first.</string>
 </resources>

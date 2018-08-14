@@ -321,10 +321,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 LoginBean loginBean = (LoginBean) var1;
                 IhyApplication.mInstance.setUser(loginBean);
                 if (loginBean != null && loginBean.getJSESSIONID() != null) {
-                    jumpToHome();
+                    String jsessionid = loginBean.getJSESSIONID();
+                    jumpToHome(jsessionid);
                     //当用户使用自有账号登录时，可以这样统计：
                     MobclickAgent.onProfileSignIn(countNum);
-                    String jsessionid = loginBean.getJSESSIONID();
+
                     LogOut.d("llw", jsessionid);
                     finish();
                 }
@@ -340,10 +341,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-    private void jumpToHome() {
-
-        mSP.putString(Constants.LOGIN_ACCOUNT, mEtCount.getText().toString().trim());
-        mSP.putString(Constants.LOGIN_PASSWORD, mEtPassWord.getText().toString().trim());
+    private void jumpToHome(String jessionid) {
+        String account = mEtCount.getText().toString().trim();
+        String password = mEtPassWord.getText().toString().trim();
+        mSP.putString(Constants.LOGIN_ACCOUNT, account);
+        mSP.putString(Constants.LOGIN_PASSWORD, password);
+        mSP.putString(account + "_jessionid", jessionid);
         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
         startActivity(intent);
     }

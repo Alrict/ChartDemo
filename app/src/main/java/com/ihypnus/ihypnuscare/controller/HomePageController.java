@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.volley.ResponseCallback;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.activity.AddNwedeviceActivity;
 import com.ihypnus.ihypnuscare.activity.HomeActivity;
@@ -28,6 +29,7 @@ import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
+import com.ihypnus.ihypnuscare.utils.SP;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
@@ -69,6 +71,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
     private int mMode;
     private AppTextView mTvTitleHiden;
     private TextView mTvHiden;
+    private SP mSP;
 
     public HomePageController(Context context) {
         super(context);
@@ -155,6 +158,14 @@ public class HomePageController extends BaseController implements View.OnClickLi
     }
 
     private void getDefaultDeviceInfos() {
+        mSP = SP.getSP(Constants.LOGIN_ACCOUNT_PASSWORD);
+        String account = mSP.getString(Constants.LOGIN_ACCOUNT);
+        String jessionid = mSP.getString(account + "_jessionid");
+        if (StringUtils.isNullOrEmpty(Constants.JSESSIONID)) {
+            Constants.JSESSIONID = jessionid;
+            Volley.me.addInitRequestHead("Cookie", "JSESSIONID=" + Constants.JSESSIONID);
+        }
+        LogOut.d("llw001", "本地缓存jessionid:" + jessionid + ",帐号:" + account);
         BaseDialogHelper.showLoadingDialog(mContext, true, mContext.getString(R.string.onloading));
         IhyRequest.getDefaultDeviceId(Constants.JSESSIONID, true, new ResponseCallback() {
             @Override
@@ -233,7 +244,8 @@ public class HomePageController extends BaseController implements View.OnClickLi
     public void refreshData() {
         LogOut.d("llw", "报告页首页刷新");
         long date = setData();
-        loadDataByNet(getStartTime(date), getEndTime(date), null);
+        long l = date + (24L * 60L * 60L * 1000L);
+        loadDataByNet(getStartTime(l), getEndTime(l), null);
     }
 
     /**
@@ -305,12 +317,12 @@ public class HomePageController extends BaseController implements View.OnClickLi
         UsageInfos.UseInfoBean useInfo = usageInfos.getUseInfo();
         //平均使用时长
         int useseconds = useInfo.getUseseconds();
-        handleUseLeng(useseconds,usageInfos);
+        handleUseLeng(useseconds, usageInfos);
 
 
     }
 
-    private String handleUseLeng(int useseconds,UsageInfos usageInfos) {
+    private String handleUseLeng(int useseconds, UsageInfos usageInfos) {
         UsageInfos.EventsBean events = usageInfos.getEvents();
         if (useseconds > 0) {
             //使用时间段
@@ -391,7 +403,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
                 ahi = events.getAhi();
             }
             mTvAhi.setText(StringUtils.isNullOrEmpty(ahi) ? "--" : String.valueOf(ahi));
-        }else {
+        } else {
             mTvHours.setText("--");
             mTvMinues.setText("--");
             mTvUsageLongData.setText("--~--");
@@ -472,13 +484,13 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
     }
 
-    public void refreshDatas(String date) {
-        mTvData.setText(date);
-        long currentTime = ReportFragment.sCurrentTime;
-        loadDataByNet(getStartTime(currentTime), getEndTime(currentTime), null);
-        //刷新柱状图数据
-
-    }
+//    public void refreshDatas(String date) {
+//        mTvData.setText(date);
+//        long currentTime = ReportFragment.sCurrentTime;
+//        loadDataByNet(getStartTime(currentTime), getEndTime(currentTime), null);
+//        //刷新柱状图数据
+//
+//    }
 
     @Override
     public void onClick(View v) {
@@ -540,7 +552,7 @@ public class HomePageController extends BaseController implements View.OnClickLi
     private void updateData(int type) {
         long date = ReportFragment.sCurrentTime;
         long lastDay = date + (24L * 60L * 60L * 1000L * type);
-        if (lastDay > (System.currentTimeMillis()-(24L * 60L * 60L * 1000L))) {
+        if (lastDay > (System.currentTimeMillis() - (24L * 60L * 60L * 1000L))) {
             ToastUtils.showToastDefault(mContext.getString(R.string.tv_toast_data_error));
             return;
         }
@@ -554,10 +566,10 @@ public class HomePageController extends BaseController implements View.OnClickLi
 
     }
 
-    public void reLoad(ImageView imageView) {
-        long currentTime = ReportFragment.sCurrentTime;
-        loadDataByNet(getStartTime(currentTime), getEndTime(currentTime), imageView);
-    }
+//    public void reLoad(ImageView imageView) {
+//        long currentTime = ReportFragment.sCurrentTime;
+//        loadDataByNet(getStartTime(currentTime), getEndTime(currentTime), imageView);
+//    }
 
     public interface ChangeDateListener {
         void onChangeDateListener();
