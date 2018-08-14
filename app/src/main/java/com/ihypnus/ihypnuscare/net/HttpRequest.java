@@ -1,5 +1,7 @@
 package com.ihypnus.ihypnuscare.net;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -24,6 +26,7 @@ import com.ihypnus.ihypnuscare.IhyApplication;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.utils.HttpLog;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
+import com.ihypnus.multilanguage.MultiLanguageUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +38,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -198,67 +202,92 @@ public class HttpRequest extends Request {
         }
     }
 
+    @SuppressLint("StringFormatInvalid")
     private String handlerErrorMsg(String errorCode, String errorMsg) {
         if (errorCode.equals("0000")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_success);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_success,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("0001")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_send_success);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_send_success,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("0013")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_error0013);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error0013,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1000")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_error1000);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1000,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1119")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_error1119);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1119,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1120")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_pwd_error);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_pwd_error,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1121")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_account_locked);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_account_locked,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1300")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_error1300);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1300,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1301")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_error1301);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1301,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1302")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_error1302);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1302,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1304")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_error1304);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1304,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1305")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_error1305);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1305,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
 
         if (errorCode.equals("1306")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_error1036);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1036,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1307")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_error1037);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1037,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1308")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_error1038);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1038,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1310")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_error1310);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error1310,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1311")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_error_1311);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error_1311,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1312")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_error_1312);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_error_1312,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
         if (errorCode.equals("1400")) {
-            return IhyApplication.mInstance.getString(R.string.tv_toast_value_ilegal);
+            return IhyApplication.mInstance.getString(R.string.tv_toast_value_ilegal,
+                    getAppLanguage(IhyApplication.mInstance).getDisplayLanguage());
         }
 
         return errorMsg;
+    }
+
+    private Locale getAppLanguage(Context context) {
+        MultiLanguageUtil.init(context);
+        return MultiLanguageUtil.getInstance().getLanguageLocale();
     }
 
     @Override

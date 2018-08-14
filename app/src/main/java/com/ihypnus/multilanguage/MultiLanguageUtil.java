@@ -152,14 +152,13 @@ public class MultiLanguageUtil {
     /**
      * 设置语言
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     public void setConfiguration() {
         Locale targetLocale = getLanguageLocale();
-        LogOut.d("llw", "設置系統語言類型：" + targetLocale.toString());
         Configuration configuration = mContext.getResources().getConfiguration();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             configuration.setLocale(targetLocale);
-            configuration.setLocales(new LocaleList(targetLocale));
+//            configuration.setLocales(new LocaleList(targetLocale));
         } else {
             configuration.locale = targetLocale;
         }
@@ -214,10 +213,10 @@ public class MultiLanguageUtil {
     //以上获取方式需要特殊处理一下
     public Locale getSysLocale() {
         Locale locale;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            locale = LocaleList.getDefault().get(0);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            locale = mContext.getResources().getConfiguration().locale;
         } else {
-            locale = Locale.getDefault();
+            locale = mContext.getResources().getConfiguration().getLocales().get(0);
         }
         return locale;
     }
@@ -227,7 +226,7 @@ public class MultiLanguageUtil {
      *
      * @param languageType
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     public void updateLanguage(int languageType) {
         CommSharedUtil.getInstance(mContext).putInt(MultiLanguageUtil.SAVE_LANGUAGE, languageType);
         MultiLanguageUtil.getInstance().setConfiguration();
