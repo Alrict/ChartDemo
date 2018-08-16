@@ -18,6 +18,7 @@ import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
+import com.ihypnus.ihypnuscare.utils.HandlerErrorUtils;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
@@ -136,7 +137,8 @@ public class DeviceDetailActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(var3);
+                String s = HandlerErrorUtils.handlerErrorMsg(DeviceDetailActivity.this, var2, var3);
+                ToastUtils.showToastDefault(s);
                 mBtnModify.setVisibility(View.INVISIBLE);
             }
         });

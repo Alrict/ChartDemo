@@ -287,7 +287,7 @@ public class HttpRequest extends Request {
 
     private Locale getAppLanguage(Context context) {
         MultiLanguageUtil.init(context);
-        return MultiLanguageUtil.getInstance().getLanguageLocale();
+        return MultiLanguageUtil.getLanguageLocale(context);
     }
 
     @Override

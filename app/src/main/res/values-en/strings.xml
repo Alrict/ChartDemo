@@ -274,4 +274,8 @@
     <string name="tv_tip_personinfo_error">Please make sure your information is complete!</string>
     <string name="tv_has_no_datas">No data</string>
     <string name="tv_toast_error_1312">The device is bound to the user. Please untie it first.</string>
+    <string name="language_cn">中文</string>
+    <string name="language_en">ENGLISH</string>
+    <string name="language_auto">自动</string>
+    <string name="language_traditional">繁體</string>
 </resources>

@@ -49,6 +49,7 @@ import com.ihypnus.ihypnuscare.bean.PersonMesVO;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
+import com.ihypnus.ihypnuscare.utils.HandlerErrorUtils;
 import com.ihypnus.ihypnuscare.utils.ImageUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.SP;
@@ -162,7 +163,8 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(var3);
+                String s = HandlerErrorUtils.handlerErrorMsg(mAct, var2, var3);
+                ToastUtils.showToastDefault(s);
             }
         });
 
@@ -644,7 +646,8 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(var3);
+                String s = HandlerErrorUtils.handlerErrorMsg(mAct, var2, var3);
+                ToastUtils.showToastDefault(s);
             }
         });
     }
@@ -667,7 +670,8 @@ public class MyIhyFragment extends BaseFragment implements View.OnClickListener 
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(var3);
+                String s = HandlerErrorUtils.handlerErrorMsg(mAct, var2, var3);
+                ToastUtils.showToastDefault(s);
             }
         });
     }

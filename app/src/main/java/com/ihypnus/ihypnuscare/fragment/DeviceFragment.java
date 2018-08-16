@@ -20,6 +20,7 @@ import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
+import com.ihypnus.ihypnuscare.utils.HandlerErrorUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
@@ -217,7 +218,8 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(var3);
+                String s = HandlerErrorUtils.handlerErrorMsg(mAct, var2, var3);
+                ToastUtils.showToastDefault(s);
             }
         });
     }
@@ -303,7 +305,8 @@ public class DeviceFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(var3);
+                String s = HandlerErrorUtils.handlerErrorMsg(mAct, var2, var3);
+                ToastUtils.showToastDefault(s);
             }
         });
     }

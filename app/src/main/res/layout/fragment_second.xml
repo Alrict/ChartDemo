@@ -32,7 +32,7 @@
         android:layout_weight="1"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/w50">
-        <com.ihypnus.ihypnuscare.widget.VerticalTextView
+       <!-- <com.ihypnus.ihypnuscare.widget.VerticalTextView
             style="@style/TextAppearanceMedium"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -40,7 +40,7 @@
             app:direction="downtoup"
             app:text="cmH2O"
             app:textColor="@color/white"
-            app:textSize="@dimen/w38"/>
+            app:textSize="@dimen/w38"/>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -118,7 +118,7 @@
         android:orientation="horizontal"
         android:paddingLeft="@dimen/w50">
 
-        <com.ihypnus.ihypnuscare.widget.VerticalTextView
+        <!--<com.ihypnus.ihypnuscare.widget.VerticalTextView
             style="@style/TextAppearanceMedium"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -126,7 +126,7 @@
             app:direction="downtoup"
             app:text="cmH2O"
             app:textColor="@color/white"
-            app:textSize="@dimen/w38"/>
+            app:textSize="@dimen/w38"/>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

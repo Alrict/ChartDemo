@@ -37,6 +37,7 @@ import com.ihypnus.ihypnuscare.dialog.IhyBaseDialog;
 import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
+import com.ihypnus.ihypnuscare.utils.HandlerErrorUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
@@ -337,7 +338,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(RegisterActivity.this, var3);
+                String s = HandlerErrorUtils.handlerErrorMsg(RegisterActivity.this, var2, var3);
+                ToastUtils.showToastDefault(RegisterActivity.this, s);
             }
         });
     }
@@ -537,7 +539,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
-                ToastUtils.showToastDefault(var3);
+                String s = HandlerErrorUtils.handlerErrorMsg(RegisterActivity.this, var2, var3);
+                ToastUtils.showToastDefault(s);
                 mBtnVcerificationCode.setEnabled(true);
                 mIvCodeLoading.clearAnimation();
                 mBtnVcerificationCode.setVisibility(View.VISIBLE);

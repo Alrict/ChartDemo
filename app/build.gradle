@@ -39,8 +39,8 @@ android {
         applicationId "com.ihypnus.ihypnuscare"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 105
-        versionName "1.0.5"
+        versionCode 106
+        versionName "1.0.6"
         flavorDimensions "versionCode"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

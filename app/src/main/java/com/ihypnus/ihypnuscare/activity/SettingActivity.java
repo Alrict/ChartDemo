@@ -18,6 +18,7 @@ import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
+import com.ihypnus.ihypnuscare.utils.HandlerErrorUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
 
@@ -123,7 +124,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(var3);
+                String s = HandlerErrorUtils.handlerErrorMsg(SettingActivity.this, var2, var3);
+                ToastUtils.showToastDefault(s);
             }
         });
     }

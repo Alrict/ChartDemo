@@ -40,7 +40,6 @@ import android.view.View;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.utils.LogOut;
-import com.ihypnus.multilanguage.MultiLanguageUtil;
 
 import java.security.InvalidParameterException;
 import java.text.DateFormatSymbols;
@@ -426,7 +425,7 @@ public class SimpleMonthView extends View {
 
     protected void onDraw(Canvas canvas) {
         //当前语言类型
-        mLanguageLocale = MultiLanguageUtil.getInstance().getLanguageLocale();
+        mLanguageLocale = Constants.LANGUAGE_TYPE;
         drawMonthTitle(canvas);
         drawMonthDayLabels(canvas);
         drawMonthNums(canvas);

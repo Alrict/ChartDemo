@@ -28,6 +28,7 @@ import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.DateTimeUtils;
+import com.ihypnus.ihypnuscare.utils.HandlerErrorUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.SP;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
@@ -296,7 +297,8 @@ public class HomePageController extends BaseController implements View.OnClickLi
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(var3);
+                String s = HandlerErrorUtils.handlerErrorMsg(mContext, var2, var3);
+                ToastUtils.showToastDefault(s);
                 if (imageView != null) {
                     imageView.clearAnimation();
                 }

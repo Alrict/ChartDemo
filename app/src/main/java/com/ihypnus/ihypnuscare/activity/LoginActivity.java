@@ -34,6 +34,7 @@ import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
 import com.ihypnus.ihypnuscare.utils.AndroidSystemHelper;
+import com.ihypnus.ihypnuscare.utils.HandlerErrorUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.SP;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
@@ -334,7 +335,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(LoginActivity.this, var3);
+                String s = HandlerErrorUtils.handlerErrorMsg(LoginActivity.this, var2, var3);
+                ToastUtils.showToastDefault(LoginActivity.this, s);
 //                jumpToHome();
             }
         });

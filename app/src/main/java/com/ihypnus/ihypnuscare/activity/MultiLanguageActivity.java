@@ -1,6 +1,5 @@
 package com.ihypnus.ihypnuscare.activity;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -12,9 +11,13 @@ import android.widget.RelativeLayout;
 import com.ihypnus.ihypnuscare.R;
 import com.ihypnus.ihypnuscare.config.Constants;
 import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
+import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
+import com.ihypnus.multilanguage.CommSharedUtil;
 import com.ihypnus.multilanguage.LanguageType;
 import com.ihypnus.multilanguage.MultiLanguageUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Locale;
 
@@ -154,19 +157,19 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
                 break;
         }
         MultiLanguageUtil.getInstance().updateLanguage(selectedLanguage);
-        Intent intent = new Intent(this, HomeActivity.class);
+       /* Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         BaseDialogHelper.dismissLoadingDialog();
-        startActivity(intent);
+        startActivity(intent);*/
 //        MultiLanguageUtil.init(getApplicationContext());
 //        MultiLanguageUtil.getInstance().updateLanguage(selectedLanguage);
-      /*  CommSharedUtil.getInstance(this).putInt(MultiLanguageUtil.SAVE_LANGUAGE, selectedLanguage);
+        CommSharedUtil.getInstance(this).putInt(MultiLanguageUtil.SAVE_LANGUAGE, selectedLanguage);
         //更新语言
         EventBus.getDefault().post(new BaseFactory.UpdateLanguageEvent());
         //更新报告页面日期
         EventBus.getDefault().post(new BaseFactory.UpdateDataLanguage());
         BaseDialogHelper.dismissLoadingDialog();
-        finish();*/
+        finish();
     }
 
     public void switchLanguage(Locale locale) {

@@ -22,6 +22,7 @@ import com.ihypnus.ihypnuscare.eventbusfactory.BaseFactory;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StatusBarUtil;
 import com.ihypnus.ihypnuscare.utils.ViewUtils;
+import com.ihypnus.multilanguage.MultiLanguageUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -305,10 +306,10 @@ public abstract class BaseActivity extends Activity {
         finish();
     }
 
-/*    @Override
+    @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(MultiLanguageUtil.attachBaseContext(newBase));
-    }*/
+        super.attachBaseContext(MultiLanguageUtil.setLocal(newBase));
+    }
 
     @Override
     public void onResume() {

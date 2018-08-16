@@ -88,13 +88,15 @@ public class WifiDialogActivity extends Activity {
     }
 
     @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(MultiLanguageUtil.attachBaseContext(newBase, getAppLanguage(newBase)));
+    protected void attachBaseContext(Context base) {
+        //保存系统选择语言
+//        MultiLanguageUtil.saveSystemCurrentLanguage(base);
+        super.attachBaseContext(MultiLanguageUtil.setLocal(base));
     }
 
     private Locale getAppLanguage(Context context) {
         MultiLanguageUtil.init(context);
-        return MultiLanguageUtil.getInstance().getLanguageLocale();
+        return MultiLanguageUtil.getLanguageLocale(context);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

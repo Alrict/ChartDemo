@@ -80,7 +80,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Hashtable;
-import java.util.Locale;
 import java.util.Map;
 
 
@@ -568,6 +567,9 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
                 finish();
                 return;
             }
+        } else if (num.length() == 11 && num.startsWith("CP")) {
+
+
         } else {
             ToastUtils.showToastInCenter(CaptureActivity.this, getString(R.string.tv_toast_scan_error));
             finish();
@@ -850,12 +852,9 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
     }
 
     @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(MultiLanguageUtil.attachBaseContext(newBase, getAppLanguage(newBase)));
-    }
-
-    private Locale getAppLanguage(Context context) {
-        MultiLanguageUtil.init(context);
-        return MultiLanguageUtil.getInstance().getLanguageLocale();
+    protected void attachBaseContext(Context base) {
+        //保存系统选择语言
+//        MultiLanguageUtil.saveSystemCurrentLanguage(base);
+        super.attachBaseContext(MultiLanguageUtil.setLocal(base));
     }
 }

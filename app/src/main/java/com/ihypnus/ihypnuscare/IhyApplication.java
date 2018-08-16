@@ -1,6 +1,7 @@
 package com.ihypnus.ihypnuscare;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -56,14 +57,17 @@ public class IhyApplication extends Application {
         mInstance = this;
         //初始化多语言设置
         MultiLanguageUtil.init(this);
+        MultiLanguageUtil.setApplicationLanguage(this);
+        //设置当前语言类型
+        Constants.LANGUAGE_TYPE = MultiLanguageUtil.getLanguageLocale(this);
+        LogOut.d("llw", "application语言类型:" + Constants.LANGUAGE_TYPE);
+
         // 初始化新网络框架请求
         NetRequestHelper.getInstance().init(this);
         initImageLoadConfig(this);
         initVariable();
         initLogReport();
-        //设置当前语言类型
-        Constants.LANGUAGE_TYPE = MultiLanguageUtil.getInstance().getLanguageLocale();
-        MultiLanguageUtil.getInstance().setApplicationLanguage(this);
+
     }
 
     public void switchLanguage(Locale locale) {
@@ -200,12 +204,15 @@ UMConfigure.init调用中appkey和channel参数请置为null）。
 
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.N)
-//    @Override
-//    protected void attachBaseContext(Context base) {
-//        super.attachBaseContext(MultiLanguageUtil.attachBaseContext(base, getAppLanguage(base)));
-//    }
-//
+    //    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    protected void attachBaseContext(Context base) {
+        //保存系统选择语言
+//        MultiLanguageUtil.saveSystemCurrentLanguage(base);
+        super.attachBaseContext(MultiLanguageUtil.setLocal(base));
+    }
+
+    //
 //    @RequiresApi(api = Build.VERSION_CODES.N)
 //    @Override
 //    public void onConfigurationChanged(Configuration newConfig) {
@@ -214,8 +221,15 @@ UMConfigure.init调用中appkey和channel参数请置为null）。
 //        MultiLanguageUtil.getInstance().setConfiguration();
 //    }
 //
-//    private Locale getAppLanguage(Context context) {
-//        MultiLanguageUtil.init(context);
-//        return MultiLanguageUtil.getInstance().getLanguageLocale();
-//    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        //保存系统选择语言
+        MultiLanguageUtil.onConfigurationChanged(getApplicationContext());
+    }
+
+    private Locale getAppLanguage(Context context) {
+        MultiLanguageUtil.init(context);
+        return MultiLanguageUtil.getLanguageLocale(context);
+    }
 }

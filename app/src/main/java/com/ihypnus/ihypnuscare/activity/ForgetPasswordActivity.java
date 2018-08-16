@@ -28,6 +28,7 @@ import com.ihypnus.ihypnuscare.dialog.BaseDialogHelper;
 import com.ihypnus.ihypnuscare.iface.BaseType;
 import com.ihypnus.ihypnuscare.iface.DialogListener;
 import com.ihypnus.ihypnuscare.net.IhyRequest;
+import com.ihypnus.ihypnuscare.utils.HandlerErrorUtils;
 import com.ihypnus.ihypnuscare.utils.LogOut;
 import com.ihypnus.ihypnuscare.utils.StringUtils;
 import com.ihypnus.ihypnuscare.utils.ToastUtils;
@@ -215,7 +216,8 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
                 BaseDialogHelper.dismissLoadingDialog();
-                ToastUtils.showToastDefault(var3);
+                String s = HandlerErrorUtils.handlerErrorMsg(ForgetPasswordActivity.this, var2, var3);
+                ToastUtils.showToastDefault(s);
             }
         });
     }
@@ -273,7 +275,8 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
 
             @Override
             public void onError(VolleyError var1, String var2, String var3) {
-                ToastUtils.showToastDefault(var3);
+                String s = HandlerErrorUtils.handlerErrorMsg(ForgetPasswordActivity.this, var2, var3);
+                ToastUtils.showToastDefault(s);
                 mBtnVerificationCode.setEnabled(true);
                 mBtnVerificationCode.setVisibility(View.VISIBLE);
                 mIvCodeLoading.setVisibility(View.GONE);
