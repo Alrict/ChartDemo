@@ -64,7 +64,7 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void init(Bundle savedInstanceState) {
         setTitle(R.string.setting_language_title);
-        savedLanguageType = MultiLanguageUtil.getInstance().getLanguageType();
+        savedLanguageType = MultiLanguageUtil.getLanguageType(getApplicationContext());
         if (savedLanguageType == LanguageType.LANGUAGE_FOLLOW_SYSTEM) {
             setFollowSytemVisible();
         } else if (savedLanguageType == LanguageType.LANGUAGE_CHINESE_TRADITIONAL) {
@@ -156,7 +156,7 @@ public class MultiLanguageActivity extends BaseActivity implements View.OnClickL
                 switchLanguage(Locale.ENGLISH);
                 break;
         }
-        MultiLanguageUtil.getInstance().updateLanguage(selectedLanguage);
+        MultiLanguageUtil.updateLanguage(selectedLanguage,getApplicationContext());
        /* Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         BaseDialogHelper.dismissLoadingDialog();

@@ -56,7 +56,6 @@ public class IhyApplication extends Application {
         super.onCreate();
         mInstance = this;
         //初始化多语言设置
-        MultiLanguageUtil.init(this);
         MultiLanguageUtil.setApplicationLanguage(this);
         //设置当前语言类型
         Constants.LANGUAGE_TYPE = MultiLanguageUtil.getLanguageLocale(this);
@@ -229,7 +228,6 @@ UMConfigure.init调用中appkey和channel参数请置为null）。
     }
 
     private Locale getAppLanguage(Context context) {
-        MultiLanguageUtil.init(context);
         return MultiLanguageUtil.getLanguageLocale(context);
     }
 }

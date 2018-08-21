@@ -134,8 +134,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     private Locale getAppLanguage(Context context) {
-        MultiLanguageUtil.init(context);
-        return MultiLanguageUtil.getInstance().getLanguageLocale(context);
+        return MultiLanguageUtil.getLanguageLocale(context);
     }
 
 //    @Subscribe(threadMode = ThreadMode.MAIN)

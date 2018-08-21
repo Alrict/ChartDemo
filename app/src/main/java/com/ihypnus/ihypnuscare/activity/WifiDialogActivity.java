@@ -95,7 +95,6 @@ public class WifiDialogActivity extends Activity {
     }
 
     private Locale getAppLanguage(Context context) {
-        MultiLanguageUtil.init(context);
         return MultiLanguageUtil.getLanguageLocale(context);
     }
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -73,6 +74,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private ImageView mIvDownArrow;
     private CheckBox mCbVisible;
     private SP mSP;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
+            finish();
+        }
+    }
 
     @Override
     protected int setView() {
