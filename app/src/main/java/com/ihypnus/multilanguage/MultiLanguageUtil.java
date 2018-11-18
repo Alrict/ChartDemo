@@ -43,9 +43,7 @@ public class MultiLanguageUtil {
         return instance;
     }
 
-//    private MultiLanguageUtil(Context context) {
-//        this.mContext = context;
-//    }
+
 
     public static Context attachBaseContext(Context context, Locale language) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
