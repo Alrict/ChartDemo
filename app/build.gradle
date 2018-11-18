@@ -24,7 +24,7 @@ android {
         debug {
             keyAlias 'ihy_key_srore'
             keyPassword '111111'
-            storeFile file('.\\keystore\\ihy_key_store.jks')
+            storeFile file('keystore//ihy_key_store.jks')
             storePassword '111111'
         }
     }
@@ -33,7 +33,7 @@ android {
     defaultConfig {
         ndk {
 // 设置支持的SO库架构
-            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_6
+            abiFilters 'armeabi' , 'x86', 'armeabi-v7a', 'x86_6'
         }
 
         applicationId "com.ihypnus.ihypnuscare"
@@ -76,13 +76,13 @@ android {
     }
 
     //multiDex的一些相关配置，这样配置可以让你的编译速度更快
-    dexOptions {
-        preDexLibraries = false
-        //让它不要对Lib做preDexing
-        incremental true
-        //开启incremental dexing,优化编译效率，这个功能android studio默认是关闭的。
-        javaMaxHeapSize "16g"     //增加java堆内存大小
-    }
+//    dexOptions {
+//        preDexLibraries = false
+//        //让它不要对Lib做preDexing
+//        incremental true
+//        //开启incremental dexing,优化编译效率，这个功能android studio默认是关闭的。
+//        javaMaxHeapSize "16g"     //增加java堆内存大小
+//    }
 
     flavorDimensions "default"
     // 可定义的产品特性:根据不同需求 选择相应模式 正式key,测试key
